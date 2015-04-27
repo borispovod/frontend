@@ -15,6 +15,7 @@ module.exports = function (grunt) {
                 },
                 files: {
                     "static/css/app.css": [
+                        "node_modules/materialize-css/bin/materialize.css",
                         "bower_components/angular-chart.js/dist/angular-chart.css",
                         "node_modules/bootstrap/dist/css/bootstrap.css",
                         "bower_components/angular-modal/modal.css",

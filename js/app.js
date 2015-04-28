@@ -5,6 +5,7 @@ require('angular-resource');
 require('browserify-angular-animate');
 require('../bower_components/angular-chart.js/dist/angular-chart.js');
 require('../bower_components/angular-socket-io/socket.js');
+//require('../bower_components/angular-materialize/src/angular-materialize.js');
 require('../node_modules/ng-table/dist/ng-table.js');
 
 

@@ -31,28 +31,28 @@
   background-position: center;"></div>
 
             <form class="clearfix" style="
-    padding: 25px;
+    padding: 10px 25px 25px;
     /* height: 242px; */
     /* position: relative; */
 " _lpchecked="1">
-                <div class="input-group" style="
-    width: 100%;
-">
 
-                    <input type="password" class="form-control" placeholder="Your Passphrase" style="
-    border-top: 0;
-    border-left: none;
-    border-right: none;
-    /* width: 100%; */
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    -webkit-transition: none;    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    /* transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; */
-" ng-model="pass" ng-trim="false" autofocus>
+                <div class="input-field ">
+                    <input id="password" type="password" ng-model="pass" ng-trim="false">
+                    <label for="password">Your Passphrase</label>
                 </div>
-
-                <button type="submit" class="sign-in-button pull-right" ng-click="login(pass)">SIGN IN
+                <div class="switch blue-switch margin">
+                    <label>
+                        <input type="checkbox">
+                        <span class="lever"></span>
+                        Remember during this session
+                    </label>
+                </div>
+                <div class="pull-right buttons-panel">
+                    <button class="btn btn-white waves-effect btn-marging"  ng-click="newUser()">NEW ACCOUNT
+                    </button>
+                <button class="btn btn-blue waves-effect waves-light" ng-click="login(pass)">SIGN IN
                 </button>
+        </div>
             </form>
 
         </div>
@@ -62,7 +62,8 @@
     /* margin: 0 auto; */
     text-align: center;
     width: 100%;
-    color: #6d6d6d;
+    color: #000;
+    opacity: 0.54;
     font-size: 14px;
 ">Crypti © 2015. All Rights Reserved.
         </div>

@@ -6,7 +6,8 @@ angular.module('webApp').controller('newUserController', ["$scope", "$http", "ne
     $scope.generatePassword = function () {
         var Mnemonic = require('bitcore-mnemonic');
         var code = new Mnemonic(Mnemonic.Words.ENGLISH);
-        $scope.newPassphrase = code.toHDPrivateKey();
+        //$scope.newPassphrase = code.toHDPrivateKey();
+        $scope.newPassphrase = code.toString();
     };
 
     $scope.step = function () {

@@ -34,10 +34,10 @@
     padding: 10px 25px 25px;
     /* height: 242px; */
     /* position: relative; */
-" _lpchecked="1">
+" _lpchecked="1" ng-submit="login(pass)">
 
                 <div class="input-field ">
-                    <input id="password" type="password" ng-model="pass" ng-trim="false">
+                    <input id="password" type="password" ng-model="pass" ng-trim="false" autofocus>
                     <label for="password">Your Passphrase</label>
                 </div>
                 <div class="switch blue-switch margin">
@@ -48,11 +48,12 @@
                     </label>
                 </div>
                 <div class="pull-right buttons-panel">
-                    <button class="btn btn-white waves-effect btn-marging"  ng-click="newUser()">NEW ACCOUNT
-                    </button>
-                <button class="btn btn-blue waves-effect waves-light" ng-click="login(pass)" ng-disabled="!pass">SIGN IN
-                </button>
-        </div>
+                    <a class="btn btn-white waves-effect btn-marging" ng-click="newUser()">NEW ACCOUNT
+                    </a>
+                    <a class="btn btn-blue waves-effect waves-light" ng-click="login(pass)"
+                            ng-disabled="!pass">SIGN IN
+                    </a>
+                </div>
             </form>
 
         </div>

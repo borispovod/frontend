@@ -44,7 +44,8 @@ angular.module('webApp').controller('newUserController', ["$scope", "$http", "ne
         newUser.deactivate();
     }
 
-
+   //runtime
+    $scope.generatePassword();
 }
 ])
 ;

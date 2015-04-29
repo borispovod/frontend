@@ -23,7 +23,7 @@
                                 <div class="left-margin-40 right-margin-40">
                                     <div class="input-field passphraseGeneration">
                                            <textarea id="newPassphrase" class="materialize-textarea"
-                                                     ng-model="newPassphrase"></textarea>
+                                                     ng-model="newPassphrase" autofocus></textarea>
                                         <label for="newPassphrase">Passphrase</label>
                                     </div>
                                     <span class="pull-right generate"
@@ -56,7 +56,7 @@
                                 <div class="left-margin-40 right-margin-40">
                                     <div class="input-field passphraseGeneration">
                                            <textarea id="repeatPassphrase" class="materialize-textarea"
-                                                     ng-model="repeatPassphrase" ng-class="{'invalid': noMatch}"></textarea>
+                                                     ng-model="repeatPassphrase" ng-class="{'invalid': noMatch}" autofocus></textarea>
                                         <label for="repeatPassphrase">Passphrase</label>
                                     </div>
                                     <span class="pass-error" ng-show="noMatch">Passphrase doesn't match.</span>

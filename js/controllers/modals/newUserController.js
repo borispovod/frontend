@@ -3,6 +3,11 @@ require('angular');
 angular.module('webApp').controller('newUserController', ["$scope", "$http", "newUser","userService", "$state", function ($scope, $http, newUser, userService, $state) {
     $scope.noMatch = false;
     $scope.firstStep = true;
+
+    $scope.activeLabel = function(pass){
+        return pass != '';
+    }
+
     $scope.generatePassword = function () {
         var Mnemonic = require('bitcore-mnemonic');
         var code = new Mnemonic(Mnemonic.Words.ENGLISH);

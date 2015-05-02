@@ -35,7 +35,10 @@ angular.module('webApp').controller('votedDelegatesController', ['$scope', '$roo
             inList: function (publicKey) {
                 return !!this.list[publicKey];
             },
-            vote: function (publicKey, username) {
+            vote: function (publicKey, username, $event, stop) {
+                if (stop) {
+                    $event.stopPropagation();
+                }
                 if (this.inList(publicKey)) {
                     delete this.list[publicKey];
                 }
@@ -43,8 +46,8 @@ angular.module('webApp').controller('votedDelegatesController', ['$scope', '$roo
                     this.list[publicKey] = username;
                 }
                 this.recalcLength();
-                if (this.list == {}) {
-                    $scope.showVotes = false;
+                if (this.length == 0) {
+                    $scope.moreDropdownSeelction.isopen = false;
                 }
             },
             toggle: function () {

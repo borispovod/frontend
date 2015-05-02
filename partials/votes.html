@@ -9,18 +9,19 @@
              {{voteList.length}} out of {{countStandby + countTop}} Delegates selected
             </span>
             <ul class="nav nav-info pull-right">
-                <li class="list-delegate">
-                    <a href="#"><span class="selection-icon"></span>View selection
+                <li class="list-delegate" dropdown is-open="moreDropdownSeelction.isopen">
+                    <a href="#" dropdown-toggle ng-disabled="voteList.length==0"><i
+                            class="mdi-action-visibility left"></i>View selection</a>
 
-                    </a>
-                    <ul class="list-group" ng-class="{'empty': voteList.length < 1}">
+                    <ul class="list-group dropdown-menu" ng-class="{'empty': voteList.length < 1}">
                         <li class="list-group-item" ng-repeat="(key,item) in voteList.list"
-                            ng-click="voteList.vote(key, item)">{{item}}
+                            ng-click="voteList.vote(key, item, $event, true)">{{item}}
                         </li>
 
                     </ul>
                 </li>
-                <li><a href="#" ng-click="vote()"><span class="vote-icon"></span>remove vote</a></li>
+                <li><a href="#" class="red-link" ng-click="vote()" ng-disabled="voteList.length==0"><i
+                        class="mdi-action-favorite-outline left"></i>remove vote</a></li>
             </ul>
         </div>
     </div>

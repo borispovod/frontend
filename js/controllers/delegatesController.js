@@ -21,7 +21,9 @@ angular.module('webApp').controller('delegatesController', ['$scope', '$rootScop
 
         $scope.loadingTop = true;
         $scope.loadingStandby = true;
-
+        $scope.moreDropdownSeelction = {
+            isopen: false
+        };
         $scope.getApproval = function (vote) {
             return (vote / $scope.allVotes ) * 100;
         };
@@ -39,7 +41,10 @@ angular.module('webApp').controller('delegatesController', ['$scope', '$rootScop
             inList: function (publicKey) {
                 return !!this.list[publicKey];
             },
-            vote: function (publicKey, username) {
+            vote: function (publicKey, username, $event, stop) {
+                if (stop) {
+                    $event.stopPropagation();
+                }
                 if (this.inList(publicKey)) {
                     delete this.list[publicKey];
                 }
@@ -47,8 +52,8 @@ angular.module('webApp').controller('delegatesController', ['$scope', '$rootScop
                     this.list[publicKey] = username;
                 }
                 this.recalcLength();
-                if (this.list == {}) {
-                    $scope.showVotes = false;
+                if (this.length == 0) {
+                    $scope.moreDropdownSeelction.isopen = false;
                 }
             },
             toggle: function () {

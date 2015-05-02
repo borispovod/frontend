@@ -16,8 +16,10 @@
         }
         .icon {
           &.new-message {
-            i {opacity: 1;
-            color: @dark-blue;}
+            i {
+              opacity: 1;
+              color: @dark-blue;
+            }
           }
           i {
             font-size: 24px;
@@ -39,34 +41,33 @@
     border: none;
     -webkit-box-shadow: none;
     box-shadow: none;
-    .ng-isolate-scope
-    {
+    .ng-isolate-scope {
       margin-top: 5px;
     }
-      .panel-heading {
-        border-top: 1px solid @border-grey;
-        border-right: 1px solid @border-grey;
-        border-left: 1px solid @border-grey;
-      }
-    }
     .panel-heading {
-      background-color: @grey;
-      padding: 16px 16px;
-      border-bottom: 2px solid @border-grey;
-      .plain-text {
-        position: absolute;
-        font-size: 14px;
-        color: #393939;
-        top: 20px;
-        font-weight: 500;
-        right: 32px;
-      }
-      .more {
-        position: absolute;
-        top: 20px;
-        right: 32px;
-        cursor: pointer;
-        background-image: url('@{images}/sprites/iconset.png');
+      border-top: 1px solid @border-grey;
+      border-right: 1px solid @border-grey;
+      border-left: 1px solid @border-grey;
+    }
+  }
+  .panel-heading {
+    background-color: @grey;
+    padding: 16px 16px;
+    border-bottom: 2px solid @border-grey;
+    .plain-text {
+      position: absolute;
+      font-size: 14px;
+      color: #393939;
+      top: 20px;
+      font-weight: 500;
+      right: 32px;
+    }
+    .more {
+      position: absolute;
+      top: 20px;
+      right: 32px;
+      cursor: pointer;
+      background-image: url('@{images}/sprites/iconset.png');
       background-position: 0 0;
       background-repeat: no-repeat;
       height: 12px;
@@ -225,6 +226,38 @@
     font-size: @graph-heading;
     width: 100%;
   }
+  &-sub-heading {
+    text-align: center;
+    font-size: @content-text;
+    color: @white;
+    font-weight: 400;
+    opacity: @font-opacity;
+    margin-top: -10px;
+  }
+  &-footer {
+    background-color: white;
+    padding: 26px;
+    color: black;
+    .description {
+      opacity: 0.87;
+      line-height: 24px;
+      font-size: 16px;
+    }
+    .forged-amount {
+      height: 100%;
+      text-align: right !important;
+      opacity: 0.87;
+    }
+    .legend {
+      font-size: 18px;
+    }
+    .value {
+      text-align: right;
+      width: 100%;
+      display: block;
+      font-size: 30px;
+    }
+  }
   &-body {
     width: 100%;
     padding: 20px 0;
@@ -246,6 +279,20 @@
     }
     .chart-container {
       margin: 0 -60px;
+    }
+  }
+
+  &.line-graph {
+    .light-graph-heading {
+      color: @white;
+    }
+    background-color: #1976d2;
+    .light-graph-body {
+      overflow: hidden;
+    }
+    .chart-container {
+      margin: 0 -12px -46px;
+      overflow: hidden;
     }
   }
 }

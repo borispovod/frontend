@@ -40,6 +40,9 @@ angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$
         voteModal.deactivate();
     }
 
+    $scope.removeVote = function (publicKey) {
+        delete $scope.voteList[publicKey];
+    }
 
     $scope.vote = function () {
 

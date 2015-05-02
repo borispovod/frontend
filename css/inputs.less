@@ -9,6 +9,13 @@ input[type=text]:focus:not([readonly]) + label, input[type=password]:focus:not([
   color: #9e9e9e;
 }
 
+#to {
+  padding: 12px 14px;
+  &:focus, &:active, &.active {
+    border: none;
+  }
+}
+
 .switch.margin {
   margin-top: 10px;
 }

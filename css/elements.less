@@ -191,9 +191,15 @@
     display: inline-block;
     &.list-delegate {
       position: relative;
+      &.open {
+        .list-group {
+          display: block;
+        }
+      }
       .list-group {
         position: absolute;
         display: none;
+        transition: .2s;
         z-index: 99999;
         right: 10px;
         top: 45px;
@@ -242,21 +248,29 @@
       }
     }
 
-    &:hover.list-delegate {
-      .list-group {
-        display: block;
-      }
-    }
     & > a {
+      font-weight: 500;
       font-size: @content-text;
       padding: 0 28px;
       text-transform: uppercase;
       color: @black;
-
+      i {
+        font-size: 18px;
+      }
       &:hover, &:active, &:focus {
-
         background-color: @white;
+        color: @black;
+      }
+      &.red-link {
+        color: @dark-red;
+        &:hover, &:active, &:focus {
+          color: @dark-red
+        }}
+      &.green-link {
         color: @dark-meant;
+        &:hover, &:active, &:focus {
+          color: @dark-meant;
+        }
       }
     }
   }
@@ -318,12 +332,24 @@ a {
     display: inline-block;
     & > a {
       font-size: @content-text;
-      padding: 18px 28px;
+      padding: 18px 28px 18px 0;
       text-transform: uppercase;
+      font-weight: 500;
       color: @black;
+      &.green-link {
+        color: @dark-meant;
+        &:hover, &:active, &:focus {
+          color: @dark-meant;
+        }
+      }
+      i {
+        font-size: 20px;
+        line-height: 13px
+      }
       &:hover, &:active, &:focus {
         background-color: @white;
-        color: @dark-meant;
+        color: @black;
+
       }
     }
   }
@@ -756,4 +782,32 @@ a {
     border-radius: 10px;
     background-color: rgba(55, 71, 79, 0.2);
   }
+}
+
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+  background-color: inherit;
+  border-color: inherit;
+}
+
+.vote-list {
+  &:hover {
+    cursor: pointer;
+    i {
+      opacity: .87;
+      color: @dark-red;
+    }
+  }
+  i {
+    opacity: .54;
+    font-size: 22px;
+    line-height: 16px;
+  }
+}
+
+.paginated .pagination > li > a, .paginated .pagination > li > span {
+  opacity: 0.87;
+}
+
+.subrow {
+  padding: 0 !important;
 }

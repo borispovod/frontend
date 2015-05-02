@@ -1,8 +1,8 @@
 require('angular');
 
 
-angular.module('webApp').controller('forgingController', ['$scope', '$rootScope', '$http', "userService", "$interval", "companyModal", "forgingModal", "registrationDelegateModal", "delegateService", "viewFactory", "blockInfo",
-    function ($rootScope, $scope, $http, userService, $interval, companyModal, forgingModal, registrationDelegateModal, delegateService, viewFactory, blockInfo) {
+angular.module('webApp').controller('forgingController', ['$scope', '$rootScope', '$http', "userService", "$interval", "companyModal", "forgingModal", "delegateService", "viewFactory", "blockInfo",
+    function ($rootScope, $scope, $http, userService, $interval, companyModal, forgingModal, delegateService, viewFactory, blockInfo) {
 
         $scope.allVotes = 100
         * 1000
@@ -12,8 +12,23 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
         * 100;
 
 
-
         $scope.graphs = {
+            amountForged: {
+                labels: ['1', '2', '3', '4'],
+                series: ['Series A', 'Series B'],
+                data: [
+                    [20, 50, 20, 50],
+                    [60, 30, 40, 20]
+                ],
+                colours: ['#378fe0', '#29b6f6'],
+                options: {
+                    scaleShowGridLines: false,
+                    pointDot: false,
+                    showTooltips: false,
+                    scaleShowLabels: false,
+                    scaleBeginAtZero: true
+                }
+            },
             totalForged: {
                 labels: ['Total Forged'],
                 values: [1],
@@ -22,7 +37,12 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
                     percentageInnerCutout: 90,
                     animationEasing: "linear",
                     segmentShowStroke: false,
-                    showTooltips: false
+                    showTooltips: false,
+                    scaleLineColor: "rgba(0,0,0,0)",
+                    scaleGridLineWidth: 0,
+                    scaleShowHorizontalLines: false,
+
+                    scaleShowVerticalLines: false
                 }
             },
             rank: {
@@ -75,7 +95,7 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
         $scope.totalBalance = userService.balance;
         $scope.unconfirmedBalance = userService.unconfirmedBalance;
         $scope.loadingBlocks = true;
-        $scope.delegateInRegistration = userService.delegateInRegistration;
+
 
         $scope.getBlocks = function () {
             $http.get("/api/blocks", {
@@ -99,43 +119,6 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
                 });
         }
 
-        $scope.getDelegate = function () {
-            delegateService.getDelegate(userService.publicKey, function (response) {
-                if ($scope.delegateInRegistration) {
-                    $scope.delegateInRegistration = !(!!response);
-                    userService.setDelegateProcess($scope.delegateInRegistration);
-                }
-                $scope.delegate = response;
-                userService.setDelegate($scope.delegate);
-                var totalDelegates = 108;
-                var rank = response.rate;
-
-                $scope.graphs.rank.values = [totalDelegates - rank, totalDelegates - 1 - (totalDelegates - rank)];
-                if (($scope.rank == 0 && rank != 0) || ($scope.rank > 50 && rank <= 50) || ($scope.rank > 101 && rank <= 101) || ($scope.rank <= 50 && rank > 50)) {
-                    $scope.graphs.rank.colours = [rank <= 50 ? '#7cb342' : (rank > 101 ? '#d32f2f' : '#ffa000'), '#f5f5f5'];
-                }
-                $scope.rank = rank;
-
-
-                var uptime = parseFloat(response.productivity);
-
-                $scope.graphs.uptime.values = [uptime, 100 - uptime];
-                if (($scope.uptime == 0 && uptime > 0) || ($scope.uptime >= 95 && uptime < 95) || ($scope.uptime >= 50 && uptime < 50)) {
-                    $scope.graphs.uptime.colours = [uptime >= 95 ? '#7cb342' : (uptime >= 50 ? '#ffa000' : '#d32f2f'), '#f5f5f5'];
-                }
-                $scope.uptime = response.productivity;
-
-
-                var approval = $scope.getApproval(response.vote);
-
-                $scope.graphs.approval.values = [approval, $scope.getApproval($scope.allVotes) - approval];
-                if (($scope.approval == 0 && approval > 0) || ($scope.approval >= 95 && approval < 95) || ($scope.approval >= 50 && approval < 50)) {
-                    $scope.graphs.approval.colours = [approval >= 95 ? '#7cb342' : (approval >= 50 ? '#ffa000' : '#d32f2f'), '#f5f5f5'];
-                }
-                $scope.approval = approval;
-
-            });
-        }
 
         $scope.getForging = function () {
             $http.get("/api/delegates/forging/status", {params: {publicKey: userService.publicKey}})
@@ -148,14 +131,13 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
         $scope.infoInterval = $interval(function () {
             $scope.getBlocks();
             $scope.getForgedAmount();
-            $scope.getDelegate();
             $scope.getForging();
         }, 1000 * 30);
-
+        
 
         $scope.getBlocks();
         $scope.getForgedAmount();
-        $scope.getDelegate();
+
         $scope.getForging();
 
 
@@ -177,16 +159,6 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
                 destroy: function () {
                     $scope.forging = userService.forging;
                     $scope.getForging();
-                }
-            })
-        }
-
-        $scope.registrationDelegate = function () {
-            $scope.registrationDelegateModal = registrationDelegateModal.activate({
-                totalBalance: userService.unconfirmedBalance,
-                destroy: function () {
-                    $scope.delegateInRegistration = userService.delegateInRegistration;
-                    $scope.getDelegate();
                 }
             })
         }

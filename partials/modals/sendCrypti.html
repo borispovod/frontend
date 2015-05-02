@@ -16,16 +16,19 @@
                     <div class="modal-body">
                         <div class="input-group app-addon">
                             <span class="input-group-addon search"></span>
-                            <input type="text" class="form-control" placeholder="Account name or ID" ng-model="to">
+                            <input id="to" type="text" class="form-control" placeholder="Account name or ID"
+                                   ng-model="to">
                             <span class="input-group-addon clear"></span>
                         </div>
-                        <div class="input-group send-xcr">
-                            <input type="text" class="form-control" placeholder="XCR Amount" ng-model="amount"
-                                   ng-trim="false">
+                        <div class="field-padding">
+                            <div class="input-field">
+                                <input id="amount" type="text" ng-model="amount" autofocus>
+                                <label for="amount">XCR Amount</label>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-body bordered">
-                        <span class="send-info-text">Make sure you're sending XCR to the right contact. This action can't be undone later.</span>
+                        <span class="send-info-text flat-text">Make sure you're sending XCR to the right contact. This action can't be undone later.</span>
                     </div>
                     <div class="modal-body">
                         <ul class="nav modal-buttons pull-right">
@@ -33,7 +36,7 @@
                                 <a href="#" ng-click="close()">Cancel
                                 </a>
                             </li>
-                            <li><a href="#" ng-click="passcheck()">send xcr</a></li>
+                            <li><a href="#" class="green-link" ng-click="passcheck()">send xcr</a></li>
                         </ul>
                     </div>
                 </div>
@@ -48,12 +51,13 @@
                         </div>
                     </div>
                     <div class="modal-body">
-
-                        <div class="input-group send-xcr">
-                            <input type="password" class="form-control" placeholder="Your Passphrase"
-                                   ng-model="secretPhrase"
-                                   ng-trim="false" ng-class="{'error':errorMessage}">
-                            <span class="error-text" ng-show="errorMessage">{{errorMessage}}</span>
+                        <div class="field-padding">
+                            <div class="input-field">
+                                <input id="passPhrase" type="password" ng-model="secretPhrase" ng-trim="false" autofocus
+                                       ng-class="{'invalid': errorMessage}">
+                                <label for="passPhrase">Your Passphrase</label>
+                            </div>
+                            <span class="pass-error" ng-show="errorMessage">{{errorMessage}}</span>
                         </div>
                     </div>
 
@@ -63,7 +67,7 @@
                                 <a href="#" ng-click="passcheck()">Cancel
                                 </a>
                             </li>
-                            <li><a href="#" ng-click="sendCrypti()">send xcr</a></li>
+                            <li><a href="#" class="green-link" ng-click="sendCrypti()">send xcr</a></li>
                         </ul>
                     </div>
                 </div>

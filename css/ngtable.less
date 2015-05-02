@@ -181,9 +181,12 @@
     background-color: @grey;
   }
 }
-.table-menu {position: absolute;
+
+.table-menu {
+  position: absolute;
   top: 7px;
-  right: 10px;}
+  right: 10px;
+}
 
 tbody {
   tr:nth-child(even) {
@@ -214,7 +217,10 @@ td {
 .pagination li.active {
   background-color: @blue;
   border-radius: 50%;
-  color: @white;
+  color: @white !important;
+  a {
+    color: @white !important;
+  }
 }
 
 

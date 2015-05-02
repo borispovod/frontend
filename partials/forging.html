@@ -1,8 +1,8 @@
-
 <div class="top-margin">
 </div>
 
 <div class="row">
+    <div class="col-md-9 col-sm-12 subrow">
         <div class="col-xs-12">
             <div class="info-panel">
             <span class="title">
@@ -13,7 +13,6 @@
             </span>
             </div>
         </div>
-
         <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6">
             <div class="light-graph">
                 <div class="light-graph-heading">XCR Earned</div>
@@ -27,7 +26,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6">
             <div class="light-graph">
                 <div class="light-graph-heading">Rank</div>
@@ -53,7 +51,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6">
             <div class="light-graph">
                 <div class="light-graph-heading">Approval</div>
@@ -66,7 +63,31 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="col-md-3 col-sm-12">
 
+
+        <div class="light-graph line-graph">
+            <div class="light-graph-heading">No Data Available</div>
+            <div class="light-graph-sub-heading">Return when you have forged at least 100 XCR</div>
+            <div class="light-graph-body">
+
+                <canvas id="line" class="chart chart-line" data="graphs.amountForged.data"
+                        colours="graphs.amountForged.colours"
+                        labels="graphs.amountForged.labels" legend="false" series="graphs.amountForged.series"
+                        options="graphs.amountForged.options">
+                </canvas>
+            </div>
+            <div class="light-graph-footer">
+                <div class="row">
+                    <div class="col-xs-6 description">Amount Forged in last year
+                    </div>
+                    <div class="col-xs-6 forged-amount"><span class="value">0.00 <span class="legend">XCR</span></span></div>
+                    <div class="clearfix visible-lg visible-md visible-sm visible-xs"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="row">

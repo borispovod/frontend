@@ -1,9 +1,10 @@
 require('angular');
 
-angular.module('webApp').controller('blockchainController', ['$scope', '$rootScope', '$http', "userService", "$interval", 'blockService', 'blockModal', 'blockInfo', 'ngTableParams', 'viewFactory',
-    function ($rootScope, $scope, $http, userService, $interval, blockService, blockModal, blockInfo, ngTableParams, viewFactory) {
+angular.module('webApp').controller('blockchainController', ['$scope', '$rootScope', '$http', "userService", "$interval", 'blockService', 'blockModal', 'blockInfo', 'userInfo', 'ngTableParams', 'viewFactory',
+    function ($rootScope, $scope, $http, userService, $interval, blockService, blockModal, blockInfo, userInfo, ngTableParams, viewFactory) {
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Blockchain', previos: null};
+        $scope.view.bar = {showBlockSearchBar: true};
         $scope.address = userService.address;
         $scope.loading = true;
 
@@ -49,6 +50,10 @@ angular.module('webApp').controller('blockchainController', ['$scope', '$rootSco
 
         $scope.blockInfo = function (block) {
             $scope.modal = blockInfo.activate({block: block});
+        }
+
+        $scope.userInfo = function (userId) {
+            $scope.modal = userInfo.activate({userId: userId});
         }
 
     }]);

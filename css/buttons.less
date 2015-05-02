@@ -1,10 +1,25 @@
 .btn {
+  display: inline-block;
+  padding: 0 14px;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 36px;
+  border: none;
+  border-radius: @border-radius;
+
 &.btn-blue {
   background-color: #0288d1 !important;
   &:hover, &:focus, &.focus {
     color: @white
   }
 }
+
+  &.btn-sky-blue {
+    background-color: @sky-blue!important;
+    &:hover, &:focus, &.focus {
+      color: @white
+    }
+  }
 
 &.btn-white {
   background-color: @white !important;

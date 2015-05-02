@@ -1,17 +1,25 @@
 .paginated {
+  position: relative;
   .ng-table-pager {
-    border-bottom: 1px solid @border-grey;
+    // border-bottom: 1px solid @border-grey;
     background-color: @background;
   }
   .ng-table {
-    border-bottom: 1px solid @border-grey;
-    border-right: 1px solid @border-grey;
-    border-left: 1px solid @border-grey;
-    -webkit-box-shadow: 0 1px 0 #dbdcdd;
-    -moz-box-shadow: 0 1px 0 #dbdcdd;
-    box-shadow: 0 1px 0 #dbdcdd;
+    border: 1px solid @border-grey;
+    -webkit-box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, .12);
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, .12);
     thead {
       border-bottom: 2px solid #cecece;
+      th div span {
+        position: relative;
+        display: inline-block;
+        padding: 18px 0;
+        font-weight: 500;
+        opacity: @font-opacity;
+      }
+      th.sortable div span {
+        cursor: pointer;
+      }
     }
   }
   .pagination > li > a, .pagination > li > span {
@@ -52,17 +60,16 @@
 
   }
 
-
   .pagination > li > a:hover, .pagination > li > span:hover, .pagination > li > a:focus, .pagination > li > span:focus {
     color: @white;
-    font-weight: 600;
+    font-weight: 500;
     background-color: @blue;
   }
 
   .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
     z-index: 2;
     color: @grey-text;
-    font-weight: 600;
+    font-weight: 500;
     cursor: default;
     background: none;
     border-color: none
@@ -78,12 +85,17 @@
 
 }
 
+.panel-default table.ng-table tr:last-child td, .panel-default table.ng-table tr:first-child td {
+  padding-top: 13px;
+  padding-bottom: 13px;
+}
+
 .ng-table-label {
   min-width: 986px;
   margin-top: 22px;
   margin-bottom: 22px;
   h2 {
-    font-weight: 600;
+    font-weight: 500;
     color: #4f5051;
   }
 }
@@ -94,36 +106,50 @@
   opacity: 0.6;
 }
 
-.ng-table th.sortable div:after, .ng-table th.sortable div:before {
-  border: none;
+.ng-table th.sortable div span:after, .ng-table th.sortable div span:before {
+  right: -16px;
+  top: 18px;
+  position: absolute;
+  border: 0;
   width: 7px;
   height: 5px;
-  background-image: url('@{images}/sprites/iconset.png');
-
+  background-image: url(/images/sprites/iconset.png);
+  content: '';
+  display: block;
 }
 
-.ng-table th.sortable div:before {
+.ng-table th.sortable div span:before {
   background-position: -70px -9px;
   border: none;
-
+  top: 26px;
 }
 
-.ng-table th.sortable div:after {
+.ng-table th.sortable div span:after {
   background-position: -70px -0;
   border: none;
 
 }
 
-.ng-table th.sortable.sort-asc div:before {
+.ng-table th.sortable.sort-asc div span:before {
   background-position: -70px 0;
   border: none;
   opacity: 1 !important;
+  top: 22px;
 }
 
-.ng-table th.sortable.sort-desc div:after {
+.ng-table th.sortable.sort-asc div span:after {
+  display: none;
+}
+
+.ng-table th.sortable.sort-desc div span:after {
   background-position: -70px -9px;
   border: none;
   opacity: 1 !important;
+  top: 22px;
+}
+
+.ng-table th.sortable.sort-desc div span:before {
+  display: none;
 }
 
 .ng-table tr.voted {
@@ -133,13 +159,12 @@
   }
 }
 
-
 .ng-table thead tr th {
   background-color: @grey;
   text-align: left;
   font-size: @content-text;
   color: @black;
-  font-weight: 600;
+  font-weight: 500;
   &:first-child {
     padding-left: 16px;
   }
@@ -148,7 +173,7 @@
     text-align: left;
     font-size: @content-text;
     color: @black;
-    font-weight: 600;
+    font-weight: 500;
     opacity: 1;
   }
   &:hover {
@@ -156,6 +181,9 @@
     background-color: @grey;
   }
 }
+.table-menu {position: absolute;
+  top: 7px;
+  right: 10px;}
 
 tbody {
   tr:nth-child(even) {
@@ -181,6 +209,12 @@ td {
       margin-right: 8px;
     }
   }
+}
+
+.pagination li.active {
+  background-color: @blue;
+  border-radius: 50%;
+  color: @white;
 }
 
 

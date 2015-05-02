@@ -5,25 +5,42 @@
         <div class="panel panel-default paginated">
 
             <table ng-table="tableBlocks" border="0" width="100%" cellpadding="0" cellspacing="0">
+                <div class="table-menu">
+                    <div class="more-down-table" dropdown
+                         on-toggle="toggled(open)" is-open="moreDownTable.isopen">
+                        <i class="mdi-navigation-more-vert" dropdown-toggle aria-haspopup="true"
+                           aria-expanded="false"></i>
+
+                        <div class="dropdown-menu" role="menu">
+                            <p ng-click="check($event)"><input type="checkbox" class="filled-in violet" id="advanced"
+                                                               checked="checked">
+                                <label for="advanced">Advanced Options</label></p>
+
+                            <p ng-click="check($event)"><input type="checkbox" class="filled-in violet" id="fulltime">
+                                <label for="fulltime">Show Full Time</label></p>
+                        </div>
+                    </div>
+                </div>
                 <tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}">
-                    <td data-title="'Height'">{{block.height}}</td>
+                    <td data-title="'Height'" sortable="'height'">{{block.height}}</td>
                     <td data-title="'Block ID'" ng-click="blockInfo(block)" class="pointer"><a href="#">{{block.id}}</a></td>
-                    <td data-title="'Generator'"><a href="#">{{block.generatorId}}</a></td>
-                    <td data-title="'Date & Time'"><span
+                    <td data-title="'Generator'" sortable="'generatorID'"><a href="#"
+                                                                             ng-click="userInfo(block.generatorId)">{{block.generatorId}}</a></td>
+                    <td data-title="'Date & Time'" sortable="'timestamp'"><span
                             ng-show="block.timestamp > 0">{{block.timestamp | timestampFilter}}</span>
                         <span ng-show="block.timestamp == 0">-</span></td>
-                    <td data-title="'Transactions'" ng-click="showBlock(block)" class="pointer"><a href="#">{{block.numberOfTransactions}}</a></td>
-                    <td data-title="'Amount'">{{block.totalAmount / 100000000 | feeFilter}}</td>
-                    <td data-title="'Fee'">{{block.totalFee / 100000000 | feeFilter}}</td>
-
+                    <td data-title="'Transactions'" ng-click="showBlock(block)" class="pointer text-center"><a href="#">{{block.numberOfTransactions}}</a></td>
+                    <td data-title="'Amount'" sortable="'totalAmount'">{{block.totalAmount / 100000000 | feeFilter}}</td>
+                    <td data-title="'Fee'" sortable="'totalFee'">{{block.totalFee / 100000000 | feeFilter}}</td>
+                    <td data-title="" class="width-80"></td>
                 </tr>
                 <tr ng-show="!loading && (!$data || $data.length == 0)">
-                    <td colspan="6">
+                    <td colspan="8">
                         No blockchain
                     </td>
                 </tr>
                 <tr ng-show="loading">
-                    <td colspan="6">
+                    <td colspan="8">
                         Loading...
                     </td>
                 </tr>

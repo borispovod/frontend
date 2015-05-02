@@ -6,10 +6,24 @@
 
 .nav-underline {
   padding: 0 40px;
+  &.registration {
+    font-weight: 500;
+    position: relative;
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      top: 17px;
+      background-image: url('@{images}/sprites/iconset.png');
+      background-position: -37px -68px;
+    }
+  }
   & > li {
     float: left;
      &.active a {
-      font-weight: bold;
+      font-weight: 500;
       border-bottom: solid 4px @blue;
     }
     & > a {

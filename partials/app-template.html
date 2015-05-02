@@ -15,7 +15,8 @@
         </div>
         <div class="white-glow"></div>
         <ul id="menu">
-            <li ng-show="showMenuItem('main.dashboard')" ui-sref-active="active"><a ui-sref="main.dashboard" class="waves-effect waves-teal">
+            <li ng-show="showMenuItem('main.dashboard')" ui-sref-active="active"><a ui-sref="main.dashboard"
+                                                                                    class="waves-effect waves-teal">
                 <div class="nav-icon" id="dashboard-icon"></div>
                 <span class="menu-text">Dashboard</span></a></li>
             <li ng-show="showMenuItem('main.contacts')" ui-sref-active="active"><a ui-sref="main.contacts"
@@ -63,25 +64,72 @@
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
-        <div class="nav-bar" id="header">
+        <div class="header-wrapper">
+            <div class="nav-bar" id="header">
 
-            <h1 id="title"><span class="title-icon" ng-show="view.page.previos" ng-click="goToPrevios()">
+                <h1 id="title"><span class="title-icon" ng-show="view.page.previos" ng-click="goToPrevios()">
             <span class="sr-only">Go to previos page</span></span>{{view.page.title}}</h1>
-            <span class="forging-state" ng-show="view.forgingState">{{view.forgingState}}</span>
 
-            <div id="top-menu">
+                <span class="forging-state" ng-show="view.forgingState">{{view.forgingState}}</span>
+
+                <div id="top-menu" class="valign-wrapper">
                 <span id="balance">
                 {{unconfirmedBalance | feeFilter}} XCR
             </span>
-                <button class="btn send-button" ng-click="sendCrypti()">
-                    <span>SEND</span>
-                </button>
-                <div class="mini-chart" ng-show="sync">
-                    <div class="mini-chart-label">{{sync | number:0}}%</div>
-                    <canvas id="total-forged" class="chart chart-doughnut" data="loading.values"
-                            labels="loading.labels" options="loading.options"
-                            colours="loading.colours"></canvas>
+                    <a class="btn btn-sky-blue waves-effect waves-light left-margin-20" ng-click="sendCrypti()"><i
+                            class="mdi-content-send left"></i>SEND
+                    </a>
+
+                    <div class="notifications left-margin-20 valign-wrapper" dropdown
+                         is-open="moreNotificationsStatus.isopen"><span dropdown-toggle>9</span>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Incoming Payments<span class="badge meent">1</span></a></li>
+                            <li><a href="#">Messages<span class="badge blue">5</span></a></a></li>
+                            <li><a href="#">Contact Request<span class="badge cloud">2</span></a></a></li>
+                            <li><a href="#">Dapp Response<span class="badge violet">1</span></a></a></li>
+                        </ul>
+                    </div>
+
+
+                    <div class="mini-chart valign-wrapper">
+                        <div class="mini-chart-label">71%</div>
+                        <canvas id="total-forged" class="chart chart-doughnut" data="loading.values"
+                                labels="loading.labels" options="loading.options"
+                                colours="loading.colours"></canvas>
+                    </div>
+                    <div class="more-down  left-margin-20" dropdown is-open="moreDropdownStatus.isopen">
+                        <i class="mdi-navigation-more-vert" dropdown-toggle></i>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Guides</a></li>
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Wiki</a></li>
+                            <li><a href="#">User Data</a></li>
+                        </ul>
+                    </div>
                 </div>
+            </div>
+            <span ng-show="false">{{view.showTransactionsSearchBar}}</span>
+            <div class="search-bar" ng-show="view.bar.showTransactionsSearchBar">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="mdi-action-search"></i></span>
+                    <input type="text" class="form-control" placeholder="Search for transactions">
+                </div>
+            </div>
+            <div class="search-bar" ng-show="view.bar.showBlockSearchBar">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="mdi-action-search"></i></span>
+                    <input type="text" class="form-control" placeholder="Search for blocks, transactions or accounts">
+                </div>
+            </div>
+            <div id="page-nav" ng-show="view.bar.forgingMenu">
+                <ul class="nav nav-underline pull-left">
+                    <li ui-sref-active="active"><a href="#" ui-sref="main.forging">Forging</a></li>
+                    <li ui-sref-active="active"><a href="#" ui-sref="main.delegates">Delegates</a></li>
+                    <li ui-sref-active="active"><a href="#" ui-sref="main.votes">My votes (8)</a></li>
+                </ul>
+                <ul class="nav nav-underline pull-right registration">
+                    <li><a href="#" class="bold-text" ng-click="registrationDelegate()">delegate registration</a></li>
+                </ul>
             </div>
         </div>
         <div class="container-fluid" ui-view></div>

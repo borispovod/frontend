@@ -2,7 +2,8 @@ module.exports = function (grunt) {
     var files = [
         "bower_components/jquery/dist/jquery.js",
         "js/main.js",
-        "js/modal.js"
+        "js/modal.js",
+        "js/ui-bootstrap-custom-0.12.1.min.js"
     ];
 
     // Project configuration.

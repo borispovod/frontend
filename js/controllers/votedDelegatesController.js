@@ -4,6 +4,7 @@ angular.module('webApp').controller('votedDelegatesController', ['$scope', '$roo
     function ($rootScope, $scope, $http, userService, $interval, $timeout, $filter, ngTableParams, delegateService, voteModal, viewFactory) {
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Forging', previos: null};
+        $scope.view.bar = {forgingMenu: true};
         $scope.allVotes = 100
         * 1000
         * 1000

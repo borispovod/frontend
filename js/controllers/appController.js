@@ -3,9 +3,39 @@ require('angular');
 angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", 'viewFactory', '$state', 'sendCryptiModal', 'serverSocket',
     function ($rootScope, $scope, $http, userService, $interval, viewFactory, $state, sendCryptiModal, serverSocket) {
 
+        $scope.moreDropdownStatus = {
+            isopen: false
+        };
+        $scope.moreNotificationsStatus = {
+            isopen: false
+        };
+
+        $scope.moreDownTable = {
+            isopen: false
+        };
+
+
+        $scope.toggleDropdown = function ($event) {
+
+        };
+
+        $scope.toggled = function(open){
+            if  ($scope.checked) {
+                $scope.moreDownTable.isopen = true;
+            }
+        }
+        $scope.checked = false;
+        $scope.check = function($event){
+            $event.stopPropagation();
+            $scope.checked = true;
+        }
+
+
+
+        $scope.syncBlocks = 71;
         $scope.loading = {
             labels: ['Total', 'Loaded'],
-            values: [100, 0],
+            values: [29, 71],
             colours: ['#1976d2', '#ffffff'],
             options: {
                 percentageInnerCutout: 90,
@@ -53,8 +83,9 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         $scope.getSync = function () {
             $http.get("/api/loader/status/sync").then(function (resp) {
                 if (resp.data.success) {
-                    $scope.sync = resp.data.sync ? (resp.data.height / resp.data.blocks) * 100 : resp.data.sync;
-                    $scope.loading.values = [resp.data.height - resp.data.blocks, resp.data.blocks];
+                  /*  $scope.sync = resp.data.sync ? (resp.data.height / resp.data.blocks) * 100 : resp.data.sync;
+                    $scope.loading.values = [resp.data.height - resp.data.blocks, resp.data.blocks];*/
+
                 }
             });
         }

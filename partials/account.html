@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="col-md-3 col-sm-6  col-xs-12">
-        <div class="panel widget widget-blue">
+        <div class="panel  widget widget-blue">
             <div class="contacts-icon"></div>
             <div class="panel-body">
                 <div class="wg-label">Contacts</div>
@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="col-md-3 col-sm-6  col-xs-12">
-        <div class="panel widget widget-violet">
+        <div class="panel  widget widget-violet">
             <div class="dapp-icon"></div>
             <div class="panel-body">
                 <div class="wg-label">Dapps Installed</div>
@@ -34,7 +34,7 @@
 
 
     <div class="col-md-3 col-sm-6  col-xs-12">
-        <div class="panel widget widget-cloud">
+        <div class="panel  widget widget-cloud">
             <div class="panel-body">
                 <div class="wg-label">Crypti Client</div>
                 <div class="wg-data version"><span class="strong">v0.1.2</span><span
@@ -43,11 +43,13 @@
         </div>
     </div>
 
-    <div class="col-md-9 col-sm-12  col-xs-12">
-        <div class="panel panel-default">
-            <div class="panel-heading"><h2>Latest Transactions</h2>
+</div>
+<div class="row">
+    <div class="col-md-9 col-sm-6  col-xs-12">
+        <div class="panel  panel-default">
+            <div class="panel-heading cursor" ui-sref="main.transactions"><h2>Latest Transactions</h2>
 
-                <div class="more" ui-sref="main.transactions"><span class="sr-only">More</span></div>
+                <div class="more"><span class="sr-only">More</span></div>
             </div>
             <table id="transactions">
                 <thead>
@@ -69,15 +71,15 @@
                     <td>{{transaction.timestamp | timestampFilter}}</td>
                     <td>{{transaction.amount / 100000000 | feeFilter}}</td>
                 </tr>
-                <tr ng-show="transactions.length == 0">
-                    <td colspan="5">
-                        No transactions yet
-                    </td>
-                </tr>
                 </tbody>
             </table>
 
         </div>
+    </div>
+    <div class="col-md-3 col-sm-6  col-xs-12">
+        <canvas id="line" class="chart chart-line" data="data" colours="colours"
+                labels="labels" legend="true" series="series">
+        </canvas>
     </div>
 </div>
 
@@ -85,8 +87,8 @@
 
 
     <div class="col-md-8 col-sm-12  col-xs-12">
-        <div class="panel panel-default">
-            <div class="panel-heading"><h2>Dapp News</h2>
+        <div class="panel  panel-default panel-list">
+            <div class="panel-heading cursor"><h2>Dapp News</h2>
 
                 <div class="more"><span class="sr-only">More</span></div>
             </div>
@@ -100,8 +102,10 @@
                             </a>
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading">RollerCoaster Tycoon</h4>
-                            I'm a one-line description of this Dapp
+                            <h4 class="media-heading">RollerCoaster Tycoon
+                                <div class="pull-right icon"><i class="mdi-action-info"></i></div>
+                            </h4>
+                            <span class="text-opacity">I'm a one-line description of this Dapp</span>
                         </div>
                     </li>
                     <li class="media">
@@ -112,8 +116,9 @@
                             </a>
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading">RollerCoaster Tycoon</h4>
-                            I'm a one-line description of this Dapp
+                            <h4 class="media-heading">RollerCoaster Tycoon
+                                <div class="pull-right icon"><i class="mdi-action-info"></i></div></h4>
+                            <span class="text-opacity">I'm a one-line description of this Dapp</span>
                         </div>
                     </li>
                     <li class="media">
@@ -124,8 +129,9 @@
                             </a>
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading">RollerCoaster Tycoon</h4>
-                            I'm a one-line description of this Dapp
+                            <h4 class="media-heading">RollerCoaster Tycoon
+                                <div class="pull-right icon"><i class="mdi-action-info"></i></div></h4>
+                            <span class="text-opacity">I'm a one-line description of this Dapp</span>
                         </div>
                     </li>
                 </ul>
@@ -135,8 +141,8 @@
         </div>
     </div>
     <div class="col-md-4 col-sm-12  col-xs-12">
-        <div class="panel panel-default">
-            <div class="panel-heading"><h2>Latest Messages</h2>
+        <div class="panel  panel-default panel-list">
+            <div class="panel-heading cursor"><h2>Latest Messages</h2>
 
                 <div class="more"><span class="sr-only">More</span></div>
             </div>
@@ -150,7 +156,8 @@
                             </a>
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading">Patrick Collins</h4>
+                            <h4 class="media-heading">Patrick Collins
+                                <div class="pull-right icon new-message padding-top-6"><i class="mdi-communication-message"></i></div></h4>
                             Yes I think it´s the best way to go
                         </div>
                     </li>
@@ -162,7 +169,8 @@
                             </a>
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading">Patrick Collins</h4>
+                            <h4 class="media-heading">Patrick Collins
+                                <div class="pull-right icon padding-top-6"><i class="mdi-communication-messenger"></i></div></h4>
                             Yes I think it´s the best way to go
                         </div>
                     </li>
@@ -174,7 +182,8 @@
                             </a>
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading">Patrick Collins</h4>
+                            <h4 class="media-heading">Patrick Collins
+                                <div class="pull-right icon padding-top-6"><i class="mdi-communication-messenger"></i></div></h4>
                             Yes I think it´s the best way to go
                         </div>
                     </li>

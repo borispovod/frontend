@@ -4,6 +4,7 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
     function ($rootScope, $scope, $http, userService, $interval, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo) {
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Transactions', previos: 'main.dashboard'};
+        $scope.view.bar = {showTransactionsSearchBar: true};
 
         $scope.transactionInfo = function (block) {
             $scope.modal = transactionInfo.activate({block: block});

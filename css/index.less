@@ -12,7 +12,7 @@
   margin: 8px auto 9px;
   background-image: url('@{images}/nav-logo.png');
   background-repeat: no-repeat;
-  height: 43px;
+  height: 48px;
   width: 95px;
 }
 
@@ -157,13 +157,31 @@ span.menu-text {
     color: #fff;
   }
 }
-
-#header {
-  background-color: @blue;
-  height: 60px;
-  padding: 20px 30px;
+.header-wrapper {
   -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+}
+.search-bar {
+  background-color: white;
+  padding: 10px 30px;
+  input, input:focus {
+    border: none !important;
+  }
+  .input-group-addon {
+    border: none;
+    background-color: transparent;
+    padding: 6px 12px 6px 0;
+    i {
+      font-size: 24px;
+      opacity: 0.37;
+    }
+  }
+}
+#header {
+  background-color: @blue;
+  height: 65px;
+  padding: 20px 30px;
+
   .forging-state {
     display: block;
     float: left;
@@ -178,9 +196,9 @@ span.menu-text {
   .mini-chart {
     display: inline-block;
     width: 80px;
-    float: right;
     position: relative;
     opacity: 0.8;
+    padding-top: 4px;
     .mini-chart-label {
       position: absolute;
       top: 0;
@@ -189,8 +207,8 @@ span.menu-text {
       height: 100%;
       color: @white;
       text-align: center;
-      padding-top: 14px;
       font-size: @small-text;
+      line-height: 48px;
     }
   }
   .send-button {
@@ -198,7 +216,7 @@ span.menu-text {
     margin: 0 0 0 20px;
     background-color: @sky-blue;
     color: #fff;
-    font-size: 14px;
+    font-size: 1rem;
     font-weight: normal;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -245,14 +263,17 @@ span.menu-text {
   }
   #top-menu {
     float: right;
-    margin-top: -10px;
+    height: 65px;
+    margin-top: -20px;
+    margin-bottom: -20px;
   }
   #balance {
+    line-height: 36px;
+    padding: 0 16px;
     border-radius: @border-radius;
     color: @white;
-    font-size: @normal-text;
+    font-size: 1rem;
     background-color: @navy;
-    padding: 10px;
     min-width: 60px;
     text-align: right;
     display: inline-block;
@@ -449,3 +470,5 @@ span.menu-text {
   background-repeat: no-repeat;
   background-position: -160px 0;
 }
+
+

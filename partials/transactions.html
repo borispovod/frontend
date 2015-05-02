@@ -4,31 +4,42 @@
     <div class="col-xs-12">
         <div class="panel panel-default paginated">
 
-            <table ng-table="tableTransactions" border="0" width="100%" cellpadding="0" cellspacing="0">
+            <table ng-table="tableTransactions" border="0" width="100%" cellpadding="0"
+                   cellspacing="0">
+                <div class="table-menu">
+                    <div class="more-down-table" dropdown
+                                             on-toggle="toggled(open)" is-open="moreDownTable.isopen">
+                    <i class="mdi-navigation-more-vert" dropdown-toggle aria-haspopup="true"
+                       aria-expanded="false"></i>
+                    <div class="dropdown-menu" role="menu">
+                        <p ng-click="check($event)"><input type="checkbox" class="filled-in violet" id="advanced" checked="checked">
+                            <label for="advanced">Advanced Options</label></p>
+
+                        <p ng-click="check($event)"><input type="checkbox" class="filled-in violet" id="fulltime">
+                            <label for="fulltime">Show Full Time</label></p>
+                    </div>
+                </div>
+                </div>
                 <tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}">
+                    <td data-title="'Height'" sortable="'id'">34232
+                    </td>
                     <td data-title="'Transaction ID'" class="pointer"><a href="#" ng-click="transactionInfo(block)">{{block.id}}</a>
                     </td>
-                    <td data-title="'Sender'" class="pointer"><a href="#">{{block.senderId}}</a>
+                    <td data-title="'Sender'" class="pointer" sortable="'senderId'"><a href="#">{{block.senderId}}</a>
                     </td>
-                    <td data-title="'Reciient'" class="pointer"><a href="#">{{block.recipientId}}</a>
+                    <td data-title="'Reciient'" class="pointer" sortable="'recipientId'"><a href="#">{{block.recipientId}}</a>
                     </td>
-                    <td data-title="'Time'">{{block.timestamp | timestampFilter}}
+                    <td data-title="'Time'" sortable="'timestamp'">{{block.timestamp | timestampFilter}}
                     </td>
-                    <td data-title="'Amount'"><span class="amount" ng-class="{'plus' : block.recipientId==appUser.address}"></span>{{block.amount | feeFilter}}
+                    <td data-title="'Amount'" sortable="'amount'">
+                        <i ng-class="{'mdi-content-add-circle dark-meent-font': block.recipientId==address, 'mdi-content-remove-circle dark-red-font': block.senderId==address}"></i>
+                        {{block.amount | feeFilter}}
                     </td>
-                    <td data-title="'Fee'">{{block.fee | feeFilter}}
+                    <td data-title="'Fee'" sortable="'fee'">{{block.fee | feeFilter}}
                     </td>
+                    <td data-title="" class="width-80"></td>
                 </tr>
-                <tr ng-show="!loading && (!$data || $data.length == 0)">
-                    <td colspan="6">
-                        No blockchain
-                    </td>
-                </tr>
-                <tr ng-show="loading">
-                    <td colspan="6">
-                        Loading...
-                    </td>
-                </tr>
+
             </table>
         </div>
     </div>

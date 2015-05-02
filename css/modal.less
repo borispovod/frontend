@@ -53,7 +53,7 @@
       }
       h2 {
         font-size: @graph-heading;
-        font-weight: 600;
+        font-weight: 500;
       }
 
     }
@@ -63,7 +63,7 @@
       padding: 20px 50px;
       h2 {
         font-size: @graph-heading;
-        font-weight: 600;
+        font-weight: 500;
         display: inline;
       }
       .chapter-more {
@@ -114,6 +114,7 @@
             background-color: #eceff1 !important;
             border-radius: 2px;
             border: 1px solid #cfd8dc;
+            font-weight: 500 !important;
             .transaction-data {
               font-weight: normal;
               font-size: 14px;
@@ -150,6 +151,9 @@
               }
             }
             .transaction-path {
+              background-image: url('@{images}/backgrounds/path-background.png');
+              background-position: center;
+              background-repeat: no-repeat;
               font-weight: normal;
               font-size: 14px;
               padding: 12px 26px;
@@ -200,13 +204,11 @@
     }
   }
   .modal-content {
-    position: fixed;
-    top: 20%;
-    left: 50%;
-    width: 600px;
-    margin-left: -312.5px;
+    width: 100%;
     background: @grey;
     border-radius: @border-radius;
+    overflow: hidden;
+    border: none;
     .modal-header {
       &.modal-iconed {
         background-color: @menu-background;
@@ -246,7 +248,7 @@
       }
       h2 {
         font-size: @graph-heading;
-        font-weight: 600;
+        font-weight: 500;
       }
 
     }
@@ -256,7 +258,7 @@
       padding: 20px 50px;
       h2 {
         font-size: @graph-heading;
-        font-weight: 600;
+        font-weight: 500;
         display: inline;
       }
       .chapter-more {
@@ -302,6 +304,7 @@
           padding: 20px 30px;
           margin-bottom: 0;
           .list-group-item {
+
             margin-top: 20px;
             padding: 0;
             background-color: #eceff1 !important;
@@ -343,6 +346,9 @@
               }
             }
             .transaction-path {
+              background-image: url('@{images}/backgrounds/path-background.png');
+              background-position: center;
+              background-repeat: no-repeat;
               font-weight: normal;
               font-size: 14px;
               padding: 12px 26px;
@@ -368,6 +374,9 @@
           }
         }
         .list-group-item {
+          &.summary {
+            font-size: 20px;
+          }
           border: 0;
           padding: 16px 40px;
           background-color: @grey;
@@ -444,4 +453,9 @@
       }}
   }
 
+}
+
+.app-modal .modal-content .modal-body .list-group .list-group-item {
+
+  font-weight: 500
 }

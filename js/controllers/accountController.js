@@ -2,8 +2,21 @@ require('angular');
 
 angular.module('webApp').controller('accountController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionInfo', 'userInfo',
     function ($rootScope, $scope, $http, userService, $interval, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionInfo, userInfo) {
+
+        $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+        $scope.series = ['Series A', 'Series B'];
+        $scope.data = [
+            [65, 59, 80, 81, 56, 55, 40],
+            [28, 48, 40, 19, 86, 27, 90]
+        ];
+        $scope.colours = ['#378fe0', '#29b6f6'];
+        $scope.onClick = function (points, evt) {
+            console.log(points, evt);
+        };
+
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Dashboard', previos: null};
+        $scope.view.bar = {};
         $scope.delegate = undefined;
         $scope.address = userService.address;
         $scope.publicKey = userService.publicKey;

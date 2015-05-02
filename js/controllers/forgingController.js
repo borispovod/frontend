@@ -11,6 +11,8 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
         * 1000
         * 100;
 
+
+
         $scope.graphs = {
             totalForged: {
                 labels: ['Total Forged'],
@@ -67,6 +69,7 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
         $scope.uptime = 0;
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Forging', previos: null};
+        $scope.view.bar = {forgingMenu: true};
         $scope.address = userService.address;
         $scope.effectiveBalance = userService.effectiveBalance;
         $scope.totalBalance = userService.balance;

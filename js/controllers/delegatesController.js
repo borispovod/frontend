@@ -190,13 +190,6 @@ angular.module('webApp').controller('delegatesController', ['$scope', '$rootScop
         };
         //end Standby delegates
 
-        $scope.updateView = $interval(function () {
-            delegateService.cachedStundby.time = delegateService.cachedStundby.time - 20000;
-            delegateService.cachedTOP.time = delegateService.cachedTOP.time - 20000;
-            $scope.updateStandby();
-            $scope.updateTop();
-        }, 10000 * 1);
-
 
         $scope.$on('$destroy', function () {
             $interval.cancel($scope.updateView);

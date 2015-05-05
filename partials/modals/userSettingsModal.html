@@ -7,20 +7,18 @@
                         <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div>
                     </div>
                     <div class="modal-header clearfix">
-                        <div><h2>Register as Delegate</h2>
+                        <div><h2>Profile Information</h2>
                         </div>
-                        <div>Please choose a delegate name
+                        <div>Please set your username
                         </div>
                     </div>
                     <div class="modal-body field-padding">
                         <div class="input-field">
-                            <input id="delegateUsername" type="text" ng-model="username" autofocus>
-                            <label for="delegateUsername">Delegate Name</label>
+                            <input id="username" type="text" ng-model="username" autofocus>
+                            <label for="username">Username</label>
                         </div>
                     </div>
-                    <div class="modal-body bordered">
-                        <span class="send-info-text padding-right-40 flat-text">Becoming a delegate requires registration. You may choose your own delegate name, which can be used to promote your delegate. Convince other users to vote for your delegate to increase your rank. Only the top 101 delegates will be forging. All fees are shared equally between top delegates. Registration fee: 10,000 XCR.</span>
-                    </div>
+
                     <div class="modal-body">
                         <ul class="nav modal-buttons pull-right">
                             <li>
@@ -57,7 +55,7 @@
                                     <a href="#" ng-click="passcheck()">Cancel
                                     </a>
                                 </li>
-                                <li><a href="#" class="green-link" ng-click="registrationDelegate()">register</a>
+                                <li><a href="#" class="green-link" ng-click="saveName()">register</a>
                                 </li>
                             </ul>
                         </div>

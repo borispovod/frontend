@@ -10,6 +10,7 @@ require('../../js/controllers/templateController');
 require('../../js/controllers/passphraseController');
 require('../../js/controllers/votedDelegatesController');
 //modals
+require('../../js/controllers/modals/userSettingsModalController');
 require('../../js/controllers/modals/blockModalController');
 require('../../js/controllers/modals/companyModalController');
 require('../../js/controllers/modals/forgingModalController');

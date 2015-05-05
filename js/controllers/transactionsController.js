@@ -39,7 +39,7 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
         //Blocks
         $scope.tableTransactions = new ngTableParams({
             page: 1,
-            count: 5
+            count: 1
         }, {
             total: 0,
             counts: [],
@@ -80,7 +80,7 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
         }, 1000 * 10);
 
         $scope.transactionsInterval = $interval(function () {
-            $scope.getTransactions();
+           // $scope.getTransactions();
         }, 1000 * 10);
 
         $scope.$on('$destroy', function () {

@@ -1,10 +1,10 @@
 require('angular');
 
-angular.module('webApp').controller('newUserController', ["$scope", "$http", "newUser","userService", "$state", function ($scope, $http, newUser, userService, $state) {
+angular.module('webApp').controller('newUserController', ["$scope", "$http", "newUser", "userService", "$state", function ($scope, $http, newUser, userService, $state) {
     $scope.noMatch = false;
     $scope.firstStep = true;
 
-    $scope.activeLabel = function(pass){
+    $scope.activeLabel = function (pass) {
         return pass != '';
     }
 
@@ -21,6 +21,12 @@ angular.module('webApp').controller('newUserController', ["$scope", "$http", "ne
         }
         $scope.firstStep = !$scope.firstStep;
     }
+
+    $scope.savePassToFile = function (pass) {
+        var blob = new Blob([pass], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, "cryptiPassphrase.txt");
+    }
+
     $scope.login = function (pass) {
         $scope.noMatch = false;
         var data = {secret: pass};
@@ -49,7 +55,7 @@ angular.module('webApp').controller('newUserController', ["$scope", "$http", "ne
         newUser.deactivate();
     }
 
-   //runtime
+    //runtime
     $scope.generatePassword();
 }
 ])

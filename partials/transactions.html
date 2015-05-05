@@ -33,9 +33,9 @@
                     </td>
                     <td data-title="'Amount'" sortable="'amount'">
                         <i ng-class="{'mdi-content-add-circle dark-meent-font': block.recipientId==address, 'mdi-content-remove-circle dark-red-font': block.senderId==address}"></i>
-                        {{block.amount | feeFilter}}
+                        {{block.amount / 100000000 | feeFilter}}
                     </td>
-                    <td data-title="'Fee'" sortable="'fee'">{{block.fee | feeFilter}}
+                    <td data-title="'Fee'" sortable="'fee'">{{block.fee / 100000000 | feeFilter}}
                     </td>
                     <td data-title="" class="width-80"></td>
                 </tr>

@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", 'viewFactory', '$state', 'sendCryptiModal', 'registrationDelegateModal', 'serverSocket', 'delegateService',
-    function ($rootScope, $scope, $http, userService, $interval, viewFactory, $state, sendCryptiModal, registrationDelegateModal, serverSocket, delegateService) {
+angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", 'viewFactory', '$state', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService',
+    function ($rootScope, $scope, $http, userService, $interval, viewFactory, $state, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService) {
 
         $scope.moreDropdownStatus = {
             isopen: false
@@ -19,17 +19,16 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
 
         };
 
-        $scope.toggled = function(open){
-            if  ($scope.checked) {
+        $scope.toggled = function (open) {
+            if ($scope.checked) {
                 $scope.moreDownTable.isopen = true;
             }
         }
         $scope.checked = false;
-        $scope.check = function($event){
+        $scope.check = function ($event) {
             $event.stopPropagation();
             $scope.checked = true;
         }
-
 
 
         $scope.syncBlocks = 71;
@@ -91,6 +90,12 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
             })
         }
 
+        $scope.userSettings = function () {
+            $scope.userSettingsModal = userSettingsModal.activate({
+                destroy: function () {
+                }
+            });
+        }
 
         $scope.getDelegate = function () {
             delegateService.getDelegate(userService.publicKey, function (response) {
@@ -133,8 +138,8 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         $scope.getSync = function () {
             $http.get("/api/loader/status/sync").then(function (resp) {
                 if (resp.data.success) {
-                  /*  $scope.sync = resp.data.sync ? (resp.data.height / resp.data.blocks) * 100 : resp.data.sync;
-                    $scope.loading.values = [resp.data.height - resp.data.blocks, resp.data.blocks];*/
+                    /*  $scope.sync = resp.data.sync ? (resp.data.height / resp.data.blocks) * 100 : resp.data.sync;
+                     $scope.loading.values = [resp.data.height - resp.data.blocks, resp.data.blocks];*/
 
                 }
             });

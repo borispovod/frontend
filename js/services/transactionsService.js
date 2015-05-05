@@ -8,14 +8,16 @@ angular.module('webApp').service('transactionsService', function ($http, userSer
                 params: {
                     senderPublicKey: userService.publicKey,
                     recipientId: userService.address,
-                    limit: 20,
-                    orderBy: 'timestamp:desc'
+                    orderBy: 'timestamp:desc',
+                    limit: params.count(),
+                    offset: (params.page() - 1) * params.count()
                 }
             })
                 .then(function (response) {
-                    params.total(5);
-                    console.log(response.data.transactions);
-                    $defer.resolve(response.data.transactions);
+
+                    var transactions = response.data.transactions;
+                    params.total(10);
+                    $defer.resolve(transactions);
                     cb();
                 });
         }

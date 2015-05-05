@@ -2,7 +2,9 @@ require('angular');
 
 angular.module('webApp').controller('passphraseController', ['$scope', '$rootScope', '$http', "$state", "userService", "newUser",
     function ($rootScope, $scope, $http, $state, userService, newUser) {
-
+        userService.setData();
+        userService.rememberPassword = false;
+        userService.rememberedPassword = '';
         // angular.element(document.getElementById("forgingButton")).show();
         $scope.newUser = function () {
             console.log('done');
@@ -11,7 +13,7 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
                 }
             });
         }
-        $scope.login = function (pass) {
+        $scope.login = function (pass, remember) {
             var data = {secret: pass};
 
             $http.post("/api/accounts/open/", {secret: pass})
@@ -21,7 +23,9 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
                         userService.setForging(resp.data.account.forging);
                         userService.setSecondPassphrase(resp.data.account.secondSignature);
                         userService.unconfirmedPassphrase = resp.data.account.unconfirmedSignature;
-
+                        if (remember) {
+                            userService.setSessionPassword(pass);
+                        }
                         //angular.element(document.getElementById("forgingButton")).hide();
                         $state.go('main.dashboard');
                     } else {

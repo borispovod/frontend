@@ -8,6 +8,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
     $scope.onlyNumbers = /^-?\d*(\.\d+)?$/;
     $scope.secondPassphrase = userService.secondPassphrase;
     $scope.address = userService.address;
+    $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
 
 
     Number.prototype.roundTo = function (digitsCount) {
@@ -34,8 +35,13 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
     }
 
     $scope.passcheck = function () {
-        $scope.passmode = !$scope.passmode;
-        $scope.pass = '';
+        if ($scope.rememberedPassword) {
+            $scope.sendXCR($scope.rememberedPassword);
+        }
+        else {
+            $scope.passmode = !$scope.passmode;
+            $scope.pass = '';
+        }
     }
     $scope.close = function () {
         if ($scope.destroy) {
@@ -188,7 +194,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
         return parseInt(result);
     }
 
-    $scope.sendCrypti = function () {
+    $scope.sendXCR = function (secretPhrase) {
         $scope.errorMessage = "";
         if (($scope.amount + '').indexOf('.') != -1) {
             $scope.lengthError = $scope.amount.split('.')[1].length > 8;
@@ -203,7 +209,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
          $scope.errorMessage = $scope.amountError ? "Not enough XCR" : "";*/
 
         var data = {
-            secret: $scope.secretPhrase,
+            secret: secretPhrase,
             amount: $scope.convertXCR($scope.amount),
             recipientId: $scope.to,
             publicKey: userService.publicKey
@@ -214,9 +220,9 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
         }
 
         if (!$scope.lengthError && !$scope.sending) {
-            $scope.sending = !$scope.sending;
+            $scope.sending = true;
             $http.put("/api/transactions", data).then(function (resp) {
-                $scope.sending = !$scope.sending;
+                $scope.sending = false;
                 if (resp.data.error) {
                     $scope.errorMessage = resp.data.error;
                 }

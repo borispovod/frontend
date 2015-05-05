@@ -69,12 +69,12 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
                 });
         }
 
-        $scope.$on('socket:transactions', function (ev, data) {
-            delegateService.getDelegate($scope.publicKey, function (response) {
-                $scope.delegate = response;
-            });
-            $scope.getAccount();
-            $scope.getTransactions();
+
+
+        $scope.$on('updateControllerData', function (event, data) {
+            if (data.indexOf('account') != -1) {
+                $scope.updateView();
+            }
         });
 
 
@@ -90,8 +90,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
             $scope.sendCryptiModal = sendCryptiModal.activate({
                 totalBalance: $scope.unconfirmedBalance,
                 destroy: function () {
-                    $scope.getAccount();
-                    $scope.getTransactions();
+                    $scope.updateView();
                 }
             });
         }
@@ -100,8 +99,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
             $scope.secondPassphraseModal = secondPassphraseModal.activate({
                 totalBalance: $scope.unconfirmedBalance,
                 destroy: function (r) {
-                    $scope.getAccount();
-                    $scope.getTransactions();
+                    $scope.updateView();
 
                     if (r) {
                         $scope.unconfirmedPassphrase = true;
@@ -110,9 +108,13 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
             });
         }
 
-        $scope.getAccount();
-        $scope.getTransactions();
-        delegateService.getDelegate($scope.publicKey, function (response) {
-            $scope.delegate = response;
-        });
+
+        $scope.updateView = function() {
+            $scope.getAccount();
+            $scope.getTransactions();
+            delegateService.getDelegate($scope.publicKey, function (response) {
+                $scope.delegate = response;
+            });
+        }
+
     }]);

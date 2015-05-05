@@ -7,6 +7,7 @@ angular.module('webApp').controller('registrationDelegateModalController', ["$sc
         $scope.action = false;
         $scope.isSecondPassphrase = userService.secondPassphrase;
         $scope.passmode = false;
+        $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
 
         $scope.close = function () {
             if ($scope.destroy) {
@@ -17,17 +18,22 @@ angular.module('webApp').controller('registrationDelegateModalController', ["$sc
         }
 
         $scope.passcheck = function () {
+            if ($scope.rememberedPassword) {
+                $scope.registrationDelegate($scope.rememberedPassword);
+            }
+            else {
             $scope.passmode = !$scope.passmode;
-            $scope.pass = '';
+            $scope.pass = '';}
         }
 
-        $scope.registrationDelegate = function () {
+        $scope.registrationDelegate = function (pass) {
+            pass = pass || $scope.secretPhrase;
 
             $scope.action = true;
             $scope.error = null;
 
             $http.put("/api/delegates/", {
-                secret: $scope.secretPhrase,
+                secret: pass,
                 secondSecret: $scope.secondPassphrase,
                 username: $scope.username,
                 publicKey: userService.publicKey

@@ -6,11 +6,11 @@
             <div id="logo"></div>
         </a>
 
-        <div class="account-block" ng-click="userSettings()">
+        <div class="account-block">
             <div class="icon">
                 <img src="images/samples/account.png">
             </div>
-            <span class="name">Welcome back, %usernname%</span>
+            <span class="name" ng-click="userSettings()">Welcome back, %usernname%</span>
             <span class="address">{{address}}</span>
         </div>
         <div class="white-glow"></div>

@@ -4,10 +4,18 @@ angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$
     $scope.voting = false;
     $scope.fromServer = '';
     $scope.passmode = false;
+    $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
+
     $scope.passcheck = function () {
-        $scope.passmode = !$scope.passmode;
-        $scope.pass = '';
+        if ($scope.rememberedPassword) {
+            $scope.vote($scope.rememberedPassword);
+        }
+        else {
+            $scope.passmode = !$scope.passmode;
+            $scope.pass = '';
+        }
     }
+
     $scope.secondPassphrase = userService.secondPassphrase;
 
     Number.prototype.roundTo = function (digitsCount) {
@@ -44,7 +52,9 @@ angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$
         delete $scope.voteList[publicKey];
     }
 
-    $scope.vote = function () {
+    $scope.vote = function (pass) {
+
+        pass = pass || $scope.secretPhrase;
 
         var data = {
             secret: $scope.secretPhrase,

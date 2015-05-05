@@ -3,17 +3,23 @@ require('angular');
 angular.module('webApp').controller('userSettingsModalController', ["$scope", "$http", "userSettingsModal", "userService", function ($scope, $http, userSettingsModal, userService) {
 
     $scope.error = null;
+    $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
 
     $scope.passcheck = function () {
+        if ($scope.rememberedPassword) {
+            $scope.saveName($scope.rememberedPassword);
+        }
+        else {
         $scope.passmode = !$scope.passmode;
-        $scope.pass = '';
+        $scope.pass = '';}
     }
 
     $scope.close = function () {
         userSettingsModal.deactivate();
     }
 
-    $scope.saveName = function () {
+    $scope.saveName = function (pass) {
+        pass = pass || $scope.secretPhrase;
         $scope.action = true;
         $scope.error = null;
 

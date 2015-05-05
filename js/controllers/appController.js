@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", 'viewFactory', '$state', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService',
-    function ($rootScope, $scope, $http, userService, $interval, viewFactory, $state, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService) {
+angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", 'viewFactory', '$state', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window',
+    function ($rootScope, $scope, $http, userService, $interval, viewFactory, $state, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window) {
 
         $scope.moreDropdownStatus = {
             isopen: false
@@ -172,7 +172,23 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
 
         $scope.$on('socket:transactions', function (ev, data) {
             $scope.getAccount();
+            $scope.updateViews(['account']);
         });
+        $scope.$on('socket:blocks', function (ev, data) {
+            $scope.getAccount();
+        });
+        $scope.$on('socket:delegates', function (ev, data) {
+            $scope.getAccount();
+        });
+
+        $window.onfocus = function () {
+            $scope.getAccount();
+            $scope.updateViews(['account']);
+        }
+
+        $scope.updateViews = function(views) {
+            $scope.$broadcast('updateControllerData', views);
+        }
 
         $scope.getAccount();
     }]);

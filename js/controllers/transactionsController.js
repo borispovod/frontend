@@ -10,36 +10,13 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
             $scope.modal = transactionInfo.activate({block: block});
         }
 
-        $scope.getTransactions = function () {
-            $http.get("/api/transactions", {
-                params: {
-                    senderPublicKey: userService.publicKey,
-                    recipientId: $scope.address,
-                    limit: 20,
-                    orderBy: 'timestamp:desc'
-                }
-            })
-                .then(function (resp) {
-                    var transactions = resp.data.transactions;
-
-                    $http.get('/api/transactions/unconfirmed', {
-                        params: {
-                            senderPublicKey: userService.publicKey,
-                            address: userService.address
-                        }
-                    })
-                        .then(function (resp) {
-                            var unconfirmedTransactions = resp.data.transactions;
-                            $scope.transactions = unconfirmedTransactions.concat(transactions);
-                        });
-                });
-        }
-
-
-        //Blocks
+        //Transactions
         $scope.tableTransactions = new ngTableParams({
             page: 1,
-            count: 1
+            count: 25,
+            sorting: {
+                b_height: 'desc'
+            }
         }, {
             total: 0,
             counts: [],
@@ -57,41 +34,23 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
             $scope.tableTransactions.reload();
         });
 
-        //end Blocks
+        //end Transactions
 
-        $scope.getAccount = function () {
-            $http.get("/api/accounts", {params: {address: userService.address}})
-                .then(function (resp) {
-                    var account = resp.data.account;
-                    userService.balance = account.balance / 100000000;
-                    userService.unconfirmedBalance = account.unconfirmedBalance / 100000000;
-                    userService.secondPassphrase = account.secondSignature;
-                    userService.unconfirmedPassphrase = account.unconfirmedSignature;
-                    $scope.balance = userService.balance;
-                    $scope.unconfirmedBalance = userService.unconfirmedBalance;
-                    $scope.secondPassphrase = userService.secondPassphrase;
-                    $scope.unconfirmedPassphrase = userService.unconfirmedPassphrase;
-                });
+
+        $scope.updateTransactions = function(){
+            $scope.tableTransactions.reload();
         }
 
-
-        $scope.balanceInterval = $interval(function () {
-            $scope.getAccount();
-        }, 1000 * 10);
-
-        $scope.transactionsInterval = $interval(function () {
-           // $scope.getTransactions();
-        }, 1000 * 10);
-
         $scope.$on('$destroy', function () {
-            $interval.cancel($scope.balanceInterval);
-            $scope.balanceInterval = null;
 
-            $interval.cancel($scope.transactionsInterval);
-            $scope.transactionsInterval = null;
         });
 
-        $scope.getAccount();
-        $scope.getTransactions();
+        $scope.$on('updateControllerData', function (event, data) {
+            if (data.indexOf('transactions') != -1) {
+                $scope.updateTransactions();
+            }
+        });
+
+        $scope.updateTransactions();
 
     }]);

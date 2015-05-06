@@ -5,10 +5,10 @@
     <div class="col-md-9 col-sm-12 subrow">
         <div class="col-xs-12">
             <div class="info-panel">
-            <span class="title">
-                Max Super Node
+            <span class="title" ng-show="delegate.username">
+                {{delegate.username}}
             </span>
-               <span class="plain-text">
+               <span class="plain-text" ng-show="delegate.time">
               Registered on 27/03/2015 at 08:40:21
             </span>
             </div>
@@ -43,7 +43,7 @@
             <div class="light-graph">
                 <div class="light-graph-heading">Uptime</div>
                 <div class="light-graph-body">
-                    <div class="chart-legend">{{uptime}} %
+                    <div class="chart-legend">{{uptime | number:2}} %
                     </div>
                     <canvas id="uptime" class="chart chart-doughnut" data="graphs.uptime.values"
                             labels="graphs.uptime.labels" options="graphs.uptime.options"
@@ -55,7 +55,7 @@
             <div class="light-graph">
                 <div class="light-graph-heading">Approval</div>
                 <div class="light-graph-body">
-                    <div class="chart-legend">{{approval}} %
+                    <div class="chart-legend">{{approval | number:2}} %
                     </div>
                     <canvas id="approval" class="chart chart-doughnut" data="graphs.approval.values"
                             labels="graphs.approval.labels" options="graphs.approval.options"
@@ -82,7 +82,8 @@
                 <div class="row">
                     <div class="col-xs-6 description">Amount Forged in last year
                     </div>
-                    <div class="col-xs-6 forged-amount"><span class="value">0.00 <span class="legend">XCR</span></span></div>
+                    <div class="col-xs-6 forged-amount"><span class="value">0.00 <span class="legend">XCR</span></span>
+                    </div>
                     <div class="clearfix visible-lg visible-md visible-sm visible-xs"></div>
                 </div>
             </div>
@@ -95,36 +96,53 @@
         <div class="panel panel-default">
             <div class="panel-heading"><h2>Forged Blocks</h2>
             </div>
-            <table id="blocks">
-                <thead>
-                <tr class="head">
-                    <th>Height</th>
-                    <th>Block ID</th>
-                    <th>Time</th>
-                    <th>Total Fee</th>
+        </div>
+        <div class="panel panel-default paginated">
+
+            <table ng-table="tableBlocks" border="0" width="100%" cellpadding="0" cellspacing="0">
+                <div class="table-menu">
+                    <div class="more-down-table" dropdown
+                         on-toggle="toggled(open)" is-open="moreDownTable.isopen">
+                        <i class="mdi-navigation-more-vert" dropdown-toggle aria-haspopup="true"
+                           aria-expanded="false"></i>
+
+                        <div class="dropdown-menu" role="menu">
+                            <p ng-click="check($event)"><input type="checkbox" class="filled-in violet"
+                                                               id="advanced"
+                                                               checked="checked">
+                                <label for="advanced">Advanced Options</label></p>
+
+                            <p ng-click="check($event)"><input type="checkbox" class="filled-in violet"
+                                                               id="fulltime">
+                                <label for="fulltime">Show Full Time</label></p>
+                        </div>
+                    </div>
+                </div>
+                <tr ng-repeat="block in $data">
+                    <td data-title="'Height'" sortable="'height'">{{block.height}}</td>
+                    <td data-title="'Block ID'" ng-click="blockInfo(block)" class="pointer"><a
+                            href="#">{{block.id}}</a></td>
+
+                    <td data-title="'Date & Time'" sortable="'timestamp'"><span
+                            ng-show="block.timestamp > 0">{{block.timestamp | timestampFilter}}</span>
+                        <span ng-show="block.timestamp == 0">-</span></td>
+
+                    <td data-title="'Fee'" sortable="'totalFee'">{{block.totalFee / 100000000 | feeFilter}}</td>
+                    <td data-title="" class="width-80"></td>
                 </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="item in blocks">
-                    <td>{{item.height}}</td>
-                    <td><a href="#" ng-click="blockInfo(item)">{{item.id}}</a></td>
-                    <td>{{item.timestamp | timestampFilter}}</td>
-                    <td>{{item.totalFee/100000000 | feeFilter}}</td>
-                </tr>
-                </tbody>
-                <tr ng-show="!loading && !blocks || blocks.length == 0">
-                    <td colspan="3">
-                        No blocks generated
+                <tr ng-show="!loading && (!$data || $data.length == 0)">
+                    <td colspan="6">
+                        No blockchain
                     </td>
                 </tr>
                 <tr ng-show="loading">
-                    <td colspan="4">
+                    <td colspan="6">
                         Loading...
                     </td>
                 </tr>
             </table>
-
         </div>
-    </div>
+
+</div>
 </div>
 

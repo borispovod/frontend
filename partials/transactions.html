@@ -21,21 +21,21 @@
                 </div>
                 </div>
                 <tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}">
-                    <td data-title="'Height'" sortable="'id'">34232
+                    <td data-title="'Height'" sortable="'b_height'">{{block.height}}
                     </td>
                     <td data-title="'Transaction ID'" class="pointer"><a href="#" ng-click="transactionInfo(block)">{{block.id}}</a>
                     </td>
-                    <td data-title="'Sender'" class="pointer" sortable="'senderId'"><a href="#">{{block.senderId}}</a>
+                    <td data-title="'Sender'" class="pointer" sortable="'t_senderId'"><a href="#">{{block.senderId}}</a>
                     </td>
-                    <td data-title="'Reciient'" class="pointer" sortable="'recipientId'"><a href="#">{{block.recipientId}}</a>
+                    <td data-title="'Reciient'" class="pointer" sortable="'t_recipientId'"><a href="#">{{block.recipientId}}</a>
                     </td>
-                    <td data-title="'Time'" sortable="'timestamp'">{{block.timestamp | timestampFilter}}
+                    <td data-title="'Time'" sortable="'t_timestamp'">{{block.timestamp | timestampFilter}}
                     </td>
-                    <td data-title="'Amount'" sortable="'amount'">
+                    <td data-title="'Amount'" sortable="'t_amount'">
                         <i ng-class="{'mdi-content-add-circle dark-meent-font': block.recipientId==address, 'mdi-content-remove-circle dark-red-font': block.senderId==address}"></i>
                         {{block.amount / 100000000 | feeFilter}}
                     </td>
-                    <td data-title="'Fee'" sortable="'fee'">{{block.fee / 100000000 | feeFilter}}
+                    <td data-title="'Fee'" sortable="'t_fee'">{{block.fee / 100000000 | feeFilter}}
                     </td>
                     <td data-title="" class="width-80"></td>
                 </tr>

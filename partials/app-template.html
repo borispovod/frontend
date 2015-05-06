@@ -10,7 +10,8 @@
             <div class="icon">
                 <img src="images/samples/account.png">
             </div>
-            <span class="name" ng-click="userSettings()">Welcome back, %usernname%</span>
+            <span class="name" ng-click="userSettings()" ng-show="username">Welcome back, {{username}}</span>
+            <span class="name" ng-click="userSettings()" ng-hide="username">Welcome, click to edit profile</span>
             <span class="address">{{address}}</span>
         </div>
         <div class="white-glow"></div>
@@ -91,8 +92,8 @@
                     </div>
 
 
-                    <div class="mini-chart valign-wrapper">
-                        <div class="mini-chart-label">71%</div>
+                    <div class="mini-chart valign-wrapper" ng-show="sync">
+                        <div class="mini-chart-label">{{sync}}%</div>
                         <canvas id="total-forged" class="chart chart-doughnut" data="loading.values"
                                 labels="loading.labels" options="loading.options"
                                 colours="loading.colours"></canvas>
@@ -127,9 +128,21 @@
                     <li ui-sref-active="active"><a href="#" ui-sref="main.delegates">Delegates</a></li>
                     <li ui-sref-active="active"><a href="#" ui-sref="main.votes">My votes (8)</a></li>
                 </ul>
-                <ul class="nav nav-underline pull-right registration">
+                <ul class="nav nav-underline pull-right registration" ng-show="!delegate.username">
                     <li><a href="#" class="bold-text" ng-click="registrationDelegate()">delegate registration</a></li>
                 </ul>
+
+                <a class="btn-floating btn-large waves-effect waves-light green" ng-click="disableForging()"  ng-show="delegate.username && forging" style="
+    position: absolute;
+    top: 96px;
+    right: 30px;
+"><i class="factory"></i></a>
+                <a class="btn-floating btn-large waves-effect waves-light red" ng-click="enableForging()" ng-show="(delegate.username && !forging)"
+                   style="
+    position: absolute;
+    top: 96px;
+    right: 30px;
+"><i class="factory"></i></a>
             </div>
         </div>
         <div class="container-fluid" ui-view></div>

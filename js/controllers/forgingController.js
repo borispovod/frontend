@@ -1,8 +1,8 @@
 require('angular');
 
 
-angular.module('webApp').controller('forgingController', ['$scope', '$rootScope', '$http', "userService", "$interval", "companyModal", "forgingModal", "delegateService", "viewFactory", "blockInfo",
-    function ($rootScope, $scope, $http, userService, $interval, companyModal, forgingModal, delegateService, viewFactory, blockInfo) {
+angular.module('webApp').controller('forgingController', ['$scope', '$rootScope', '$http', "userService", "$interval", "companyModal", "forgingModal", "delegateService", "viewFactory", "blockInfo", "ngTableParams", "blockService",
+    function ($rootScope, $scope, $http, userService, $interval, companyModal, forgingModal, delegateService, viewFactory, blockInfo, ngTableParams, blockService) {
 
         $scope.allVotes = 100
         * 1000
@@ -83,6 +83,7 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
         $scope.getApproval = function (vote) {
             return (vote / $scope.allVotes ) * 100;
         };
+
         $scope.approval = 0;
         $scope.vote = 0;
         $scope.rank = 0;
@@ -96,20 +97,69 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
         $scope.unconfirmedBalance = userService.unconfirmedBalance;
         $scope.loadingBlocks = true;
 
+        //Blocks
+        $scope.tableBlocks = new ngTableParams({
+            page: 1,
+            count: 25,
+            sorting: {
+                height: 'desc'
+            }
+        }, {
+            total: 0,
+            counts: [],
+            getData: function ($defer, params) {
+                $scope.loading = true;
+                blockService.getBlocks($defer, params, $scope.filter, function () {
+                    $scope.loading = false;
+                }, userService.publicKey);
+            }
+        });
 
-        $scope.getBlocks = function () {
-            $http.get("/api/blocks", {
-                params: {
-                    generatorPublicKey: userService.publicKey,
-                    limit: 20,
-                    orderBy: "height:desc"
+        $scope.tableBlocks.settings().$scope = $scope;
+
+        $scope.$watch("filter.$", function () {
+            $scope.tableBlocks.reload();
+        });
+
+        $scope.updateBlocks = function () {
+            $scope.tableBlocks.reload();
+        };
+        //end Blocks
+
+
+        $scope.updateGraphs = function () {
+
+            delegateService.getDelegate(userService.publicKey, function (response) {
+
+                var totalDelegates = 108;
+                var rank = response.rate;
+
+                $scope.graphs.rank.values = [totalDelegates - rank, totalDelegates - 1 - (totalDelegates - rank)];
+                if (($scope.rank == 0 && rank != 0) || ($scope.rank > 50 && rank <= 50) || ($scope.rank > 101 && rank <= 101) || ($scope.rank <= 50 && rank > 50)) {
+                    $scope.graphs.rank.colours = [rank <= 50 ? '#7cb342' : (rank > 101 ? '#d32f2f' : '#ffa000'), '#f5f5f5'];
                 }
-            })
-                .then(function (resp) {
-                    $scope.blocks = resp.data.blocks;
-                    $scope.loadingBlocks = false;
-                });
-        }
+                $scope.rank = rank;
+
+
+                var uptime = parseFloat(response.productivity);
+
+                $scope.graphs.uptime.values = [uptime, 100 - uptime];
+                if (($scope.uptime == 0 && uptime > 0) || ($scope.uptime >= 95 && uptime < 95) || ($scope.uptime >= 50 && uptime < 50)) {
+                    $scope.graphs.uptime.colours = [uptime >= 95 ? '#7cb342' : (uptime >= 50 ? '#ffa000' : '#d32f2f'), '#f5f5f5'];
+                }
+                $scope.uptime = response.productivity;
+
+
+                var approval = $scope.getApproval(response.vote);
+
+                $scope.graphs.approval.values = [approval, $scope.getApproval($scope.allVotes) - approval];
+                if (($scope.approval == 0 && approval > 0) || ($scope.approval >= 95 && approval < 95) || ($scope.approval >= 50 && approval < 50)) {
+                    $scope.graphs.approval.colours = [approval >= 95 ? '#7cb342' : (approval >= 50 ? '#ffa000' : '#d32f2f'), '#f5f5f5'];
+                }
+                $scope.approval = approval;
+
+            });
+        };
 
         $scope.getForgedAmount = function () {
             $http.get("/api/delegates/forging/getForgedByAccount", {params: {generatorPublicKey: userService.publicKey}})
@@ -120,48 +170,18 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
         }
 
 
-        $scope.getForging = function () {
-            $http.get("/api/delegates/forging/status", {params: {publicKey: userService.publicKey}})
-                .then(function (resp) {
-                    $scope.forging = resp.data.enabled;
-                    userService.setForging($scope.forging);
-                });
-        }
+        $scope.$on('updateControllerData', function (event, data) {
+            if (data.indexOf('forging') != -1) {
+                $scope.updateBlocks();
+                $scope.getForgedAmount();
+                $scope.updateGraphs();
+            }
+        });
 
-        $scope.infoInterval = $interval(function () {
-            $scope.getBlocks();
-            $scope.getForgedAmount();
-            $scope.getForging();
-        }, 1000 * 30);
-
-
-        $scope.getBlocks();
+        $scope.updateBlocks();
         $scope.getForgedAmount();
+        $scope.updateGraphs();
 
-        $scope.getForging();
-
-
-        $scope.enableForging = function () {
-            $scope.forgingModal = forgingModal.activate({
-                forging: false,
-                totalBalance: userService.unconfirmedBalance,
-                destroy: function () {
-                    $scope.forging = userService.forging;
-                    $scope.getForging();
-                }
-            })
-        }
-
-        $scope.disableForging = function () {
-            $scope.forgingModal = forgingModal.activate({
-                forging: true,
-                totalBalance: userService.unconfirmedBalance,
-                destroy: function () {
-                    $scope.forging = userService.forging;
-                    $scope.getForging();
-                }
-            })
-        }
 
         $scope.newCompany = function () {
             $scope.companyModal = companyModal.activate({

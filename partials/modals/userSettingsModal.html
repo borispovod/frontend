@@ -17,6 +17,7 @@
                             <input id="username" type="text" ng-model="username" autofocus>
                             <label for="username">Username</label>
                         </div>
+                        <span class="pass-error" ng-show="error && rememberedPassword">{{error}}</span>
                     </div>
 
                     <div class="modal-body">

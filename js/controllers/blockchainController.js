@@ -11,7 +11,10 @@ angular.module('webApp').controller('blockchainController', ['$scope', '$rootSco
         //Blocks
         $scope.tableBlocks = new ngTableParams({
             page: 1,
-            count: 25
+            count: 25,
+            sorting: {
+                height: 'desc'
+            }
         }, {
             total: 0,
             counts: [],
@@ -34,6 +37,11 @@ angular.module('webApp').controller('blockchainController', ['$scope', '$rootSco
         };
         //end Blocks
 
+        $scope.$on('updateControllerData', function (event, data) {
+            if (data.indexOf('blockchain') != -1) {
+                $scope.updateBlocks();
+            }
+        });
 
         $scope.blocksInterval = $interval(function () {
             $scope.updateBlocks();

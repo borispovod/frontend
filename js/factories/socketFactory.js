@@ -8,9 +8,9 @@ angular.module('webApp').factory('serverSocket', ["socketFactory", "$location", 
         ioSocket: newIoSocket
     });
 
-    serverSocket.forward('transactions');
-    serverSocket.forward('blocks');
-    serverSocket.forward('delegates');
+    serverSocket.forward('transactions/change');
+    serverSocket.forward('blocks/change');
+    serverSocket.forward('delegates/change');
 
     return serverSocket;
 }]);

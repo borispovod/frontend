@@ -24,7 +24,7 @@
                 <tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}">
                     <td data-title="'Height'" sortable="'height'">{{block.height}}</td>
                     <td data-title="'Block ID'" ng-click="blockInfo(block)" class="pointer"><a href="#">{{block.id}}</a></td>
-                    <td data-title="'Generator'" sortable="'generatorID'"><a href="#"
+                    <td data-title="'Generator'"><a href="#"
                                                                              ng-click="userInfo(block.generatorId)">{{block.generatorId}}</a></td>
                     <td data-title="'Date & Time'" sortable="'timestamp'"><span
                             ng-show="block.timestamp > 0">{{block.timestamp | timestampFilter}}</span>

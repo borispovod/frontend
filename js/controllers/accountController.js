@@ -35,7 +35,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
                     senderPublicKey: userService.publicKey,
                     recipientId: $scope.address,
                     limit: 4,
-                    orderBy: 'timestamp:desc'
+                    orderBy: 't_timestamp:desc'
                 }
             })
                 .then(function (resp) {
@@ -116,5 +116,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
                 $scope.delegate = response;
             });
         }
+
+        $scope.updateView();
 
     }]);

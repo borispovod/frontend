@@ -24,7 +24,7 @@ angular.module('webApp').controller('userSettingsModalController', ["$scope", "$
         $scope.error = null;
 
         $http.put("/api/accounts/username", {
-            secret: $scope.secretPhrase,
+            secret: pass,
             secondSecret: $scope.secondPassphrase,
             username: $scope.username,
             publicKey: userService.publicKey

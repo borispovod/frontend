@@ -1,7 +1,9 @@
 require('angular');
 
-angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", 'viewFactory', '$state', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window',
-    function ($rootScope, $scope, $http, userService, $interval, viewFactory, $state, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window) {
+angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", 'viewFactory', '$state', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal',
+    function ($rootScope, $scope, $http, userService, $interval, viewFactory, $state, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal) {
+
+        $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
 
         $scope.moreDropdownStatus = {
             isopen: false
@@ -31,10 +33,10 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         }
 
 
-        $scope.syncBlocks = 71;
+        $scope.sync = 1;
         $scope.loading = {
             labels: ['Total', 'Loaded'],
-            values: [29, 71],
+            values: [0, 100],
             colours: ['#1976d2', '#ffffff'],
             options: {
                 percentageInnerCutout: 90,
@@ -56,7 +58,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
 
         ];
 
-        $scope.getAccount = function () {
+        $scope.getAppData = function () {
             $http.get("/api/accounts", {params: {address: userService.address}})
                 .then(function (resp) {
                     var account = resp.data.account;
@@ -64,11 +66,14 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                     userService.unconfirmedBalance = account.unconfirmedBalance / 100000000;
                     userService.secondPassphrase = account.secondSignature;
                     userService.unconfirmedPassphrase = account.unconfirmedSignature;
+                    userService.username = account.username;
+                    $scope.username = userService.username;
                     $scope.balance = userService.balance;
                     $scope.unconfirmedBalance = userService.unconfirmedBalance;
                     $scope.secondPassphrase = userService.secondPassphrase;
                     $scope.unconfirmedPassphrase = userService.unconfirmedPassphrase;
                     $scope.delegateInRegistration = userService.delegateInRegistration;
+
                 });
         }
 
@@ -78,6 +83,68 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                 destroy: function () {
                 }
             });
+        }
+
+
+        $scope.enableForging = function () {
+            if ($scope.rememberedPassword) {
+
+                $http.post("/api/delegates/forging/enable", {
+                    secret: $scope.rememberedPassword,
+                    publicKey: userService.publicKey
+                })
+                    .then(function (resp) {
+                        userService.setForging(resp.data.success);
+                        $scope.forging = resp.data.success;
+
+                    });
+
+
+            }
+            else {
+                $scope.forgingModal = forgingModal.activate({
+                    forging: false,
+                    totalBalance: userService.unconfirmedBalance,
+                    destroy: function () {
+                        $scope.forging = userService.forging;
+                        $scope.getForging();
+                    }
+                })
+            }
+        }
+
+        $scope.disableForging = function () {
+            if ($scope.rememberedPassword) {
+
+                $scope.error = null;
+
+                $http.post("/api/delegates/forging/disable", {
+                    secret: $$scope.rememberedPassword,
+                    publicKey: userService.publicKey
+                })
+                    .then(function (resp) {
+                        userService.setForging(!resp.data.success);
+                        $scope.forging = !resp.data.success;
+                    });
+            }
+            else {
+                $scope.forgingModal = forgingModal.activate({
+                    forging: true,
+                    totalBalance: userService.unconfirmedBalance,
+                    destroy: function () {
+                        $scope.forging = userService.forging;
+                        $scope.getForging();
+                    }
+                })
+            }
+        }
+
+        $scope.getForging = function () {
+            $http.get("/api/delegates/forging/status", {params: {publicKey: userService.publicKey}})
+                .then(function (resp) {
+                    $scope.forging = resp.data.enabled;
+                    userService.setForging($scope.forging);
+                });
         }
 
         $scope.registrationDelegate = function () {
@@ -105,32 +172,6 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                 }
                 $scope.delegate = response;
                 userService.setDelegate($scope.delegate);
-                var totalDelegates = 108;
-                var rank = response.rate;
-
-                $scope.graphs.rank.values = [totalDelegates - rank, totalDelegates - 1 - (totalDelegates - rank)];
-                if (($scope.rank == 0 && rank != 0) || ($scope.rank > 50 && rank <= 50) || ($scope.rank > 101 && rank <= 101) || ($scope.rank <= 50 && rank > 50)) {
-                    $scope.graphs.rank.colours = [rank <= 50 ? '#7cb342' : (rank > 101 ? '#d32f2f' : '#ffa000'), '#f5f5f5'];
-                }
-                $scope.rank = rank;
-
-
-                var uptime = parseFloat(response.productivity);
-
-                $scope.graphs.uptime.values = [uptime, 100 - uptime];
-                if (($scope.uptime == 0 && uptime > 0) || ($scope.uptime >= 95 && uptime < 95) || ($scope.uptime >= 50 && uptime < 50)) {
-                    $scope.graphs.uptime.colours = [uptime >= 95 ? '#7cb342' : (uptime >= 50 ? '#ffa000' : '#d32f2f'), '#f5f5f5'];
-                }
-                $scope.uptime = response.productivity;
-
-
-                var approval = $scope.getApproval(response.vote);
-
-                $scope.graphs.approval.values = [approval, $scope.getApproval($scope.allVotes) - approval];
-                if (($scope.approval == 0 && approval > 0) || ($scope.approval >= 95 && approval < 95) || ($scope.approval >= 50 && approval < 50)) {
-                    $scope.graphs.approval.colours = [approval >= 95 ? '#7cb342' : (approval >= 50 ? '#ffa000' : '#d32f2f'), '#f5f5f5'];
-                }
-                $scope.approval = approval;
 
             });
         }
@@ -138,8 +179,8 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         $scope.getSync = function () {
             $http.get("/api/loader/status/sync").then(function (resp) {
                 if (resp.data.success) {
-                    /*  $scope.sync = resp.data.sync ? (resp.data.height / resp.data.blocks) * 100 : resp.data.sync;
-                     $scope.loading.values = [resp.data.height - resp.data.blocks, resp.data.blocks];*/
+                    $scope.sync = resp.data.sync ? (resp.data.height / resp.data.blocks) * 100 : resp.data.sync;
+                    $scope.loading.values = [resp.data.height - resp.data.blocks, resp.data.blocks];
 
                 }
             });
@@ -147,7 +188,6 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
 
         $scope.syncInterval = $interval(function () {
             $scope.getSync();
-            $scope.getDelegate();
         }, 1000 * 30);
 
         $scope.getSync();
@@ -170,25 +210,33 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
 
             });
 
-        $scope.$on('socket:transactions', function (ev, data) {
-            $scope.getAccount();
+        $scope.$on('socket:transactions/change', function (ev, data) {
+            $scope.getAppData();
             $scope.updateViews(['account']);
         });
-        $scope.$on('socket:blocks', function (ev, data) {
-            $scope.getAccount();
+        $scope.$on('socket:blocks/change', function (ev, data) {
+            $scope.getAppData();
+            $scope.getForging();
+            $scope.getDelegate();
+            $scope.updateViews(['account', 'blockchain', 'transactions', 'forging']);
         });
-        $scope.$on('socket:delegates', function (ev, data) {
-            $scope.getAccount();
+        $scope.$on('socket:delegates/change', function (ev, data) {
+            $scope.getAppData();
+            $scope.getForging();
+            $scope.getDelegate();
+            $scope.updateViews(['forging']);
         });
 
         $window.onfocus = function () {
-            $scope.getAccount();
-            $scope.updateViews(['account']);
+            $scope.getAppData();
+            $scope.updateViews(['account', 'blockchain']);
         }
 
-        $scope.updateViews = function(views) {
+        $scope.updateViews = function (views) {
             $scope.$broadcast('updateControllerData', views);
         }
 
-        $scope.getAccount();
+        $scope.getAppData();
+        $scope.getForging();
+        $scope.getDelegate();
     }]);

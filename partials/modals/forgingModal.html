@@ -1,32 +1,43 @@
-<div class="app-modal">
-    <div class="modal-content">
+<div class="app-modal valign-wrapper">
+    <div class="container height100">
+        <div class="row height100">
+            <div class="col-md-6 col-md-offset-4 height100 valign-wrapper">
+                <div class="modal-content">
 
-        <div class="modal-content">
-            <div class="modal-header modal-iconed">
-                <div class="close-modal" ng-click="passcheck()"><span class="sr-only">Close modal</span></div>
-            </div>
-            <div class="modal-header clearfix">
-                <div><h2>Start Forging</h2>
-                </div>
-                <div>Please enter your passphrase below
-                </div>
-            </div>
-            <div class="modal-body">
+                    <div class="modal-content">
+                        <div class="modal-header modal-iconed">
+                            <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span>
+                            </div>
+                        </div>
+                        <div class="modal-header clearfix">
+                            <div><h2>Start Forging</h2>
+                            </div>
+                            <div>Please enter your passphrase below
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <div class="field-padding">
+                                <div class="input-field">
+                                    <input id="passPhrase" type="password" ng-model="secretPhrase" ng-trim="false"
+                                           autofocus
+                                           ng-class="{'invalid': error}">
+                                    <label for="passPhrase">Your Passphrase</label>
+                                </div>
+                                <span class="pass-error" ng-show="error">{{error}}</span>
 
-                <div class="input-group send-xcr">
-                    <input type="password" class="form-control" placeholder="Your Passphrase" ng-model="secretPhrase"
-                           ng-trim="false">
-                </div>
-            </div>
+                        </div>
 
-            <div class="modal-body">
-                <ul class="nav modal-buttons pull-right">
-                    <li>
-                        <a href="#" ng-click="passcheck()">Cancel
-                        </a>
-                    </li>
-                    <li><a href="#" ng-click="sendCrypti()">send xcr</a></li>
-                </ul>
+                        <div class="modal-body">
+                            <ul class="nav modal-buttons pull-right">
+                                <li>
+                                    <a href="#" ng-click="close()">Cancel
+                                    </a>
+                                </li>
+                                <li><a href="#" ng-click="forgingState()">{{label}}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

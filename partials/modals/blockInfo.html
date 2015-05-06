@@ -15,7 +15,7 @@
                                 </li>
                                 <li class="list-group-item">Transactions<span class="pull-right small-text">{{block.numberOfTransactions}}</span>
                                 </li>
-                                <li class="list-group-item bordered">Confirmations<span class="pull-right small-text">some data</span>
+                                <li class="list-group-item bordered">Confirmations<span class="pull-right small-text"></span>
                                 </li>
                                 <li class="list-group-item">Height<span
                                         class="pull-right small-text">{{block.height}}</span></li>
@@ -54,7 +54,7 @@
                                         </div>
                                         <div class="xcr">{{transaction.amount / 100000000 | feeFilter}} XCR
                                         </div>
-                                        <div class="confirmations">{{transaction.confirmations}} CONFIRMATIONS
+                                        <div class="confirmations">{{transaction.confirmations || 0}} CONFIRMATIONS
                                         </div>
                                     </div>
                                 </li>

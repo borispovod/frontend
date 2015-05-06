@@ -12,16 +12,16 @@
                                 </a>
                             </div>
                             <div class="media-body text-left">
-                                <h2 class="media-heading">Account: <span class="id">{{userId}}</span><span
-                                        class="blockchain-icon"></span></h2>
-                                User description
+                                <h2 class="media-heading">Account: <span class="id">{{account.address}}</span><span
+                                        class="blockchain-icon" clip-copy="account.address"></span></h2>
+                                {{account.username}}
                             </div>
                         </div>
                         <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div>
                     </div>
                     <div class="modal-nav">
                         <ul class="nav nav-justified nav-actions">
-                            <li><a href="#" class="green-link"><i class="mdi-content-send"></i> Send XCR</a></li>
+                            <li><a href="#" class="green-link" ng-click="sendCryptiToUser()"><i class="mdi-content-send"></i> Send XCR</a></li>
                             <li><a href="#"><i class="mdi-communication-message"></i> Send Message</a></li>
                             <li><a href="#"><i class="mdi-action-stars"></i> Add Favorite</a></li>
                             <li><a href="#"><i class="mdi-social-person-add"></i> Contact Request</a></li>
@@ -33,7 +33,7 @@
                                 <li class="list-group-item summary">Summary
                                 </li>
                                 <li class="list-group-item bordered">Total Balance<span
-                                        class="pull-right small-text">%%% XCR</span></li>
+                                        class="pull-right small-text">{{ account.unconfirmedBalance / 100000000  | feeFilter }} XCR</span></li>
                                 <li class="list-group-item">USD Equivalent<span class="pull-right small-text">$$$</span>
                                 </li>
                             </ul>
@@ -43,23 +43,23 @@
                                 <h2>Transactions </h2>
 
                                 <div class="chapter-more pull-right" ng-class="{'open': transactions.view}"
-                                     ng-click="toggleTransactions()">6 Transactions
+                                     ng-click="toggleTransactions()">{{account.transactions.length || '0'}} Transactions
                                 </div>
                             </div>
                         </div>
-                        <div ng-repeat="transaction in transactions.list" ng-show="transactions.view">
+                        <div ng-repeat="transaction in account.transactions" ng-show="account.transactions">
                             <div class="modal-header"><h2>Transaction ID: </h2>
-                                {{transaction.id}}<span class="blockchain-icon"></span>
+                                {{transaction.id}}<span class="blockchain-icon" clip-copy="transaction.id"></span>
                             </div>
                             <div class="modal-body">
                                 <ul class="list-group">
                                     <li class="list-group-item bordered">Confirmations<span
                                             class="pull-right small-text">{{transaction.confirmations}}</span>
                                     </li>
-                                    <li class="list-group-item">Amount<span class="pull-right small-text">{{block.amount}} XCR</span>
+                                    <li class="list-group-item">Amount<span class="pull-right small-text">{{transaction.amount / 100000000}} XCR</span>
                                     </li>
                                     <li class="list-group-item bordered">Fee<span
-                                            class="pull-right small-text">{{transaction.fee}} XCR</span></li>
+                                            class="pull-right small-text">{{transaction.fee / 100000000}} XCR</span></li>
                                     <li class="list-group-item">USD Equivalent<span
                                             class="pull-right small-text">$$$</span>
                                     </li>

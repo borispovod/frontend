@@ -1,12 +1,14 @@
 <div class="app-modal" id="transaction-modal">
     <div class="modal-content">
-        <div class="modal-header"><h2>Transaction ID: </h2>{{block.id}}<span class="blockchain-icon"></span><div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div></div>
+        <div class="modal-header"><h2>Transaction ID: </h2>{{block.id}}<span class="blockchain-icon" clip-copy="block.id"></span><div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div></div>
         <div class="modal-body">
             <ul class="list-group">
+                <li class="list-group-item summary">Summary
+                </li>
                 <li class="list-group-item bordered">Confirmations<span class="pull-right small-text">{{block.confirmations}}</span></li>
-                <li class="list-group-item">Amount<span class="pull-right small-text">{{block.amount}} XCR</span></li>
+                <li class="list-group-item">Amount<span class="pull-right small-text">{{block.amount/ 100000000}} XCR</span></li>
                 <li class="list-group-item bordered">Fee<span
-                        class="pull-right small-text">{{block.fee}} XCR</span></li>
+                        class="pull-right small-text">{{block.fee / 100000000 }} XCR</span></li>
                 <li class="list-group-item">USD Equivalent<span class="pull-right small-text">$$$</span></li>
                 <li class="list-group-item bordered">Time<span class="pull-right small-text">{{block.timestamp | timestampFilter}}</span></li>
             </ul>

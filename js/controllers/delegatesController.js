@@ -62,6 +62,9 @@ angular.module('webApp').controller('delegatesController', ['$scope', '$rootScop
         };
 
         $scope.vote = function () {
+            if ($scope.voteList.length < 1) {
+                return;
+            }
             $scope.showVotes = false;
             $scope.voteModal = voteModal.activate({
                 totalBalance: $scope.unconfirmedBalance,
@@ -125,7 +128,7 @@ angular.module('webApp').controller('delegatesController', ['$scope', '$rootScop
         //Top deletates
         $scope.tableTopDelegates = new ngTableParams({
             page: 1,            // show first page
-            count: 5,
+            count: 25,
             sorting: {
                 rate: 'asc'     // initial sorting
             }
@@ -159,7 +162,7 @@ angular.module('webApp').controller('delegatesController', ['$scope', '$rootScop
         //Standby delegates
         $scope.tableStandbyDelegates = new ngTableParams({
             page: 1,            // show first page
-            count: 10,
+            count: 25,
             sorting: {
                 rate: 'asc'     // initial sorting
             }

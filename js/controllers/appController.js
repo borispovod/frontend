@@ -58,6 +58,12 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
 
         ];
 
+        $scope.getUSDPrice = function(){
+            $http.get("//poloniex.com/public?command=returnTicker").then(function(response){
+                console.log(response);
+            });
+        };
+
         $scope.getAppData = function () {
             $http.get("/api/accounts", {params: {address: userService.address}})
                 .then(function (resp) {
@@ -73,7 +79,9 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                     $scope.secondPassphrase = userService.secondPassphrase;
                     $scope.unconfirmedPassphrase = userService.unconfirmedPassphrase;
                     $scope.delegateInRegistration = userService.delegateInRegistration;
-
+                    $scope.getForging();
+                    $scope.getDelegate();
+                    $scope.getMyVotesCount();
                 });
         }
 
@@ -119,7 +127,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                 $scope.error = null;
 
                 $http.post("/api/delegates/forging/disable", {
-                    secret: $$scope.rememberedPassword,
+                    secret: $scope.rememberedPassword,
                     publicKey: userService.publicKey
                 })
                     .then(function (resp) {
@@ -186,6 +194,13 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
             });
         }
 
+        $scope.getMyVotesCount = function(){
+            $http.get("/api/accounts/delegates/", {params: {address: userService.address}})
+                .then(function (response) {
+                    $scope.myVotesCount = response.data.delegates ? response.data.delegates.length : 0;
+                });
+        }
+
         $scope.syncInterval = $interval(function () {
             $scope.getSync();
         }, 1000 * 30);
@@ -216,14 +231,11 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         });
         $scope.$on('socket:blocks/change', function (ev, data) {
             $scope.getAppData();
-            $scope.getForging();
-            $scope.getDelegate();
             $scope.updateViews(['account', 'blockchain', 'transactions', 'forging']);
         });
         $scope.$on('socket:delegates/change', function (ev, data) {
             $scope.getAppData();
-            $scope.getForging();
-            $scope.getDelegate();
+
             $scope.updateViews(['forging']);
         });
 
@@ -237,6 +249,5 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         }
 
         $scope.getAppData();
-        $scope.getForging();
-        $scope.getDelegate();
+
     }]);

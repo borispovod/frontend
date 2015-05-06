@@ -3,19 +3,21 @@ require('angular-ui-router');
 require('angular-modal');
 require('angular-resource');
 require('browserify-angular-animate');
+require('ng-clip');
 require('../bower_components/angular-chart.js/dist/angular-chart.js');
 require('../bower_components/angular-socket-io/socket.js');
 //require('../bower_components/angular-materialize/src/angular-materialize.js');
 require('../node_modules/ng-table/dist/ng-table.js');
 
 
-webApp = angular.module('webApp', ['ui.router', 'btford.modal', 'ngTable', 'ngAnimate',  'chart.js', 'btford.socket-io', 'ui.bootstrap']);
+webApp = angular.module('webApp', ['ui.router', 'btford.modal', 'ngTable', 'ngAnimate',  'chart.js', 'btford.socket-io', 'ui.bootstrap', 'ngClipboard']);
 
-webApp.config([
+webApp.config(["ngClipProvider",
     "$locationProvider",
     "$stateProvider",
     "$urlRouterProvider",
-    function ($locationProvider, $stateProvider, $urlRouterProvider) {
+    function (ngClipProvider, $locationProvider, $stateProvider, $urlRouterProvider) {
+        ngClipProvider.setPath("../node_modules/zeroclipboard/dist/ZeroClipboard.swf");
 
         $locationProvider.html5Mode(true);
         $urlRouterProvider.otherwise("/");

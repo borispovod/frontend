@@ -170,6 +170,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
                 var fraction = parts[1].substring(0, 8);
             }
         } else {
+            $scope.errorMessage = "Wrong XCR value";
             throw "Invalid input";
         }
 
@@ -181,6 +182,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
 
         //in case there's a comma or something else in there.. at this point there should only be numbers
         if (!/^\d+$/.test(result)) {
+            $scope.errorMessage = "Wrong XCR value";
             throw "Invalid input.";
         }
 

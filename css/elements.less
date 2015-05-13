@@ -197,6 +197,7 @@
         }
       }
       .list-group {
+        padding: 0;
         position: absolute;
         display: none;
         transition: .2s;
@@ -225,6 +226,7 @@
           border: none;
           cursor: pointer;
           position: relative;
+          border-radius: @border-radius;
           &:hover {
             background-color: @light-grey;
             &:after {
@@ -251,7 +253,7 @@
     & > a {
       font-weight: 500;
       font-size: @content-text;
-      padding: 0 28px;
+      padding: 0 0 0 28px;
       text-transform: uppercase;
       color: @black;
       i {
@@ -821,4 +823,10 @@ a {
   left: 18px;
   position: absolute;
   background-image: url('/images/forgingIcon.png');
+}
+
+.waves-effect.waves-blue .waves-ripple{
+  /* The alpha value allows the text and background color
+  of the button to still show through. */
+  background-color: rgba(25, 118, 210, 0.65);
 }

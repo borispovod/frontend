@@ -1,10 +1,11 @@
 module.exports = function (grunt) {
     var files = [
-        "bower_components/jquery/dist/jquery.js",
         "js/main.js",
         "js/modal.js",
         "js/ui-bootstrap-custom-0.12.1.min.js"
     ];
+
+    var withounBrowserify = ['static/js/br_app.js', 'bower_components/materialize/bin/materialize.js'];
 
     // Project configuration.
     grunt.initConfig({
@@ -21,7 +22,6 @@ module.exports = function (grunt) {
                         "node_modules/bootstrap/dist/css/bootstrap.css",
                         "bower_components/angular-modal/modal.css",
                         "node_modules/ng-table/ng-table.css",
-
                         "tmp/app.css"
                     ]
                 }
@@ -40,6 +40,11 @@ module.exports = function (grunt) {
             develop: {
                 files: {
                     "static/js/app.js": files
+                }
+            },
+            ignoringBrowserify: {
+                files: {
+                    "static/js/vendor_app.js": withounBrowserify
                 }
             }
         },
@@ -71,7 +76,7 @@ module.exports = function (grunt) {
 
 
     // Default task.
-    grunt.registerTask("default", ["less", "cssmin", "concat", 'browserify']);
+    grunt.registerTask("default", ["less", "cssmin", "concat:develop", 'browserify', "concat:ignoringBrowserify"]);
     // Release task
     grunt.registerTask("release", ["default", "uglify:release"]);
 

@@ -21,6 +21,24 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
         * 1000
         * 100;
 
+        $scope.graphs = {
+            cryptiPrice: {
+                labels: ['1', '2'],
+                series: ['Series B'],
+                data: [
+                    [60,  20]
+                ],
+                colours: ['#29b6f6'],
+                options: {
+                    scaleShowGridLines: false,
+                    pointDot: false,
+                    showTooltips: false,
+                    scaleShowLabels: false,
+                    scaleBeginAtZero: true
+                }
+            }
+        };
+
         $scope.transactionInfo = function (block) {
             $scope.modal = transactionInfo.activate({block: block});
         }
@@ -69,7 +87,19 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
                 });
         }
 
+        $scope.getPrice = function () {
+            $http.get(" http://146.148.61.64:4060/api/1/trade/XCR_BTC")
+                .then(function (response) {
+                    $scope.graphs.cryptiPrice.data = [
+                        response.data.data.map(
+                            function (line) {
+                                return line.price
+                            })
+                    ];
 
+                });
+
+        }
 
         $scope.$on('updateControllerData', function (event, data) {
             if (data.indexOf('account') != -1) {
@@ -109,7 +139,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
         }
 
 
-        $scope.updateView = function() {
+        $scope.updateView = function () {
             $scope.getAccount();
             $scope.getTransactions();
             delegateService.getDelegate($scope.publicKey, function (response) {
@@ -118,5 +148,6 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
         }
 
         $scope.updateView();
+        $scope.getPrice();
 
     }]);

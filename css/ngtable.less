@@ -165,6 +165,7 @@
   font-size: @content-text;
   color: @black;
   font-weight: 500;
+  padding-right: 10px;
   &:first-child {
     padding-left: 16px;
   }
@@ -214,12 +215,20 @@ td {
   }
 }
 
-.pagination li.active {
-  background-color: @blue;
-  border-radius: 50%;
-  color: @white !important;
-  a {
-    color: @white !important;
+.pagination {
+  li {
+    i {
+      font-size: 20px;
+      line-height: 21px;
+    }
+    &.active {
+      background-color: @blue;
+      border-radius: 50%;
+      color: @white !important;
+      a {
+        color: @white !important;
+      }
+    }
   }
 }
 

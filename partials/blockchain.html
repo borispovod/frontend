@@ -26,7 +26,7 @@
                     <td data-title="'Block ID'" ng-click="blockInfo(block)" class="pointer"><a href="#">{{block.id}}</a></td>
                     <td data-title="'Generator'"><a href="#"
                                                                              ng-click="userInfo(block.generatorId)">{{block.generatorId}}</a></td>
-                    <td data-title="'Date & Time'" sortable="'timestamp'"><span
+                    <td data-title="'Time'" sortable="'timestamp'"><span
                             ng-show="block.timestamp > 0">{{block.timestamp | timestampFilter}}</span>
                         <span ng-show="block.timestamp == 0">-</span></td>
                     <td data-title="'Transactions'" ng-click="showBlock(block)" class="pointer text-center"><a href="#">{{block.numberOfTransactions}}</a></td>

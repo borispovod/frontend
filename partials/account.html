@@ -7,7 +7,7 @@
             <div class="crypti-icon"></div>
             <div class="panel-body">
                 <div class="wg-label">Balance</div>
-                <div class="wg-data"><span class="strong">{{ unconfirmedBalance | feeFilter }}</span> XCR</div>
+                <div class="wg-data"><span class="strong">{{unconfirmedBalance | feeFilter}}</span> XCR</div>
             </div>
         </div>
     </div>
@@ -77,7 +77,27 @@
         </div>
     </div>
     <div class="col-md-3 col-sm-6  col-xs-12">
+        <div class="light-graph line-graph">
+            <div class="light-graph-heading">No Data Available</div>
+            <div class="light-graph-sub-heading">Return when you have forged at least 100 XCR</div>
+            <div class="light-graph-body">
 
+                <canvas id="line" class="chart chart-line" data="graphs.cryptiPrice.data"
+                        colours="graphs.cryptiPrice.colours"
+                        labels="graphs.cryptiPrice.labels" legend="false" series="graphs.cryptiPrice.series"
+                        options="graphs.cryptiPrice.options">
+                </canvas>
+            </div>
+            <div class="light-graph-footer">
+                <div class="row">
+                    <div class="col-xs-6 description">Amount Forged</br>in last year
+                    </div>
+                    <div class="col-xs-6 forged-amount"><span class="value">0.00 <span class="legend">XCR</span></span>
+                    </div>
+                    <div class="clearfix visible-lg visible-md visible-sm visible-xs"></div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

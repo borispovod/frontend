@@ -5,6 +5,9 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
         userService.setData();
         userService.rememberPassword = false;
         userService.rememberedPassword = '';
+        $scope.rememberPassword = true;
+        $scope.errorMessage = "";
+
         // angular.element(document.getElementById("forgingButton")).show();
         $scope.newUser = function () {
             console.log('done');
@@ -15,7 +18,7 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
         }
         $scope.login = function (pass, remember) {
             var data = {secret: pass};
-
+            $scope.errorMessage = "";
             $http.post("/api/accounts/open/", {secret: pass})
                 .then(function (resp) {
                     if (resp.data.success) {
@@ -29,7 +32,7 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
                         //angular.element(document.getElementById("forgingButton")).hide();
                         $state.go('main.dashboard');
                     } else {
-                        alert("Something wrong. Restart server please.");
+                        $scope.errorMessage = resp.data.error;
                     }
                 });
         }

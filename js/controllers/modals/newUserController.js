@@ -24,7 +24,7 @@ angular.module('webApp').controller('newUserController', ["$scope", "$http", "ne
 
     $scope.savePassToFile = function (pass) {
         var blob = new Blob([pass], {type: "text/plain;charset=utf-8"});
-        saveAs(blob, "cryptiPassphrase.txt");
+        FS.saveAs(blob, "cryptiPassphrase.txt");
     }
 
     $scope.login = function (pass) {

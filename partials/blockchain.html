@@ -4,7 +4,8 @@
     <div class="col-xs-12">
         <div class="panel panel-default paginated">
 
-            <table ng-table="tableBlocks" border="0" width="100%" cellpadding="0" cellspacing="0">
+            <table ng-table="tableBlocks" border="0" width="100%" cellpadding="0" cellspacing="0"
+                   template-pagination="custom/pager">
                 <div class="table-menu">
                     <div class="more-down-table" dropdown
                          on-toggle="toggled(open)" is-open="moreDownTable.isopen">

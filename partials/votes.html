@@ -32,7 +32,8 @@
 
                 <div class="plain-text">{{count}} in Total</div>
             </div>
-            <table ng-table="tableMyDelegates" border="0" width="100%" cellpadding="0" cellspacing="0">
+            <table ng-table="tableMyDelegates" border="0" width="100%" cellpadding="0" cellspacing="0"
+                   template-pagination="custom/pager">
                 <tr ng-repeat="delegate in $data">
                     <td data-title="''" class="no-select">
 

@@ -32,7 +32,7 @@
                     <td data-title="'Time'" sortable="'t_timestamp'">{{block.timestamp | timestampFilter}}
                     </td>
                     <td data-title="'Amount'" sortable="'t_amount'">
-                        <i ng-class="{'mdi-content-add-circle dark-meent-font': block.recipientId==address, 'mdi-content-remove-circle dark-red-font': block.senderId==address}"></i>
+                        <i class="vertical-text" ng-class="{'mdi-content-add-circle dark-meent-font': block.recipientId==address, 'mdi-content-remove-circle dark-red-font': block.senderId==address}"></i>
                         {{block.amount / 100000000 | feeFilter}}
                     </td>
                     <td data-title="'Fee'" sortable="'t_fee'">{{block.fee / 100000000 | feeFilter}}

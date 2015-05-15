@@ -1,0 +1,34 @@
+input[type=text], input[type=password], input[type=email], input[type=url], input[type=time], input[type=date], input[type=datetime-local], input[type=tel], input[type=number], input[type=search] {
+  height: 2.2rem;
+  width: 100%;
+  font-size: 1.15rem;
+}
+
+.input-field label {
+  top: .6rem;
+  left: 0;
+  font-size: 1.15rem;
+  opacity: 1;
+  color: #b8b8b8;
+  &.active {
+    font-size: .8rem;
+    -webkit-transform: translateY(-160%);
+    -moz-transform: translateY(-160%);
+    -ms-transform: translateY(-160%);
+    -o-transform: translateY(-160%);
+    transform: translateY(-160%);
+  }
+}
+
+.input-field {
+  position: relative;
+  margin-top: 1.6rem;
+}
+
+.switch label .lever {
+  margin-left: 0;
+}
+
+.switch.margin {
+  margin-top: 20px;
+}

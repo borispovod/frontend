@@ -9,6 +9,7 @@ require('../../js/controllers/loadingController');
 require('../../js/controllers/templateController');
 require('../../js/controllers/passphraseController');
 require('../../js/controllers/votedDelegatesController');
+require('../../js/controllers/contactsController');
 //modals
 require('../../js/controllers/modals/userSettingsModalController');
 require('../../js/controllers/modals/blockModalController');
@@ -18,6 +19,7 @@ require('../../js/controllers/modals/freeModalController');
 require('../../js/controllers/modals/secondPassphraseController');
 require('../../js/controllers/modals/sendCryptiController');
 require('../../js/controllers/modals/voteController');
+require('../../js/controllers/modals/addContactModalController');
 require('../../js/controllers/modals/registrationDelegateModalController');
 require('../../js/controllers/modals/blockInfoController');
 require('../../js/controllers/modals/transactionInfoController');

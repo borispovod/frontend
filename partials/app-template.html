@@ -58,7 +58,6 @@
                 <div id="logout-icon"></div>
                 <span class="menu-text">Logout</span></a></li>
         </ul>
-
         <div id="inc"></div>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -67,10 +66,8 @@
     <div id="page-content-wrapper">
         <div class="header-wrapper">
             <div class="nav-bar" id="header">
-
                 <h1 id="title"><span class="title-icon" ng-show="view.page.previos" ng-click="goToPrevios()">
             <span class="sr-only">Go to previos page</span></span>{{view.page.title}}</h1>
-
                 <span class="forging-state" ng-show="view.forgingState">{{view.forgingState}}</span>
 
                 <div id="top-menu" class="valign-wrapper">
@@ -90,8 +87,6 @@
                             <li><a href="#">Dapp Response<span class="badge violet">1</span></a></a></li>
                         </ul>
                     </div>
-
-
                     <div class="mini-chart valign-wrapper" ng-show="sync">
                         <div class="mini-chart-label">{{sync}}%</div>
                         <canvas id="total-forged" class="chart chart-doughnut" data="loading.values"
@@ -110,6 +105,7 @@
                 </div>
             </div>
             <span ng-show="false">{{view.showTransactionsSearchBar}}</span>
+
             <div class="search-bar" ng-show="view.bar.showTransactionsSearchBar">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="mdi-action-search"></i></span>
@@ -122,27 +118,39 @@
                     <input type="text" class="form-control" placeholder="Search for blocks, transactions or accounts">
                 </div>
             </div>
-            <div id="page-nav" ng-show="view.bar.forgingMenu">
+            <div id="page-nav" ng-if="view.bar.forgingMenu">
                 <ul class="nav nav-underline pull-left">
                     <li ui-sref-active="active"><a href="#" ui-sref="main.forging">Forging</a></li>
                     <li ui-sref-active="active"><a href="#" ui-sref="main.delegates">Delegates</a></li>
-                    <li ui-sref-active="active"><a href="#" ui-sref="main.votes">My votes ({{myVotesCount||'0'}})</a></li>
+                    <li ui-sref-active="active"><a href="#" ui-sref="main.votes">My votes ({{myVotesCount||'0'}})</a>
+                    </li>
                 </ul>
                 <ul class="nav nav-underline pull-right registration" ng-show="!delegate.username">
                     <li><a href="#" class="bold-text" ng-click="registrationDelegate()">delegate registration</a></li>
                 </ul>
-
-                <a class="btn-floating btn-large waves-effect waves-light green" ng-click="disableForging()"  ng-show="delegate.username && forging" style="
+                <a class="btn-floating btn-large waves-effect waves-light green" ng-click="disableForging()"
+                   ng-show="delegate.username && forging" style="
     position: absolute;
     top: 96px;
     right: 30px;
 "><i class="factory"></i></a>
-                <a class="btn-floating btn-large waves-effect waves-light red" ng-click="enableForging()" ng-show="(delegate.username && !forging)"
+                <a class="btn-floating btn-large waves-effect waves-light red" ng-click="enableForging()"
+                   ng-show="(delegate.username && !forging)"
                    style="
     position: absolute;
     top: 96px;
     right: 30px;
 "><i class="factory"></i></a>
+            </div>
+            <div id="page-nav" ng-if="view.bar.showContactsBar">
+                <ul class="nav nav-underline pull-left">
+                    <li ui-sref-active="active"><a href="#" ui-sref="main.contacts">Contacts</a></li>
+                </ul>
+                <a ng-click="addContact()" class="btn-floating btn-large waves-effect waves-light green" style="
+    position: absolute;
+    right: 26px;
+  top: 96px;
+"><i class="mdi-content-add"></i></a>
             </div>
         </div>
         <div class="container-fluid" ui-view></div>

@@ -2,24 +2,28 @@
     <div class="container height100">
         <div class="row height100">
             <div class="col-md-6 col-md-offset-4 height100 valign-wrapper">
-                <div class="modal-content" ng-show="!passmode" >
+                <div class="modal-content" ng-show="!passmode">
                     <div class="modal-header modal-iconed">
                         <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div>
                     </div>
                     <div class="modal-header clearfix">
-                        <div><h2>Register as Delegate</h2>
+                        <div><h2>Add new contact</h2>
                         </div>
-                        <div>Please choose a delegate name
+                        <div>Please type in an account name or ID below
                         </div>
                     </div>
-                    <div class="modal-body field-padding">
-                        <div class="input-field">
-                            <input id="delegateUsername" type="text" ng-model="username" autofocus>
-                            <label for="delegateUsername">Delegate Name</label>
+                    <div class="modal-body">
+                        <div class="input-group app-addon">
+                            <span class="input-group-addon search"></span>
+                            <input id="contact" type="text" class="form-control" placeholder="Account name or ID"
+                                   ng-model="contact">
+                            <span class="input-group-addon clear"></span>
                         </div>
+                            <span class="pass-error"
+                                  ng-show="errorMessage && rememberedPassword">{{errorMessage}}</span>
                     </div>
                     <div class="modal-body bordered">
-                        <span class="send-info-text padding-right-40 flat-text">Becoming a delegate requires registration. You may choose your own delegate name, which can be used to promote your delegate. Convince other users to vote for your delegate to increase your rank. Only the top 101 delegates will be forging. All fees are shared equally between top delegates. Registration fee: 10,000 XCR.</span>
+                        <span class="send-info-text flat-text">We'll let you know when the contact has accepted your request.</span>
                     </div>
                     <div class="modal-body">
                         <ul class="nav modal-buttons pull-right">
@@ -27,14 +31,13 @@
                                 <a href="#" ng-click="close()">Cancel
                                 </a>
                             </li>
-                            <li><a href="#" class="green-link" ng-click="passcheck()">register</a></li>
+                            <li><a href="#" class="green-link" ng-click="passcheck()">add contact</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="modal-content" ng-show="passmode">
                     <div class="modal-header modal-iconed">
-                        <div class="close-modal" ng-click="passcheck()"><span class="sr-only">Close modal</span>
-                        </div>
+                        <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div>
                     </div>
                     <div class="modal-header clearfix">
                         <div><h2>Account Verification</h2>
@@ -46,21 +49,21 @@
                         <div class="field-padding">
                             <div class="input-field">
                                 <input id="passPhrase" type="password" ng-model="secretPhrase" ng-trim="false" autofocus
-                                       ng-class="{'invalid': error}">
+                                       ng-class="{'invalid': errorMessage}">
                                 <label for="passPhrase">Your Passphrase</label>
                             </div>
-                            <span class="pass-error" ng-show="error">{{error}}</span>
+                            <span class="pass-error" ng-show="errorMessage">{{errorMessage}}</span>
                         </div>
-                        <div class="modal-body">
-                            <ul class="nav modal-buttons pull-right">
-                                <li>
-                                    <a href="#" ng-click="passcheck()">Cancel
-                                    </a>
-                                </li>
-                                <li><a href="#" class="green-link" ng-click="registrationDelegate()">register</a>
-                                </li>
-                            </ul>
-                        </div>
+                    </div>
+
+                    <div class="modal-body">
+                        <ul class="nav modal-buttons pull-right">
+                            <li>
+                                <a href="#" ng-click="passcheck()">BACK
+                                </a>
+                            </li>
+                            <li><a href="#" class="green-link" ng-click="addFolower(secretPhrase)">send xcr</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>

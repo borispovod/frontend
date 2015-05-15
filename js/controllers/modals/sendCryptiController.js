@@ -43,6 +43,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
             $scope.pass = '';
         }
     }
+
     $scope.close = function () {
         if ($scope.destroy) {
             $scope.destroy();

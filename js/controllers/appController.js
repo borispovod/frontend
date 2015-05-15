@@ -1,8 +1,8 @@
 require('angular');
 
 
-angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", 'viewFactory', '$state', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal',
-    function ($rootScope, $scope, $http, userService, $interval, viewFactory, $state, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal) {
+angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", 'viewFactory', '$state', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal',
+    function ($rootScope, $scope, $http, userService, $interval, viewFactory, $state, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal) {
 
         $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
 
@@ -17,6 +17,10 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
             isopen: false
         };
 
+        $scope.contacts = {
+            count: 0,
+            list: []
+        };
 
         $scope.toggleDropdown = function ($event) {
 
@@ -55,12 +59,13 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
             'main.votes',
             'main.forging',
             'main.blockchain',
-            'passphrase'
+            'passphrase',
+            'main.contacts'
 
         ];
 
-        $scope.getUSDPrice = function(){
-            $http.get("//poloniex.com/public?command=returnTicker").then(function(response){
+        $scope.getUSDPrice = function () {
+            $http.get("//poloniex.com/public?command=returnTicker").then(function (response) {
                 console.log(response);
             });
         };
@@ -83,6 +88,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                     $scope.getForging();
                     $scope.getDelegate();
                     $scope.getMyVotesCount();
+                    $scope.getContacts();
                 });
         }
 
@@ -94,6 +100,12 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
             });
         }
 
+        $scope.addContact = function () {
+            $scope.addContactModal = addContactModal.activate({
+                destroy: function () {
+                }
+            });
+        }
 
         $scope.enableForging = function () {
             if ($scope.rememberedPassword) {
@@ -156,6 +168,15 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                 });
         }
 
+        $scope.getContacts = function () {
+            contactsService.getContacts(userService.publicKey, function () {
+                $scope.contacts = {
+                    count: contactsService.count,
+                    list: contactsService.list
+                };
+            });
+        }
+
         $scope.registrationDelegate = function () {
             $scope.registrationDelegateModal = registrationDelegateModal.activate({
                 totalBalance: userService.unconfirmedBalance,
@@ -195,7 +216,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
             });
         }
 
-        $scope.getMyVotesCount = function(){
+        $scope.getMyVotesCount = function () {
             $http.get("/api/accounts/delegates/", {params: {address: userService.address}})
                 .then(function (response) {
                     $scope.myVotesCount = response.data.delegates ? response.data.delegates.length : 0;

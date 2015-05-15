@@ -59,6 +59,11 @@ webApp.config(["ngClipProvider",
                 templateUrl: "/partials/blockchain.html",
                 controller: "blockchainController"
             })
+            .state('main.contacts', {
+                url: "/contacts",
+                templateUrl: "/partials/contacts.html",
+                controller: "contactsController"
+            })
             .state('passphrase', {
                 url: "/",
                 templateUrl: "/partials/passphrase.html",

@@ -28,8 +28,13 @@ angular.module('webApp').controller('addContactModalController', ["$scope", "add
         }
 
         $scope.addFolower = function (secretPhrase) {
-            contactsService.addContact(userService.publicKey, secretPhrase, $scope.contact, function (response) {
-                console.log(response);
+            contactsService.addContact(userService.publicKey, secretPhrase, '+' + $scope.contact, function (response) {
+                if (response.data.success) {
+                    $scope.close();
+                }
+                else {
+                    $scope.errorMessage = response.data.error;
+                }
             });
         }
     }]);

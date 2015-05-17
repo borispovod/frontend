@@ -152,11 +152,33 @@
         color: @border-grey;
         opacity: 1;
       }
-
+      :focus {
+        border: none;
+      }
       box-shadow: none;
-      padding: 26px 14px;
+      padding: 16px 14px;
       border: none;
     }
+  }
+}
+
+.app-addon-error{
+  font-size: 12px;
+  color: #f34235;
+  display: block;
+  padding: 10px 36px;
+  position: relative;
+  background-color: #fafafa;
+  &:after {
+    content: '';
+    height: 15px;
+    width: 17px;
+    display: block;
+    position: absolute;
+    background-image: url('@{images}/sprites/iconset.png');
+    background-position: 0 -69px;
+    top: 8px;
+    right: 34px;
   }
 }
 
@@ -267,7 +289,8 @@
         color: @dark-red;
         &:hover, &:active, &:focus {
           color: @dark-red
-        }}
+        }
+      }
       &.green-link {
         color: @dark-meant;
         &:hover, &:active, &:focus {
@@ -825,7 +848,7 @@ a {
   background-image: url('/images/forgingIcon.png');
 }
 
-.waves-effect.waves-blue .waves-ripple{
+.waves-effect.waves-blue .waves-ripple {
   /* The alpha value allows the text and background color
   of the button to still show through. */
   background-color: rgba(25, 118, 210, 0.65);

@@ -5,5 +5,4 @@ angular.module('webApp').controller('contactsController', ['$scope', '$rootScope
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Contacts', previos: null};
         $scope.view.bar = {showContactsBar: true};
-
     }]);

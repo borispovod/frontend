@@ -92,9 +92,11 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                 });
         }
 
-        $scope.sendCrypti = function () {
+        $scope.sendCrypti = function (to) {
+            to = to || '';
             $scope.sendCryptiModal = sendCryptiModal.activate({
                 totalBalance: $scope.unconfirmedBalance,
+                to: to,
                 destroy: function () {
                 }
             });

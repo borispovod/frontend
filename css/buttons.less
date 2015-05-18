@@ -7,32 +7,42 @@
   border: none;
   border-radius: @border-radius;
 
-&.btn-blue {
-  background-color: #0288d1 !important;
-  &:hover, &:focus, &.focus {
-    color: @white
-  }
-}
-
-  &.btn-sky-blue {
-    background-color: @sky-blue!important;
+  &.btn-blue {
+    background-color: #0288d1 !important;
     &:hover, &:focus, &.focus {
       color: @white
     }
   }
 
-&.btn-white {
-  background-color: @white !important;
-  color: @black;
-  &:hover, &:focus, &.focus {
-    color: @black
+  &.btn-sky-blue {
+    background-color: @sky-blue !important;
+    &:hover, &:focus, &.focus {
+      color: @white
+    }
   }
-}
+
+  &.btn-dark-meant {
+    background-color: @white;
+    box-shadow: none;
+    color: #212121;
+    &:hover, &:focus, &.focus {
+      background-color: @dark-meant;
+      box-shadow: none;
+      color: @white;
+    }
+  }
+
+  &.btn-white {
+    background-color: @white !important;
+    color: @black;
+    &:hover, &:focus, &.focus {
+      color: @black
+    }
+  }
   &.btn-marging {
     margin-right: 10px;
   }
 }
-
 
 .buttons-panel {
   margin-top: 40px;

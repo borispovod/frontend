@@ -10,7 +10,8 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
         * 1000
         * 1000
         * 100;
-
+        $scope.showAllColumns = false;
+        $scope.showFullTime = false;
 
         $scope.graphs = {
             amountForged: {

@@ -7,6 +7,8 @@ angular.module('webApp').controller('blockchainController', ['$scope', '$rootSco
         $scope.view.bar = {showBlockSearchBar: true};
         $scope.address = userService.address;
         $scope.loading = true;
+        $scope.showAllColumns = false;
+        $scope.showFullTime = false;
 
         //Blocks
         $scope.tableBlocks = new ngTableParams({

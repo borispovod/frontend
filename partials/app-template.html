@@ -54,9 +54,7 @@
                                                                                   class="waves-effect waves-blue">
                 <div class="nav-icon" id="network-icon"></div>
                 <span class="menu-text">Network</span></a></li>
-            <li><a href="/" id="logout" class="waves-effect waves-blue">
-                <div id="logout-icon"></div>
-                <span class="menu-text">Logout</span></a></li>
+
         </ul>
         <div id="inc"></div>
     </div>
@@ -69,7 +67,6 @@
                 <h1 id="title"><span class="title-icon" ng-show="view.page.previos" ng-click="goToPrevios()">
             <span class="sr-only">Go to previos page</span></span>{{view.page.title}}</h1>
                 <span class="forging-state" ng-show="view.forgingState">{{view.forgingState}}</span>
-
                 <div id="top-menu" class="valign-wrapper">
                 <span id="balance">
                 {{unconfirmedBalance | feeFilter}} XCR
@@ -96,10 +93,9 @@
                     <div class="more-down  left-margin-20" dropdown is-open="moreDropdownStatus.isopen">
                         <i class="mdi-navigation-more-vert" dropdown-toggle></i>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Guides</a></li>
-                            <li><a href="#">FAQ</a></li>
-                            <li><a href="#">Wiki</a></li>
-                            <li><a href="#">User Data</a></li>
+                            <li><a href="#" ng-click="myUserInfo()">My Profile</a></li>
+                            <li><a href="#">2nd Passphrase</a></li>
+                            <li><a href="/">Logout</a></li>
                         </ul>
                     </div>
                 </div>

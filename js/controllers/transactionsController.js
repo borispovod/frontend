@@ -5,6 +5,8 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Transactions', previos: 'main.dashboard'};
         $scope.view.bar = {showTransactionsSearchBar: true};
+        $scope.showAllColumns = false;
+        $scope.showFullTime = false;
 
         $scope.transactionInfo = function (block) {
             $scope.modal = transactionInfo.activate({block: block});
@@ -37,7 +39,7 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
         //end Transactions
 
 
-        $scope.updateTransactions = function(){
+        $scope.updateTransactions = function () {
             $scope.tableTransactions.reload();
         }
 

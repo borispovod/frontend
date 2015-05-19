@@ -12,10 +12,10 @@
                     <i class="mdi-navigation-more-vert" dropdown-toggle aria-haspopup="true"
                        aria-expanded="false"></i>
                     <div class="dropdown-menu" role="menu">
-                        <p ng-click="check($event)"><input type="checkbox" class="filled-in violet" id="advanced" checked="checked">
-                            <label for="advanced">Advanced Options</label></p>
+                        <p ng-click="check($event)"><input type="checkbox" class="filled-in violet" id="advanced" ng-model="showAllColumns">
+                            <label for="advanced"> Show All Columns</label></p>
 
-                        <p ng-click="check($event)"><input type="checkbox" class="filled-in violet" id="fulltime">
+                        <p ng-click="check($event)"><input type="checkbox" class="filled-in violet" id="fulltime" ng-model="showFullTime">
                             <label for="fulltime">Show Full Time</label></p>
                     </div>
                 </div>
@@ -23,13 +23,13 @@
                 <tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}">
                     <td data-title="'Height'" sortable="'b_height'">{{block.height}}
                     </td>
-                    <td data-title="'Transaction ID'" class="pointer"><a href="#" ng-click="transactionInfo(block)">{{block.id}}</a>
+                    <td ng-show="showAllColumns" data-title="'Transaction ID'" class="pointer"><a href="#" ng-click="transactionInfo(block)">{{block.id}}</a>
                     </td>
                     <td data-title="'Sender'" class="pointer" sortable="'t_senderId'"><a href="#">{{block.senderId}}</a>
                     </td>
                     <td data-title="'Recipient'" class="pointer" sortable="'t_recipientId'"><a href="#">{{block.recipientId}}</a>
                     </td>
-                    <td data-title="'Time'" sortable="'t_timestamp'">{{block.timestamp | timestampFilter}}
+                    <td data-title="'Time'" sortable="'t_timestamp'">{{block.timestamp | timeAgoFilter : showFullTime}}
                     </td>
                     <td data-title="'Amount'" sortable="'t_amount'">
                         <i class="vertical-text" ng-class="{'mdi-content-add-circle dark-meent-font': block.recipientId==address, 'mdi-content-remove-circle dark-red-font': block.senderId==address}"></i>

@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('delegatesController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "$filter", "ngTableParams", "delegateService", "voteModal", "viewFactory",
-    function ($rootScope, $scope, $http, userService, $interval, $timeout, $filter, ngTableParams, delegateService, voteModal, viewFactory) {
+angular.module('webApp').controller('delegatesController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "$filter", "ngTableParams", "delegateService", "voteModal", "viewFactory", "userInfo",
+    function ($rootScope, $scope, $http, userService, $interval, $timeout, $filter, ngTableParams, delegateService, voteModal, viewFactory, userInfo) {
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Forging', previos: null};
         $scope.view.bar = {forgingMenu: true};
@@ -81,6 +81,10 @@ angular.module('webApp').controller('delegatesController', ['$scope', '$rootScop
         };
 
         $scope.balance = userService._unconfirmedBalance;
+
+        $scope.userInfo = function (userId) {
+            $scope.modal = userInfo.activate({userId: userId});
+        }
 
         //Unconfirmed transactions
         $scope.unconfirmedTransactions = {

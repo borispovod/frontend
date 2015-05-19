@@ -116,28 +116,17 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
             $scope.transactionsInterval = null;
         });
 
-        $scope.sendCrypti = function () {
-            $scope.sendCryptiModal = sendCryptiModal.activate({
-                totalBalance: $scope.unconfirmedBalance,
-                destroy: function () {
-                    $scope.updateView();
-                }
-            });
-        }
-
         $scope.addSecondPassphrase = function () {
             $scope.secondPassphraseModal = secondPassphraseModal.activate({
                 totalBalance: $scope.unconfirmedBalance,
                 destroy: function (r) {
                     $scope.updateView();
-
                     if (r) {
                         $scope.unconfirmedPassphrase = true;
                     }
                 }
             });
         }
-
 
         $scope.updateView = function () {
             $scope.getAccount();

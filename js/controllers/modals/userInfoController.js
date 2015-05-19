@@ -36,7 +36,7 @@ angular.module('webApp').controller('userInfoController', ["$scope", "$http", "u
                             })
                                 .then(function (resp) {
                                     var unconfirmedTransactions = resp.data.transactions;
-                                    $scope.account.transactions = unconfirmedTransactions.concat(transactions).slice(0, 6);
+                                    $scope.transactions.list = unconfirmedTransactions.concat(transactions).slice(0, 6);
                                 });
                         });
             });

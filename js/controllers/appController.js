@@ -5,6 +5,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
     function ($rootScope, $scope, $http, userService, $interval, viewFactory, $state, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal) {
 
         $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
+        $scope.xcr_usd = 0;
 
         $scope.moreDropdownStatus = {
             isopen: false
@@ -25,6 +26,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         $scope.toggleDropdown = function ($event) {
 
         };
+
 
         $scope.toggled = function (open) {
             if ($scope.checked) {
@@ -65,10 +67,19 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         ];
 
         $scope.getUSDPrice = function () {
-            $http.get("//poloniex.com/public?command=returnTicker").then(function (response) {
-                console.log(response);
-            });
+            $http.get("http://146.148.61.64:4060/api/1/ticker/XCR_BTC")
+                .then(function (response) {
+                    var xcr_btc = response.data.last;
+                    $http.get("http://146.148.61.64:4060/api/1/ticker/BTC_USD")
+                        .then(function (response) {
+                            $scope.xcr_usd = xcr_btc * response.data.last;
+                        });
+                });
         };
+
+        $scope.convertToUSD = function (xcr) {
+            return (xcr / 100000000) * $scope.xcr_usd;
+        }
 
         $scope.getAppData = function () {
             $http.get("/api/accounts", {params: {address: userService.address}})
@@ -102,8 +113,10 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
             });
         }
 
-        $scope.addContact = function () {
+        $scope.addContact = function (contact) {
+            contact = contact || "";
             $scope.addContactModal = addContactModal.activate({
+                contact: contact,
                 destroy: function () {
                 }
             });
@@ -273,5 +286,5 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         }
 
         $scope.getAppData();
-
+        $scope.getUSDPrice();
     }]);

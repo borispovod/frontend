@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('accountController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionInfo', 'userInfo',
-    function ($rootScope, $scope, $http, userService, $interval, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionInfo, userInfo) {
+angular.module('webApp').controller('accountController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionInfo', 'userInfo', '$filter',
+    function ($rootScope, $scope, $http, userService, $interval, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionInfo, userInfo, $filter) {
 
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Dashboard', previos: null};
@@ -82,6 +82,10 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
                     userService.unconfirmedPassphrase = account.unconfirmedSignature;
                     $scope.balance = userService.balance;
                     $scope.unconfirmedBalance = userService.unconfirmedBalance;
+                    $scope.balanceToShow = $filter('decimalFilter')(userService.unconfirmedBalance);
+                    if ($scope.balanceToShow[1]){
+                        $scope.balanceToShow[1]='.'+ $scope.balanceToShow[1];
+                    }
                     $scope.secondPassphrase = userService.secondPassphrase;
                     $scope.unconfirmedPassphrase = userService.unconfirmedPassphrase;
                 });

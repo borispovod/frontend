@@ -33,7 +33,7 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
             totalForged: {
                 labels: ['Total Forged'],
                 values: [1],
-                colours: ['#90a4ae'],
+                colours: ['#fff'],
                 options: {
                     percentageInnerCutout: 90,
                     animationEasing: "linear",
@@ -131,7 +131,6 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
         $scope.updateGraphs = function () {
 
             delegateService.getDelegate(userService.publicKey, function (response) {
-
                 var totalDelegates = 108;
                 var rank = response.rate;
 
@@ -165,8 +164,7 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
         $scope.getForgedAmount = function () {
             $http.get("/api/delegates/forging/getForgedByAccount", {params: {generatorPublicKey: userService.publicKey}})
                 .then(function (resp) {
-                    $scope.totalForged = resp.data.fees;
-                    $scope.graphs.totalForged.values = [resp.data.fees || 1];
+
                 });
         }
 

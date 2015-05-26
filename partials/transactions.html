@@ -1,41 +1,49 @@
 <div class="top-margin"></div>
-
 <div class="row">
     <div class="col-xs-12">
         <div class="panel panel-default paginated">
-
             <table ng-table="tableTransactions" border="0" width="100%" cellpadding="0"
                    cellspacing="0">
                 <div class="table-menu">
                     <div class="more-down-table" dropdown
-                                             on-toggle="toggled(open)" is-open="moreDownTable.isopen">
-                    <i class="mdi-navigation-more-vert" dropdown-toggle aria-haspopup="true"
-                       aria-expanded="false"></i>
-                    <div class="dropdown-menu" role="menu">
-                        <p ng-click="check($event)"><input type="checkbox" class="filled-in violet" id="advanced" ng-model="showAllColumns">
-                            <label for="advanced"> Show All Columns</label></p>
+                         on-toggle="toggled(open)" is-open="moreDownTable.isopen">
+                        <i class="mdi-navigation-more-vert" dropdown-toggle aria-haspopup="true"
+                           aria-expanded="false"></i>
 
-                        <p ng-click="check($event)"><input type="checkbox" class="filled-in violet" id="fulltime" ng-model="showFullTime">
-                            <label for="fulltime">Show Full Time</label></p>
+                        <div class="dropdown-menu" role="menu">
+                            <p ng-click="check($event)"><input type="checkbox" class="filled-in violet" id="advanced"
+                                                               ng-model="showAllColumns">
+                                <label for="advanced"> Show All Columns</label></p>
+
+                            <p ng-click="check($event)"><input type="checkbox" class="filled-in violet" id="fulltime"
+                                                               ng-model="showFullTime">
+                                <label for="fulltime">Show Full Time</label></p>
+                        </div>
                     </div>
                 </div>
-                </div>
-                <tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}">
-                    <td data-title="'Height'" sortable="'b_height'">{{block.height}}
+                <tr ng-repeat="transaction in $data">
+                    <td data-title="'Height'" sortable="'b_height'">{{transaction.height}}
                     </td>
-                    <td ng-show="showAllColumns" data-title="'Transaction ID'" class="pointer"><a href="#" ng-click="transactionInfo(block)">{{block.id}}</a>
+                    <td ng-show="showAllColumns" data-title="'Transaction ID'" class="pointer"><a href="#"
+                                                                                                  ng-click="transactionInfo(block)">{{transaction.id}}</a>
                     </td>
-                    <td data-title="'Sender'" class="pointer" sortable="'t_senderId'"><a href="#">{{block.senderId}}</a>
+                    <td data-title="'Sender'" class="pointer" sortable="'t_senderId'"><a href="#"
+                                                                                         ng-click="userInfo(transaction.senderId)">{{transaction.senderId}}</a>
                     </td>
-                    <td data-title="'Recipient'" class="pointer" sortable="'t_recipientId'"><a href="#">{{block.recipientId}}</a>
+                    <td data-title="'Recipient'" class="pointer" sortable="'t_recipientId'"><a href="#"
+                                                                                               ng-click="userInfo(transaction.recipientId)">{{transaction.recipientId}}</a>
                     </td>
-                    <td data-title="'Time'" sortable="'t_timestamp'">{{block.timestamp | timeAgoFilter : showFullTime}}
+                    <td data-title="'Time'" sortable="'t_timestamp'">{{transaction.timestamp | timeAgoFilter :
+                        showFullTime}}
                     </td>
                     <td data-title="'Amount'" sortable="'t_amount'">
-                        <i class="vertical-text" ng-class="{'mdi-content-add-circle dark-meent-font': block.recipientId==address, 'mdi-content-remove-circle dark-red-font': block.senderId==address}"></i>
-                        {{block.amount / 100000000 | feeFilter}}
+                        <i ng-if="transaction.recipientId==transaction.senderId"
+                           class="vertical-text mdi-image-brightness-1 cloud-font"></i>
+                        <i ng-if="transaction.recipientId!=transaction.senderId" class="vertical-text"
+                           ng-class="{'mdi-content-add-circle dark-meent-font': transaction.recipientId==address, 'mdi-content-remove-circle dark-red-font': transaction.senderId==address}"></i>
+                        {{transaction.amount / 100000000 | feeFilter}}
                     </td>
-                    <td data-title="'Fee'" sortable="'t_fee'">{{block.fee / 100000000 | feeFilter}}
+                    <td data-title="'Fee'" sortable="'t_fee'">{{transaction.fee / 100000000 | feeFilter}}
                     </td>
                     <td data-title="" class="width-80"></td>
                 </tr>

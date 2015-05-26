@@ -17,6 +17,10 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
             });
         }
         $scope.login = function (pass, remember) {
+            if (pass.length>100) {
+                $scope.errorMessage = 'Password must contain less than 100 characters.';
+                return;
+            }
             var data = {secret: pass};
             $scope.errorMessage = "";
             $http.post("/api/accounts/open/", {secret: pass})

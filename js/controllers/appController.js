@@ -1,9 +1,10 @@
 require('angular');
 
 
-angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", 'viewFactory', '$state', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal', 'userInfo',
-    function ($rootScope, $scope, $http, userService, $interval, viewFactory, $state, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal, userInfo) {
+angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", 'viewFactory', '$state', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal', 'userInfo', 'transactionsService', 'secondPassphraseModal',
+    function ($rootScope, $scope, $http, userService, $interval, viewFactory, $state, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal, userInfo, transactionsService, secondPassphraseModal) {
 
+        $scope.searchTransactions = transactionsService;
         $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
         $scope.xcr_usd = 0;
 
@@ -26,7 +27,6 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         $scope.toggleDropdown = function ($event) {
 
         };
-
 
         $scope.toggled = function (open) {
             if ($scope.checked) {
@@ -117,6 +117,14 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
             contact = contact || "";
             $scope.addContactModal = addContactModal.activate({
                 contact: contact,
+                destroy: function () {
+                }
+            });
+        }
+
+        $scope.setSecondPassphrase = function () {
+            $scope.addSecondPassModal = secondPassphraseModal.activate({
+                totalBalance: $scope.unconfirmedBalance,
                 destroy: function () {
                 }
             });
@@ -242,7 +250,6 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
             $scope.modal = userInfo.activate({userId: userService.address});
         }
 
-
         $scope.syncInterval = $interval(function () {
             $scope.getSync();
         }, 1000 * 30);
@@ -277,7 +284,6 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         });
         $scope.$on('socket:delegates/change', function (ev, data) {
             $scope.getAppData();
-
             $scope.updateViews(['forging']);
         });
 

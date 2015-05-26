@@ -8,8 +8,16 @@ angular.module('webApp').controller('addContactModalController', ["$scope", "add
         $scope.secondPassphrase = userService.secondPassphrase;
         $scope.publicKey = userService.publicKey;
         $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
+        $scope.checkSecondPass = false;
 
-        $scope.passcheck = function () {
+        $scope.passcheck = function (fromSecondPass) {
+            if (fromSecondPass) {
+                $scope.checkSecondPass = false;
+                $scope.passmode = $scope.rememberedPassword ? false : true;
+                $scope.secondPassphrase = '';
+                $scope.pass = '';
+                return;
+            }
             if ($scope.rememberedPassword) {
                 $scope.addFolower($scope.rememberedPassword);
             }
@@ -27,8 +35,23 @@ angular.module('webApp').controller('addContactModalController', ["$scope", "add
             addContactModal.deactivate();
         }
 
-        $scope.addFolower = function (secretPhrase) {
-            contactsService.addContact(userService.publicKey, secretPhrase, '+' + $scope.contact, function (response) {
+        $scope.addFolower = function (pass, withSecond) {
+            if ($scope.secondPassphrase && !withSecond) {
+                $scope.checkSecondPass = true;
+                return;
+            }
+            var queryParams = {
+                secret: pass,
+                following: $scope.contact,
+                publicKey: userService.publicKey
+            }
+            if ($scope.secondPassphrase) {
+                queryParams.secondSecret = $scope.secondPhrase;
+                if ($scope.rememberedPassword) {
+                    queryParams.secret = $scope.rememberedPassword;
+                }
+            }
+            contactsService.addContact(queryParams, function (response) {
                 if (response.data.success) {
                     $scope.close();
                 }

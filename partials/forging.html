@@ -1,4 +1,3 @@
-
 <div class="row">
     <div class="col-md-9 col-sm-12 subrow">
         <div class="col-xs-12">
@@ -18,9 +17,6 @@
                     <div class="chart-legend">{{totalForged / 100000000 | feeFilter }}<span
                             class="small-text">XCR</span>
                     </div>
-                    <canvas id="total-forged" class="chart chart-doughnut" data="graphs.totalForged.values"
-                            labels="graphs.totalForged.labels" options="graphs.totalForged.options"
-                            colours="graphs.totalForged.colours"></canvas>
                 </div>
             </div>
         </div>
@@ -62,33 +58,30 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3 col-sm-12">
+</div>
+<div class="col-md-3 col-sm-12">
+    <div class="light-graph line-graph">
+        <div class="light-graph-heading">No Data Available</div>
+        <div class="light-graph-sub-heading">Return when you have forged at least 100 XCR</div>
+        <div class="light-graph-body">
 
-
-        <div class="light-graph line-graph">
-            <div class="light-graph-heading">No Data Available</div>
-            <div class="light-graph-sub-heading">Return when you have forged at least 100 XCR</div>
-            <div class="light-graph-body">
-
-                <canvas id="line" class="chart chart-line" data="graphs.amountForged.data"
-                        colours="graphs.amountForged.colours"
-                        labels="graphs.amountForged.labels" legend="false" series="graphs.amountForged.series"
-                        options="graphs.amountForged.options">
-                </canvas>
-            </div>
-            <div class="light-graph-footer">
-                <div class="row">
-                    <div class="col-xs-6 description">Amount Forged</br>in last year
-                    </div>
-                    <div class="col-xs-6 forged-amount"><span class="value">0.00 <span class="legend">XCR</span></span>
-                    </div>
-                    <div class="clearfix visible-lg visible-md visible-sm visible-xs"></div>
+            <canvas id="line" class="chart chart-line" data="graphs.amountForged.data"
+                    colours="graphs.amountForged.colours"
+                    labels="graphs.amountForged.labels" legend="false" series="graphs.amountForged.series"
+                    options="graphs.amountForged.options">
+            </canvas>
+        </div>
+        <div class="light-graph-footer">
+            <div class="row">
+                <div class="col-xs-6 description">Amount Forged</br>in last year
                 </div>
+                <div class="col-xs-6 forged-amount"><span class="value">0.00 <span class="legend">XCR</span></span>
+                </div>
+                <div class="clearfix visible-lg visible-md visible-sm visible-xs"></div>
             </div>
         </div>
     </div>
 </div>
-
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="panel panel-default paginated">
@@ -137,6 +130,6 @@
             </table>
         </div>
 
-</div>
+    </div>
 </div>
 

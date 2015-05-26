@@ -46,12 +46,7 @@ angular.module('webApp').service('contactsService', function ($http, userService
                             $defer.resolve(transformedData);
                         });
         },
-        addContact: function (publicKey, pass, contact, cb) {
-            var queryParams = {
-                secret: pass,
-                following: contact,
-                publicKey: publicKey
-            }
+        addContact: function (queryParams, cb) {
             $http.put("/api/contacts/",
                 queryParams
             )

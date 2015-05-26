@@ -122,8 +122,12 @@ angular.module('webApp').service('delegateService', function ($http, $filter) {
                 .then(function (response) {
                     if (response.data.success) {
                         response.data.delegate.active = delegates.isActiveRate(response.data.delegate.rate);
-                                        }
-                    cb(response.data.delegate);
+
+                        cb(response.data.delegate);
+                    }
+                    else {
+                        cb({rate: 0, productivity: 0, vote: 0})
+                    }
 
                 });
         }

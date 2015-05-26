@@ -5,11 +5,12 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
     $scope.passmode = false;
     $scope.accountValid = true;
     $scope.errorMessage = "";
+    $scope.checkSecondPass = false;
     $scope.onlyNumbers = /^-?\d*(\.\d+)?$/;
     $scope.secondPassphrase = userService.secondPassphrase;
     $scope.address = userService.address;
-    $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
 
+    $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
 
     Number.prototype.roundTo = function (digitsCount) {
         var digitsCount = typeof digitsCount !== 'undefined' ? digitsCount : 2;
@@ -34,7 +35,14 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
         return number.roundTo(digitsCount).valueOf();
     }
 
-    $scope.passcheck = function () {
+    $scope.passcheck = function (fromSecondPass) {
+        if (fromSecondPass) {
+            $scope.checkSecondPass = false;
+            $scope.passmode = $scope.rememberedPassword ? false : true;
+            $scope.secondPassphrase = '';
+            $scope.pass = '';
+            return;
+        }
         if ($scope.rememberedPassword) {
             $scope.sendXCR($scope.rememberedPassword);
         }
@@ -196,12 +204,19 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
 
         return parseInt(result);
     }
+    $scope.clearRecipient = function () {
+        $scope.to = '';
+    }
 
-    $scope.sendXCR = function (secretPhrase) {
+    $scope.sendXCR = function (secretPhrase, withSecond) {
+        if ($scope.secondPassphrase && !withSecond) {
+            $scope.checkSecondPass = true;
+            return;
+        }
         $scope.errorMessage = "";
         if (($scope.amount + '').indexOf('.') != -1) {
             $scope.lengthError = $scope.amount.split('.')[1].length > 8;
-            $scope.errorMessage = "More than 8 numbers in decimal part";
+            $scope.errorMessage = $scope.lengthError ? "More than 8 numbers in decimal part" : '';
         }
 
         if ($scope.lengthError) {
@@ -220,6 +235,9 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
 
         if ($scope.secondPassphrase) {
             data.secondSecret = $scope.secondPhrase;
+            if ($scope.rememberedPassword) {
+                data.secret = $scope.rememberedPassword;
+            }
         }
 
         if (!$scope.lengthError && !$scope.sending) {

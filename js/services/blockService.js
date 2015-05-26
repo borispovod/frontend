@@ -37,7 +37,10 @@ angular.module('webApp').service('blockService', function ($http) {
                                 params.total(res.data.blocks[0].height);
                             }
                             $defer.resolve(response.data.blocks);
-                            blocks.lastBlockId = response.data.blocks[response.data.blocks.length - 1].id;
+                            if (response.data.blocks.length) {
+                                blocks.lastBlockId = response.data.blocks[response.data.blocks.length - 1].id;
+                            }
+                            else   { blocks.lastBlockId = 0;}
                             cb();
                         });
                 });

@@ -1,12 +1,17 @@
 require('angular');
 
-angular.module('webApp').controller('transactionsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionsService', 'ngTableParams', 'transactionInfo',
-    function ($rootScope, $scope, $http, userService, $interval, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo) {
+angular.module('webApp').controller('transactionsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionsService', 'ngTableParams', 'transactionInfo', '$timeout', 'userInfo',
+    function ($rootScope, $scope, $http, userService, $interval, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo, $timeout, userInfo) {
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Transactions', previos: 'main.dashboard'};
         $scope.view.bar = {showTransactionsSearchBar: true};
         $scope.showAllColumns = false;
         $scope.showFullTime = false;
+        $scope.transactionsView = transactionsService;
+
+        $scope.userInfo = function (userId) {
+            $scope.modal = userInfo.activate({userId: userId});
+        }
 
         $scope.transactionInfo = function (block) {
             $scope.modal = transactionInfo.activate({block: block});
@@ -24,7 +29,7 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
             counts: [],
             getData: function ($defer, params) {
                 $scope.loading = true;
-                transactionsService.getTransactions($defer, params, $scope.filter, function () {
+                transactionsService.getTransactions($defer, params, $scope.filter, $scope.transactionsView.searchForTransaction, function (error) {
                     $scope.loading = false;
                 });
             }
@@ -52,6 +57,18 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
                 $scope.updateTransactions();
             }
         });
+
+        //Search transactions watcher
+        var tempSearchTransactionID = '',
+            searchTransactionIDTimeout;
+        $scope.$watch('search.searchForTransaction', function (val) {
+            if (searchTransactionIDTimeout) $timeout.cancel(searchTransactionIDTimeout);
+            tempSearchTransactionID = val;
+            searchTransactionIDTimeout = $timeout(function () {
+                $scope.searchForTransaction = tempSearchTransactionID;
+                $scope.updateTransactions();
+            }, 2000); // delay 2000 ms
+        })
 
         $scope.updateTransactions();
 

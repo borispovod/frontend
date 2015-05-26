@@ -42,7 +42,7 @@ angular.module('webApp').controller('addContactModalController', ["$scope", "add
             }
             var queryParams = {
                 secret: pass,
-                following: $scope.contact,
+                following: '+' + $scope.contact,
                 publicKey: userService.publicKey
             }
             if ($scope.secondPassphrase) {

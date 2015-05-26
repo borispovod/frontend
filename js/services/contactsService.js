@@ -18,6 +18,7 @@ angular.module('webApp').service('contactsService', function ($http, userService
     }
     var contacts = {
         count: 0,
+        followersCount: 0,
         list: [],
         getContacts: function (publicKey, cb) {
             var queryParams = {
@@ -29,6 +30,7 @@ angular.module('webApp').service('contactsService', function ($http, userService
                 .then(function (response) {
                     contacts.list = response.data.following;
                     contacts.count = response.data.following.length;
+                    contacts.followersCount = response.data.followers.length;
                     cb();
                 });
         },
@@ -45,6 +47,20 @@ angular.module('webApp').service('contactsService', function ($http, userService
                             var transformedData = transformData(response.data.following, filter, params);
                             $defer.resolve(transformedData);
                         });
+        },
+        getSortedFollowers: function ($defer, params, filter, cb) {
+            var queryParams = {
+                publicKey: userService.publicKey
+            }
+            $http.get("/api/contacts/", {
+                params: queryParams
+            })
+                .then(function (response) {
+                    params.total(response.data.followers.length);
+                    var filteredData = $filter('filter')(response.data.followers, filter);
+                    var transformedData = transformData(response.data.followers, filter, params);
+                    $defer.resolve(transformedData);
+                });
         },
         addContact: function (queryParams, cb) {
             $http.put("/api/contacts/",

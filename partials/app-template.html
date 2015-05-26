@@ -146,6 +146,7 @@
             <div id="page-nav" ng-if="view.bar.showContactsBar">
                 <ul class="nav nav-underline pull-left">
                     <li ui-sref-active="active"><a href="#" ui-sref="main.contacts">Contacts</a></li>
+                    <li ui-sref-active="active"><a href="#" ui-sref="main.pending">Pending({{contacts.followersCount}})</a></li>
                 </ul>
                 <a ng-click="addContact()" class="btn-floating btn-large waves-effect waves-light green" style="
     position: absolute;

@@ -111,7 +111,6 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
             }
         });
 
-
         $scope.$on('$destroy', function () {
             $interval.cancel($scope.balanceInterval);
             $scope.balanceInterval = null;

@@ -12,6 +12,7 @@ angular.module('webApp').factory('serverSocket', ["socketFactory", "$location", 
     serverSocket.forward('blocks/change');
     serverSocket.forward('delegates/change');
     serverSocket.forward('contacts/change');
+    serverSocket.forward('followers/change');
 
     return serverSocket;
 }]);

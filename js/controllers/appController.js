@@ -85,11 +85,20 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
             $http.get("/api/accounts", {params: {address: userService.address}})
                 .then(function (resp) {
                     var account = resp.data.account;
-                    userService.balance = account.balance / 100000000;
-                    userService.unconfirmedBalance = account.unconfirmedBalance / 100000000;
-                    userService.secondPassphrase = account.secondSignature;
-                    userService.unconfirmedPassphrase = account.unconfirmedSignature;
-                    userService.username = account.username;
+                    if (!account){
+                        userService.balance = 0;
+                        userService.unconfirmedBalance = 0;
+                        userService.secondPassphrase = '';
+                        userService.unconfirmedPassphrase = '';
+                        userService.username = '';
+                    }
+                    else {
+                        userService.balance = account.balance / 100000000;
+                        userService.unconfirmedBalance = account.unconfirmedBalance / 100000000;
+                        userService.secondPassphrase = account.secondSignature;
+                        userService.unconfirmedPassphrase = account.unconfirmedSignature;
+                        userService.username = account.username;
+                    }
                     $scope.username = userService.username;
                     $scope.balance = userService.balance;
                     $scope.unconfirmedBalance = userService.unconfirmedBalance;
@@ -195,6 +204,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
             contactsService.getContacts(userService.publicKey, function () {
                 $scope.contacts = {
                     count: contactsService.count,
+                    followersCount: contactsService.followersCount,
                     list: contactsService.list
                 };
             });
@@ -285,6 +295,14 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         $scope.$on('socket:delegates/change', function (ev, data) {
             $scope.getAppData();
             $scope.updateViews(['forging']);
+        });
+        $scope.$on('socket:contacts/change', function (ev, data) {
+            $scope.getAppData();
+            $scope.updateViews(['contacts']);
+        });
+        $scope.$on('socket:followers/change', function (ev, data) {
+            $scope.getAppData();
+            $scope.updateViews(['followers']);
         });
 
         $window.onfocus = function () {

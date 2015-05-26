@@ -64,6 +64,11 @@ webApp.config(["ngClipProvider",
                 templateUrl: "/partials/contacts.html",
                 controller: "contactsController"
             })
+            .state('main.pending', {
+                url: "/pending",
+                templateUrl: "/partials/pendings.html",
+                controller: "pendingsController"
+            })
             .state('passphrase', {
                 url: "/",
                 templateUrl: "/partials/passphrase.html",

@@ -1,13 +1,13 @@
 require('angular');
 
-angular.module('webApp').controller('contactsController', ['$scope', '$rootScope', '$http', 'viewFactory', 'contactsService', 'ngTableParams',
+angular.module('webApp').controller('pendingsController', ['$scope', '$rootScope', '$http', 'viewFactory', 'contactsService', 'ngTableParams',
     function ($rootScope, $scope, $http, viewFactory, contactsService, ngTableParams) {
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Contacts', previos: null};
         $scope.view.bar = {showContactsBar: true};
         $scope.contactsView = contactsService;
         //Contacts table
-        $scope.tableContacts = new ngTableParams({
+        $scope.tableFollowers = new ngTableParams({
             page: 1,            // show first page
             count: 25,
             sorting: {
@@ -17,7 +17,7 @@ angular.module('webApp').controller('contactsController', ['$scope', '$rootScope
             counts: [],
             total: 0,
             getData: function ($defer, params) {
-                contactsService.getSortedContacts($defer, params, $scope.filter);
+                contactsService.getSortedFollowers($defer, params, $scope.filter);
             }
         });
 
@@ -27,14 +27,14 @@ angular.module('webApp').controller('contactsController', ['$scope', '$rootScope
             $scope.tableContacts.reload();
         });
 
-        $scope.updateContacts = function () {
+        $scope.updateFollowers = function () {
             $scope.tableContacts.reload();
         };
         //end Top delegates
 
         $scope.$on('updateControllerData', function (event, data) {
-            if (data.indexOf('contacts') != -1) {
-                $scope.updateContacts();
+            if (data.indexOf('followers') != -1) {
+                $scope.updateFollowers();
             }
         });
 

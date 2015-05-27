@@ -41,7 +41,7 @@
   background-position: center;"></div>
             <div class="loading clearfix" class="clearfix" style="
    padding:60px 25px 35px;" ng-controller="loadingController">
-                <div class="progress">
+                <div class="progress" ng-show="height">
                     <div class="determinate" style="width: {{loadingState}}%"></div>
                 </div>
                 <h3 class="heading" ng-show="!height || !blocksCount">Blockchain is loading...</h3>

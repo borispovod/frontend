@@ -9,7 +9,11 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         $scope.xcr_usd = 0;
         $scope.version = 'ersion load';
         $scope.diffVersion = 0;
+        $scope.subForgingCollapsed = true;
 
+        $scope.collapseMenu = function(){
+            $scope.subForgingCollapsed = !$scope.subForgingCollapsed;
+        }
 
         $scope.moreDropdownStatus = {
             isopen: false

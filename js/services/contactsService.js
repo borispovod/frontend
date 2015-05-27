@@ -16,6 +16,7 @@ angular.module('webApp').service('contactsService', function ($http, userService
     function transformData(data, filter, params) {
         return sliceData(orderData(filterData(data, filter), params), params);
     }
+
     var contacts = {
         count: 0,
         followersCount: 0,
@@ -28,9 +29,16 @@ angular.module('webApp').service('contactsService', function ($http, userService
                 params: queryParams
             })
                 .then(function (response) {
-                    contacts.list = response.data.following;
-                    contacts.count = response.data.following.length;
-                    contacts.followersCount = response.data.followers.length;
+                    if (response.data.success) {
+                        contacts.list = response.data.following;
+                        contacts.count = response.data.following.length;
+                        contacts.followersCount = response.data.followers.length;
+                    }
+                    else {
+                        contacts.list = [];
+                        contacts.count = 0;
+                        contacts.followersCount = 0;
+                    }
                     cb();
                 });
         },
@@ -38,15 +46,15 @@ angular.module('webApp').service('contactsService', function ($http, userService
             var queryParams = {
                 publicKey: userService.publicKey
             }
-                    $http.get("/api/contacts/", {
-                        params: queryParams
-                    })
-                        .then(function (response) {
-                            params.total(response.data.following.length);
-                            var filteredData = $filter('filter')(response.data.following, filter);
-                            var transformedData = transformData(response.data.following, filter, params);
-                            $defer.resolve(transformedData);
-                        });
+            $http.get("/api/contacts/", {
+                params: queryParams
+            })
+                .then(function (response) {
+                    params.total(response.data.following.length);
+                    var filteredData = $filter('filter')(response.data.following, filter);
+                    var transformedData = transformData(response.data.following, filter, params);
+                    $defer.resolve(transformedData);
+                });
         },
         getSortedFollowers: function ($defer, params, filter, cb) {
             var queryParams = {

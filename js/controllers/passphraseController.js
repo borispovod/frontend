@@ -10,7 +10,6 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
 
         // angular.element(document.getElementById("forgingButton")).show();
         $scope.newUser = function () {
-            console.log('done');
             $scope.newUserModal = newUser.activate({
                 destroy: function () {
                 }

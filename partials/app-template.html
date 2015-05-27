@@ -11,7 +11,8 @@
                 <img src="images/samples/account.png">
             </div>
             <span class="name" ng-show="username">Welcome back, {{username}}</span>
-            <span class="name name-add" ng-click="userSettings()" ng-hide="username">Welcome, click to edit profile</span>
+            <span class="name name-add" ng-click="userSettings()"
+                  ng-hide="username">Welcome, click to edit profile</span>
             <span class="address">{{address}}</span>
         </div>
         <div class="white-glow"></div>
@@ -35,14 +36,13 @@
             <li ng-show="showMenuItem('main.forging')" ui-sref-active="active"><a ui-sref="main.forging"
                                                                                   class="waves-effect waves-blue">
                 <div class="nav-icon" id="forging-icon"></div>
-                <span class="menu-text">Forging</span><i class="vertical-text right mdi-hardware-keyboard-arrow-down"
-                                                         style="
-    opacity: .87;    display: inline-block;
-    padding-top: 2px;
-    padding-right: 15px;
-    font-size: 20px;
-"></i></a> </li>
-            <ul id="submenu">
+                <span class="menu-text">Forging</span><i
+                                                         ng-click="collapseMenu()"
+                                                         stop-event
+                                                         class="vertical-text right submenu-collapsing"
+                                                         ng-class="{'mdi-hardware-keyboard-arrow-down': subForgingCollapsed, 'mdi-hardware-keyboard-arrow-up':!subForgingCollapsed}"></i></a>
+            </li>
+            <ul id="submenu" ng-hide="subForgingCollapsed">
                 <li ng-show="showMenuItem('main.delegates')" ui-sref-active="active"><a ui-sref="main.delegates"
                                                                                         class="waves-effect waves-blue">
                     <div class="nav-icon" id="delegates-icon"></div>
@@ -74,6 +74,7 @@
                 <h1 id="title"><span class="title-icon" ng-show="view.page.previos" ng-click="goToPrevios()">
             <span class="sr-only">Go to previos page</span></span>{{view.page.title}}</h1>
                 <span class="forging-state" ng-show="view.forgingState">{{view.forgingState}}</span>
+
                 <div id="top-menu" class="valign-wrapper">
                 <span id="balance">
                 {{unconfirmedBalance | feeFilter}} XCR
@@ -101,7 +102,8 @@
                         <i class="mdi-navigation-more-vert" dropdown-toggle></i>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#" ng-click="myUserInfo()">My Profile</a></li>
-                            <li ng-if="!secondPassphrase"><a href="#" ng-click="setSecondPassphrase()">2nd Passphrase</a></li>
+                            <li ng-if="!secondPassphrase"><a href="#" ng-click="setSecondPassphrase()">2nd
+                                Passphrase</a></li>
                             <li><a href="/">Logout</a></li>
                         </ul>
                     </div>
@@ -110,7 +112,8 @@
             <div class="search-bar" ng-show="view.bar.showTransactionsSearchBar">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="mdi-action-search"></i></span>
-                    <input type="text" class="form-control" placeholder="Search for transactions" ng-model="searchTransactions.searchForTransaction">
+                    <input type="text" class="form-control" placeholder="Search for transactions"
+                           ng-model="searchTransactions.searchForTransaction">
                 </div>
             </div>
             <div class="search-bar" ng-show="view.bar.showBlockSearchBar">
@@ -146,7 +149,8 @@
             <div id="page-nav" ng-if="view.bar.showContactsBar">
                 <ul class="nav nav-underline pull-left">
                     <li ui-sref-active="active"><a href="#" ui-sref="main.contacts">Contacts</a></li>
-                    <li ui-sref-active="active"><a href="#" ui-sref="main.pending">Pending({{contacts.followersCount}})</a></li>
+                    <li ui-sref-active="active"><a href="#"
+                                                   ui-sref="main.pending">Pending({{contacts.followersCount}})</a></li>
                 </ul>
                 <a ng-click="addContact()" class="btn-floating btn-large waves-effect waves-light green" style="
     position: absolute;

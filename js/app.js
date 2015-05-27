@@ -4,6 +4,7 @@ require('angular-modal');
 require('angular-resource');
 require('browserify-angular-animate');
 require('ng-clip');
+//require('../bower_components//angular-animate/angular-animate.js')
 require('../bower_components/angular-chart.js/dist/angular-chart.js');
 require('../bower_components/angular-socket-io/socket.js');
 //require('../bower_components/angular-materialize/src/angular-materialize.js');

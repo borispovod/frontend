@@ -40,7 +40,9 @@ angular.module('webApp').service('blockService', function ($http) {
                             if (response.data.blocks.length) {
                                 blocks.lastBlockId = response.data.blocks[response.data.blocks.length - 1].id;
                             }
-                            else   { blocks.lastBlockId = 0;}
+                            else   {
+                                blocks.lastBlockId = 0;
+                            }
                             cb();
                         });
                 });

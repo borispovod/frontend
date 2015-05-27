@@ -112,6 +112,7 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
                 $scope.loading = true;
                 blockService.getBlocks($defer, params, $scope.filter, function () {
                     $scope.loading = false;
+                    $scope.countForgingBlocks = params.total;
                 }, userService.publicKey);
             }
         });

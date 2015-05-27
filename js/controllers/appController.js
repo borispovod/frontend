@@ -7,7 +7,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         $scope.searchTransactions = transactionsService;
         $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
         $scope.xcr_usd = 0;
-        $scope.version = '... loading data';
+        $scope.version = 'version load';
         $scope.diffVersion = 0;
 
 
@@ -91,7 +91,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                 }
                 else {
                     $scope.diffVersion = -1;
-                    $scope.version = 'ersion undefined';
+                    $scope.version = 'ersion error';
                 }
             });
         };

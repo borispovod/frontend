@@ -27,6 +27,10 @@ angular.module('webApp').service('userService', function () {
 		this.delegate = delegate;
 	}
 
+    this.setDelegateTime = function(transactions){
+        this.delegate.time = transactions[0].timestamp;
+    }
+
 	this.setDelegateProcess = function (delegate) {
 		this.delegateInRegistration = delegate;
 	}

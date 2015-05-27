@@ -161,7 +161,6 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
 
         $scope.enableForging = function () {
             if ($scope.rememberedPassword) {
-
                 $http.post("/api/delegates/forging/enable", {
                     secret: $scope.rememberedPassword,
                     publicKey: userService.publicKey
@@ -169,7 +168,6 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                     .then(function (resp) {
                         userService.setForging(resp.data.success);
                         $scope.forging = resp.data.success;
-
                     });
 
 
@@ -255,7 +253,22 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                 }
                 $scope.delegate = response;
                 userService.setDelegate($scope.delegate);
-
+                if (!response.noDelegate) {
+                    $http.get("/api/transactions", {
+                        params: {
+                            senderPublicKey: userService.publicKey,
+                            limit: 1,
+                            type: 2
+                        }
+                    }).then(function (response) {
+                        if (response.data.success) {
+                            userService.setDelegateTime(response.data.transactions);
+                        }
+                        else {
+                            userService.setDelegateTime([{timestamp:null}]);
+                        }
+                    });
+                }
             });
         }
 

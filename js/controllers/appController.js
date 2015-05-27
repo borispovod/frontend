@@ -1,5 +1,5 @@
 require('angular');
-
+var compareVersion = require('../../node_modules/compare-version/index.js');
 
 angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", 'viewFactory', '$state', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal', 'userInfo', 'transactionsService', 'secondPassphraseModal',
     function ($rootScope, $scope, $http, userService, $interval, viewFactory, $state, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal, userInfo, transactionsService, secondPassphraseModal) {
@@ -7,6 +7,9 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         $scope.searchTransactions = transactionsService;
         $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
         $scope.xcr_usd = 0;
+        $scope.version = '... loading data';
+        $scope.diffVersion = 0;
+
 
         $scope.moreDropdownStatus = {
             isopen: false
@@ -77,15 +80,31 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                 });
         };
 
+        $scope.getVersion = function () {
+            $http.get("/api/peers/version").then(function (response) {
+                if (response.data.success) {
+                    $scope.version = response.data.version;
+                    $http.get("https://wallet.crypti.me/api/peers/version").then(function (response) {
+                        $scope.latest = response.data.version;
+                        $scope.diffVersion = compareVersion($scope.version, $scope.latest);
+                    });
+                }
+                else {
+                    $scope.diffVersion = -1;
+                    $scope.version = 'ersion undefined';
+                }
+            });
+        };
+
         $scope.convertToUSD = function (xcr) {
             return (xcr / 100000000) * $scope.xcr_usd;
-        }
+        };
 
         $scope.getAppData = function () {
             $http.get("/api/accounts", {params: {address: userService.address}})
                 .then(function (resp) {
                     var account = resp.data.account;
-                    if (!account){
+                    if (!account) {
                         userService.balance = 0;
                         userService.unconfirmedBalance = 0;
                         userService.secondPassphrase = '';
@@ -109,8 +128,9 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                     $scope.getDelegate();
                     $scope.getMyVotesCount();
                     $scope.getContacts();
+                    $scope.getVersion();
                 });
-        }
+        };
 
         $scope.sendCrypti = function (to) {
             to = to || '';

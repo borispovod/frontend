@@ -48,7 +48,7 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
             },
             rank: {
                 labels: ['Others', 'Rank'],
-                values: [0, 100],
+                values: [100, 0],
                 colours: ['#90a4ae', '#f5f5f5'],
                 options: {
                     percentageInnerCutout: 90,

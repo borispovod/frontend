@@ -163,6 +163,18 @@
     color: @cloud;
     border-top: 4px solid @cloud;
   }
+  &.widget-red {
+    color: @white;
+    background-color: @red;
+    .btn-white {
+      background-color: @white !important;
+      color: @red;
+      &:hover, &:focus, &.focus {
+        color: @red;
+      }
+    }
+  }
+
   .panel-body {
   }
   .wg-label {

@@ -14,7 +14,7 @@ angular.module('webApp').filter('timeAgoFilter', function ($filter) {
         var diffTime = (currentTime - time.getTime()) / 1000;
 
         if (diffTime < 60) {
-            return '1 min ago';
+            return Math.floor(diffTime) + ' sec ago';
         }
         if (Math.floor(diffTime / 60) <= 1) {
             return Math.floor(diffTime / 60) + ' min ago';

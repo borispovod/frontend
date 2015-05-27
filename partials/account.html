@@ -7,7 +7,7 @@
             <div class="crypti-icon"></div>
             <div class="panel-body">
                 <div class="wg-label">Balance</div>
-                <div class="wg-data"><span class="strong">{{balanceToShow[0]}}<span class="small">{{balanceToShow[1]}}</span></span> XCR</div>
+                <div class="wg-data"><span class="strong">{{balanceToShow[0] || 0}}<span class="small">{{balanceToShow[1]}}</span></span> XCR</div>
             </div>
         </div>
     </div>
@@ -22,7 +22,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+    <!--<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
         <div class="panel  widget widget-violet">
             <div class="dapp-icon"></div>
             <div class="panel-body">
@@ -31,7 +31,7 @@
                         class="wg-legend">5 Updates Available</span></div>
             </div>
         </div>
-    </div>
+    </div>-->
     <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
         <div class="panel  widget widget-cloud">
             <div class="panel-body">
@@ -44,7 +44,7 @@
 
 </div>
 <div class="row">
-    <div class="col-lg-9 col-md-12 col-sm-12  col-xs-12">
+    <div class="col-lg-12 col-md-12 col-sm-12  col-xs-12">
         <div class="panel  panel-default">
             <div class="panel-heading" ng-class="{'cursor': transactions.length}"
                  eat-click-if="!transactions.length" ui-sref="main.transactions"><h2>Latest Transactions</h2>
@@ -84,6 +84,7 @@
                 <p class="empty-state-text">You haven't made any transactions yet.</p></div>
         </div>
     </div>
+    <!--
     <div class="col-lg-3 col-md-6 col-sm-6  col-xs-12">
         <div class="light-graph line-graph">
             <div class="light-graph-heading">No Data Available</div>
@@ -107,7 +108,9 @@
             </div>
         </div>
     </div>
+    -->
 </div>
+<!--
 <div class="col-lg-8 col-md-6 col-sm-6  col-xs-12">
     <div class="panel  panel-default panel-list">
         <div class="panel-heading cursor"><h2>Dapp News</h2>
@@ -231,4 +234,5 @@
             <p class="empty-state-text">You haven't started any conversation yet.</p></div>
     </div>
 </div>
+-->
 

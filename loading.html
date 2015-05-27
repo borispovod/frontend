@@ -5,17 +5,53 @@
     <title>Crypti - loading...</title>
     <link rel="shortcut icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="/static/css/app.css">
-    <script src="/static/js/br_app.js"></script>
+    <script src="/static/js/vendor_app.js"></script>
 </head>
-    <body>
-        <div id="pass">
-            <div id="center">
-                <div id="logo-grey"></div>
-                <div class="loading" ng-controller="loadingController">
-                    <h3 class="heading" ng-show="!height || !blocksCount">Blockchain loading...</h3>
-                    <h3 class="heading" ng-show="height">Blockchain loading: ({{height}}/{{blocksCount}} blocks)</h3>
+<body>
+<div id="pass" ng-controller="loadingController">
+    <div style="
+    background-image: url('images/banner.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 40%;
+"></div>
+    <div style="
+    /* margin-bottom: 100px; */
+    width: 100%;
+    height: 60%;
+    position: relative;
+">
+        <div style="
+    width: 372px;
+    background-color: #ffffff;
+    border: solid 1px #cecece;
+    margin: -100px auto 0;
+    /* height: 324px; */
+    border-radius: 4px;
+">
+            <div style="
+     background-repeat: no-repeat;
+  height: 100px;
+  background-color: #263238;
+  background-image: url('images/logo-white.png');
+  /* border-color: #263238; */
+  margin: -1px;
+  border-radius: 4px 4px 0 0;
+  background-position: center;"></div>
+            <div class="loading clearfix" class="clearfix" style="
+   padding:60px 25px 35px;" ng-controller="loadingController">
+                <div class="progress">
+                    <div class="determinate" style="width: {{loadingState}}%"></div>
                 </div>
+                <h3 class="heading" ng-show="!height || !blocksCount">Blockchain is loading...</h3>
+
+                <h3 class="heading" ng-show="height">{{loadingState}}%</h3>
+
+                <h3 class="heading" ng-show="height">Blockchain is loading...</h3>
             </div>
         </div>
-    </body>
+    </div>
+</div>
+</body>
 </html>

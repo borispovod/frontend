@@ -33,7 +33,7 @@ angular.module('webApp').controller('pendingsController', ['$scope', '$rootScope
         //end Top delegates
 
         $scope.$on('updateControllerData', function (event, data) {
-            if (data.indexOf('followers') != -1) {
+            if (data.indexOf('main.pending') != -1) {
                 $scope.updateFollowers();
             }
         });

@@ -7,7 +7,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         $scope.searchTransactions = transactionsService;
         $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
         $scope.xcr_usd = 0;
-        $scope.version = 'version load';
+        $scope.version = 'ersion load';
         $scope.diffVersion = 0;
 
 
@@ -265,7 +265,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                             userService.setDelegateTime(response.data.transactions);
                         }
                         else {
-                            userService.setDelegateTime([{timestamp:null}]);
+                            userService.setDelegateTime([{timestamp: null}]);
                         }
                     });
                 }
@@ -276,7 +276,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
             $http.get("/api/loader/status/sync").then(function (resp) {
                 if (resp.data.success) {
                     $scope.sync = resp.data.sync ? (resp.data.height / resp.data.blocks) * 100 : resp.data.sync;
-                    $scope.loading.values = [resp.data.height - resp.data.blocks, resp.data.blocks];
+                    $scope.loading.values = [(resp.data.height - resp.data.blocks) < 0 ? (0 - (resp.data.height - resp.data.blocks)) : (resp.data.height - resp.data.blocks), resp.data.blocks];
 
                 }
             });
@@ -319,28 +319,28 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
 
         $scope.$on('socket:transactions/change', function (ev, data) {
             $scope.getAppData();
-            $scope.updateViews(['account']);
+            $scope.updateViews([$state.current.name]);
         });
         $scope.$on('socket:blocks/change', function (ev, data) {
             $scope.getAppData();
-            $scope.updateViews(['account', 'blockchain', 'transactions', 'forging']);
+            $scope.updateViews([$state.current.name]);
         });
         $scope.$on('socket:delegates/change', function (ev, data) {
             $scope.getAppData();
-            $scope.updateViews(['forging']);
+            $scope.updateViews([$state.current.name]);
         });
         $scope.$on('socket:contacts/change', function (ev, data) {
             $scope.getAppData();
-            $scope.updateViews(['contacts']);
+            $scope.updateViews([$state.current.name]);
         });
         $scope.$on('socket:followers/change', function (ev, data) {
             $scope.getAppData();
-            $scope.updateViews(['followers']);
+            $scope.updateViews([$state.current.name]);
         });
 
         $window.onfocus = function () {
             $scope.getAppData();
-            $scope.updateViews(['account', 'blockchain']);
+            $scope.updateViews([$state.current.name]);
         }
 
         $scope.updateViews = function (views) {

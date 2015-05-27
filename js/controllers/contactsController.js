@@ -33,7 +33,7 @@ angular.module('webApp').controller('contactsController', ['$scope', '$rootScope
         //end Top delegates
 
         $scope.$on('updateControllerData', function (event, data) {
-            if (data.indexOf('contacts') != -1) {
+            if (data.indexOf('main.contacts') != -1) {
                 $scope.updateContacts();
             }
         });

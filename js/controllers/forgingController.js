@@ -175,7 +175,7 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
 
 
         $scope.$on('updateControllerData', function (event, data) {
-            if (data.indexOf('forging') != -1) {
+            if (data.indexOf('main.forging') != -1) {
                 $scope.updateBlocks();
                 $scope.getForgedAmount();
                 $scope.updateGraphs();

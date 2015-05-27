@@ -1,39 +1,9 @@
-<div id="pass" >
-    <div style="
-    background-image: url('images/banner.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 100%;
-    height: 40%;
-"></div>
-    <div style="
-    /* margin-bottom: 100px; */
-    width: 100%;
-    height: 60%;
-    position: relative;
-">
-        <div style="
-    width: 372px;
-    background-color: #ffffff;
-    border: solid 1px #cecece;
-    margin: -100px auto 0;
-    /* height: 324px; */
-    border-radius: 4px;
-">
-            <div style="
-     background-repeat: no-repeat;
-  height: 100px;
-  background-color: #263238;
-  background-image: url('images/logo-white.png');
-  /* border-color: #263238; */
-  margin: -1px;
-  border-radius: 4px 4px 0 0;
-  background-position: center;"></div>
-            <form class="clearfix" style="
-    padding: 10px 25px 25px;
-    /* height: 242px; */
-    /* position: relative; */
-" _lpchecked="1" ng-submit="login(pass, rememberPassword)">
+<div id="pass">
+    <div class="pass-banner"></div>
+    <div class="pass-bottom">
+        <div class="pass-window">
+            <div class="pass-window-icon"></div>
+            <form class="clearfix pass-window-form" _lpchecked="1" ng-submit="login(pass, rememberPassword)">
                 <div class="input-field ">
                     <input id="password" type="password" ng-model="pass" ng-trim="false" autofocus>
                     <label for="password">Your Passphrase</label>
@@ -57,16 +27,7 @@
             </form>
 
         </div>
-        <div style="
-    position: absolute;
-    bottom: -80px;
-    /* margin: 0 auto; */
-    text-align: center;
-    width: 100%;
-    color: #000;
-    opacity: 0.54;
-    font-size: 14px;
-">Crypti © 2015. All Rights Reserved.
+        <div class="pass-footer">Crypti © 2015. All Rights Reserved.
         </div>
     </div>
 </div>

@@ -53,7 +53,7 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
         });
 
         $scope.$on('updateControllerData', function (event, data) {
-            if (data.indexOf('transactions') != -1) {
+            if (data.indexOf('main.transactions') != -1) {
                 $scope.updateTransactions();
             }
         });

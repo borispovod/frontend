@@ -40,7 +40,7 @@ angular.module('webApp').controller('blockchainController', ['$scope', '$rootSco
         //end Blocks
 
         $scope.$on('updateControllerData', function (event, data) {
-            if (data.indexOf('blockchain') != -1) {
+            if (data.indexOf('main.blockchain') != -1) {
                 $scope.updateBlocks();
             }
         });

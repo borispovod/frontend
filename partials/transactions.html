@@ -28,10 +28,12 @@
                                                                                                   ng-click="transactionInfo(block)">{{transaction.id}}</a>
                     </td>
                     <td data-title="'Sender'" class="pointer" sortable="'t_senderId'"><a href="#"
-                                                                                         ng-click="userInfo(transaction.senderId)">{{transaction.senderId}}</a>
+                                                                                         ng-click="userInfo(transaction.senderId)">{{transaction.senderUsername
+                        || transaction.senderId}}</a>
                     </td>
                     <td data-title="'Recipient'" class="pointer" sortable="'t_recipientId'"><a href="#"
-                                                                                               ng-click="userInfo(transaction.recipientId)">{{transaction.recipientId}}</a>
+                                                                                               ng-click="userInfo(transaction.recipientId)">{{transaction.recipientUsername
+                        || transaction.recipientId}}</a>
                     </td>
                     <td data-title="'Time'" sortable="'t_timestamp'">{{transaction.timestamp | timeAgoFilter :
                         showFullTime}}

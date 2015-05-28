@@ -2,7 +2,7 @@
 
 </div>
 <div class="row">
-    <div class="col-lg-4 col-md-6 col-sm-12">
+    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
         <div class="panel widget widget-green">
             <div class="crypti-icon"></div>
             <div class="panel-body">
@@ -13,7 +13,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-4 col-md-6 col-sm-12">
+    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
         <div class="panel  widget widget-blue">
             <div class="contacts-icon"></div>
             <div class="panel-body">
@@ -34,7 +34,7 @@
             </div>
         </div>
     </div>-->
-    <div class="col-lg-4 col-md-6 col-sm-12">
+    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
         <div class="panel  widget widget-cloud" ng-show="diffVersion!=-1">
             <div class="panel-body">
                 <div class="wg-label">Crypti Client</div>
@@ -75,9 +75,9 @@
                 <tr ng-repeat="transaction in transactions">
                     <td class="hide-in-1400"><a href="#" ng-click="transactionInfo(transaction)">{{transaction.id}}</a>
                     </td>
-                    <td class="padding-in-1400"><a href="#" ng-click="userInfo(transaction.senderId)">{{transaction.senderId}}</a>
+                    <td class="padding-in-1400"><a href="#" ng-click="userInfo(transaction.senderId)">{{transaction.senderUsername || transaction.senderId}}</a>
                     </td>
-                    <td ng-show="transaction.type <= 1"><a href="#" ng-click="userInfo(transaction.recipientId)">{{transaction.recipientId}}</a>
+                    <td ng-show="transaction.type <= 1"><a href="#" ng-click="userInfo(transaction.recipientId)">{{transaction.recipientUsername || transaction.recipientId}}</a>
                     </td>
                     <td ng-show="transaction.type > 1"></td>
                     <td>{{transaction.timestamp | timeAgoFilter: false}}</td>

@@ -1,5 +1,4 @@
-<div id="wrapper" ng-controller="appController">
-
+<div id="wrapper" ng-controller="appController" ng-class="{'toggled': !toggled}">
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
         <a ui-sref="main.account">
@@ -71,6 +70,12 @@
     <div id="page-content-wrapper">
         <div class="header-wrapper">
             <div class="nav-bar" id="header">
+                <button type="button" class="toggle-menu" ng-click="toggleMenu()">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 <h1 id="title"><span class="title-icon" ng-show="view.page.previos" ng-click="goToPrevios()">
             <span class="sr-only">Go to previos page</span></span>{{view.page.title}}</h1>
                 <span class="forging-state" ng-show="view.forgingState">{{view.forgingState}}</span>
@@ -82,7 +87,6 @@
                     <a class="btn btn-sky-blue waves-effect waves-light left-margin-20" ng-click="sendCrypti()"><i
                             class="mdi-content-send left"></i>SEND
                     </a>
-
                     <!--<div class="notifications left-margin-20 valign-wrapper" dropdown
                          is-open="moreNotificationsStatus.isopen"><span dropdown-toggle>9</span>
                         <ul class="dropdown-menu" role="menu">

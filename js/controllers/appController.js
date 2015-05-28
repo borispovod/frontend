@@ -5,6 +5,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
     function ($rootScope, $scope, $http, userService, $interval, viewFactory, $state, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal, userInfo, transactionsService, secondPassphraseModal) {
 
         $scope.searchTransactions = transactionsService;
+        $scope.toggled = false;
         $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
         $scope.xcr_usd = 0;
         $scope.version = 'ersion load';
@@ -13,6 +14,10 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
 
         $scope.collapseMenu = function(){
             $scope.subForgingCollapsed = !$scope.subForgingCollapsed;
+        }
+
+        $scope.toggleMenu = function(){
+            $scope.toggled = !$scope.toggled;
         }
 
         $scope.moreDropdownStatus = {

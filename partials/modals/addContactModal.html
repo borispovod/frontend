@@ -17,7 +17,7 @@
                             <span class="input-group-addon search"></span>
                             <input id="contact" type="text" class="form-control" placeholder="Account name or ID"
                                    ng-model="contact">
-                            <span class="input-group-addon clear"></span>
+                            <span class="input-group-addon clear" ng-click="contact='';"></span>
                         </div>
                             <span class="app-addon-error"
                                   ng-show="errorMessage && rememberedPassword">{{errorMessage}}</span>

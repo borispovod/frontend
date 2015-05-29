@@ -11,7 +11,7 @@ angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$
         if (fromSecondPass) {
             $scope.checkSecondPass = false;
             $scope.passmode = $scope.rememberedPassword ? false : true;
-            $scope.secondPassphrase = '';
+            $scope.secondPhrase = '';
             $scope.pass = '';
             return;
         }

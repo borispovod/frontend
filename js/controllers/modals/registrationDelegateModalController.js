@@ -22,7 +22,7 @@ angular.module('webApp').controller('registrationDelegateModalController', ["$sc
             if (fromSecondPass) {
                 $scope.checkSecondPass = false;
                 $scope.passmode = $scope.rememberedPassword ? false : true;
-                $scope.secondPassphrase = '';
+                $scope.secondPhrase = '';
                 $scope.pass = '';
                 return;
             }

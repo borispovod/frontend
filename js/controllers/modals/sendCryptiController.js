@@ -39,7 +39,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
         if (fromSecondPass) {
             $scope.checkSecondPass = false;
             $scope.passmode = $scope.rememberedPassword ? false : true;
-            $scope.secondPassphrase = '';
+            $scope.secondPhrase = '';
             $scope.pass = '';
             return;
         }

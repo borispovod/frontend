@@ -14,7 +14,7 @@ angular.module('webApp').controller('addContactModalController', ["$scope", "add
             if (fromSecondPass) {
                 $scope.checkSecondPass = false;
                 $scope.passmode = $scope.rememberedPassword ? false : true;
-                $scope.secondPassphrase = '';
+                $scope.secondPhrase = '';
                 $scope.pass = '';
                 return;
             }

@@ -4,7 +4,6 @@ angular.module('webApp').controller('forgingModalController', ["$scope", "forgin
     $scope.error = null;
     $scope.forging = userService.forging;
 
-
     if ($scope.forging) {
         $scope.label = "Disable Forging"
     }

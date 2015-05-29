@@ -25,7 +25,7 @@
                     <td data-title="'Height'" sortable="'b_height'">{{transaction.height}}
                     </td>
                     <td ng-show="showAllColumns" data-title="'Transaction ID'" class="pointer"><a href="#"
-                                                                                                  ng-click="transactionInfo(block)">{{transaction.id}}</a>
+                                                                                                  ng-click="transactionInfo(transaction)">{{transaction.id}}</a>
                     </td>
                     <td data-title="'Sender'" class="pointer" sortable="'t_senderId'"><a href="#"
                                                                                          ng-click="userInfo(transaction.senderId)">{{transaction.senderUsername

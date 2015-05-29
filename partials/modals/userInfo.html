@@ -72,12 +72,13 @@
                                         </div>
                                         <div class="transaction-path">
                                             <div class="transaction-part pull-left"><a
-                                                    href="#">{{transaction.senderId}}</a> <span
+                                                    href="#" ng-click="getAccountDetail(transaction.senderId)">{{transaction.senderId}}</a> <span
                                                     class="xcr">{{transaction.amount / 100000000 | feeFilter}} XCR</span>
                                             </div>
                                             <div class="transaction-direction"></div>
-                                            <div class="transaction-part pull-right"><a href="#">{{transaction.recipientId
-                                                || "-"}}</a><span
+                                            <div class="transaction-part pull-right"><a href="#"
+                                                                                        ng-click="getAccountDetail(transaction.recipientId)">{{transaction.recipientId
+                                                || ""}}</a><span
                                                     class="xcr">{{transaction.amount / 100000000 | feeFilter}} XCR</span>
                                             </div>
                                         </div>

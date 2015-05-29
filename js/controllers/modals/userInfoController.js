@@ -2,6 +2,8 @@ require('angular');
 
 angular.module('webApp').controller('userInfoController', ["$scope", "$http", "userInfo", "sendCryptiModal", function ($scope, $http, userInfo, sendCryptiModal) {
 
+    $scope.userIdOld = '';
+
     $scope.sendCryptiToUser = function () {
         userInfo.deactivate();
         $scope.sendCryptiModal = sendCryptiModal.activate({
@@ -13,10 +15,14 @@ angular.module('webApp').controller('userInfoController', ["$scope", "$http", "u
     }
 
     $scope.getAccountDetail = function (userId) {
+        if ($scope.userIdOld == userId){
+            return;
+        }
+        $scope.userIdOld = userId;
+        $scope.transactions = {view: false, list: [1]};
         $http.get("/api/accounts", {params: {address: userId}})
             .then(function (resp) {
                 $scope.account = resp.data.account;
-
                     $http.get("/api/transactions", {
                         params: {
                             senderPublicKey: $scope.account.publicKey,

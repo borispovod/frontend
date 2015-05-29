@@ -5,8 +5,16 @@ angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$
     $scope.fromServer = '';
     $scope.passmode = false;
     $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
+    $scope.secondPassphrase = userService.secondPassphrase;
 
-    $scope.passcheck = function () {
+    $scope.passcheck = function (fromSecondPass) {
+        if (fromSecondPass) {
+            $scope.checkSecondPass = false;
+            $scope.passmode = $scope.rememberedPassword ? false : true;
+            $scope.secondPassphrase = '';
+            $scope.pass = '';
+            return;
+        }
         if ($scope.rememberedPassword) {
             $scope.vote($scope.rememberedPassword);
         }
@@ -52,12 +60,15 @@ angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$
         delete $scope.voteList[publicKey];
     }
 
-    $scope.vote = function (pass) {
-
+    $scope.vote = function (pass, withSecond) {
+        if ($scope.secondPassphrase && !withSecond) {
+            $scope.checkSecondPass = true;
+            return;
+        }
         pass = pass || $scope.secretPhrase;
 
         var data = {
-            secret: $scope.secretPhrase,
+            secret: pass,
             delegates: Object.keys($scope.voteList).map(function (key) {
                 return ($scope.adding ? '+' : '-') + key;
             }),
@@ -66,7 +77,11 @@ angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$
 
         if ($scope.secondPassphrase) {
             data.secondSecret = $scope.secondPhrase;
+            if ($scope.rememberedPassword) {
+                data.secret = $scope.rememberedPassword;
+            }
         }
+
         $scope.voting = !$scope.voting;
         $http.put("/api/accounts/delegates", data).then(function (resp) {
             $scope.voting = !$scope.voting;

@@ -7,6 +7,7 @@ angular.module('webApp').controller('registrationDelegateModalController', ["$sc
         $scope.action = false;
         $scope.isSecondPassphrase = userService.secondPassphrase;
         $scope.passmode = false;
+        $scope.secondPassphrase = userService.secondPassphrase;
         $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
 
         $scope.close = function () {
@@ -17,27 +18,45 @@ angular.module('webApp').controller('registrationDelegateModalController', ["$sc
             registrationDelegateModal.deactivate();
         }
 
-        $scope.passcheck = function () {
+        $scope.passcheck = function (fromSecondPass) {
+            if (fromSecondPass) {
+                $scope.checkSecondPass = false;
+                $scope.passmode = $scope.rememberedPassword ? false : true;
+                $scope.secondPassphrase = '';
+                $scope.pass = '';
+                return;
+            }
             if ($scope.rememberedPassword) {
                 $scope.registrationDelegate($scope.rememberedPassword);
             }
             else {
-            $scope.passmode = !$scope.passmode;
-            $scope.pass = '';}
+                $scope.passmode = !$scope.passmode;
+                $scope.pass = '';
+            }
         }
 
-        $scope.registrationDelegate = function (pass) {
+        $scope.registrationDelegate = function (pass, withSecond) {
+            if ($scope.secondPassphrase && !withSecond) {
+                $scope.checkSecondPass = true;
+                return;
+            }
             pass = pass || $scope.secretPhrase;
 
             $scope.action = true;
             $scope.error = null;
-
-            $http.put("/api/delegates/", {
+            var data = {
                 secret: pass,
                 secondSecret: $scope.secondPassphrase,
-                username: $scope.username,
+                username: $scope.delegateUsername,
                 publicKey: userService.publicKey
-            })
+            };
+            if ($scope.secondPassphrase) {
+                data.secondSecret = $scope.secondPhrase;
+                if ($scope.rememberedPassword) {
+                    data.secret = $scope.rememberedPassword;
+                }
+            }
+            $http.put("/api/delegates/", data)
                 .then(function (resp) {
                     $scope.action = false;
                     userService.setDelegateProcess(resp.data.success);

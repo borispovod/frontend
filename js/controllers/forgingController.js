@@ -51,6 +51,7 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
                 values: [0, 100],
                 colours: ['#90a4ae', '#f5f5f5'],
                 options: {
+                    responsive: true,
                     percentageInnerCutout: 90,
                     animationEasing: "linear",
                     segmentShowStroke: false,

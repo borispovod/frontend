@@ -105,6 +105,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
 
         }
 
+
         $scope.$on('updateControllerData', function (event, data) {
             if (data.indexOf('main.dashboard') != -1) {
                 $scope.updateView();

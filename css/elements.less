@@ -131,7 +131,7 @@
     }
   }
   &.app-addon {
-    padding: 0 20px;
+    padding: 15px 20px;
     background-color: @white;
     margin: -1px;
     border-radius: 0;
@@ -147,17 +147,18 @@
 
     }
     & .form-control {
-
       &:-moz-placeholder, &::-webkit-input-placeholder, ::-moz-placeholder, &:-ms-input-placeholder {
         color: @border-grey;
         opacity: 1;
       }
       :focus {
-        border: none;
+        border: 0;
+        border-bottom:0;
       }
+      border-bottom-style: hidden;
       box-shadow: none;
-      padding: 16px 14px;
-      border: none;
+      padding: 0 14px;
+      border: 0;
     }
   }
 }

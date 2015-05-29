@@ -20,7 +20,7 @@
                         <div class="transaction-part pull-left"><a href="#" ng-click="userInfo(block.recipientId)">{{block.senderId}}</a> <span
                                 class="xcr">{{block.amount / 100000000 | feeFilter}} XCR</span></div>
                         <div class="transaction-direction"></div>
-                        <div class="transaction-part pull-right"><a href="#" ng-click="userInfo(block.recipientId)">{{block.recipientId || "-"}}</a><span
+                        <div class="transaction-part pull-right"><a href="#" ng-click="userInfo(block.recipientId)">{{block.recipientId || ""}}</a><span
                                 class="xcr">{{block.amount / 100000000 | feeFilter}} XCR</span></div>
                     </div>
                     <div class="transaction-bottom">

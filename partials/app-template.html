@@ -96,8 +96,8 @@
                             <li><a href="#">Dapp Response<span class="badge violet">1</span></a></a></li>
                         </ul>
                     </div>-->
-                    <div class="mini-chart valign-wrapper" ng-show="sync">
-                        <div class="mini-chart-label">{{sync}}%</div>
+                    <div class="mini-chart valign-wrapper" ng-show="syncState!=0">
+                        <div class="mini-chart-label">{{syncState}}%</div>
                         <canvas id="total-forged" class="chart chart-doughnut" data="loading.values"
                                 labels="loading.labels" options="loading.options"
                                 colours="loading.colours"></canvas>

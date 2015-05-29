@@ -52,7 +52,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         }
 
 
-        $scope.sync = 1;
+        $scope.syncState = 1;
         $scope.loading = {
             labels: ['Total', 'Loaded'],
             values: [0, 100],
@@ -284,7 +284,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         $scope.getSync = function () {
             $http.get("/api/loader/status/sync").then(function (resp) {
                 if (resp.data.success) {
-                    $scope.sync = resp.data.sync ? (resp.data.height / resp.data.blocks) * 100 : resp.data.sync;
+                    $scope.syncState = resp.data.sync ? Math.floor((resp.data.height / resp.data.blocks) * 100) : 0;
                     $scope.loading.values = [(resp.data.height - resp.data.blocks) < 0 ? (0 - (resp.data.height - resp.data.blocks)) : (resp.data.height - resp.data.blocks), resp.data.blocks];
 
                 }

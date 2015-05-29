@@ -148,13 +148,13 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
                 $scope.rank = rank;
 
 
-                var uptime = parseFloat(response.productivity);
+                var uptime = parseFloat(response.productivity || 100);
 
                 $scope.graphs.uptime.values = [uptime, 100 - uptime];
                 if (($scope.uptime == 0 && uptime > 0) || ($scope.uptime >= 95 && uptime < 95) || ($scope.uptime >= 50 && uptime < 50)) {
                     $scope.graphs.uptime.colours = [uptime >= 95 ? '#7cb342' : (uptime >= 50 ? '#ffa000' : '#d32f2f'), '#f5f5f5'];
                 }
-                $scope.uptime = response.productivity;
+                $scope.uptime = response.productivity || 100;
 
                 var approval = $scope.getApproval(response.vote);
 

@@ -23,7 +23,7 @@ angular.module('webApp').service('transactionsService', function ($http, userSer
                 }
             }).then(function (response) {
                     if (response.data.success) {
-                        if (response.data.transaction.senderId == userService.address || response.data.recipientId == userService.address) {
+                        if (response.data.transaction.senderId == userService.address || response.data.transaction.recipientId == userService.address) {
                             cb({transactions: [response.data.transaction], count: 1});
                         }
                         else {

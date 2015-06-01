@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('blockchainController', ['$scope', '$rootScope', '$http', "userService", "$interval", 'blockService', 'blockModal', 'blockInfo', 'userInfo', 'ngTableParams', 'viewFactory',
-    function ($rootScope, $scope, $http, userService, $interval, blockService, blockModal, blockInfo, userInfo, ngTableParams, viewFactory) {
+angular.module('webApp').controller('blockchainController', ['$scope', '$timeout', '$rootScope', '$http', "userService", "$interval", 'blockService', 'blockModal', 'blockInfo', 'userInfo', 'ngTableParams', 'viewFactory',
+    function ($rootScope, $timeout, $scope, $http, userService, $interval, blockService, blockModal, blockInfo, userInfo, ngTableParams, viewFactory) {
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Blockchain', previos: null};
         $scope.view.bar = {showBlockSearchBar: true};
@@ -9,6 +9,7 @@ angular.module('webApp').controller('blockchainController', ['$scope', '$rootSco
         $scope.loading = true;
         $scope.showAllColumns = false;
         $scope.showFullTime = false;
+        $scope.searchBlocks = blockService;
 
         //Blocks
         $scope.tableBlocks = new ngTableParams({
@@ -22,7 +23,7 @@ angular.module('webApp').controller('blockchainController', ['$scope', '$rootSco
             counts: [],
             getData: function ($defer, params) {
                 $scope.loading = true;
-                blockService.getBlocks($defer, params, $scope.filter, function () {
+                blockService.getBlocks($scope.searchBlocks.searchForBlock, $defer, params, $scope.filter, function () {
                     $scope.loading = false;
                 });
             }
@@ -65,5 +66,18 @@ angular.module('webApp').controller('blockchainController', ['$scope', '$rootSco
         $scope.userInfo = function (userId) {
             $scope.modal = userInfo.activate({userId: userId});
         }
+
+        //Search blocks watcher
+        var tempSearchBlockID = '',
+            searchBlockIDTimeout;
+        $scope.$watch('searchBlocks.searchForBlock', function (val) {
+            if (searchBlockIDTimeout) $timeout.cancel(searchBlockIDTimeout);
+            tempSearchBlockID = val;
+            searchBlockIDTimeout = $timeout(function () {
+                $scope.searchBlocks.searchForBlock = tempSearchBlockID;
+                $scope.updateBlocks();
+            }, 2000); // delay 2000 ms
+        })
+
 
     }]);

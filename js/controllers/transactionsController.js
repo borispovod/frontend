@@ -8,6 +8,7 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
         $scope.showAllColumns = false;
         $scope.showFullTime = false;
         $scope.transactionsView = transactionsService;
+        $scope.searchTransactions = transactionsService;
 
         $scope.userInfo = function (userId) {
             $scope.modal = userInfo.activate({userId: userId});
@@ -61,11 +62,12 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
         //Search transactions watcher
         var tempSearchTransactionID = '',
             searchTransactionIDTimeout;
-        $scope.$watch('search.searchForTransaction', function (val) {
+        $scope.$watch('searchTransactions.searchForTransaction', function (val) {
+           console.log($scope.searchTransactions.searchForTransaction);
             if (searchTransactionIDTimeout) $timeout.cancel(searchTransactionIDTimeout);
             tempSearchTransactionID = val;
             searchTransactionIDTimeout = $timeout(function () {
-                $scope.searchForTransaction = tempSearchTransactionID;
+               $scope.searchTransactions.searchForTransaction = tempSearchTransactionID;
                 $scope.updateTransactions();
             }, 2000); // delay 2000 ms
         })

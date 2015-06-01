@@ -30,9 +30,11 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
             counts: [],
             getData: function ($defer, params) {
                 $scope.loading = true;
-                transactionsService.getTransactions($defer, params, $scope.filter, $scope.transactionsView.searchForTransaction, function (error) {
-                    $scope.loading = false;
-                });
+                transactionsService.getTransactions($defer, params, $scope.filter, $scope.transactionsView.searchForTransaction,
+                    function (error) {
+                        $scope.searchTransactions.inSearch = false;
+                        $scope.loading = false;
+                    });
             }
         });
 
@@ -63,11 +65,22 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
         var tempSearchTransactionID = '',
             searchTransactionIDTimeout;
         $scope.$watch('searchTransactions.searchForTransaction', function (val) {
-           console.log($scope.searchTransactions.searchForTransaction);
+            console.log($scope.searchTransactions.searchForTransaction);
             if (searchTransactionIDTimeout) $timeout.cancel(searchTransactionIDTimeout);
+            if (val.trim() != '') {
+                $scope.searchTransactions.inSearch = true;
+            }
+            else {
+                $scope.searchTransactions.inSearch = false;
+                if (tempSearchTransactionID != val) {
+                    tempSearchTransactionID = val;
+                    $scope.updateTransactions();
+                    return;
+                }
+            }
             tempSearchTransactionID = val;
             searchTransactionIDTimeout = $timeout(function () {
-               $scope.searchTransactions.searchForTransaction = tempSearchTransactionID;
+                $scope.searchTransactions.searchForTransaction = tempSearchTransactionID;
                 $scope.updateTransactions();
             }, 2000); // delay 2000 ms
         })

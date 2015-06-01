@@ -115,16 +115,34 @@
             </div>
             <div class="search-bar" ng-show="view.bar.showTransactionsSearchBar">
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="mdi-action-search"></i></span>
-                    <input type="text" class="form-control" placeholder="Search for transactions"
+                    <span class="input-group-addon">
+                        <i class="mdi-action-search"></i>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Search for transactions (Transaction ID, Sender address, Recipient address)"
                            ng-model="searchTransactions.searchForTransaction">
+                       <span class="input-group-addon spinner-addon">
+                            <div class="preloader-wrapper active" ng-if="searchTransactions.inSearch">
+                                <div class="spinner-layer spinner-blue-only">
+                                    <div class="circle-clipper left">
+                                        <div class="circle"></div>
+                                    </div>
+                                    <div class="gap-patch">
+                                        <div class="circle"></div>
+                                    </div>
+                                    <div class="circle-clipper right">
+                                        <div class="circle"></div>
+                                    </div>
+                                </div>
+                            </div>
+                    </span>
                 </div>
             </div>
 
             <div class="search-bar" ng-show="view.bar.showBlockSearchBar">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="mdi-action-search"></i></span>
-                    <input type="text" class="form-control" placeholder="Search for blocks" ng-model="searchBlocks.searchForBlock">
+                    <input type="text" class="form-control" placeholder="Search for blocks"
+                           ng-model="searchBlocks.searchForBlock">
                 </div>
             </div>
 

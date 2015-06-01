@@ -43,9 +43,37 @@ angular.module('webApp').service('transactionsService', function ($http, userSer
             if (searchForTransaction != '') {
                 this.getTransaction(searchForTransaction, function (response) {
                     var transactions = response.transactions;
-                    params.total(transactions.length);
-                    $defer.resolve(transactions);
-                    cb(null);
+                    if (transactions.length) {
+                        params.total(transactions.length);
+                        cb(null);
+                        $defer.resolve(transactions);
+
+                    }
+                    else {
+                        var sortString = '';
+                        var keys = [];
+                        for (var key in params.$params.sorting) {
+                            if (params.$params.sorting.hasOwnProperty(key)) {
+                                sortString = key + ':' + params.$params.sorting[key];
+                            }
+                        }
+                        transactionsList.requestTransactions({
+                            ownerPublicKey: userService.publicKey,
+                            ownerAddress: userService.address,
+                            recipientId: searchForTransaction,
+                            senderId: searchForTransaction,
+                            orderBy: sortString,
+                            limit: params.count(),
+                            offset: (params.page() - 1) * params.count()
+                        }, function (response) {
+                            var transactions = response.transactions;
+                            transactionsList.count = response.count;
+                            params.total(response.count);
+                            cb(null);
+                            $defer.resolve(transactions);
+
+                        });
+                    }
                 });
             }
             else {
@@ -66,8 +94,9 @@ angular.module('webApp').service('transactionsService', function ($http, userSer
                     var transactions = response.transactions;
                     transactionsList.count = response.count;
                     params.total(response.count);
-                    $defer.resolve(transactions);
                     cb(null);
+                    $defer.resolve(transactions);
+
                 });
             }
         }

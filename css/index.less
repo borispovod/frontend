@@ -157,13 +157,23 @@ span.menu-text {
     color: #fff;
   }
 }
+
 .header-wrapper {
   -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
 }
+
 .search-bar {
   background-color: white;
   padding: 10px 30px;
+
+  .preloader-wrapper {
+    width: 22px;
+    height: 22px;
+    .spinner-blue, .spinner-blue-only {
+      border-color: @blue;
+    }
+  }
   input, input:focus {
     border: none !important;
   }
@@ -174,12 +184,17 @@ span.menu-text {
     border: none;
     background-color: transparent;
     padding: 6px 12px 6px 0;
+    &.spinner-addon {
+      min-width: 35px;
+      padding: 6px 0 6px 12px;
+    }
     i {
       font-size: 24px;
       opacity: 0.37;
     }
   }
 }
+
 #header {
   background-color: @blue;
   height: 65px;

@@ -65,7 +65,6 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
         var tempSearchTransactionID = '',
             searchTransactionIDTimeout;
         $scope.$watch('searchTransactions.searchForTransaction', function (val) {
-            console.log($scope.searchTransactions.searchForTransaction);
             if (searchTransactionIDTimeout) $timeout.cancel(searchTransactionIDTimeout);
             if (val.trim() != '') {
                 $scope.searchTransactions.inSearch = true;

@@ -97,7 +97,7 @@ angular.module('webApp').controller('votedDelegatesController', ['$scope', '$roo
         //My deletates
         $scope.tableMyDelegates = new ngTableParams({
             page: 1,            // show first page
-            count: 5,
+            count: 25,
             sorting: {
                 rate: 'asc'     // initial sorting
             }

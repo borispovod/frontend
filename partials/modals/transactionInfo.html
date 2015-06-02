@@ -6,9 +6,9 @@
                 <li class="list-group-item summary">Summary
                 </li>
                 <li class="list-group-item bordered">Confirmations<span class="pull-right small-text">{{block.confirmations}}</span></li>
-                <li class="list-group-item">Amount<span class="pull-right small-text">{{block.amount/ 100000000}} XCR</span></li>
+                <li class="list-group-item">Amount<span class="pull-right small-text">{{block.amount/ 100000000 | feeFilter}} XCR</span></li>
                 <li class="list-group-item bordered">Fee<span
-                        class="pull-right small-text">{{block.fee / 100000000 }} XCR</span></li>
+                        class="pull-right small-text">{{block.fee / 100000000 | feeFilter}} XCR</span></li>
                 <li class="list-group-item">USD Equivalent<span class="pull-right small-text">{{convertToUSD(block.amount)| number: 2}}$</span></li>
                 <li class="list-group-item bordered">Time<span class="pull-right small-text">{{block.timestamp | timestampFilter}}</span></li>
             </ul>

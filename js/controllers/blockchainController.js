@@ -24,6 +24,7 @@ angular.module('webApp').controller('blockchainController', ['$scope', '$timeout
             getData: function ($defer, params) {
                 $scope.loading = true;
                 blockService.getBlocks($scope.searchBlocks.searchForBlock, $defer, params, $scope.filter, function () {
+                    $scope.searchBlocks.inSearch = false;
                     $scope.loading = false;
                 });
             }
@@ -72,6 +73,17 @@ angular.module('webApp').controller('blockchainController', ['$scope', '$timeout
             searchBlockIDTimeout;
         $scope.$watch('searchBlocks.searchForBlock', function (val) {
             if (searchBlockIDTimeout) $timeout.cancel(searchBlockIDTimeout);
+            if (val.trim() != '') {
+                $scope.searchBlocks.inSearch = true;
+            }
+            else {
+                $scope.searchBlocks.inSearch = false;
+                if (tempSearchBlockID != val) {
+                    tempSearchBlockID = val;
+                    $scope.updateBlocks();
+                    return;
+                }
+            }
             tempSearchBlockID = val;
             searchBlockIDTimeout = $timeout(function () {
                 $scope.searchBlocks.searchForBlock = tempSearchBlockID;

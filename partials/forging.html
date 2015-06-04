@@ -19,7 +19,7 @@
                XCR Earned
             </span>
                <span class="plain-text">
-             {{totalForged / 100000000 | feeFilter }} XCR
+             {{totalForged  | xcrFilter }} XCR
             </span>
         </div>
         <!-- <div class="light-graph">
@@ -130,7 +130,7 @@
                             ng-show="block.timestamp > 0">{{block.timestamp | timeAgoFilter : showFullTime}}</span>
                         <span ng-show="block.timestamp == 0">-</span></td>
 
-                    <td data-title="'Fee'" sortable="'totalFee'">{{block.totalFee / 100000000 | feeFilter}}</td>
+                    <td data-title="'Fee'" sortable="'totalFee'">{{block.totalFee  | xcrFilter}}</td>
                     <td data-title="" class="width-80"></td>
                 </tr>
                 <tr ng-show="!loading && (!$data || $data.length == 0)">

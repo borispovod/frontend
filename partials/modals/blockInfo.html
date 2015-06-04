@@ -19,9 +19,9 @@
                                 </li>
                                 <li class="list-group-item">Height<span
                                         class="pull-right small-text">{{block.height}}</span></li>
-                                <li class="list-group-item bordered">Total Fee<span class="pull-right small-text">{{block.totalFee/ 100000000 | feeFilter}}</span>
+                                <li class="list-group-item bordered">Total Fee<span class="pull-right small-text">{{block.totalFee | xcrFilter}}</span>
                                 </li>
-                                <li class="list-group-item">Total Amount<span class="pull-right small-text">{{block.totalAmount/ 100000000 | feeFilter}}</span>
+                                <li class="list-group-item">Total Amount<span class="pull-right small-text">{{block.totalAmount | xcrFilter}}</span>
                                 </li>
                                 <li class="list-group-item">USD Equivalent<span class="pull-right small-text">{{convertToUSD(block.totalAmount)| number: 2}}$</span>
                                 </li>
@@ -42,17 +42,17 @@
                                     </div>
                                     <div class="transaction-path">
                                         <div class="transaction-part pull-left"><a href="#">{{transaction.senderId}}</a>
-                                            <span class="xcr">{{transaction.amount / 100000000 | feeFilter}} XCR</span>
+                                            <span class="xcr">{{transaction.amount  | xcrFilter}} XCR</span>
                                         </div>
                                         <div class="transaction-direction"></div>
                                         <div class="transaction-part pull-right"><a href="#">{{transaction.recipientId
-                                            || "-"}}</a><span class="xcr">{{transaction.amount / 100000000 | feeFilter}} XCR</span>
+                                            || "-"}}</a><span class="xcr">{{transaction.amount  | xcrFilter}} XCR</span>
                                         </div>
                                     </div>
                                     <div class="transaction-bottom">
-                                        <div class="fee">FEE: {{transaction.fee / 100000000 | feeFilter}} XCR
+                                        <div class="fee">FEE: {{transaction.fee  | xcrFilter}} XCR
                                         </div>
-                                        <div class="xcr">{{transaction.amount / 100000000 | feeFilter}} XCR
+                                        <div class="xcr">{{transaction.amount  | xcrFilter}} XCR
                                         </div>
                                         <div class="confirmations">{{transaction.confirmations || 0}} CONFIRMATIONS
                                         </div>

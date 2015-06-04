@@ -7,6 +7,8 @@ angular.module('webApp').controller('registrationDelegateModalController', ["$sc
         $scope.action = false;
         $scope.isSecondPassphrase = userService.secondPassphrase;
         $scope.passmode = false;
+        $scope.delegateData = {username: ''};
+
         $scope.secondPassphrase = userService.secondPassphrase;
         $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
 
@@ -27,9 +29,11 @@ angular.module('webApp').controller('registrationDelegateModalController', ["$sc
                 return;
             }
             if ($scope.rememberedPassword) {
+
                 $scope.registrationDelegate($scope.rememberedPassword);
             }
             else {
+
                 $scope.passmode = !$scope.passmode;
                 $scope.pass = '';
             }
@@ -37,6 +41,7 @@ angular.module('webApp').controller('registrationDelegateModalController', ["$sc
 
         $scope.registrationDelegate = function (pass, withSecond) {
             if ($scope.secondPassphrase && !withSecond) {
+
                 $scope.checkSecondPass = true;
                 return;
             }
@@ -46,8 +51,8 @@ angular.module('webApp').controller('registrationDelegateModalController', ["$sc
             $scope.error = null;
             var data = {
                 secret: pass,
-                secondSecret: $scope.secondPassphrase,
-                username: $scope.delegateUsername,
+                secondSecret: $scope.secondPhrase,
+                username: $scope.delegateData.username,
                 publicKey: userService.publicKey
             };
             if ($scope.secondPassphrase) {

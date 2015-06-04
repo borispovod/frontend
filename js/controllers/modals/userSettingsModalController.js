@@ -4,31 +4,52 @@ angular.module('webApp').controller('userSettingsModalController', ["$scope", "$
 
     $scope.error = null;
     $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
+    $scope.secondPassphrase = userService.secondPassphrase;
 
-    $scope.passcheck = function () {
+    $scope.passcheck = function (fromSecondPass) {
+        if (fromSecondPass) {
+            $scope.checkSecondPass = false;
+            $scope.passmode = $scope.rememberedPassword ? false : true;
+            $scope.secondPhrase = '';
+            $scope.pass = '';
+            return;
+        }
         if ($scope.rememberedPassword) {
             $scope.saveName($scope.rememberedPassword);
         }
         else {
-        $scope.passmode = !$scope.passmode;
-        $scope.pass = '';}
+
+            $scope.passmode = !$scope.passmode;
+            $scope.pass = '';
+        }
     }
 
     $scope.close = function () {
         userSettingsModal.deactivate();
     }
 
-    $scope.saveName = function (pass) {
+    $scope.saveName = function (pass, withSecond) {
+        if ($scope.secondPassphrase && !withSecond) {
+
+            $scope.checkSecondPass = true;
+            return;
+        }
         pass = pass || $scope.secretPhrase;
         $scope.action = true;
         $scope.error = null;
 
-        $http.put("/api/accounts/username", {
+        var data = {
             secret: pass,
-            secondSecret: $scope.secondPassphrase,
             username: $scope.username,
-            publicKey: userService.publicKey
-        })
+            publicKey: userService.publicKey};
+
+        if ($scope.secondPassphrase) {
+            data.secondSecret = $scope.secondPhrase;
+            if ($scope.rememberedPassword) {
+                data.secret = $scope.rememberedPassword;
+            }
+        }
+        $http.put("/api/accounts/username", data)
             .then(function (resp) {
                 $scope.action = false;
 

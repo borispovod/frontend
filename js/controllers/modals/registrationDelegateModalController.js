@@ -8,7 +8,6 @@ angular.module('webApp').controller('registrationDelegateModalController', ["$sc
         $scope.isSecondPassphrase = userService.secondPassphrase;
         $scope.passmode = false;
         $scope.delegateData = {username: ''};
-
         $scope.secondPassphrase = userService.secondPassphrase;
         $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
 

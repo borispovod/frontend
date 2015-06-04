@@ -122,8 +122,8 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                         userService.username = '';
                     }
                     else {
-                        userService.balance = account.balance / 100000000;
-                        userService.unconfirmedBalance = account.unconfirmedBalance / 100000000;
+                        userService.balance = account.balance ;
+                        userService.unconfirmedBalance = account.unconfirmedBalance;
                         userService.secondPassphrase = account.secondSignature;
                         userService.unconfirmedPassphrase = account.unconfirmedSignature;
                         userService.username = account.username;

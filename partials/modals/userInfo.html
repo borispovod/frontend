@@ -32,7 +32,7 @@
                                 <li class="list-group-item summary">Summary
                                 </li>
                                 <li class="list-group-item bordered">Total Balance<span
-                                        class="pull-right small-text">{{account.unconfirmedBalance / 100000000  | feeFilter }} XCR</span></li>
+                                        class="pull-right small-text">{{account.unconfirmedBalance  | xcrFilter }} XCR</span></li>
                                 <li class="list-group-item">USD Equivalent<span class="pull-right small-text">{{convertToUSD(account.unconfirmedBalance)| number: 2}}$</span>
                                 </li>
                             </ul>

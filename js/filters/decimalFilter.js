@@ -1,34 +1,12 @@
 require('angular');
 
 angular.module('webApp').filter('decimalFilter', function () {
+
     return function (fee) {
+        fee = fee.toString();
         if (!fee) {
-            return 0;
+            return [0][0];
         }
-
-        var r = fee.toFixed(8);
-
-        var clear = "";
-        var findValue = false;
-
-        for (var i = r.length - 1; i >= 0; i--) {
-            if (findValue) {
-                clear += r[i];
-            } else {
-                if (r[i] != '0') {
-                    findValue = true;
-                    clear += r[i];
-                }
-            }
-        }
-
-        var result = clear.split("").reverse().join("");
-        if (result[result.length - 1] == '.') {
-            return [result.substr(0, result.length - 1), null];
-        }
-        if (result.indexOf(".") != -1) {
-            return result.split('.');
-        }
-        return [result, null];
+        return [fee.slice(0, -8), fee.slice(-8)];
     }
 });

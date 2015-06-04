@@ -76,8 +76,8 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
             $http.get("/api/accounts", {params: {address: userService.address}})
                 .then(function (resp) {
                     var account = resp.data.account;
-                    userService.balance = account.balance / 100000000;
-                    userService.unconfirmedBalance = account.unconfirmedBalance / 100000000;
+                    userService.balance = account.balance;
+                    userService.unconfirmedBalance = account.unconfirmedBalance ;
                     userService.secondPassphrase = account.secondSignature;
                     userService.unconfirmedPassphrase = account.unconfirmedSignature;
                     $scope.balance = userService.balance;

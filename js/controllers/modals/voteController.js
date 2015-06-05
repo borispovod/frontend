@@ -6,6 +6,18 @@ angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$
     $scope.passmode = false;
     $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
     $scope.secondPassphrase = userService.secondPassphrase;
+    $scope.fee = 0;
+
+    $scope.getFee = function(){
+        $http.get("/api/accounts/delegates/fee").then(function (resp) {
+            if (resp.data.success) {
+                $scope.fee = resp.data.fee;
+            }
+            else {
+                $scope.fee = 0;
+            }
+        });
+    }
 
     $scope.passcheck = function (fromSecondPass) {
         if (fromSecondPass) {
@@ -43,6 +55,8 @@ angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$
             return this.toFixed(digitsCount);
         }
     }
+
+    $scope.getFee();
 
     Math.roundTo = function (number, digitsCount) {
         number = Number(number);

@@ -11,6 +11,21 @@ angular.module('webApp').controller('registrationDelegateModalController', ["$sc
         $scope.secondPassphrase = userService.secondPassphrase;
         $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
 
+        $scope.fee = 0;
+
+        $scope.getFee = function () {
+            $http.get("/api/delegates/fee").then(function (resp) {
+                if (resp.data.success) {
+                    $scope.fee = resp.data.fee;
+                }
+                else {
+                    $scope.fee = 0;
+                }
+            });
+        }
+
+        $scope.getFee();
+
         $scope.close = function () {
             if ($scope.destroy) {
                 $scope.destroy();

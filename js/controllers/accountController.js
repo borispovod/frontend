@@ -52,7 +52,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
                 params: {
                     senderPublicKey: userService.publicKey,
                     recipientId: $scope.address,
-                    limit: 4,
+                    limit: 8,
                     orderBy: 't_timestamp:desc'
                 }
             })
@@ -67,7 +67,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
                     })
                         .then(function (resp) {
                             var unconfirmedTransactions = resp.data.transactions;
-                            $scope.transactions = unconfirmedTransactions.concat(transactions).slice(0, 4);
+                            $scope.transactions = unconfirmedTransactions.concat(transactions).slice(0, 8);
                         });
                 });
         }

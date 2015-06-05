@@ -12,6 +12,7 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
         * 100;
         $scope.showAllColumns = false;
         $scope.showFullTime = false;
+        $scope.countForgingBlocks = 0;
 
         $scope.graphs = {
             amountForged: {
@@ -113,7 +114,7 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
                 $scope.loading = true;
                 blockService.getBlocks('', $defer, params, $scope.filter, function () {
                     $scope.loading = false;
-                    $scope.countForgingBlocks = params.total;
+                    $scope.countForgingBlocks = params.total();
                 }, userService.publicKey);
             }
         });

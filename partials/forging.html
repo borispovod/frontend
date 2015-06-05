@@ -100,11 +100,12 @@
 -->
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="panel panel-default paginated">
+        <div class="panel panel-default" ng-class="{'paginated': countForgingBlocks}">
             <div class="panel-heading"><h2>Forged Blocks</h2>
             </div>
-            <table ng-table="tableBlocks" border="0" width="100%" cellpadding="0" cellspacing="0">
-                <div class="table-menu">
+            <table ng-table="tableBlocks" border="0" width="100%" cellpadding="0" cellspacing="0"
+                   ng-show="countForgingBlocks">
+                <div class="table-menu" ng-show="countForgingBlocks">
                     <div class="more-down-table" dropdown
                          on-toggle="toggled(open)" is-open="moreDownTable.isopen">
                         <i class="mdi-navigation-more-vert" dropdown-toggle aria-haspopup="true"
@@ -130,22 +131,16 @@
                             ng-show="block.timestamp > 0">{{block.timestamp | timeAgoFilter : showFullTime}}</span>
                         <span ng-show="block.timestamp == 0">-</span></td>
 
-                    <td data-title="'Fee'" sortable="'totalFee'">{{block.totalFee  | xcrFilter}}</td>
+                    <td data-title="'Fee'" sortable="'totalFee'">{{block.totalFee | xcrFilter}}</td>
                     <td data-title="" class="width-80"></td>
                 </tr>
-                <tr ng-show="!loading && (!$data || $data.length == 0)">
-                    <td colspan="6">
-                        No blocks
-                    </td>
-                </tr>
-                <tr ng-show="loading">
-                    <td colspan="6">
-                        Loading...
-                    </td>
-                </tr>
             </table>
-        </div>
-
+            <div class="panel-body empty-body empty-table without-margin-top" ng-show="!countForgingBlocks">
+                <div class="logo-gray-iconed"></div>
+                <p class="empty-state-text">You haven't forged any blocks yet.</p>
+            </div>
     </div>
+
+</div>
 </div>
 

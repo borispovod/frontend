@@ -76,3 +76,15 @@ label {
 .input-field label {
   left:0;
 }
+
+[type=checkbox].filled-in:checked + label:before {
+  top: 2px;
+}
+
+[type=checkbox].filled-in:checked + label:after {
+  top: 2px;
+}
+
+[type=checkbox].filled-in:not(:checked) + label:after {
+  top: 2px;
+}

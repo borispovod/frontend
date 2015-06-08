@@ -33,7 +33,6 @@ input[type=text]:focus:not([readonly]) + label, input[type=password]:focus:not([
   }
 }
 
-
 .switch.margin {
   margin-top: 10px;
 }
@@ -59,7 +58,7 @@ label {
 
 .passphraseGeneration.input-field {
   textarea.materialize-textarea {
-    padding: 1.6rem 0 .06rem;
+    margin: 0;
     &.invalid:focus {
       border-bottom: 1px solid #F44336;
     }
@@ -68,13 +67,22 @@ label {
     }
   }
   label {
-    top: 0.6rem;
+    top: 0;
+    font-size: 16px;
     left: 0;
   }
 }
 
+textarea.materialize-textarea {
+  font-size: 16px;
+  overflow-y: hidden;
+  padding: 0;
+  resize: none;
+  min-height: 3rem
+}
+
 .input-field label {
-  left:0;
+  left: 0;
 }
 
 [type=checkbox].filled-in:checked + label:before {

@@ -3,7 +3,21 @@ require('angular');
 angular.module('webApp').controller('secondPassphraseModalController', ["$scope", "secondPassphraseModal", "$http", "userService", function ($scope, secondPassphraseModal, $http, userService) {
 
     $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
-    $scope.passmode=false;
+    $scope.passmode = false;
+    $scope.focus = 'secondPass';
+    $scope.fee = 0;
+
+    $scope.getFee = function () {
+        $http.get("/api/signatures/fee").then(function (resp) {
+            if (resp.data.success) {
+                $scope.fee = resp.data.fee;
+            }
+            else {
+                $scope.fee = 0;
+            }
+        });
+    }
+    $scope.getFee();
 
     $scope.close = function () {
         if ($scope.destroy) {
@@ -18,14 +32,25 @@ angular.module('webApp').controller('secondPassphraseModalController', ["$scope"
         }
         else {
             $scope.passmode = !$scope.passmode;
+            if ($scope.passmode) {
+                $scope.focus = 'pass';
+            }
+            else {
+                $scope.focus = 'secondPass';
+            }
             $scope.pass = '';
         }
     }
 
     $scope.addNewPassphrase = function (pass) {
+        $scope.fromServer = '';
+        if ($scope.repeatSecretPhrase != $scope.newSecretPhrase) {
+            $scope.fromServer = 'Password and Confirm Password don\'t match';
+            return;
+        }
         $http.put("/api/signatures", {
             secret: pass,
-			secondSecret: $scope.newSecretPhrase,
+            secondSecret: $scope.newSecretPhrase,
             publicKey: userService.publicKey
         }).then(function (resp) {
             if (resp.data.error) {

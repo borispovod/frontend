@@ -9,6 +9,11 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
     $scope.onlyNumbers = /^-?\d*(\.\d+)?$/;
     $scope.secondPassphrase = userService.secondPassphrase;
     $scope.address = userService.address;
+    $scope.focus = $scope.to ? 'amount' : 'to';
+
+    $scope.submit = function () {
+        console.log('submited');
+    };
 
     $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
 
@@ -39,8 +44,11 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
         if (fromSecondPass) {
             $scope.checkSecondPass = false;
             $scope.passmode = $scope.rememberedPassword ? false : true;
+            if ($scope.passmode) {
+                $scope.focus = 'secretPhrase';
+            }
             $scope.secondPhrase = '';
-            $scope.pass = '';
+            $scope.secretPhrase = '';
             return;
         }
         if ($scope.rememberedPassword) {
@@ -48,7 +56,8 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
         }
         else {
             $scope.passmode = !$scope.passmode;
-            $scope.pass = '';
+            $scope.focus = 'secretPhrase';
+            $scope.secretPhrase = '';
         }
     }
 
@@ -56,9 +65,9 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
         if ($scope.destroy) {
             $scope.destroy();
         }
-
         sendCryptiModal.deactivate();
     }
+
 
     $scope.moreThanEightDigits = function (number) {
         if (number.indexOf(".") < 0) {
@@ -211,6 +220,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
     $scope.sendXCR = function (secretPhrase, withSecond) {
         if ($scope.secondPassphrase && !withSecond) {
             $scope.checkSecondPass = true;
+            $scope.focus = 'secondPhrase';
             return;
         }
         $scope.errorMessage = "";

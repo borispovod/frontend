@@ -4,7 +4,7 @@ angular.module('webApp').controller('forgingModalController', ["$scope", "forgin
     $scope.error = null;
     $scope.forging = userService.forging;
     $scope.fee = 0;
-
+    $scope.focus = 'secretPhrase';
 
     if ($scope.forging) {
         $scope.label = "Disable Forging"

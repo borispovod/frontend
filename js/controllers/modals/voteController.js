@@ -6,6 +6,7 @@ angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$
     $scope.passmode = false;
     $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
     $scope.secondPassphrase = userService.secondPassphrase;
+    $scope.focus = 'secretPhrase';
     $scope.fee = 0;
 
     $scope.getFee = function(){
@@ -23,8 +24,11 @@ angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$
         if (fromSecondPass) {
             $scope.checkSecondPass = false;
             $scope.passmode = $scope.rememberedPassword ? false : true;
+            if ($scope.passmode){
+                $scope.focus = 'secretPhrase';
+            }
             $scope.secondPhrase = '';
-            $scope.pass = '';
+            $scope.secretPhrase = '';
             return;
         }
         if ($scope.rememberedPassword) {
@@ -32,7 +36,10 @@ angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$
         }
         else {
             $scope.passmode = !$scope.passmode;
-            $scope.pass = '';
+            if ($scope.passmode) {
+                $scope.focus = 'secretPhrase';
+            }
+            $scope.secretPhrase = '';
         }
     }
 
@@ -77,6 +84,7 @@ angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$
     $scope.vote = function (pass, withSecond) {
         if ($scope.secondPassphrase && !withSecond) {
             $scope.checkSecondPass = true;
+            $scope.focus = 'secondPhrase';
             return;
         }
         pass = pass || $scope.secretPhrase;

@@ -12,6 +12,7 @@ angular.module('webApp').controller('registrationDelegateModalController', ["$sc
         $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
 
         $scope.fee = 0;
+        $scope.focus = 'username';
 
         $scope.getFee = function () {
             $http.get("/api/delegates/fee").then(function (resp) {
@@ -40,6 +41,12 @@ angular.module('webApp').controller('registrationDelegateModalController', ["$sc
                 $scope.passmode = $scope.rememberedPassword ? false : true;
                 $scope.secondPhrase = '';
                 $scope.pass = '';
+                if ($scope.passmode) {
+                    $scope.focus = 'secretPhrase';
+                }
+                else {
+                    $scope.focus = 'username';
+                }
                 return;
             }
             if ($scope.rememberedPassword) {
@@ -47,7 +54,7 @@ angular.module('webApp').controller('registrationDelegateModalController', ["$sc
                 $scope.registrationDelegate($scope.rememberedPassword);
             }
             else {
-
+                $scope.focus = 'secretPhrase';
                 $scope.passmode = !$scope.passmode;
                 $scope.pass = '';
             }
@@ -55,7 +62,7 @@ angular.module('webApp').controller('registrationDelegateModalController', ["$sc
 
         $scope.registrationDelegate = function (pass, withSecond) {
             if ($scope.secondPassphrase && !withSecond) {
-
+                $scope.focus = 'secondPhrase';
                 $scope.checkSecondPass = true;
                 return;
             }

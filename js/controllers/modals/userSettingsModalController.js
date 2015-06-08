@@ -5,11 +5,18 @@ angular.module('webApp').controller('userSettingsModalController', ["$scope", "$
     $scope.error = null;
     $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
     $scope.secondPassphrase = userService.secondPassphrase;
+    $scope.focus = 'username';
 
     $scope.passcheck = function (fromSecondPass) {
         if (fromSecondPass) {
             $scope.checkSecondPass = false;
             $scope.passmode = $scope.rememberedPassword ? false : true;
+            if ($scope.passmode){
+                $scope.focus = 'passPhrase';
+            }
+            else {
+                $scope.focus = 'username';
+            }
             $scope.secondPhrase = '';
             $scope.pass = '';
             return;
@@ -18,7 +25,7 @@ angular.module('webApp').controller('userSettingsModalController', ["$scope", "$
             $scope.saveName($scope.rememberedPassword);
         }
         else {
-
+            $scope.focus = 'passPhrase';
             $scope.passmode = !$scope.passmode;
             $scope.pass = '';
         }
@@ -30,7 +37,7 @@ angular.module('webApp').controller('userSettingsModalController', ["$scope", "$
 
     $scope.saveName = function (pass, withSecond) {
         if ($scope.secondPassphrase && !withSecond) {
-
+            $scope.focus = 'secondPhrase';
             $scope.checkSecondPass = true;
             return;
         }

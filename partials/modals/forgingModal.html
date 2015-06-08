@@ -15,17 +15,19 @@
                             </div>
                         </div>
                         <div class="modal-body">
-                            <div class="field-padding">
-                                <div class="input-field">
-                                    <input id="passPhrase" type="password" ng-model="secretPhrase" ng-trim="false"
-                                           autofocus
-                                           ng-class="{'invalid': error}">
-                                    <label for="passPhrase">Your Passphrase</label>
+                            <form ng-submit="forgingState()">
+                                <div class="field-padding">
+                                    <div class="input-field">
+                                        <input ng-focus="focus=='secretPhrase'" id="passPhrase" type="password"
+                                               ng-model="secretPhrase" ng-trim="false"
+                                               autofocus
+                                               ng-class="{'invalid': error}">
+                                        <label for="passPhrase">Your Passphrase</label>
+                                    </div>
+                                    <span class="pass-error" ng-show="error">{{error}}</span>
                                 </div>
-                                <span class="pass-error" ng-show="error">{{error}}</span>
-
-                            </div>
-
+                                <input type="submit" ng-show="false">
+                            </form>
                             <div class="modal-body">
                                 <ul class="nav modal-buttons pull-right">
                                     <li>
@@ -35,6 +37,7 @@
                                     <li><a href="#" ng-click="forgingState()">{{label}}</a></li>
                                 </ul>
                             </div>
+
                         </div>
                     </div>
                 </div>

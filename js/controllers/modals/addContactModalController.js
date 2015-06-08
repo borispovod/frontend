@@ -9,11 +9,18 @@ angular.module('webApp').controller('addContactModalController', ["$scope", "add
         $scope.publicKey = userService.publicKey;
         $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
         $scope.checkSecondPass = false;
+        $scope.focus = 'contact';
 
         $scope.passcheck = function (fromSecondPass) {
             if (fromSecondPass) {
                 $scope.checkSecondPass = false;
                 $scope.passmode = $scope.rememberedPassword ? false : true;
+                if ($scope.passmode){
+                    $scope.focus = 'secretPhrase';
+                }
+                else {
+                    $scope.focus = 'contact';
+                }
                 $scope.secondPhrase = '';
                 $scope.pass = '';
                 return;
@@ -23,6 +30,7 @@ angular.module('webApp').controller('addContactModalController', ["$scope", "add
             }
             else {
                 $scope.passmode = !$scope.passmode;
+                $scope.focus = 'secretPhrase';
                 $scope.pass = '';
             }
         }
@@ -38,6 +46,7 @@ angular.module('webApp').controller('addContactModalController', ["$scope", "add
         $scope.addFolower = function (pass, withSecond) {
             if ($scope.secondPassphrase && !withSecond) {
                 $scope.checkSecondPass = true;
+                $scope.focus = 'secondPhrase';
                 return;
             }
             var queryParams = {

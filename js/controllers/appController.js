@@ -13,11 +13,11 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         $scope.diffVersion = 0;
         $scope.subForgingCollapsed = true;
 
-        $scope.collapseMenu = function(){
+        $scope.collapseMenu = function () {
             $scope.subForgingCollapsed = !$scope.subForgingCollapsed;
         }
 
-        $scope.toggleMenu = function(){
+        $scope.toggleMenu = function () {
             $scope.toggled = !$scope.toggled;
         }
 
@@ -122,7 +122,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                         userService.username = '';
                     }
                     else {
-                        userService.balance = account.balance ;
+                        userService.balance = account.balance;
                         userService.unconfirmedBalance = account.unconfirmedBalance;
                         userService.secondPassphrase = account.secondSignature;
                         userService.unconfirmedPassphrase = account.unconfirmedSignature;
@@ -285,7 +285,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         $scope.getSync = function () {
             $http.get("/api/loader/status/sync").then(function (resp) {
                 if (resp.data.success) {
-                    $scope.syncState = resp.data.sync ? Math.floor((resp.data.height / resp.data.blocks) * 100) : 0;
+                    $scope.syncState = resp.data.sync ? (resp.data.height ? (Math.floor((resp.data.height / resp.data.blocks) * 100)) : 0) : 0;
                     $scope.loading.values = [(resp.data.height - resp.data.blocks) < 0 ? (0 - (resp.data.height - resp.data.blocks)) : (resp.data.height - resp.data.blocks), resp.data.blocks];
 
                 }

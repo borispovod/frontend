@@ -257,6 +257,11 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
 
         $scope.getDelegate = function () {
             delegateService.getDelegate(userService.publicKey, function (response) {
+                if (response.username && !$scope.username){
+                    $scope.username  = response.username;
+                    userService.username = response.username;
+
+                }
                 if ($scope.delegateInRegistration) {
                     $scope.delegateInRegistration = !(!!response);
                     userService.setDelegateProcess($scope.delegateInRegistration);

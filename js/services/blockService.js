@@ -15,7 +15,7 @@ angular.module('webApp').service('blockService', function ($http) {
                         cb({blocks: [response.data.block], count: 1});
                     }
                     else {
-                        cb({blocks: [], count: 1});
+                        cb({blocks: [], count: 0});
                     }
                 }
             );
@@ -24,10 +24,34 @@ angular.module('webApp').service('blockService', function ($http) {
             blocks.searchForBlock = searchForBlock.trim();
             if (blocks.searchForBlock != '') {
                 this.getBlock(blocks.searchForBlock, function (response) {
-                    var blocks = response.blocks;
-                    params.total(response.count);
-                    $defer.resolve(response.blocks);
-                    cb(null);
+                    if (response.count) {
+                        params.total(response.count);
+                        $defer.resolve(response.blocks);
+                        cb(null);
+                    }
+                    else {
+                        var sortString = '';
+                        var keys = [];
+                        for (var key in params.$params.sorting) {
+                            if (params.$params.sorting.hasOwnProperty(key)) {
+                                sortString = key + ':' + params.$params.sorting[key];
+                            }
+                        }
+                        var queryParams = {
+                            orderBy: sortString,
+                            limit: params.count(),
+                            offset: (params.page() - 1) * params.count(),
+                            height: blocks.searchForBlock
+                        }
+                        $http.get("/api/blocks/", {
+                            params: queryParams
+                        })
+                            .then(function (response) {
+                                params.total(response.data.count);
+                                $defer.resolve(response.data.blocks);
+                                cb(null);
+                            });
+                    }
                 });
             }
             else {

@@ -108,6 +108,9 @@
 
 .ng-table th.sortable div span:after, .ng-table th.sortable div span:before {
   right: -16px;
+  @media (max-width: @hide-transactions-screen) {
+    right: -12px;
+  }
   top: 18px;
   position: absolute;
   border: 0;
@@ -172,7 +175,7 @@
   font-size: @content-text;
   color: @black;
   font-weight: 500;
-  padding-right: 10px;
+  padding: 0 5px;
   &:first-child {
     padding-left: 16px;
   }
@@ -203,6 +206,7 @@ tbody {
 }
 
 td {
+  padding-left: 5px;
   a {
     text-decoration: underline;
     line-height: 1.5rem;

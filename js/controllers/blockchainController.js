@@ -10,6 +10,7 @@ angular.module('webApp').controller('blockchainController', ['$scope', '$timeout
         $scope.showAllColumns = false;
         $scope.showFullTime = false;
         $scope.searchBlocks = blockService;
+        $scope.countForgingBlocks = 0;
 
         //Blocks
         $scope.tableBlocks = new ngTableParams({
@@ -25,6 +26,7 @@ angular.module('webApp').controller('blockchainController', ['$scope', '$timeout
                 $scope.loading = true;
                 blockService.getBlocks($scope.searchBlocks.searchForBlock, $defer, params, $scope.filter, function () {
                     $scope.searchBlocks.inSearch = false;
+                    $scope.countForgingBlocks = params.total();
                     $scope.loading = false;
                 });
             }

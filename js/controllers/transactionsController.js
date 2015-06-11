@@ -9,6 +9,7 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
         $scope.showFullTime = false;
         $scope.transactionsView = transactionsService;
         $scope.searchTransactions = transactionsService;
+        $scope.countForgingBlocks = 0;
 
         $scope.userInfo = function (userId) {
             $scope.modal = userInfo.activate({userId: userId});
@@ -33,6 +34,7 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
                 transactionsService.getTransactions($defer, params, $scope.filter, $scope.transactionsView.searchForTransaction,
                     function (error) {
                         $scope.searchTransactions.inSearch = false;
+                        $scope.countForgingBlocks = params.total();
                         $scope.loading = false;
                     });
             }

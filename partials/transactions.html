@@ -1,10 +1,10 @@
 <div class="top-margin"></div>
 <div class="row">
     <div class="col-xs-12">
-        <div class="panel panel-default paginated">
-            <table ng-table="tableTransactions" border="0" width="100%" cellpadding="0"
+        <div class="panel panel-default" ng-class="{'paginated': countForgingBlocks}">
+            <table ng-show="countForgingBlocks" ng-table="tableTransactions" border="0" width="100%" cellpadding="0"
                    cellspacing="0">
-                <div class="table-menu">
+                <div class="table-menu" ng-show="countForgingBlocks">
                     <div class="more-down-table" dropdown
                          on-toggle="toggled(open)" is-open="moreDownTable.isopen">
                         <i class="mdi-navigation-more-vert" dropdown-toggle aria-haspopup="true"
@@ -13,7 +13,7 @@
                         <div class="dropdown-menu" role="menu">
                             <p ng-click="check($event)"><input type="checkbox" class="filled-in violet" id="advanced"
                                                                ng-model="showAllColumns">
-                                <label for="advanced"> Show All Columns</label></p>
+                                <label for="advanced">Show All Columns</label></p>
 
                             <p ng-click="check($event)"><input type="checkbox" class="filled-in violet" id="fulltime"
                                                                ng-model="showFullTime">
@@ -47,10 +47,13 @@
                     </td>
                     <td data-title="'Fee'" sortable="'t_fee'">{{transaction.fee  | xcrFilter}}
                     </td>
-                    <td data-title="" class="width-80"></td>
+                    <td data-title=""></td>
                 </tr>
-
             </table>
+            <div class="panel-body empty-body empty-table without-margin-top" ng-if="!countForgingBlocks && searchTransactions.searchForTransaction">
+                <div class="logo-gray-iconed"></div>
+                <p class="empty-state-text">No results for this search.</p>
+            </div>
         </div>
     </div>
 </div>

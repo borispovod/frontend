@@ -84,7 +84,12 @@ angular.module('webApp').service('blockService', function ($http) {
                                     params.total(res.data.count);
                                 }
                                 else {
-                                    params.total(res.data.blocks[0].height);
+                                    if (res.data.count) {
+                                        params.total(res.data.blocks[0].height);
+                                    }
+                                    else {
+                                        params.total(0);
+                                    }
                                 }
                                 $defer.resolve(response.data.blocks);
                                 if (response.data.blocks.length) {

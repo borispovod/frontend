@@ -17,7 +17,9 @@ angular.module('webApp').controller('pendingsController', ['$scope', '$rootScope
             counts: [],
             total: 0,
             getData: function ($defer, params) {
-                contactsService.getSortedFollowers($defer, params, $scope.filter);
+                contactsService.getSortedFollowers($defer, params, $scope.filter, function(err){
+
+                });
             }
         });
 

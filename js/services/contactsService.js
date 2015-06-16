@@ -54,6 +54,7 @@ angular.module('webApp').service('contactsService', function ($http, userService
                     var filteredData = $filter('filter')(response.data.following, filter);
                     var transformedData = transformData(response.data.following, filter, params);
                     $defer.resolve(transformedData);
+                    cb(null);
                 });
         },
         getSortedFollowers: function ($defer, params, filter, cb) {
@@ -68,6 +69,7 @@ angular.module('webApp').service('contactsService', function ($http, userService
                     var filteredData = $filter('filter')(response.data.followers, filter);
                     var transformedData = transformData(response.data.followers, filter, params);
                     $defer.resolve(transformedData);
+                    cb(null);
                 });
         },
         addContact: function (queryParams, cb) {

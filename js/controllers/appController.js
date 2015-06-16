@@ -1,8 +1,8 @@
 require('angular');
 var compareVersion = require('../../node_modules/compare-version/index.js');
 
-angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", 'viewFactory', '$state', 'blockService', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal', 'userInfo', 'transactionsService', 'secondPassphraseModal',
-    function ($rootScope, $scope, $http, userService, $interval, viewFactory, $state, blockService, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal, userInfo, transactionsService, secondPassphraseModal) {
+angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal', 'userInfo', 'transactionsService', 'secondPassphraseModal',
+    function ($rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal, userInfo, transactionsService, secondPassphraseModal) {
 
         $scope.searchTransactions = transactionsService;
         $scope.searchBlocks = blockService;
@@ -139,6 +139,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                     $scope.getMyVotesCount();
                     $scope.getContacts();
                     $scope.getVersion();
+
                 });
         };
 
@@ -257,8 +258,8 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
 
         $scope.getDelegate = function () {
             delegateService.getDelegate(userService.publicKey, function (response) {
-                if (response.username && !$scope.username){
-                    $scope.username  = response.username;
+                if (response.username && !$scope.username) {
+                    $scope.username = response.username;
                     userService.username = response.username;
 
                 }
@@ -338,6 +339,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
             $scope.updateViews([$state.current.name]);
         });
         $scope.$on('socket:blocks/change', function (ev, data) {
+            console.log('new blocks ' + new Date());
             $scope.getAppData();
             $scope.updateViews([$state.current.name]);
         });

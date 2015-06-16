@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('accountController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionInfo', 'userInfo', '$filter',
-    function ($rootScope, $scope, $http, userService, $interval, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionInfo, userInfo, $filter) {
+angular.module('webApp').controller('accountController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionInfo', 'userInfo', '$filter',
+    function ($rootScope, $scope, $http, userService, $interval, $timeout, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionInfo, userInfo, $filter) {
 
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Dashboard', previos: null};
@@ -67,7 +67,10 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
                     })
                         .then(function (resp) {
                             var unconfirmedTransactions = resp.data.transactions;
-                            $scope.transactions = unconfirmedTransactions.concat(transactions).slice(0, 8);
+                            $timeout(function () {
+                                $scope.transactions = unconfirmedTransactions.concat(transactions).slice(0, 8);
+                            });
+
                         });
                 });
         }
@@ -136,7 +139,9 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
             $scope.getAccount();
             $scope.getTransactions();
             delegateService.getDelegate($scope.publicKey, function (response) {
-                $scope.delegate = response;
+                $timeout(function () {
+                    $scope.delegate = response;
+                });
             });
         }
 

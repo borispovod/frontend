@@ -5,7 +5,7 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Transactions', previos: 'main.dashboard'};
         $scope.view.bar = {showTransactionsSearchBar: true};
-        $scope.showAllColumns = false;
+        $scope.showAllColumns = true;
         $scope.showFullTime = false;
         $scope.transactionsView = transactionsService;
         $scope.searchTransactions = transactionsService;
@@ -36,6 +36,7 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
                         $scope.searchTransactions.inSearch = false;
                         $scope.countForgingBlocks = params.total();
                         $scope.loading = false;
+
                     });
             }
         });
@@ -59,7 +60,7 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
 
         $scope.$on('updateControllerData', function (event, data) {
             if (data.indexOf('main.transactions') != -1) {
-                $scope.updateTransactions();
+                //$scope.updateTransactions();
             }
         });
 

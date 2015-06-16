@@ -38,7 +38,7 @@
                     <td data-title="'Time'" sortable="'t_timestamp'">{{transaction.timestamp | timeAgoFilter :
                         showFullTime}}
                     </td>
-                    <td data-title="'Amount'" sortable="'t_amount'">
+                    <td class="td-amount" data-title="'Amount'" sortable="'t_amount'">
                         <i ng-if="transaction.recipientId==transaction.senderId"
                            class="vertical-text mdi-image-brightness-1 cloud-font"></i>
                         <i ng-if="transaction.recipientId!=transaction.senderId" class="vertical-text"

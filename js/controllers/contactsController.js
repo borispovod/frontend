@@ -17,7 +17,8 @@ angular.module('webApp').controller('contactsController', ['$scope', '$rootScope
             counts: [],
             total: 0,
             getData: function ($defer, params) {
-                contactsService.getSortedContacts($defer, params, $scope.filter);
+                contactsService.getSortedContacts($defer, params, $scope.filter, function(err){
+                });
             }
         });
 

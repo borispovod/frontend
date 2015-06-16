@@ -52,7 +52,7 @@
                     <td data-title="'Name'" sortable="'username'" class="username">{{delegate.username}}</td>
                     <td data-title="'Crypti Address'"><a href="#" ng-click="userInfo(delegate.address)">{{delegate.address}}</a>
                     </td>
-                    <td data-title="'Uptime'"><span
+                    <td data-title="'Uptime'" sortable="'productivity'"><span
                             ng-show="delegate.productivity">{{(delegate.productivity)}}%</span><span
                             ng-show="!delegate.productivity">-</span></td>
                     <td data-title="'Approval'" sortable="'vote'">{{getApproval(delegate.vote) | number: 2}}%</td>
@@ -122,9 +122,9 @@
                     <td data-title="'Name'" sortable="'username'" class="username">{{delegate.username}}</td>
                     <td data-title="'Crypti Address'"><a href="#" ng-click="userInfo(delegate.address)">{{delegate.address}}</a>
                     </td>
-                    <td data-title="'Uptime'"><span ng-show="delegate.productivity">{{(delegate.productivity)}}%</span><span
+                    <td data-title="'Uptime'" sortable="'productivity'"><span ng-show="delegate.productivity">{{(delegate.productivity)}}%</span><span
                             ng-show="!delegate.productivity">-</span></td>
-                    <td data-title="'Approval'">{{getApproval(delegate.vote) | number: 2}}%</td>
+                    <td data-title="'Approval'" sortable="'vote'">{{getApproval(delegate.vote) | number: 2}}%</td>
                     <td data-title="">
                         <div class="dropdown-more-group" dropdown><span class="table-more-actions" dropdown-toggle><span
                                 class="dots"></span></span>

@@ -165,6 +165,7 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
                 }
                 $scope.approval = approval;
 
+
             });
         };
 

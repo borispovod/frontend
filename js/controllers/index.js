@@ -11,6 +11,10 @@ require('../../js/controllers/passphraseController');
 require('../../js/controllers/votedDelegatesController');
 require('../../js/controllers/contactsController');
 require('../../js/controllers/pendingsController');
+require('../../js/controllers/settingsController');
+require('../../js/controllers/walletsController');
+require('../../js/controllers/walletTransactionsController');
+require('../../js/controllers/walletPendingsController');
 //modals
 require('../../js/controllers/modals/userSettingsModalController');
 require('../../js/controllers/modals/blockModalController');
@@ -26,5 +30,6 @@ require('../../js/controllers/modals/blockInfoController');
 require('../../js/controllers/modals/transactionInfoController');
 require('../../js/controllers/modals/userInfoController');
 require('../../js/controllers/modals/newUserController');
+require('../../js/controllers/modals/multisignatureModalController');
 
 

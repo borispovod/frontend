@@ -56,16 +56,15 @@
                                                                                      class="waves-effect waves-blue">
                 <div class="nav-icon" id="blockchain-icon"></div>
                 <span class="menu-text">Blockchain</span></a></li>
-            <li ng-show="showMenuItem('main.network')" ui-sref-active="active"><a ui-sref="main.network"
+            <li ng-show="showMenuItem('main.multi')" ui-sref-active="active"><a ui-sref="main.multi"
                                                                                   class="waves-effect waves-blue">
                 <div class="nav-icon" id="network-icon"></div>
-                <span class="menu-text">Network</span></a></li>
+                <span class="menu-text">Multi</span></a></li>
 
         </ul>
         <div id="inc"></div>
     </div>
     <!-- /#sidebar-wrapper -->
-
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="header-wrapper">
@@ -108,6 +107,7 @@
                             <li><a href="#" ng-click="myUserInfo()">My Profile</a></li>
                             <li ng-if="!secondPassphrase"><a href="#" ng-click="setSecondPassphrase()">2nd
                                 Passphrase</a></li>
+                            <li><a ui-sref="main.settings">Settings</a></li>
                             <li><a href="/">Logout</a></li>
                         </ul>
                     </div>
@@ -184,6 +184,13 @@
     top: 96px;
     right: 30px;
 "><i class="factory"></i></a>
+            </div>
+            <div id="page-nav" ng-if="view.bar.showWalletBar">
+                <ul class="nav nav-underline pull-left">
+                    <li ui-sref-active="active"><a href="#" ui-sref="main.multi">Wallets</a></li>
+                    <li ui-sref-active="active"><a href="#"
+                                                   ui-sref="main.multiPendings">Pending(5)</a></li>
+                </ul>
             </div>
             <div id="page-nav" ng-if="view.bar.showContactsBar">
                 <ul class="nav nav-underline pull-left">

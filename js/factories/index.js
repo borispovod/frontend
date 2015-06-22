@@ -15,3 +15,4 @@ require('../../js/factories/modals/secondPassphraseModal');
 require('../../js/factories/modals/sendCryptiModal');
 require('../../js/factories/modals/voteModal');
 require('../../js/factories/modals/registrationDelegateModal');
+require('../../js/factories/modals/multisignatureModal');

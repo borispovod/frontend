@@ -45,6 +45,15 @@ input[type=text]:focus:not([readonly]) + label, input[type=password]:focus:not([
   background-color: lighten(#0288d1, 20%);
 }
 
+.switch.violet-switch label input[type=checkbox]:checked + .lever {
+  background-color: @violet;
+}
+
+.switch.violet-switch label input[type=checkbox]:checked + .lever:after {
+  background-color: lighten(@violet, 20%);
+}
+
+
 [type=checkbox].filled-in.violet:checked + label:after {
   border: 2px solid @violet;
   background-color: @violet;

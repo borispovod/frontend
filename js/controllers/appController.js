@@ -4,6 +4,7 @@ var compareVersion = require('../../node_modules/compare-version/index.js');
 angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal', 'userInfo', 'transactionsService', 'secondPassphraseModal',
     function ($rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal, userInfo, transactionsService, secondPassphraseModal) {
 
+
         $scope.searchTransactions = transactionsService;
         $scope.searchBlocks = blockService;
         $scope.toggled = false;
@@ -75,7 +76,8 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
             'main.forging',
             'main.blockchain',
             'passphrase',
-            'main.contacts'
+            'main.contacts',
+            'main.multi'
 
         ];
 
@@ -139,6 +141,10 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                     $scope.getMyVotesCount();
                     $scope.getContacts();
                     $scope.getVersion();
+                    if(!$scope.$$phase)
+                    {
+                        $scope.$apply();
+                    }
 
                 });
         };
@@ -339,7 +345,6 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
             $scope.updateViews([$state.current.name]);
         });
         $scope.$on('socket:blocks/change', function (ev, data) {
-            console.log('new blocks ' + new Date());
             $scope.getAppData();
             $scope.updateViews([$state.current.name]);
         });

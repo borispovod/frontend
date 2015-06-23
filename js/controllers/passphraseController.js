@@ -22,21 +22,12 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
             }
             var data = {secret: pass};
             $scope.errorMessage = "";
-            $http.post("/api/accounts/open/", {secret: pass})
-                .then(function (resp) {
-                    if (resp.data.success) {
-                        userService.setData(resp.data.account.address, resp.data.account.publicKey, resp.data.account.balance, resp.data.account.unconfirmedBalance, resp.data.account.effectiveBalance);
-                        userService.setForging(resp.data.account.forging);
-                        userService.setSecondPassphrase(resp.data.account.secondSignature);
-                        userService.unconfirmedPassphrase = resp.data.account.unconfirmedSignature;
-                        if (remember) {
-                            userService.setSessionPassword(pass);
-                        }
-                        //angular.element(document.getElementById("forgingButton")).hide();
-                        $state.go('main.dashboard');
-                    } else {
-                        $scope.errorMessage = resp.data.error;
-                    }
-                });
+
+            var crypti = require('crypti-js');
+            var keys = crypti.crypto.getKeys(pass);
+            var address = crypti.crypto.getAddress(keys.publicKey);
+            userService.setData(address, keys.publicKey);
+            $scope.logging = false;
+            $state.go('main.dashboard');
         }
     }]);

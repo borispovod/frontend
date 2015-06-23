@@ -1,8 +1,8 @@
 require('angular');
 var compareVersion = require('../../node_modules/compare-version/index.js');
 
-angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal', 'userInfo', 'transactionsService', 'secondPassphraseModal',
-    function ($rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal, userInfo, transactionsService, secondPassphraseModal) {
+angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal', 'userInfo', 'transactionsService', 'secondPassphraseModal', 'peerFactory',
+    function ($rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal, userInfo, transactionsService, secondPassphraseModal, peerFactory) {
 
 
         $scope.searchTransactions = transactionsService;
@@ -82,7 +82,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         ];
 
         $scope.getUSDPrice = function () {
-            $http.get("http://146.148.61.64:4060/api/1/ticker/XCR_BTC")
+            $http.get("//146.148.61.64:4060/api/1/ticker/XCR_BTC")
                 .then(function (response) {
                     var xcr_btc = response.data.last;
                     $http.get("http://146.148.61.64:4060/api/1/ticker/BTC_USD")
@@ -93,7 +93,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         };
 
         $scope.getVersion = function () {
-            $http.get("/api/peers/version").then(function (response) {
+            $http.get(peerFactory.getUrl() + "/api/peers/version").then(function (response) {
                 if (response.data.success) {
                     $scope.version = response.data.version;
                     $http.get("https://wallet.crypti.me/api/peers/version").then(function (response) {
@@ -113,7 +113,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         };
 
         $scope.getAppData = function () {
-            $http.get("/api/accounts", {params: {address: userService.address}})
+            $http.get(peerFactory.getUrl() + "/api/accounts", {params: {address: userService.address}})
                 .then(function (resp) {
                     var account = resp.data.account;
                     if (!account) {
@@ -178,7 +178,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
 
         $scope.enableForging = function () {
             if ($scope.rememberedPassword) {
-                $http.post("/api/delegates/forging/enable", {
+                $http.post(peerFactory.getUrl() + "/api/delegates/forging/enable", {
                     secret: $scope.rememberedPassword,
                     publicKey: userService.publicKey
                 })
@@ -206,7 +206,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
 
                 $scope.error = null;
 
-                $http.post("/api/delegates/forging/disable", {
+                $http.post(peerFactory.getUrl() + "/api/delegates/forging/disable", {
                     secret: $scope.rememberedPassword,
                     publicKey: userService.publicKey
                 })
@@ -228,7 +228,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         }
 
         $scope.getForging = function () {
-            $http.get("/api/delegates/forging/status", {params: {publicKey: userService.publicKey}})
+            $http.get(peerFactory.getUrl() + "/api/delegates/forging/status", {params: {publicKey: userService.publicKey}})
                 .then(function (resp) {
                     $scope.forging = resp.data.enabled;
                     userService.setForging($scope.forging);
@@ -276,7 +276,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                 $scope.delegate = response;
                 userService.setDelegate($scope.delegate);
                 if (!response.noDelegate) {
-                    $http.get("/api/transactions", {
+                    $http.get(peerFactory.getUrl() + "/api/transactions", {
                         params: {
                             senderPublicKey: userService.publicKey,
                             limit: 1,
@@ -295,7 +295,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         }
 
         $scope.getSync = function () {
-            $http.get("/api/loader/status/sync").then(function (resp) {
+            $http.get(peerFactory.getUrl() + "/api/loader/status/sync").then(function (resp) {
                 if (resp.data.success) {
                     $scope.syncState = resp.data.sync ? (resp.data.blocks ? (Math.floor((resp.data.height / resp.data.blocks) * 100)) : 0) : 0;
                     if ($scope.syncState) {
@@ -306,7 +306,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         }
 
         $scope.getMyVotesCount = function () {
-            $http.get("/api/accounts/delegates/", {params: {address: userService.address}})
+            $http.get(peerFactory.getUrl() + "/api/accounts/delegates/", {params: {address: userService.address}})
                 .then(function (response) {
                     $scope.myVotesCount = response.data.delegates ? response.data.delegates.length : 0;
                 });
@@ -369,7 +369,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         $scope.updateViews = function (views) {
             $scope.$broadcast('updateControllerData', views);
         }
-
+debugger;
         $scope.getAppData();
         $scope.getUSDPrice();
     }]);

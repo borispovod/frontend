@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('accountController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionInfo', 'userInfo', '$filter',
-    function ($rootScope, $scope, $http, userService, $interval, $timeout, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionInfo, userInfo, $filter) {
+angular.module('webApp').controller('accountController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionInfo', 'userInfo', '$filter', 'peerFactory',
+    function ($rootScope, $scope, $http, userService, $interval, $timeout, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionInfo, userInfo, $filter, peerFactory) {
 
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Dashboard', previos: null};
@@ -48,7 +48,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
         }
 
         $scope.getTransactions = function () {
-            $http.get("/api/transactions", {
+            $http.get(peerFactory.getUrl() +"/api/transactions", {
                 params: {
                     senderPublicKey: userService.publicKey,
                     recipientId: $scope.address,
@@ -58,8 +58,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
             })
                 .then(function (resp) {
                     var transactions = resp.data.transactions;
-
-                    $http.get('/api/transactions/unconfirmed', {
+                    $http.get(peerFactory.getUrl() +'/api/transactions/unconfirmed', {
                         params: {
                             senderPublicKey: userService.publicKey,
                             address: userService.address
@@ -76,7 +75,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
         }
 
         $scope.getAccount = function () {
-            $http.get("/api/accounts", {params: {address: userService.address}})
+            $http.get(peerFactory.getUrl() +"/api/accounts", {params: {address: userService.address}})
                 .then(function (resp) {
                     var account = resp.data.account;
                     userService.balance = account.balance;
@@ -95,7 +94,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
         }
 
         $scope.getPrice = function () {
-            $http.get(" http://146.148.61.64:4060/api/1/trade/XCR_BTC")
+            $http.get("//146.148.61.64:4060/api/1/trade/XCR_BTC")
                 .then(function (response) {
                     $scope.graphs.cryptiPrice.data = [
                         response.data.data.map(

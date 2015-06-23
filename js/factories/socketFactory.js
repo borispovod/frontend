@@ -1,7 +1,7 @@
 require('angular');
 
 angular.module('webApp').factory('serverSocket', ["socketFactory", "$location", function (socketFactory, $location) {
-    var newIoSocket = io.connect($location.protocol() + '://' + $location.host() + ($location.port() ? ':' + $location.port() : ''));
+   /* var newIoSocket = io.connect($location.protocol() + '://' + $location.host() + ($location.port() ? ':' + $location.port() : ''));
     serverSocket = socketFactory({
         ioSocket: newIoSocket
     });
@@ -10,5 +10,5 @@ angular.module('webApp').factory('serverSocket', ["socketFactory", "$location", 
     serverSocket.forward('delegates/change');
     serverSocket.forward('contacts/change');
     serverSocket.forward('followers/change');
-    return serverSocket;
+    return serverSocket;*/
 }]);

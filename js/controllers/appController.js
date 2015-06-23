@@ -80,10 +80,10 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         ];
 
         $scope.getUSDPrice = function () {
-            $http.get("http://146.148.61.64:4060/api/1/ticker/XCR_BTC")
+            $http.get("//146.148.61.64:4060/api/1/ticker/XCR_BTC")
                 .then(function (response) {
                     var xcr_btc = response.data.last;
-                    $http.get("http://146.148.61.64:4060/api/1/ticker/BTC_USD")
+                    $http.get("//146.148.61.64:4060/api/1/ticker/BTC_USD")
                         .then(function (response) {
                             $scope.xcr_usd = xcr_btc * response.data.last;
                         });

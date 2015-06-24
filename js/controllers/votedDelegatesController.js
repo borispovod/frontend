@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('votedDelegatesController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "$filter", "ngTableParams", "delegateService", "voteModal", "viewFactory",
-    function ($rootScope, $scope, $http, userService, $interval, $timeout, $filter, ngTableParams, delegateService, voteModal, viewFactory) {
+angular.module('webApp').controller('votedDelegatesController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "$filter", "ngTableParams", "delegateService", "voteModal", "viewFactory", "peerFactory",
+    function ($rootScope, $scope, $http, userService, $interval, $timeout, $filter, ngTableParams, delegateService, voteModal, viewFactory, peerFactory) {
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Forging', previos: null};
         $scope.view.bar = {forgingMenu: true};
@@ -77,7 +77,7 @@ angular.module('webApp').controller('votedDelegatesController', ['$scope', '$roo
         $scope.unconfirmedTransactions = {
             list: [],
             getList: function () {
-                $http.get("/api/transactions/unconfirmed/", {params: {senderPublicKey: userService.publicKey}})
+                $http.get(peerFactory.getUrl() + "/api/transactions/unconfirmed/", {params: {senderPublicKey: userService.publicKey}})
                     .then(function (response) {
                         $scope.unconfirmedTransactions.list = [];
                         response.data.transactions.forEach(function (transaction) {

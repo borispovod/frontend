@@ -1,12 +1,12 @@
 require('angular');
 
-angular.module('webApp').service('blockService', function ($http) {
+angular.module('webApp').service('blockService', function ($http, peerFactory) {
 
     var blocks = {
         lastBlockId: null,
         searchForBlock: '',
         getBlock: function (blockID, cb) {
-            $http.get("/api/blocks/get", {
+            $http.get(peerFactory.getUrl() + "/api/blocks/get", {
                 params: {
                     id: blockID
                 }
@@ -43,7 +43,7 @@ angular.module('webApp').service('blockService', function ($http) {
                             offset: (params.page() - 1) * params.count(),
                             height: blocks.searchForBlock
                         }
-                        $http.get("/api/blocks/", {
+                        $http.get(peerFactory.getUrl() + "/api/blocks/", {
                             params: queryParams
                         })
                             .then(function (response) {
@@ -70,7 +70,7 @@ angular.module('webApp').service('blockService', function ($http) {
                 if (publicKey) {
                     queryParams.generatorPublicKey = publicKey;
                 }
-                $http.get("/api/blocks/", {
+                $http.get(peerFactory.getUrl() + "/api/blocks/", {
                     params: queryParams
                 })
                     .then(function (response) {
@@ -78,7 +78,7 @@ angular.module('webApp').service('blockService', function ($http) {
                         if (publicKey) {
                             queryParams.generatorPublicKey = publicKey;
                         }
-                        $http.get("/api/blocks/", {params: queryParams})
+                        $http.get(peerFactory.getUrl() + "/api/blocks/", {params: queryParams})
                             .then(function (res) {
                                 if (publicKey) {
                                     params.total(res.data.count);

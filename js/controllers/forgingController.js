@@ -1,8 +1,8 @@
 require('angular');
 
 
-angular.module('webApp').controller('forgingController', ['$scope', '$rootScope', '$http', "userService", "$interval", "companyModal", "forgingModal", "delegateService", "viewFactory", "blockInfo", "ngTableParams", "blockService",
-    function ($rootScope, $scope, $http, userService, $interval, companyModal, forgingModal, delegateService, viewFactory, blockInfo, ngTableParams, blockService) {
+angular.module('webApp').controller('forgingController', ['$scope', '$rootScope', '$http', "userService", "$interval", "companyModal", "forgingModal", "delegateService", "viewFactory", "blockInfo", "ngTableParams", "blockService", "peerFactory",
+    function ($rootScope, $scope, $http, userService, $interval, companyModal, forgingModal, delegateService, viewFactory, blockInfo, ngTableParams, blockService, peerFactory) {
 
         $scope.allVotes = 100
         * 1000
@@ -170,7 +170,7 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
         };
 
         $scope.getForgedAmount = function () {
-            $http.get("/api/delegates/forging/getForgedByAccount", {params: {generatorPublicKey: userService.publicKey}})
+            $http.get(peerFactory.getUrl() + "/api/delegates/forging/getForgedByAccount", {params: {generatorPublicKey: userService.publicKey}})
                 .then(function (resp) {
                     $scope.totalForged = resp.data.fees;
                 });

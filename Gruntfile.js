@@ -5,7 +5,7 @@ module.exports = function (grunt) {
         "js/ui-bootstrap-custom-0.12.1.min.js"
     ];
    var withounBrowserify = ['static/js/br_app.js'];
-   // var withounBrowserify = ['static/js/br_app.js', 'bower_components/materialize/bin/materialize.js'];
+   var withounBrowserify = ['static/js/br_app.js', 'bower_components/materialize/bin/materialize.js'];
 
     // Project configuration.
     grunt.initConfig({

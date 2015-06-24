@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('webApp').service('contactsService', function ($http, userService, $filter) {
+angular.module('webApp').service('contactsService', function ($http, userService, $filter, peerFactory) {
     function filterData(data, filter) {
         return $filter('filter')(data, filter)
     }
@@ -25,7 +25,7 @@ angular.module('webApp').service('contactsService', function ($http, userService
             var queryParams = {
                 publicKey: publicKey
             }
-            $http.get("/api/contacts/", {
+            $http.get(peerFactory.getUrl() + "/api/contacts/", {
                 params: queryParams
             })
                 .then(function (response) {
@@ -46,7 +46,7 @@ angular.module('webApp').service('contactsService', function ($http, userService
             var queryParams = {
                 publicKey: userService.publicKey
             }
-            $http.get("/api/contacts/", {
+            $http.get(peerFactory.getUrl() + "/api/contacts/", {
                 params: queryParams
             })
                 .then(function (response) {
@@ -61,7 +61,7 @@ angular.module('webApp').service('contactsService', function ($http, userService
             var queryParams = {
                 publicKey: userService.publicKey
             }
-            $http.get("/api/contacts/", {
+            $http.get(peerFactory.getUrl() + "/api/contacts/", {
                 params: queryParams
             })
                 .then(function (response) {
@@ -73,7 +73,7 @@ angular.module('webApp').service('contactsService', function ($http, userService
                 });
         },
         addContact: function (queryParams, cb) {
-            $http.put("/api/contacts/",
+            $http.put(peerFactory.getUrl() + "/api/contacts/",
                 queryParams
             )
                 .then(function (response) {

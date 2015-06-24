@@ -1,11 +1,11 @@
 require('angular');
 
-angular.module('webApp').service('transactionsService', function ($http, userService) {
+angular.module('webApp').service('transactionsService', function ($http, userService, peerFactory) {
 
 
     var transactionsList = {
         requestTransactions: function (params, cb) {
-            $http.get("/api/transactions", {
+            $http.get(peerFactory.getUrl() + "/api/transactions", {
                 params: params
             }).then(function (response) {
                 if (response.data.success) {
@@ -17,7 +17,7 @@ angular.module('webApp').service('transactionsService', function ($http, userSer
             });
         },
         getTransaction: function (transactionId, cb) {
-            $http.get("/api/transactions/get", {
+            $http.get(peerFactory.getUrl() + "/api/transactions/get", {
                 params: {
                     id: transactionId
                 }

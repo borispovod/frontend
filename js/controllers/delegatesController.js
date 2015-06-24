@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('delegatesController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "$filter", "ngTableParams", "delegateService", "voteModal", "viewFactory", "userInfo",
-    function ($rootScope, $scope, $http, userService, $interval, $timeout, $filter, ngTableParams, delegateService, voteModal, viewFactory, userInfo) {
+angular.module('webApp').controller('delegatesController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "$filter", "ngTableParams", "delegateService", "voteModal", "viewFactory", "userInfo", "peerFactory",
+    function ($rootScope, $scope, $http, userService, $interval, $timeout, $filter, ngTableParams, delegateService, voteModal, viewFactory, userInfo, peerFactory) {
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Forging', previos: null};
         $scope.view.bar = {forgingMenu: true};
@@ -90,7 +90,7 @@ angular.module('webApp').controller('delegatesController', ['$scope', '$rootScop
         $scope.unconfirmedTransactions = {
             list: [],
             getList: function () {
-                $http.get("/api/transactions/unconfirmed/", {params: {senderPublicKey: userService.publicKey}})
+                $http.get(peerFactory.getUrl() + "/api/transactions/unconfirmed/", {params: {senderPublicKey: userService.publicKey}})
                     .then(function (response) {
                         $scope.unconfirmedTransactions.list = [];
                         response.data.transactions.forEach(function (transaction) {
@@ -110,7 +110,7 @@ angular.module('webApp').controller('delegatesController', ['$scope', '$rootScop
         $scope.delegates = {
             list: [],
             getList: function (cb) {
-                $http.get("/api/accounts/delegates/", {params: {address: userService.address}})
+                $http.get(peerFactory.getUrl() + "/api/accounts/delegates/", {params: {address: userService.address}})
                     .then(function (response) {
                         if (response.data.delegates == null) {
                             return [];

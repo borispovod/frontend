@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('passphraseController', ['$scope', '$rootScope', '$http', "$state", "userService", "newUser",
-    function ($rootScope, $scope, $http, $state, userService, newUser) {
+angular.module('webApp').controller('passphraseController', ['$scope', '$rootScope', '$http', "$state", "userService", "newUser", "peerFactory",
+    function ($rootScope, $scope, $http, $state, userService, newUser, peerFactory) {
         userService.setData();
         userService.rememberPassword = false;
         userService.rememberedPassword = '';
@@ -27,7 +27,19 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
             var keys = crypti.crypto.getKeys(pass);
             var address = crypti.crypto.getAddress(keys.publicKey);
             userService.setData(address, keys.publicKey);
-            $scope.logging = false;
-            $state.go('main.dashboard');
+
+            (function (d, script) {
+                script = d.createElement('script');
+                script.type = 'text/javascript';
+                script.async = true;
+                script.onload = function ()
+                {
+                    $scope.logging = false;
+                    $state.go('main.dashboard');
+                };
+                script.src = peerFactory.getUrl() + '/socket.io/socket.io.js';
+                d.getElementsByTagName('head')[0].appendChild(script);
+            }(document));
+
         }
     }]);

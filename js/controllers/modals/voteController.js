@@ -1,6 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$http", "userService", "$timeout", function ($scope, voteModal, $http, userService, $timeout) {
+angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$http", "userService", "$timeout", "peerFactory",
+    function ($scope, voteModal, $http, userService, $timeout, peerFactory) {
     $scope.voting = false;
     $scope.fromServer = '';
     $scope.passmode = false;
@@ -10,7 +11,7 @@ angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$
     $scope.fee = 0;
 
     $scope.getFee = function(){
-        $http.get("/api/accounts/delegates/fee").then(function (resp) {
+        $http.get(peerFactory.getUrl() + "/api/accounts/delegates/fee").then(function (resp) {
             if (resp.data.success) {
                 $scope.fee = resp.data.fee;
             }

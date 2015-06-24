@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('webApp').controller('userInfoController', ["$scope", "$http", "userInfo", "sendCryptiModal", function ($scope, $http, userInfo, sendCryptiModal) {
+angular.module('webApp').controller('userInfoController', ["$scope", "$http", "userInfo", "sendCryptiModal", "peerFactory", function ($scope, $http, userInfo, sendCryptiModal, peerFactory) {
 
     $scope.userIdOld = '';
 
@@ -20,10 +20,10 @@ angular.module('webApp').controller('userInfoController', ["$scope", "$http", "u
         }
         $scope.userIdOld = userId;
         $scope.transactions = {view: false, list: [1]};
-        $http.get("/api/accounts", {params: {address: userId}})
+        $http.get(peerFactory.getUrl() + "/api/accounts", {params: {address: userId}})
             .then(function (resp) {
                 $scope.account = resp.data.account;
-                    $http.get("/api/transactions", {
+                    $http.get(peerFactory.getUrl() + "/api/transactions", {
                         params: {
                             senderPublicKey: $scope.account.publicKey,
                             recipientId: $scope.account.address,
@@ -34,7 +34,7 @@ angular.module('webApp').controller('userInfoController', ["$scope", "$http", "u
                         .then(function (resp) {
                             var transactions = resp.data.transactions;
 
-                            $http.get('/api/transactions/unconfirmed', {
+                            $http.get(peerFactory.getUrl() + '/api/transactions/unconfirmed', {
                                 params: {
                                     senderPublicKey: $scope.account.publicKey,
                                     address: $scope.account.address

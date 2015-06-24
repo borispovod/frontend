@@ -73,11 +73,11 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="transaction in transactions">
-                    <td class="hide-in-1400"><a href="#" ng-click="transactionInfo(transaction)">{{transaction.id}}</a>
+                    <td class="hide-in-1400"><a ng-click="transactionInfo(transaction)">{{transaction.id}}</a>
                     </td>
-                    <td class="padding-in-1400"><a href="#" ng-click="userInfo(transaction.senderId)">{{transaction.senderUsername || transaction.senderId}}</a>
+                    <td class="padding-in-1400"><a ng-click="userInfo(transaction.senderId)">{{transaction.senderUsername || transaction.senderId}}</a>
                     </td>
-                    <td ng-show="transaction.type <= 1"><a href="#" ng-click="userInfo(transaction.recipientId)">{{transaction.recipientUsername || transaction.recipientId}}</a>
+                    <td ng-show="transaction.type <= 1"><a ng-click="userInfo(transaction.recipientId)">{{transaction.recipientUsername || transaction.recipientId}}</a>
                     </td>
                     <td ng-show="transaction.type > 1"></td>
                     <td>{{transaction.timestamp | timeAgoFilter: false}}</td>

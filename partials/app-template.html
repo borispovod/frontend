@@ -104,11 +104,10 @@
                     <div class="more-down left-margin-20" dropdown is-open="moreDropdownStatus.isopen">
                         <i class="mdi-navigation-more-vert" dropdown-toggle></i>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#" ng-click="myUserInfo()">My Profile</a></li>
+                            <li><a ng-click="myUserInfo()">My Profile</a></li>
                             <li ng-if="!secondPassphrase"><a href="#" ng-click="setSecondPassphrase()">2nd
                                 Passphrase</a></li>
-                            <li><a ui-sref="main.settings">Settings</a></li>
-                            <li><a href="/">Logout</a></li>
+                            <li><a ui-sref="passphrase">Logout</a></li>
                         </ul>
                     </div>
                 </div>
@@ -163,13 +162,13 @@
 
             <div id="page-nav" ng-if="view.bar.forgingMenu">
                 <ul class="nav nav-underline pull-left">
-                    <li ui-sref-active="active"><a href="#" ui-sref="main.forging">Forging</a></li>
-                    <li ui-sref-active="active"><a href="#" ui-sref="main.delegates">Delegates</a></li>
-                    <li ui-sref-active="active"><a href="#" ui-sref="main.votes">My votes ({{myVotesCount||'0'}})</a>
+                    <li ui-sref-active="active"><a ui-sref="main.forging">Forging</a></li>
+                    <li ui-sref-active="active"><a ui-sref="main.delegates">Delegates</a></li>
+                    <li ui-sref-active="active"><a ui-sref="main.votes">My votes ({{myVotesCount||'0'}})</a>
                     </li>
                 </ul>
                 <ul class="nav nav-underline pull-right registration" ng-show="!delegate.username">
-                    <li><a href="#" class="bold-text" ng-click="registrationDelegate()">delegate registration</a></li>
+                    <li><a class="bold-text" ng-click="registrationDelegate()">delegate registration</a></li>
                 </ul>
                 <a class="btn-floating btn-large waves-effect waves-light green" ng-click="disableForging()"
                    ng-show="delegate.username && forging" style="
@@ -187,15 +186,15 @@
             </div>
             <div id="page-nav" ng-if="view.bar.showWalletBar">
                 <ul class="nav nav-underline pull-left">
-                    <li ui-sref-active="active"><a href="#" ui-sref="main.multi">Wallets</a></li>
-                    <li ui-sref-active="active"><a href="#"
+                    <li ui-sref-active="active"><a ui-sref="main.multi">Wallets</a></li>
+                    <li ui-sref-active="active"><a
                                                    ui-sref="main.multiPendings">Pending(5)</a></li>
                 </ul>
             </div>
             <div id="page-nav" ng-if="view.bar.showContactsBar">
                 <ul class="nav nav-underline pull-left">
-                    <li ui-sref-active="active"><a href="#" ui-sref="main.contacts">Contacts</a></li>
-                    <li ui-sref-active="active"><a href="#"
+                    <li ui-sref-active="active"><a ui-sref="main.contacts">Contacts</a></li>
+                    <li ui-sref-active="active"><a
                                                    ui-sref="main.pending">Pending({{contacts.followersCount}})</a></li>
                 </ul>
                 <a ng-click="addContact()" class="btn-floating btn-large waves-effect waves-light green" style="

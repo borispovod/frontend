@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('webApp').controller('secondPassphraseModalController', ["$scope", "secondPassphraseModal", "$http", "userService", function ($scope, secondPassphraseModal, $http, userService) {
+angular.module('webApp').controller('secondPassphraseModalController', ["$scope", "secondPassphraseModal", "$http", "userService", "peerFactory", function ($scope, secondPassphraseModal, $http, userService, peerFactory) {
 
     $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
     $scope.passmode = false;
@@ -8,7 +8,7 @@ angular.module('webApp').controller('secondPassphraseModalController', ["$scope"
     $scope.fee = 0;
 
     $scope.getFee = function () {
-        $http.get("/api/signatures/fee").then(function (resp) {
+        $http.get(peerFactory.getUrl() + "/api/signatures/fee").then(function (resp) {
             if (resp.data.success) {
                 $scope.fee = resp.data.fee;
             }

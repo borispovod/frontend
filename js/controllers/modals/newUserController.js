@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('webApp').controller('newUserController', ["$scope", "$http", "newUser", "userService", "$state", function ($scope, $http, newUser, userService, $state) {
+angular.module('webApp').controller('newUserController', ["$scope", "$http", "newUser", "userService", "$state", "peerFactory", function ($scope, $http, newUser, userService, $state, peerFactory) {
     $scope.noMatch = false;
     $scope.firstStep = true;
 
@@ -34,7 +34,7 @@ angular.module('webApp').controller('newUserController', ["$scope", "$http", "ne
             $scope.noMatch = true;
         }
         else {
-            $http.post("/api/accounts/open/", {secret: pass})
+            $http.post(peerFactory.getUrl() + "/api/accounts/open/", {secret: pass})
                 .then(function (resp) {
                     if (resp.data.success) {
                         newUser.deactivate();

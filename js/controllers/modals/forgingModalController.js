@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('webApp').controller('forgingModalController', ["$scope", "forgingModal", "$http", "userService", function ($scope, forgingModal, $http, userService) {
+angular.module('webApp').controller('forgingModalController', ["$scope", "forgingModal", "$http", "userService", "peerFactory", function ($scope, forgingModal, $http, userService, peerFactory) {
     $scope.error = null;
     $scope.forging = userService.forging;
     $scope.fee = 0;
@@ -37,7 +37,7 @@ angular.module('webApp').controller('forgingModalController', ["$scope", "forgin
             return $scope.stopForging();
         }
 
-        $http.post("/api/delegates/forging/enable", {secret: $scope.secretPhrase, publicKey: userService.publicKey})
+        $http.post(peerFactory.getUrl() + "/api/delegates/forging/enable", {secret: $scope.secretPhrase, publicKey: userService.publicKey})
             .then(function (resp) {
                 userService.setForging(resp.data.success);
                 $scope.forging = resp.data.success;
@@ -57,7 +57,7 @@ angular.module('webApp').controller('forgingModalController', ["$scope", "forgin
     $scope.stopForging = function () {
         $scope.error = null;
 
-        $http.post("/api/delegates/forging/disable", {secret: $scope.secretPhrase, publicKey: userService.publicKey})
+        $http.post(peerFactory.getUrl() + "/api/delegates/forging/disable", {secret: $scope.secretPhrase, publicKey: userService.publicKey})
             .then(function (resp) {
                 userService.setForging(!resp.data.success);
                 $scope.forging = !resp.data.success;

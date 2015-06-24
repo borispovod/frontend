@@ -13,7 +13,7 @@
                         </div>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form ng-submit="passcheck()">
                             <div class="input-group app-addon">
                                 <span class="input-group-addon search"></span>
                                 <input id="to" ng-focus="focus == 'to'" type="text" class="form-control"
@@ -29,6 +29,7 @@
                                 <span class="pass-error"
                                       ng-show="errorMessage && rememberedPassword">{{errorMessage}}</span>
                             </div>
+                            <input type="submit" ng-show="false">
                         </form>
                     </div>
                     <div class="modal-body bordered">
@@ -72,10 +73,10 @@
                     <div class="modal-body">
                         <ul class="nav modal-buttons pull-right">
                             <li>
-                                <a href="#" ng-click="passcheck()">BACK
+                                <a ng-click="passcheck()">BACK
                                 </a>
                             </li>
-                            <li><a href="#" class="green-link" ng-click="sendXCR(secretPhrase)">send xcr</a></li>
+                            <li><a class="green-link" ng-click="sendXCR(secretPhrase)">send xcr</a></li>
                         </ul>
                     </div>
                 </div>
@@ -106,10 +107,10 @@
                     <div class="modal-body">
                         <ul class="nav modal-buttons pull-right">
                             <li>
-                                <a href="#" ng-click="passcheck(true)">BACK
+                                <a  ng-click="passcheck(true)">BACK
                                 </a>
                             </li>
-                            <li><a href="#" class="green-link" ng-click="sendXCR(secretPhrase, true)">send xcr</a>
+                            <li><a  class="green-link" ng-click="sendXCR(secretPhrase, true)">send xcr</a>
                             </li>
                         </ul>
                     </div>

@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('registrationDelegateModalController', ["$scope", "registrationDelegateModal", "$http", "userService", "delegateService",
-    function ($scope, registrationDelegateModal, $http, userService, delegateService) {
+angular.module('webApp').controller('registrationDelegateModalController', ["$scope", "registrationDelegateModal", "$http", "userService", "delegateService", "peerFactory",
+    function ($scope, registrationDelegateModal, $http, userService, delegateService, peerFactory) {
         $scope.error = null;
         $scope.delegate = userService.delegate;
         $scope.action = false;
@@ -15,7 +15,7 @@ angular.module('webApp').controller('registrationDelegateModalController', ["$sc
         $scope.focus = 'username';
 
         $scope.getFee = function () {
-            $http.get("/api/delegates/fee").then(function (resp) {
+            $http.get(peerFactory.getUrl() + "/api/delegates/fee").then(function (resp) {
                 if (resp.data.success) {
                     $scope.fee = resp.data.fee;
                 }
@@ -82,7 +82,7 @@ angular.module('webApp').controller('registrationDelegateModalController', ["$sc
                     data.secret = $scope.rememberedPassword;
                 }
             }
-            $http.put("/api/delegates/", data)
+            $http.put(peerFactory.getUrl() + "/api/delegates/", data)
                 .then(function (resp) {
                     $scope.action = false;
                     userService.setDelegateProcess(resp.data.success);

@@ -89,10 +89,10 @@
                     <!--<div class="notifications left-margin-20 valign-wrapper" dropdown
                          is-open="moreNotificationsStatus.isopen"><span dropdown-toggle>9</span>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Incoming Payments<span class="badge meent">1</span></a></li>
-                            <li><a href="#">Messages<span class="badge blue">5</span></a></a></li>
-                            <li><a href="#">Contact Request<span class="badge cloud">2</span></a></a></li>
-                            <li><a href="#">Dapp Response<span class="badge violet">1</span></a></a></li>
+                            <li><a>Incoming Payments<span class="badge meent">1</span></a></li>
+                            <li><a>Messages<span class="badge blue">5</span></a></a></li>
+                            <li><a>Contact Request<span class="badge cloud">2</span></a></a></li>
+                            <li><a>Dapp Response<span class="badge violet">1</span></a></a></li>
                         </ul>
                     </div>-->
                     <div class="mini-chart valign-wrapper" ng-show="syncState!=0">
@@ -105,7 +105,7 @@
                         <i class="mdi-navigation-more-vert" dropdown-toggle></i>
                         <ul class="dropdown-menu" role="menu">
                             <li><a ng-click="myUserInfo()">My Profile</a></li>
-                            <li ng-if="!secondPassphrase"><a href="#" ng-click="setSecondPassphrase()">2nd
+                            <li ng-if="!secondPassphrase"><a ng-click="setSecondPassphrase()">2nd
                                 Passphrase</a></li>
                             <li><a ui-sref="passphrase">Logout</a></li>
                         </ul>

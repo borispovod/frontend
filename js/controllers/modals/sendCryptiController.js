@@ -256,7 +256,6 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
 
             sendTransaction = crypti.transaction.createTransaction(data.recipientId, data.amount, data.secret, data.secondSecret);
 
-
             var checkBeforSending = transactionService.checkTransaction(sendTransaction, data.secret);
 
             if (checkBeforSending.err) {

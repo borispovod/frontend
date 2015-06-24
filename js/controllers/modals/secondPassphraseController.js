@@ -1,6 +1,9 @@
 require('angular');
+var crypti = require('crypti-js');
 
-angular.module('webApp').controller('secondPassphraseModalController', ["$scope", "secondPassphraseModal", "$http", "userService", "peerFactory", function ($scope, secondPassphraseModal, $http, userService, peerFactory) {
+angular.module('webApp').controller('secondPassphraseModalController',
+    ["$scope", "secondPassphraseModal", "$http", "userService", "peerFactory", "transactionService",
+        function ($scope, secondPassphraseModal, $http, userService, peerFactory, transactionService) {
 
     $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
     $scope.passmode = false;
@@ -48,13 +51,21 @@ angular.module('webApp').controller('secondPassphraseModalController', ["$scope"
             $scope.fromServer = 'Password and Confirm Password don\'t match';
             return;
         }
-        $http.put("/api/signatures", {
-            secret: pass,
-            secondSecret: $scope.newSecretPhrase,
-            publicKey: userService.publicKey
-        }).then(function (resp) {
-            if (resp.data.error) {
-                $scope.fromServer = resp.data.error;
+
+        var transaction = crypti.signature.createSignature(pass, $scope.newSecretPhrase);
+        var checkBeforSending = transactionService.checkTransaction(transaction,pass);
+
+        if (checkBeforSending.err) {
+            $scope.fromServer = checkBeforSending.message;
+            return;
+        }
+
+        $scope.sending = true;
+
+        $http.post(peerFactory.getUrl() + "/peer/transactions", {transaction: transaction}, transactionService.createHeaders()).then(function (resp) {
+            $scope.sending = false;
+            if (!resp.data.success) {
+                $scope.fromServer = resp.data.message;
             }
             else {
                 if ($scope.destroy) {

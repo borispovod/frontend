@@ -1,6 +1,8 @@
 require('angular');
 
-angular.module('webApp').controller('userSettingsModalController', ["$scope", "$http", "userSettingsModal", "userService", function ($scope, $http, userSettingsModal, userService) {
+angular.module('webApp').controller('userSettingsModalController',
+    ["$scope", "$http", "userSettingsModal", "userService", "transactionService", "peerFactory",
+        function ($scope, $http, userSettingsModal, userService, transactionService, peerFactory) {
 
     $scope.error = null;
     $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
@@ -56,20 +58,39 @@ angular.module('webApp').controller('userSettingsModalController', ["$scope", "$
                 data.secret = $scope.rememberedPassword;
             }
         }
-        $http.put("/api/accounts/username", data)
-            .then(function (resp) {
-                $scope.action = false;
+        var crypti = require('crypti-js');
+        var usernameTransaction;
 
-                if (resp.data.success) {
-                    if ($scope.destroy) {
-                        $scope.destroy();
+        usernameTransaction = crypti.username.createUsername(data.secret, data.username, data.secondSecret);
+
+        var checkBeforSending = transactionService.checkTransaction(usernameTransaction, data.secret);
+
+        if (checkBeforSending.err) {
+            $scope.error = checkBeforSending.message;
+            return;
+        }
+
+        if (!$scope.lengthError && !$scope.sending) {
+            $scope.sending = !$scope.sending;
+
+            $http.post(peerFactory.getUrl() + "/peer/transactions",
+                {transaction: usernameTransaction},
+                transactionService.createHeaders()).then(function (resp) {
+                    $scope.sending = !$scope.sending;
+                    if (!resp.data.success) {
+                        $scope.error = resp.data.message;
                     }
+                    else {
+                        if ($scope.destroy) {
+                            $scope.destroy();
+                        }
+                        userSettingsModal.deactivate();
+                    }
+                });
 
-                    userSettingsModal.deactivate();
-                } else {
-                    $scope.error = resp.data.error;
-                }
-            });
+        }
+
+
     }
 
 }]);

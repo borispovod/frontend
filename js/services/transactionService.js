@@ -1,5 +1,4 @@
 require('angular');
-var platform = require("platform");
 var crypti = require('crypti-js');
 
 angular.module('webApp').service('transactionService', function (userService) {
@@ -53,8 +52,8 @@ angular.module('webApp').service('transactionService', function (userService) {
     this.createHeaders = function (timeout) {
         var data = {
             "headers": {
-                "os": platform.os.toString(),
-                "version": "0.2.0Lite!",
+                "os": process.platform,
+                "version": "0.2.1Lite!",
                 "port": 0,
                 "share-port": false
             }};

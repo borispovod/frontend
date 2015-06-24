@@ -13,7 +13,7 @@
                         </div>
                     </div>
                     <div class="modal-body">
-                        <form ng-submit="passcheck()">
+                        <form>
                             <div class="input-group app-addon">
                                 <span class="input-group-addon search"></span>
                                 <input id="to" ng-focus="focus == 'to'" type="text" class="form-control"
@@ -29,7 +29,6 @@
                                 <span class="pass-error"
                                       ng-show="errorMessage && rememberedPassword">{{errorMessage}}</span>
                             </div>
-                            <input type="submit" ng-show="false">
                         </form>
                     </div>
                     <div class="modal-body bordered">
@@ -38,10 +37,10 @@
                     <div class="modal-body">
                         <ul class="nav modal-buttons pull-right">
                             <li>
-                                <a href="#" ng-click="close()">Cancel
+                                <a ng-click="close()">Cancel
                                 </a>
                             </li>
-                            <li><a href="#" class="green-link" ng-click="passcheck()">send xcr</a></li>
+                            <li><a class="green-link" ng-click="passcheck()">send xcr</a></li>
                         </ul>
                     </div>
                 </div>

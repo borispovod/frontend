@@ -27,6 +27,9 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
             var keys = crypti.crypto.getKeys(pass);
             var address = crypti.crypto.getAddress(keys.publicKey);
             userService.setData(address, keys.publicKey);
+            if (remember) {
+                userService.setSessionPassword(pass);
+            }
 
             (function (d, script) {
                 script = d.createElement('script');

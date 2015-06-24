@@ -1,271 +1,288 @@
 require('angular');
 
-angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryptiModal", "$http", "userService", "$timeout", function ($scope, sendCryptiModal, $http, userService, $timeout) {
-    $scope.sending = false;
-    $scope.passmode = false;
-    $scope.accountValid = true;
-    $scope.errorMessage = "";
-    $scope.checkSecondPass = false;
-    $scope.onlyNumbers = /^-?\d*(\.\d+)?$/;
-    $scope.secondPassphrase = userService.secondPassphrase;
-    $scope.address = userService.address;
-    $scope.focus = $scope.to ? 'amount' : 'to';
+angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryptiModal", "$http", "userService", "$timeout", "peerFactory", "transactionService",
+    function ($scope, sendCryptiModal, $http, userService, $timeout, peerFactory, transactionService) {
+        $scope.sending = false;
+        $scope.passmode = false;
+        $scope.accountValid = true;
+        $scope.errorMessage = "";
+        $scope.checkSecondPass = false;
+        $scope.onlyNumbers = /^-?\d*(\.\d+)?$/;
+        $scope.secondPassphrase = userService.secondPassphrase;
+        $scope.address = userService.address;
+        $scope.focus = $scope.to ? 'amount' : 'to';
 
-    $scope.submit = function () {
-        console.log('submited');
-    };
+        $scope.submit = function () {
+            console.log('submited');
+        };
 
-    $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
+        $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
 
-    Number.prototype.roundTo = function (digitsCount) {
-        var digitsCount = typeof digitsCount !== 'undefined' ? digitsCount : 2;
-        var s = String(this);
-        if (s.indexOf('e') < 0) {
-            var e = s.indexOf('.');
-            if (e == -1) return this;
-            var c = s.length - e - 1;
-            if (c < digitsCount) digitsCount = c;
-            var e1 = e + 1 + digitsCount;
-            var d = Number(s.substr(0, e) + s.substr(e + 1, digitsCount));
-            if (s[e1] > 4) d += 1;
-            d /= Math.pow(10, digitsCount);
-            return d.valueOf();
-        } else {
-            return this.toFixed(digitsCount);
-        }
-    }
-
-    Math.roundTo = function (number, digitsCount) {
-        number = Number(number);
-        return number.roundTo(digitsCount).valueOf();
-    }
-
-    $scope.passcheck = function (fromSecondPass) {
-        if (fromSecondPass) {
-            $scope.checkSecondPass = false;
-            $scope.passmode = $scope.rememberedPassword ? false : true;
-            if ($scope.passmode) {
-                $scope.focus = 'secretPhrase';
+        Number.prototype.roundTo = function (digitsCount) {
+            var digitsCount = typeof digitsCount !== 'undefined' ? digitsCount : 2;
+            var s = String(this);
+            if (s.indexOf('e') < 0) {
+                var e = s.indexOf('.');
+                if (e == -1) return this;
+                var c = s.length - e - 1;
+                if (c < digitsCount) digitsCount = c;
+                var e1 = e + 1 + digitsCount;
+                var d = Number(s.substr(0, e) + s.substr(e + 1, digitsCount));
+                if (s[e1] > 4) d += 1;
+                d /= Math.pow(10, digitsCount);
+                return d.valueOf();
+            } else {
+                return this.toFixed(digitsCount);
             }
-            $scope.secondPhrase = '';
-            $scope.secretPhrase = '';
-            return;
         }
-        if ($scope.rememberedPassword) {
-            $scope.sendXCR($scope.rememberedPassword);
-        }
-        else {
-            $scope.passmode = !$scope.passmode;
-            $scope.focus = 'secretPhrase';
-            $scope.secretPhrase = '';
-        }
-    }
 
-    $scope.close = function () {
-        if ($scope.destroy) {
-            $scope.destroy();
+        Math.roundTo = function (number, digitsCount) {
+            number = Number(number);
+            return number.roundTo(digitsCount).valueOf();
         }
-        sendCryptiModal.deactivate();
-    }
 
-
-    $scope.moreThanEightDigits = function (number) {
-        if (number.indexOf(".") < 0) {
-            return false;
-        }
-        else {
-            if (number.split('.')[1].length > 8) {
-                return true;
+        $scope.passcheck = function (fromSecondPass) {
+            if (fromSecondPass) {
+                $scope.checkSecondPass = false;
+                $scope.passmode = $scope.rememberedPassword ? false : true;
+                if ($scope.passmode) {
+                    $scope.focus = 'secretPhrase';
+                }
+                $scope.secondPhrase = '';
+                $scope.secretPhrase = '';
+                return;
+            }
+            if ($scope.rememberedPassword) {
+                $scope.sendXCR($scope.rememberedPassword);
             }
             else {
+                $scope.passmode = !$scope.passmode;
+                $scope.focus = 'secretPhrase';
+                $scope.secretPhrase = '';
+            }
+        }
+
+        $scope.close = function () {
+            if ($scope.destroy) {
+                $scope.destroy();
+            }
+            sendCryptiModal.deactivate();
+        }
+
+
+        $scope.moreThanEightDigits = function (number) {
+            if (number.indexOf(".") < 0) {
                 return false;
             }
-        }
-    }
-
-    $scope.recalculateFee = function ($event) {
-        if (!$scope.amount || isNaN(parseFloat($scope.amount))) {
-            $scope.fee = "";
-        } else {
-            if ($scope.amount.indexOf('.') >= 0) {
-                var strs = $scope.amount.split('.');
-                $scope.maxlength = strs[0].length + 9;
+            else {
+                if (number.split('.')[1].length > 8) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
             }
-            // calculate fee.
+        }
 
-
-            var fee = parseInt($scope.amount * 100000000 / 100 * $scope.currentFee) / 100000000;
-            //($scope.amount / 100 * $scope.currentFee).roundTo(8);
-
-            if ($scope.amount == 0) {
-                fee = 0;
-            } else if (parseFloat(fee) == 0) {
-                fee = "0.00000001";
-                $scope.fee = fee;
+        $scope.recalculateFee = function () {
+            if (!$scope.amount || isNaN(parseFloat($scope.amount))) {
+                $scope.fee = "";
             } else {
-                $scope.fee = fee.toFixed(8);
+                if ($scope.amount.indexOf('.') >= 0) {
+                    var strs = $scope.amount.split('.');
+                    $scope.maxlength = strs[0].length + 9;
+                }
+                // calculate fee.
+
+
+                var fee = parseInt($scope.amount * 100000000 / 100 * $scope.currentFee) / 100000000;
+                //($scope.amount / 100 * $scope.currentFee).roundTo(8);
+
+                if ($scope.amount == 0) {
+                    fee = 0;
+                } else if (parseFloat(fee) == 0) {
+                    fee = "0.00000001";
+                    $scope.fee = fee;
+                } else {
+                    $scope.fee = fee.toFixed(8);
+                }
             }
-        }
 
-        /*
-         if (!$scope.amount) {
-         $scope.fee = "";
-         return;
-         }
+            /*
+             if (!$scope.amount) {
+             $scope.fee = "";
+             return;
+             }
 
-         if($scope.moreThanEightDigits(parseFloat($scope.amount))){
-         console.log('fee');
-         $scope.amount = parseFloat($scope.amount).roundTo(8).toString();
-         console.log($scope.amount);
-         }
-         if($scope.currentFee){
-         var fee = $scope.amount * $scope.currentFee * 0.01;
-         }
-
-
-         $scope.fee = fee.roundTo(8);
-         */
-    }
+             if($scope.moreThanEightDigits(parseFloat($scope.amount))){
+             console.log('fee');
+             $scope.amount = parseFloat($scope.amount).roundTo(8).toString();
+             console.log($scope.amount);
+             }
+             if($scope.currentFee){
+             var fee = $scope.amount * $scope.currentFee * 0.01;
+             }
 
 
-    $scope.accountChanged = function (e) {
-        var string = $scope.to;
-
-        if (!string) {
-            return;
+             $scope.fee = fee.roundTo(8);
+             */
         }
 
 
-        if (string[string.length - 1] == "C") {
-            var isnum = /^\d+$/.test(string.substring(0, string.length - 1));
-            if (isnum && string.length - 1 >= 1 && string.length - 1 <= 20) {
-                $scope.accountValid = true;
+        $scope.accountChanged = function (e) {
+            var string = $scope.to;
+
+            if (!string) {
+                return;
+            }
+
+
+            if (string[string.length - 1] == "C") {
+                var isnum = /^\d+$/.test(string.substring(0, string.length - 1));
+                if (isnum && string.length - 1 >= 1 && string.length - 1 <= 20) {
+                    $scope.accountValid = true;
+                }
+                else {
+                    $scope.accountValid = false;
+                }
             }
             else {
                 $scope.accountValid = false;
             }
         }
-        else {
-            $scope.accountValid = false;
-        }
-    }
 
-    $scope.moreThanEightDigits = function (number) {
-        if (number.toString().indexOf(".") < 0) {
-            return false;
-        }
-        else {
-            if (number.toString().split('.')[1].length > 8) {
-                return true;
-            }
-            else {
+        $scope.moreThanEightDigits = function (number) {
+            if (number.toString().indexOf(".") < 0) {
                 return false;
             }
-        }
-    }
-
-    $scope.getCurrentFee = function () {
-        $http.get("/api/blocks/getFee")
-            .then(function (resp) {
-                $scope.currentFee = resp.data.fee;
-            });
-    }
-
-    $scope.convertXCR = function (currency) {
-        currency = String(currency);
-
-        var parts = currency.split(".");
-
-        var amount = parts[0];
-
-        //no fractional part
-        if (parts.length == 1) {
-            var fraction = "00000000";
-        } else if (parts.length == 2) {
-            if (parts[1].length <= 8) {
-                var fraction = parts[1];
-            } else {
-                var fraction = parts[1].substring(0, 8);
-            }
-        } else {
-            $scope.errorMessage = "Wrong XCR value";
-            throw "Invalid input";
-        }
-
-        for (var i = fraction.length; i < 8; i++) {
-            fraction += "0";
-        }
-
-        var result = amount + "" + fraction;
-
-        //in case there's a comma or something else in there.. at this point there should only be numbers
-        if (!/^\d+$/.test(result)) {
-            $scope.errorMessage = "Wrong XCR value";
-            throw "Invalid input.";
-        }
-
-        //remove leading zeroes
-        result = result.replace(/^0+/, "");
-
-        if (result === "") {
-            result = "0";
-        }
-
-        return parseInt(result);
-    }
-    $scope.clearRecipient = function () {
-        $scope.to = '';
-    }
-
-    $scope.sendXCR = function (secretPhrase, withSecond) {
-        if ($scope.secondPassphrase && !withSecond) {
-            $scope.checkSecondPass = true;
-            $scope.focus = 'secondPhrase';
-            return;
-        }
-        $scope.errorMessage = "";
-        if (($scope.amount + '').indexOf('.') != -1) {
-            $scope.lengthError = $scope.amount.split('.')[1].length > 8;
-            $scope.errorMessage = $scope.lengthError ? "More than 8 numbers in decimal part" : '';
-        }
-
-        if ($scope.lengthError) {
-            return;
-        }
-
-        /*$scope.amountError = $scope.convertXCR($scope.fee) + $scope.convertXCR($scope.amount) > userService._unconfirmedBalance;
-         $scope.errorMessage = $scope.amountError ? "Not enough XCR" : "";*/
-
-        var data = {
-            secret: secretPhrase,
-            amount: $scope.convertXCR($scope.amount),
-            recipientId: $scope.to,
-            publicKey: userService.publicKey
-        };
-
-        if ($scope.secondPassphrase) {
-            data.secondSecret = $scope.secondPhrase;
-            if ($scope.rememberedPassword) {
-                data.secret = $scope.rememberedPassword;
-            }
-        }
-
-        if (!$scope.lengthError && !$scope.sending) {
-            $scope.sending = true;
-            $http.put("/api/transactions", data).then(function (resp) {
-                $scope.sending = false;
-                if (resp.data.error) {
-                    $scope.errorMessage = resp.data.error;
+            else {
+                if (number.toString().split('.')[1].length > 8) {
+                    return true;
                 }
                 else {
-                    if ($scope.destroy) {
-                        $scope.destroy();
-                    }
-                    sendCryptiModal.deactivate();
+                    return false;
                 }
-            });
-
+            }
         }
-    }
-    $scope.getCurrentFee();
-}]);
+
+        $scope.getCurrentFee = function () {
+            $http.get(peerFactory.getUrl() + "/api/blocks/getFee")
+                .then(function (resp) {
+                    $scope.currentFee = resp.data.fee;
+                });
+        }
+
+        $scope.convertXCR = function (currency) {
+            currency = String(currency);
+
+            var parts = currency.split(".");
+
+            var amount = parts[0];
+
+            //no fractional part
+            if (parts.length == 1) {
+                var fraction = "00000000";
+            } else if (parts.length == 2) {
+                if (parts[1].length <= 8) {
+                    var fraction = parts[1];
+                } else {
+                    var fraction = parts[1].substring(0, 8);
+                }
+            } else {
+                $scope.errorMessage = "Wrong XCR value";
+                throw "Invalid input";
+            }
+
+            for (var i = fraction.length; i < 8; i++) {
+                fraction += "0";
+            }
+
+            var result = amount + "" + fraction;
+
+            //in case there's a comma or something else in there.. at this point there should only be numbers
+            if (!/^\d+$/.test(result)) {
+                $scope.errorMessage = "Wrong XCR value";
+                throw "Invalid input.";
+            }
+
+            //remove leading zeroes
+            result = result.replace(/^0+/, "");
+
+            if (result === "") {
+                result = "0";
+            }
+
+            return parseInt(result);
+        }
+        $scope.clearRecipient = function () {
+            $scope.to = '';
+        }
+
+        $scope.sendXCR = function (secretPhrase, withSecond) {
+
+            if ($scope.secondPassphrase && !withSecond) {
+                $scope.checkSecondPass = true;
+                $scope.focus = 'secondPhrase';
+                return;
+            }
+            $scope.recalculateFee();
+            $scope.errorMessage = "";
+            if (($scope.amount + '').indexOf('.') != -1) {
+                $scope.lengthError = $scope.amount.split('.')[1].length > 8;
+                $scope.errorMessage = $scope.lengthError ? "More than 8 numbers in decimal part" : '';
+            }
+
+            if ($scope.lengthError) {
+                return;
+            }
+
+            $scope.amountError = $scope.convertXCR($scope.fee) + $scope.convertXCR($scope.amount) > userService._unconfirmedBalance;
+            $scope.errorMessage = $scope.amountError ? "Not enough XCR" : "";
+
+            var data = {
+                secret: secretPhrase,
+                amount: $scope.convertXCR($scope.amount),
+                recipientId: $scope.to
+            };
+
+            if ($scope.secondPassphrase) {
+                data.secondSecret = $scope.secondPhrase;
+                if ($scope.rememberedPassword) {
+                    data.secret = $scope.rememberedPassword;
+                }
+            }
+            var crypti = require('crypti-js');
+            var sendTransaction;
+
+            sendTransaction = crypti.transaction.createTransaction(data.recipientId, data.amount, data.secret, data.secondSecret);
+
+
+            var checkBeforSending = transactionService.checkTransaction(sendTransaction, data.secret);
+
+            if (checkBeforSending.err) {
+                $scope.errorMessage = checkBeforSending.message;
+                return;
+            }
+
+            if (!$scope.lengthError && !$scope.sending) {
+                $scope.sending = !$scope.sending;
+
+                $http.post(peerFactory.getUrl() + "/peer/transactions",
+                    {transaction: sendTransaction},
+                    transactionService.createHeaders()).then(function (resp) {
+                        $scope.sending = !$scope.sending;
+                        if (!resp.data.success) {
+                            $scope.errorMessage = resp.data.message;
+                        }
+                        else {
+                            if ($scope.destroy) {
+                                $scope.destroy();
+                            }
+                            sendCryptiModal.deactivate();
+                        }
+                    });
+
+            }
+        }
+        $scope.getCurrentFee();
+    }]);

@@ -85,6 +85,7 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
 
             (function (d, script) {
                 script = d.createElement('script');
+                script.id = "soketIoScript";
                 script.type = 'text/javascript';
                 script.async = true;
                 script.onload = function () {

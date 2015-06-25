@@ -1,8 +1,10 @@
 require('angular');
 var compareVersion = require('../../node_modules/compare-version/index.js');
+var ip = require('ip');
+var ipRegex = require('ip-regex');
 
-angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal', 'userInfo', 'transactionsService', 'secondPassphraseModal', 'peerFactory', 'dbFactory',
-    function ($rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal, userInfo, transactionsService, secondPassphraseModal, peerFactory, dbFactory) {
+angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal', 'userInfo', 'transactionsService', 'secondPassphraseModal', 'peerFactory', 'dbFactory', "serverSocket",
+    function ($rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal, userInfo, transactionsService, secondPassphraseModal, peerFactory, dbFactory, serverSocket) {
 
         $scope.inError = false;
 
@@ -21,21 +23,36 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
             peerFactory.checkPeer(peerFactory.getUrl(), function (resp) {
                 if (resp.status != 200) {
                     if ($scope.inError) {
-                        dbFactory.getRandom(10, function () {
-                            var key = (Math.floor((Math.random() * 10) + 1) - 1);
-                            peerFactory.checkPeer(dbFactory.randomList[key].key.url, function (resp) {
-                                if (resp.status == 200) {
-                                    peerFactory.setPeer(ip.fromLong(dbFactory.randomList[key].key._id), dbFactory.randomList[key].key.port);
-                                    $scope.peerexists = true;
-                                }
-                                else {
-                                    dbFactory.delete(dbFactory.randomList[key].key._id, function () {
-                                        setBestPeer();
-                                    });
-                                }
-                            })
-                        });
+                        var setBestPeer = function () {
+                            dbFactory.getRandom(10, function () {
+                                var key = (Math.floor((Math.random() * 10) + 1) - 1);
+                                peerFactory.checkPeer(dbFactory.randomList[key].key.url, function (resp) {
+                                    if (resp.status == 200) {
+                                        peerFactory.setPeer(ip.fromLong(dbFactory.randomList[key].key._id), dbFactory.randomList[key].key.port);
+                                        $scope.peerexists = true;
+                                        $('#soketIoScript').remove();
+                                        (function (d, script) {
+                                            script = d.createElement('script');
+                                            script.id = "soketIoScript";
+                                            script.type = 'text/javascript';
+                                            script.async = true;
+                                            script.onload = function () {
+                                                serverSocket.newPeer();
+                                            };
+                                            script.src = peerFactory.getUrl() + '/socket.io/socket.io.js';
+                                            d.getElementsByTagName('head')[0].appendChild(script);
+                                        }(document));
 
+
+                                    }
+                                    else {
+                                        dbFactory.delete(dbFactory.randomList[key].key._id, function () {
+                                            setBestPeer();
+                                        });
+                                    }
+                                })
+                            });
+                        }();
                     }
                     else {
                         $scope.inError = true;

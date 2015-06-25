@@ -9,6 +9,7 @@
     "materialize": "~0.96.1",
     "file-saver": "*",
     "blob": "*",
-    "angular-animate": "~1.4.0"
+    "angular-animate": "~1.4.0",
+    "angular-blurred-modal": "git@github.com:sthomp/angular-blurred-modal"
   }
 }

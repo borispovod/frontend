@@ -1,9 +1,60 @@
 require('angular');
 var compareVersion = require('../../node_modules/compare-version/index.js');
 
-angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal', 'userInfo', 'transactionsService', 'secondPassphraseModal', 'peerFactory',
-    function ($rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal, userInfo, transactionsService, secondPassphraseModal, peerFactory) {
+angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal', 'userInfo', 'transactionsService', 'secondPassphraseModal', 'peerFactory', 'dbFactory',
+    function ($rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal, userInfo, transactionsService, secondPassphraseModal, peerFactory, dbFactory) {
 
+        $scope.inError = false;
+
+        $scope.dbCompact = $interval(function () {
+            dbFactory.compact(function (resp) {
+            });
+        }, 5 * 6 * 10 * 1000);
+
+        $scope.$on('start-interval', function (event, args) {
+            $scope.peerCheking = $interval(function () {
+                $scope.checkPeer()
+            }, 10000);
+        });
+
+        $scope.checkPeer = function () {
+            peerFactory.checkPeer(peerFactory.getUrl(), function (resp) {
+                if (resp.status != 200) {
+                    if ($scope.inError) {
+                        dbFactory.getRandom(10, function () {
+                            var key = (Math.floor((Math.random() * 10) + 1) - 1);
+                            peerFactory.checkPeer(dbFactory.randomList[key].key.url, function (resp) {
+                                if (resp.status == 200) {
+                                    peerFactory.setPeer(ip.fromLong(dbFactory.randomList[key].key._id), dbFactory.randomList[key].key.port);
+                                    $scope.peerexists = true;
+                                }
+                                else {
+                                    dbFactory.delete(dbFactory.randomList[key].key._id, function () {
+                                        setBestPeer();
+                                    });
+                                }
+                            })
+                        });
+
+                    }
+                    else {
+                        $scope.inError = true;
+                    }
+                }
+                else {
+                    $scope.inError = false;
+                }
+            });
+        };
+
+        $scope.peerCheking = $interval(function () {
+            $scope.checkPeer()
+        }, 10000);
+
+        $scope.$on('$destroy', function () {
+            $interval.cancel($scope.peerCheking);
+            $interval.cancel($scope.dbCompact);
+        });
 
         $scope.searchTransactions = transactionsService;
         $scope.searchBlocks = blockService;
@@ -140,8 +191,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                     $scope.getMyVotesCount();
                     $scope.getContacts();
                     $scope.getVersion();
-                    if(!$scope.$$phase)
-                    {
+                    if (!$scope.$$phase) {
                         $scope.$apply();
                     }
 
@@ -368,7 +418,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         $scope.updateViews = function (views) {
             $scope.$broadcast('updateControllerData', views);
         }
-debugger;
+
         $scope.getAppData();
         $scope.getUSDPrice();
     }]);

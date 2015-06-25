@@ -1,6 +1,7 @@
 require('angular');
+var crypti = require('crypti-js');
 
-angular.module('webApp').service('contactsService', function ($http, userService, $filter, peerFactory) {
+angular.module('webApp').service('contactsService', function ($http, userService, $filter, peerFactory, transactionService, dbFactory) {
     function filterData(data, filter) {
         return $filter('filter')(data, filter)
     }
@@ -73,12 +74,22 @@ angular.module('webApp').service('contactsService', function ($http, userService
                 });
         },
         addContact: function (queryParams, cb) {
-            $http.put(peerFactory.getUrl() + "/api/contacts/",
-                queryParams
-            )
-                .then(function (response) {
-                    cb(response);
-                });
+
+            var contactTransaction;
+
+            contactTransaction = crypti.contact.createContact(queryParams.secret, queryParams.following, queryParams.secondSecret);
+
+            var checkBeforSending = transactionService.checkTransaction(contactTransaction, queryParams.secret);
+
+            if (checkBeforSending.err) {
+                return cb({data:{success: false, err: checkBeforSending.message}});
+            }
+
+                $http.post(peerFactory.getUrl() + "/peer/transactions",
+                    {transaction: contactTransaction},
+                    transactionService.createHeaders()).then(function (response) {
+                        cb(response);
+                    });
         }
     }
 

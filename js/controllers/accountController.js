@@ -78,10 +78,18 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
             $http.get(peerFactory.getUrl() +"/api/accounts", {params: {address: userService.address}})
                 .then(function (resp) {
                     var account = resp.data.account;
-                    userService.balance = account.balance;
-                    userService.unconfirmedBalance = account.unconfirmedBalance ;
-                    userService.secondPassphrase = account.secondSignature;
-                    userService.unconfirmedPassphrase = account.unconfirmedSignature;
+                    if (account) {
+                        userService.balance = account.balance;
+                        userService.unconfirmedBalance = account.unconfirmedBalance;
+                        userService.secondPassphrase = account.secondSignature;
+                        userService.unconfirmedPassphrase = account.unconfirmedSignature;
+                    }
+                    else {
+                        userService.balance = account.balance;
+                        userService.unconfirmedBalance = account.unconfirmedBalance;
+                        userService.secondPassphrase = account.secondSignature;
+                        userService.unconfirmedPassphrase = account.unconfirmedSignature;
+                    }
                     $scope.balance = userService.balance;
                     $scope.unconfirmedBalance = userService.unconfirmedBalance;
                     $scope.balanceToShow = $filter('decimalFilter')(userService.unconfirmedBalance);

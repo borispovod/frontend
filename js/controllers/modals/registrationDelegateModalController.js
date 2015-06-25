@@ -1,7 +1,8 @@
 require('angular');
 
-angular.module('webApp').controller('registrationDelegateModalController', ["$scope", "registrationDelegateModal", "$http", "userService", "delegateService", "peerFactory",
-    function ($scope, registrationDelegateModal, $http, userService, delegateService, peerFactory) {
+angular.module('webApp').controller('registrationDelegateModalController',
+    ["$scope", "registrationDelegateModal", "$http", "userService", "delegateService", "peerFactory", "transactionService",
+    function ($scope, registrationDelegateModal, $http, userService, delegateService, peerFactory, transactionService) {
         $scope.error = null;
         $scope.delegate = userService.delegate;
         $scope.action = false;
@@ -82,21 +83,39 @@ angular.module('webApp').controller('registrationDelegateModalController', ["$sc
                     data.secret = $scope.rememberedPassword;
                 }
             }
-            $http.put(peerFactory.getUrl() + "/api/delegates/", data)
-                .then(function (resp) {
-                    $scope.action = false;
-                    userService.setDelegateProcess(resp.data.success);
 
-                    if (resp.data.success) {
-                        if ($scope.destroy) {
-                            $scope.destroy();
+            var crypti = require('crypti-js');
+            var delegateTransaction;
+
+            delegateTransaction = crypti.delegate.createDelegate(data.secret, data.username, data.secondSecret);
+
+            var checkBeforSending = transactionService.checkTransaction(delegateTransaction, data.secret);
+
+            if (checkBeforSending.err) {
+                $scope.error = checkBeforSending.message;
+                return;
+            }
+
+            if (!$scope.lengthError && !$scope.sending) {
+                $scope.sending = !$scope.sending;
+
+                $http.post(peerFactory.getUrl() + "/peer/transactions",
+                    {transaction: delegateTransaction},
+                    transactionService.createHeaders()).then(function (resp) {
+                        $scope.sending = !$scope.sending;
+                        if (!resp.data.success) {
+                            $scope.error = resp.data.message;
                         }
+                        else {
+                            if ($scope.destroy) {
+                                $scope.destroy();
+                            }
+                            registrationDelegateModal.deactivate();
+                        }
+                    });
 
-                        registrationDelegateModal.deactivate();
-                    } else {
-                        $scope.error = resp.data.error;
-                    }
-                });
+            }
+
         }
 
     }]);

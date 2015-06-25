@@ -1,7 +1,8 @@
 require('angular');
+var crypti = require('crypti-js');
 
-angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$http", "userService", "$timeout", "peerFactory",
-    function ($scope, voteModal, $http, userService, $timeout, peerFactory) {
+angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$http", "userService", "$timeout", "peerFactory", "transactionService",
+    function ($scope, voteModal, $http, userService, $timeout, peerFactory, transactionService) {
     $scope.voting = false;
     $scope.fromServer = '';
     $scope.passmode = false;
@@ -106,10 +107,22 @@ angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$
         }
 
         $scope.voting = !$scope.voting;
-        $http.put("/api/accounts/delegates", data).then(function (resp) {
+        var voteTransaction;
+
+        voteTransaction = crypti.vote.createVote(data.secret, data.delegates, data.secondSecret);
+
+        var checkBeforSending = transactionService.checkTransaction(voteTransaction, data.secret);
+
+        if (checkBeforSending.err) {
+            $scope.fromServer = checkBeforSending.message;
+            return;
+        };
+
+        $scope.voting = !$scope.voting;
+        $http.post(peerFactory.getUrl() + "/peer/transactions", {transaction: voteTransaction}, transactionService.createHeaders()).then(function (resp) {
             $scope.voting = !$scope.voting;
-            if (resp.data.error) {
-                $scope.fromServer = resp.data.error;
+            if (!resp.data.success) {
+                $scope.fromServer = resp.data.message;
             }
             else {
                 if ($scope.destroy) {

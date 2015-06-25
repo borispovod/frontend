@@ -152,7 +152,6 @@ angular.module('webApp').factory('dbFactory', function (peerFactory) {
         });
     };
 
-
     factory.add = function (peer) {
         this.db.put({
             _id: peer.ip,
@@ -214,7 +213,6 @@ angular.module('webApp').factory('dbFactory', function (peerFactory) {
 
         }
     };
-
 
     factory.updatepeer = function (peer) {
         this.db.get(peer.key._id, function (err, doc) {

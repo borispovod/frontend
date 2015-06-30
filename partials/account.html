@@ -24,16 +24,6 @@
             </div>
         </div>
     </div>
-    <!--<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-        <div class="panel  widget widget-violet">
-            <div class="dapp-icon"></div>
-            <div class="panel-body">
-                <div class="wg-label">Dapps Installed</div>
-                <div class="wg-data"><span class="strong">13</span><span
-                        class="wg-legend">5 Updates Available</span></div>
-            </div>
-        </div>
-    </div>-->
     <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
         <div class="panel  widget widget-cloud" ng-show="diffVersion!=-1">
             <div class="panel-body">
@@ -62,19 +52,19 @@
                 <div class="more" ng-show="transactions.length"><span class="sr-only">More</span></div>
             </div>
             <table ng-table="tableParams" class="table ng-table-responsive">
-                <tbody ng-repeat="group in $groups">
+                <tbody class="tbody-group" ng-repeat="group in $groups">
                 <tr class="ng-table-group">
-                    <td colspan="{{$columns.length}}">
+                    <td colspan="2">
                             Transaction ID: <strong>{{ group.value }}</strong>
                     </td>
                 </tr>
                 <tr ng-repeat="trans in group.data">
-                    <td colspan="{{$columns.length}}">
+                    <td colspan="2">
                         Sender: {{trans.senderId}}
                     </td>
                 </tr>
                 <tr ng-repeat="trans in group.data">
-                    <td colspan="{{$columns.length}}">
+                    <td colspan="2">
                         Recipient: {{trans.recipientId}}
                     </td>
                 </tr>
@@ -93,155 +83,5 @@
                 <p class="empty-state-text">You haven't made any transactions yet.</p></div>
         </div>
     </div>
-    <!--
-    <div class="col-lg-3 col-md-6 col-sm-6  col-xs-12">
-        <div class="light-graph line-graph">
-            <div class="light-graph-heading">No Data Available</div>
-            <div class="light-graph-sub-heading">Return when you have forged at least 100 XCR</div>
-            <div class="light-graph-body">
-
-                <canvas id="line" class="chart chart-line" data="graphs.cryptiPrice.data"
-                        colours="graphs.cryptiPrice.colours"
-                        labels="graphs.cryptiPrice.labels" legend="false" series="graphs.cryptiPrice.series"
-                        options="graphs.cryptiPrice.options">
-                </canvas>
-            </div>
-            <div class="light-graph-footer">
-                <div class="row">
-                    <div class="col-xs-6 description">Amount Forged</br>in last year
-                    </div>
-                    <div class="col-xs-6 forged-amount"><span class="value">0.00 <span class="legend">XCR</span></span>
-                    </div>
-                    <div class="clearfix visible-lg visible-md visible-sm visible-xs"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    -->
 </div>
-<!--
-<div class="col-lg-8 col-md-6 col-sm-6  col-xs-12">
-    <div class="panel  panel-default panel-list">
-        <div class="panel-heading cursor"><h2>Dapp News</h2>
-
-            <div class="more"><span class="sr-only">More</span></div>
-        </div>
-        <div class="panel-body" ng-if="false">
-            <ul class="media-list">
-                <li class="media">
-                    <div class="media-left media-middle">
-                        <a href="#">
-                            <img class="media-object" src="/images/samples/RollerCoaster.png"
-                                 alt="RollerCoaster Tycoon">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">RollerCoaster Tycoon
-                            <div class="pull-right icon"><i class="mdi-action-info"></i></div>
-                        </h4>
-                        <span class="text-opacity">I'm a one-line description of this Dapp</span>
-                    </div>
-                </li>
-                <li class="media">
-                    <div class="media-left media-middle">
-                        <a href="#">
-                            <img class="media-object" src="/images/samples/RollerCoaster.png"
-                                 alt="RollerCoaster Tycoon">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">RollerCoaster Tycoon
-                            <div class="pull-right icon"><i class="mdi-action-info"></i></div>
-                        </h4>
-                        <span class="text-opacity">I'm a one-line description of this Dapp</span>
-                    </div>
-                </li>
-                <li class="media">
-                    <div class="media-left media-middle">
-                        <a href="#">
-                            <img class="media-object" src="/images/samples/RollerCoaster.png"
-                                 alt="RollerCoaster Tycoon">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">RollerCoaster Tycoon
-                            <div class="pull-right icon"><i class="mdi-action-info"></i></div>
-                        </h4>
-                        <span class="text-opacity">I'm a one-line description of this Dapp</span>
-                    </div>
-                </li>
-            </ul>
-
-
-        </div>
-        <div class="panel-body empty-body" ng-if="true">
-            <p class="empty-state-icon"><i class="mdi-hardware-computer medium"></i></p>
-
-            <p class="empty-state-text">You haven't any dapp yet.</p></div>
-    </div>
-</div>
-<div class="col-lg-4 col-md-12 col-sm-6  col-xs-12">
-    <div class="panel  panel-default panel-list">
-        <div class="panel-heading cursor"><h2>Latest Messages</h2>
-
-            <div class="more"><span class="sr-only">More</span></div>
-        </div>
-        <div class="panel-body" ng-if="false">
-            <ul class="media-list">
-                <li class="media">
-                    <div class="media-left media-middle">
-                        <a href="#">
-                            <img class="media-object" src="/images/samples/account.png"
-                                 alt="RollerCoaster Tycoon">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">Patrick Collins
-                            <div class="pull-right icon new-message padding-top-6"><i
-                                    class="mdi-communication-message"></i></div>
-                        </h4>
-                        Yes I think it´s the best way to go
-                    </div>
-                </li>
-                <li class="media">
-                    <div class="media-left media-middle">
-                        <a href="#">
-                            <img class="media-object" src="/images/samples/account.png"
-                                 alt="RollerCoaster Tycoon">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">Patrick Collins
-                            <div class="pull-right icon padding-top-6"><i class="mdi-communication-messenger"></i>
-                            </div>
-                        </h4>
-                        Yes I think it´s the best way to go
-                    </div>
-                </li>
-                <li class="media">
-                    <div class="media-left media-middle">
-                        <a href="#">
-                            <img class="media-object" src="/images/samples/account.png"
-                                 alt="RollerCoaster Tycoon">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">Patrick Collins
-                            <div class="pull-right icon padding-top-6"><i class="mdi-communication-messenger"></i>
-                            </div>
-                        </h4>
-                        Yes I think it´s the best way to go
-                    </div>
-                </li>
-            </ul>
-
-
-        </div>
-        <div class="panel-body empty-body" ng-if="true">
-            <p class="empty-state-icon"><i class="mdi-communication-forum medium"></i></p>
-
-            <p class="empty-state-text">You haven't started any conversation yet.</p></div>
-    </div>
-</div>
--->
 

@@ -19,13 +19,13 @@ app.on('window-all-closed', function () {
 // initialization and ready for creating browser windows.
 app.on('ready', function () {
     // Create the browser window.
-    mainWindow = new BrowserWindow({width: 1300, height: 800});
+    mainWindow = new BrowserWindow({width: 640, height: 960});
 
     // and load the index.html of the app.
     mainWindow.loadUrl('file://' + __dirname + '/wallet.html');
 
     // Open the devtools.
-    //mainWindow.openDevTools();
+    mainWindow.openDevTools();
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function () {

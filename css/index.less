@@ -199,8 +199,8 @@ span.menu-text {
 
 #header {
   background-color: @blue;
-  height: 65px;
   padding: 20px 30px;
+
 
   .forging-state {
     display: block;
@@ -270,6 +270,7 @@ span.menu-text {
     font-weight: normal;
     color: @white;
     opacity: @font-opacity;
+
   }
   .title-icon {
     background-image: url('@{images}/sprites/iconset.png');
@@ -286,6 +287,20 @@ span.menu-text {
     height: 65px;
     margin-top: -20px;
     margin-bottom: -20px;
+    @media (max-height: @screen-xs-max) {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      height: 65px;
+    }
+    .more-down {
+      @media (max-height: @screen-xs-max) {
+      position: absolute;
+      top: 14px;
+      right: 30px;
+      }
+    }
+
   }
   #balance {
     line-height: 36px;

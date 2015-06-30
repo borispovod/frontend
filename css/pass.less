@@ -1,7 +1,9 @@
 #pass {
   background-color: #ebeced;
-  height: 100%;
-  min-height: 500px;
+  background-image: url('@{images}/banner.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100%;
   .sign-in-button {
     padding: 8px 14px;
     border: none;
@@ -41,28 +43,37 @@
 }
 
 .pass-window {
-  width: 372px;
+  margin: 20px auto;
   background-color: #ffffff;
   border: solid 1px #cecece;
-  margin: -100px auto 0;
   border-radius: 4px;
+  .buttons-panel {
+    .btn {
+      display: block;
+    }
+  }
   &-icon {
     background-repeat: no-repeat;
     height: 100px;
     background-color: #263238;
     background-image: url('@{images}/logo-white.png');
-    margin: -1px;
+    margin: -1px -7px;
     border-radius: 4px 4px 0 0;
     background-position: center;
   }
   &-form {
-    padding: 10px 25px 25px;
+    padding: 10px 15px 25px;
+  }
+  .lever-legend {
+    width: 100%;
+    display: block;
+    padding-left: 60px;
+    margin-top: -14px;
   }
 }
 
 .pass-footer {
-  position: absolute;
-  bottom: -80px;
+  padding-bottom: 10px;
   text-align: center;
   width: 100%;
   color: #000;
@@ -162,10 +173,10 @@
     font-size: 14px;
     color: @black;
     padding-top: 25px;
-  &.heading {
-    font-weight: 700;
-    padding-top: 50px;
-    font-size: 13px;
-  }
+    &.heading {
+      font-weight: 700;
+      padding-top: 50px;
+      font-size: 13px;
+    }
   }
 }

@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('accountController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionInfo', 'userInfo', '$filter', 'peerFactory',
-    function ($rootScope, $scope, $http, userService, $interval, $timeout, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionInfo, userInfo, $filter, peerFactory) {
+angular.module('webApp').controller('accountController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionInfo', 'userInfo', '$filter', 'peerFactory', 'ngTableParams',
+    function ($rootScope, $scope, $http, userService, $interval, $timeout, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionInfo, userInfo, $filter, peerFactory, ngTableParams) {
 
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Dashboard', previos: null};
@@ -47,7 +47,30 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
             $scope.modal = userInfo.activate({userId: userId});
         }
 
-        $scope.getTransactions = function () {
+        $scope.tableParams = new ngTableParams({
+            page: 1,            // show first page
+            count: 8          // count per page
+        }, {
+            groupBy: function (item) {
+                return item.id;
+            }, total: 0,
+            counts: [],
+            getData: function ($defer, params) {
+                $scope.getTransactions($defer);
+            }
+        });
+
+        $scope.tableParams.settings().$scope = $scope;
+
+        $scope.$watch("filter.$", function () {
+            $scope.tableParams.reload();
+        });
+
+        //end Transactions
+
+
+
+        $scope.getTransactions = function ($defer) {
             $http.get(peerFactory.getUrl() +"/api/transactions", {
                 params: {
                     senderPublicKey: userService.publicKey,
@@ -68,6 +91,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
                             var unconfirmedTransactions = resp.data.transactions;
                             $timeout(function () {
                                 $scope.transactions = unconfirmedTransactions.concat(transactions).slice(0, 8);
+                                $defer.resolve($scope.transactions);
                             });
 
                         });
@@ -144,7 +168,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
 
         $scope.updateView = function () {
             $scope.getAccount();
-            $scope.getTransactions();
+            $scope.tableParams.reload();
             delegateService.getDelegate($scope.publicKey, function (response) {
                 $timeout(function () {
                     $scope.delegate = response;

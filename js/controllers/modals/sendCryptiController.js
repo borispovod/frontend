@@ -2,6 +2,7 @@ require('angular');
 
 angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryptiModal", "$http", "userService", "$timeout", "peerFactory", "transactionService",
     function ($scope, sendCryptiModal, $http, userService, $timeout, peerFactory, transactionService) {
+
         $scope.sending = false;
         $scope.passmode = false;
         $scope.accountValid = true;

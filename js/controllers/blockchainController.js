@@ -20,6 +20,9 @@ angular.module('webApp').controller('blockchainController', ['$scope', '$timeout
                 height: 'desc'
             }
         }, {
+            groupBy: function (item) {
+                return item.id;
+            },
             total: 0,
             counts: [],
             getData: function ($defer, params) {

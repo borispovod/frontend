@@ -435,7 +435,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         $scope.updateViews = function (views) {
             $scope.$broadcast('updateControllerData', views);
         }
-        supersonic.logger.log('app start');
+
         $scope.getAppData();
         $scope.getUSDPrice();
     }]);

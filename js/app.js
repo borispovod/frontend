@@ -15,10 +15,10 @@ webApp = angular.module('webApp', ['ui.router', 'btford.modal', 'ngTable', 'ngAn
 webApp.config(["ngClipProvider",
     "$locationProvider",
     "$stateProvider",
-    "$urlRouterProvider",
-    function (ngClipProvider, $locationProvider, $stateProvider, $urlRouterProvider) {
+    "$urlRouterProvider", "$httpProvider",
+    function (ngClipProvider, $locationProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
         ngClipProvider.setPath("../node_modules/zeroclipboard/dist/ZeroClipboard.swf");
-
+        $httpProvider.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
       //  $locationProvider.html5Mode(true);
         $urlRouterProvider.otherwise("/");
         // Now set up the states

@@ -102,6 +102,9 @@ angular.module('webApp').controller('votedDelegatesController', ['$scope', '$roo
                 rate: 'asc'     // initial sorting
             }
         }, {
+            groupBy: function (item) {
+                return item.address;
+            },
             counts: [],
             total: 0,
             getData: function ($defer, params) {

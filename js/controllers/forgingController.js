@@ -108,6 +108,9 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
                 height: 'desc'
             }
         }, {
+            groupBy: function (item) {
+                return item.id;
+            },
             total: 0,
             counts: [],
             getData: function ($defer, params) {

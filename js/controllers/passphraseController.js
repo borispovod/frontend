@@ -47,14 +47,12 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
 
 
                             if (resp.status == 200) {
-                                supersonic.logger.log('new peer');
                                 peerFactory.setPeer(ip.fromLong(dbFactory.randomList[key].id), dbFactory.randomList[key].doc.port);
 
                                 $scope.peerexists = true;
                                 stBlurredDialog.close();
                             }
                             else {
-                                supersonic.logger.log('error peer');
                                 dbFactory.delete(dbFactory.randomList[key].id, function () {
                                     $scope.setBestPeer();
                                 });
@@ -75,7 +73,6 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
         }
 
         $scope.login = function (pass, remember) {
-            supersonic.logger.log(peerFactory.getUrl());
             if (!$scope.peerexists) {
                 return;
             }
@@ -102,7 +99,6 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
                 script.type = 'text/javascript';
                 script.async = true;
                 script.onload = function () {
-                    supersonic.logger.log('soket insert - load script');
                     $scope.logging = false;
                     $state.go('main.dashboard');
                 };
@@ -147,22 +143,16 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
         // Cordova is ready
         function onDeviceReady() {
             dbFactory.createdb();
-
             if (!peerFactory.peer) {
                 stBlurredDialog.open('partials/modals/blurredModal.html', {err: false});
-
                 dbFactory.emptydb(
                     function (empty) {
-
                         if (empty) {
-
                             $scope.getPeers(function () {
-
                                 $scope.setBestPeer();
                             });
                         }
                         else {
-
                             $scope.setBestPeer();
                         }
                     }
@@ -172,7 +162,6 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
                 $scope.peerexists = true;
             }
         }
-
 
 
     }]);

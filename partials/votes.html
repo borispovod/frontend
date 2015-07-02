@@ -1,10 +1,10 @@
 <div class="row">
     <div class="col-xs-12">
-        <div class="info-panel">
-            <span class="plain-text pull-left">
+        <div class="info-panel clearfix">
+            <span class="plain-text pull-left ">
              {{voteList.length}} out of {{countStandby + countTop}} Delegates selected
             </span>
-            <ul class="nav nav-info pull-right">
+            <ul class="nav nav-info pull-left clearfix">
                 <li class="list-delegate" dropdown is-open="moreDropdownSeelction.isopen">
                     <a dropdown-toggle ng-disabled="voteList.length==0"><i
                             class="mdi-action-visibility left"></i>View selection</a>
@@ -31,49 +31,44 @@
 
                 <div class="plain-text">{{count}} in Total</div>
             </div>
-            <table ng-show="count" ng-table="tableMyDelegates" border="0" width="100%" cellpadding="0" cellspacing="0"
-                   template-pagination="custom/pager">
-                <tr ng-repeat="delegate in $data"
+            <table ng-show="count" template-pagination="custom/pager"
+                   ng-table="tableMyDelegates" class="table ng-table-responsive ng-table-group"
+                   ng-class="{'checked': voteList.inList(delegate.publicKey)}">
+                <tbody class="tbody-group" ng-repeat="group in $groups">
+
+                <tr ng-repeat="delegate in group.data"
                     ng-class="{'checked': voteList.inList(delegate.publicKey)}">
-                    <td data-title="''" class="no-select checkbox-col">
-                        <input ng-click="voteList.vote(delegate.publicKey, delegate.username)" type="checkbox"
+                    <td><input ng-click="voteList.vote(delegate.publicKey, delegate.username)" type="checkbox"
                                class="filled-in violet" id="filled-in-box-{{delegate.publicKey}}"
-                               ng-checked="voteList.inList(delegate.publicKey)">
-                        <label for="filled-in-box-{{delegate.publicKey}}"></label>
-                        <!--   <span class="app-chekbox"
-                                 ng-show="delegates.voted(delegate.publicKey) || unconfirmedTransactions.inList(delegate.publicKey)"></span>
-                        <span class="app-chekbox" ng-click="voteList.vote(delegate.publicKey, delegate.username)"
-                              ng-hide="delegates.voted(delegate.publicKey) || unconfirmedTransactions.inList(delegate.publicKey)"
-                              ng-class="{'unchecked':!voteList.inList(delegate.publicKey), 'checked':voteList.inList(delegate.publicKey)}"></span>-->
-                    </td>
-                    <td data-title="'Rank'" sortable="'rate'">{{delegate.rate}}</td>
-                    <td data-title="'Name'" sortable="'username'" class="username">{{delegate.username}}</td>
-                    <td data-title="'Crypti Address'" ><a>{{delegate.address}}</a></td>
-                    <td data-title="'Uptime'" sortable="'productivity'">{{(delegate.productivity)}}%</td>
-                    <td data-title="'Approval'" sortable="'vote'">{{getApproval(delegate.vote) | number: 2}}%</td>
-                    <td data-title="">
-                        <div class="dropdown-more-group" dropdown><span class="table-more-actions" dropdown-toggle><span
-                                class="dots"></span></span>
-                            <ul class="list-group" role="menu">
-                                <li class="list-group-item"><a ng-click="sendCrypti(delegate.address)">Send
-                                    XCR</a></li>
-                                <!--<li class="list-group-item"><a>Send Message</a></li>-->
-                                <div class="divider-wrap">
-                                    <li class="divider"></li>
-                                </div>
-                                <li class="list-group-item"><a clip-copy="delegate.address">Copy Address</a>
-                                </li>
-                                <li class="list-group-item"><a clip-copy="delegate.username">Copy Name</a></li>
-                                <div class="divider-wrap">
-                                    <li class="divider"></li>
-                                </div>
-                                <li class="list-group-item"><a ng-click="addContact(delegate.address)">Add as
-                                    Contact</a></li>
-                                <!--<li class="list-group-item"><a>See Voters</a></li>-->
-                            </ul>
-                        </div>
+                               ng-checked="voteList.inList(delegate.publicKey)"/>
+                        <label for="filled-in-box-{{delegate.publicKey}}"></label></td>
+                    <td colspan="2">
+                        <strong>{{delegate.username}}</strong>
                     </td>
                 </tr>
+                <tr ng-repeat="delegate in group.data"
+                    ng-class="{'checked': voteList.inList(delegate.publicKey)}"
+                    class="ng-table-group">
+                    <td colspan="3">
+                        Crypti Address: {{delegate.address}}
+                    </td>
+                </tr>
+
+                <tr ng-repeat="delegate in group.data"
+                    ng-class="{'checked': voteList.inList(delegate.publicKey)}">
+                    <td>
+                        Rank: {{delegate.rate}}
+                    </td>
+                    <td>
+                        Upptime: <span
+                            ng-show="delegate.productivity">{{(delegate.productivity)}}%</span><span
+                            ng-show="!delegate.productivity">-</span>
+                    </td>
+                    <td>
+                        Approval: {{getApproval(delegate.vote) | number: 2}}%
+                    </td>
+                </tr>
+                </tbody>
             </table>
             <div class="panel-body empty-body empty-table" ng-if="!count">
                 <div class="logo-gray-iconed"></div>

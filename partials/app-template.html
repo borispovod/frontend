@@ -10,11 +10,11 @@
                 <img src="images/samples/account.png">
             </div>
             <span class="name" ng-show="username">Welcome back, {{username}}</span>
-            <span class="name name-add" ng-click="userSettings()"
-                  ng-hide="username">Welcome, click to edit profile</span>
-            <span class="address">{{address}}</span>
-        </div>
-      <!--  <div class="white-glow"></div>-->
+            <!--    <span class="name name-add" ng-click="userSettings()"
+                    ng-hide="username">Welcome, click to edit profile</span>-->
+              <span class="address">{{address}}</span>
+          </div>
+        <!--  <div class="white-glow"></div>-->
         <ul id="menu">
             <li ng-show="showMenuItem('main.dashboard')" ui-sref-active="active"><a ui-sref="main.dashboard"
                                                                                     class="waves-effect waves-blue">
@@ -96,9 +96,10 @@
                     <div class="more-down left-margin-20" dropdown is-open="moreDropdownStatus.isopen">
                         <i class="mdi-navigation-more-vert" dropdown-toggle></i>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a ng-click="myUserInfo()">My Profile</a></li>
+                         <!--   <li><a ng-click="myUserInfo()">My Profile</a></li>
                             <li ng-if="!secondPassphrase"><a ng-click="setSecondPassphrase()">2nd
                                 Passphrase</a></li>
+                            -->
                             <li><a ui-sref="passphrase">Logout</a></li>
                         </ul>
                     </div>

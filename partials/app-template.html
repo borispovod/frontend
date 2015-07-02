@@ -1,80 +1,8 @@
 <div id="wrapper" ng-controller="appController" ng-class="{'toggled': !toggled}">
-    <!-- Sidebar -->
-    <div id="sidebar-wrapper">
-        <a ui-sref="main.account">
-            <div id="logo"></div>
-        </a>
 
-        <div class="account-block">
-            <div class="icon">
-                <img src="images/samples/account.png">
-            </div>
-            <span class="name" ng-show="username">Welcome back, {{username}}</span>
-            <!--    <span class="name name-add" ng-click="userSettings()"
-                    ng-hide="username">Welcome, click to edit profile</span>-->
-              <span class="address">{{address}}</span>
-          </div>
-        <!--  <div class="white-glow"></div>-->
-        <ul id="menu">
-            <li ng-show="showMenuItem('main.dashboard')" ui-sref-active="active"><a ui-sref="main.dashboard"
-                                                                                    class="waves-effect waves-blue">
-                <div class="nav-icon" id="dashboard-icon"></div>
-                <span class="menu-text">Dashboard</span></a></li>
-            <li ng-show="showMenuItem('main.contacts')" ui-sref-active="active"><a ui-sref="main.contacts"
-                                                                                   class="waves-effect waves-blue">
-                <div class="nav-icon" id="contacts-icon"></div>
-                <span class="menu-text">Contacts</span></a></li>
-            <li ng-show="showMenuItem('main.conversations')" ui-sref-active="active"><a ui-sref="main.conversations"
-                                                                                        class="waves-effect waves-blue">
-                <div class="nav-icon" id="conversations-icon"></div>
-                <span class="menu-text">Conversations</span></a></li>
-            <li ng-show="showMenuItem('main.dappstore')" ui-sref-active="active"><a ui-sref="main.dappstore"
-                                                                                    class="waves-effect waves-blue">
-                <div class="nav-icon" id="dappstore-icon"></div>
-                <span class="menu-text">Dapp Store</span></a></li>
-            <li ng-show="showMenuItem('main.forging')" ui-sref-active="active"><a ui-sref="main.forging"
-                                                                                  class="waves-effect waves-blue">
-                <div class="nav-icon" id="forging-icon"></div>
-                <span class="menu-text">Forging</span><i
-                    ng-click="collapseMenu()"
-                    stop-event
-                    class="vertical-text right submenu-collapsing"
-                    ng-class="{'mdi-hardware-keyboard-arrow-down': subForgingCollapsed, 'mdi-hardware-keyboard-arrow-up':!subForgingCollapsed}"></i></a>
-            </li>
-            <ul id="submenu" ng-hide="subForgingCollapsed">
-                <li ng-show="showMenuItem('main.delegates')" ui-sref-active="active"><a ui-sref="main.delegates"
-                                                                                        class="waves-effect waves-blue">
-                    <div class="nav-icon" id="delegates-icon"></div>
-                    <span class="menu-text">Delegates</span></a></li>
-                <li ng-show="showMenuItem('main.votes')" ui-sref-active="active">
-                    <a ui-sref="main.votes" class="waves-effect waves-blue">
-                        <div class="nav-icon" id="myvotes-icon"></div>
-                        <span class="menu-text">My Votes</span></a>
-                </li>
-            </ul>
-            <li ng-show="showMenuItem('main.blockchain')" ui-sref-active="active"><a ui-sref="main.blockchain"
-                                                                                     class="waves-effect waves-blue">
-                <div class="nav-icon" id="blockchain-icon"></div>
-                <span class="menu-text">Blockchain</span></a></li>
-            <li ng-show="showMenuItem('main.multi')" ui-sref-active="active"><a ui-sref="main.multi"
-                                                                                  class="waves-effect waves-blue">
-                <div class="nav-icon" id="network-icon"></div>
-                <span class="menu-text">Multi</span></a></li>
-
-        </ul>
-        <div id="inc"></div>
-    </div>
-    <!-- /#sidebar-wrapper -->
-    <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="header-wrapper">
             <div class="nav-bar clearfix" id="header">
-                <button type="button" class="toggle-menu" ng-click="toggleMenu()">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
                 <h1 id="title"><span class="title-icon" ng-show="view.page.previos" ng-click="goToPrevios()">
             <span class="sr-only">Go to previos page</span></span>{{view.page.title}}</h1>
                 <span class="forging-state" ng-show="view.forgingState">{{view.forgingState}}</span>
@@ -86,20 +14,9 @@
                     <a class="btn btn-sky-blue waves-effect waves-light left-margin-20" ng-click="sendCrypti()"><i
                             class="mdi-content-send left"></i>SEND
                     </a>
-
-                    <div class="mini-chart valign-wrapper" ng-show="syncState!=0">
-                        <div class="mini-chart-label">{{syncState}}%</div>
-                        <canvas id="total-forged" class="chart chart-doughnut" data="loading.values"
-                                labels="loading.labels" options="loading.options"
-                                colours="loading.colours"></canvas>
-                    </div>
                     <div class="more-down left-margin-20" dropdown is-open="moreDropdownStatus.isopen">
                         <i class="mdi-navigation-more-vert" dropdown-toggle></i>
                         <ul class="dropdown-menu" role="menu">
-                         <!--   <li><a ng-click="myUserInfo()">My Profile</a></li>
-                            <li ng-if="!secondPassphrase"><a ng-click="setSecondPassphrase()">2nd
-                                Passphrase</a></li>
-                            -->
                             <li><a ui-sref="passphrase">Logout</a></li>
                         </ul>
                     </div>

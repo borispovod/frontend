@@ -6,7 +6,7 @@ angular.module('webApp').factory('dbFactory', function (peerFactory) {
     var factory = {};
     factory.randomList = [];
     factory.createdb = function () {
-        this.db = new LevelPouchDB('cryptidb', {adapter: 'websql'});
+        this.db = new LevelPouchDB('cryptidb', {location: 2});
 
     };
 
@@ -14,44 +14,37 @@ angular.module('webApp').factory('dbFactory', function (peerFactory) {
         this.db.compact().then(function (result) {
             cb(result);
         }).catch(function (err) {
-           console.log(err);
+            console.log(err);
         });
     };
 
     factory.emptydb = function (cb) {
-        this.db.query(function (doc, emit) {
-            if (doc._id != 'bestPeer' && doc._id != 'customPeer') {
-                emit(doc);
-            }
-        }, function (err, results) {
 
+        this.db.info(function (err, info) {
             if (err) {
-                return err;
+                return console.log(err);
             }
-            cb(results.total_rows == 0);
+            cb(info.doc_count == 0);
         });
-
     };
 
     factory.getRandom = function (count, cb) {
-        var key = (Math.floor((Math.random() * 10) + 1) - 1).toString();
 
-        this.db.query(function (doc, emit) {
-            if (doc._id.indexOf(key) != -1 && doc._id != 'bestPeer' && doc._id != 'customPeer') {
-                emit(doc);
-            }
-        }, {limit: count}, function (err, results) {
-
+        this.db.allDocs({
+            include_docs: true
+        }, function (err, response) {
             if (err) {
-                return null;
+                return console.log(err);
             }
-            if (factory.randomList.length >= 10) {
+            factory.randomList = factory.randomList.concat(response.rows);
+            if (factory.randomList.length >= count) {
                 cb();
+
             }
             else {
-                factory.randomList = factory.randomList.concat(results.rows);
                 factory.getRandom(count, cb);
             }
+
         });
 
     };
@@ -108,7 +101,7 @@ angular.module('webApp').factory('dbFactory', function (peerFactory) {
 
     factory.updatedb = function (cb) {
         this.db.query(function (doc, emit) {
-            if (doc.needtocheck && doc._id != 'bestPeer' && doc._id != 'customPeer') {
+            if (doc.needtocheck) {
                 emit(doc);
             }
         }, {limit: 2}, function (err, results) {
@@ -126,7 +119,7 @@ angular.module('webApp').factory('dbFactory', function (peerFactory) {
                         if (peer.doc._id != 'customPeer' && peer.doc._id != 'bestPeer') {
                             factory.db.get(peer.doc._id, function (err, doc) {
                                 if (err) {
-                                    return  err;
+                                    return err;
                                 }
                                 factory.db.put({
                                     port: peer.doc.port,
@@ -163,7 +156,7 @@ angular.module('webApp').factory('dbFactory', function (peerFactory) {
             if (err) {
                 //return console.log(err);
             }
-           // console.log(response);
+
         })
     };
 

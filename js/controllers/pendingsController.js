@@ -14,6 +14,9 @@ angular.module('webApp').controller('pendingsController', ['$scope', '$rootScope
                 username: 'asc'     // initial sorting
             }
         }, {
+            groupBy: function (item) {
+                return item.address;
+            },
             counts: [],
             total: 0,
             getData: function ($defer, params) {

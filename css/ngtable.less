@@ -156,14 +156,14 @@
 }
 
 .ng-table tr.voted {
-  background-color: @meant;
+  background-color: @meant !important;
   &:hover {
     background-color: @meant;
   }
 }
 
 .ng-table tr.checked {
-  background-color: @super-light-violet;
+  background-color: @super-light-violet !important;
   &:hover {
     background-color: @super-light-violet;
   }
@@ -205,6 +205,30 @@ tbody {
   }
 }
 
+tbody.tbody-group {
+  tr:hover {
+    background-color: inherit;
+  }
+  &:nth-child(even){
+    background-color: @grey;
+  }
+  tr:nth-child(even) {
+    background-color: inherit;
+  }
+  &.voted {
+    background-color: @meant;
+    &:hover {
+      background-color: @meant;
+    }
+  }
+  &.checked{
+    background-color: @super-light-violet;
+    &:hover {
+      background-color: @super-light-violet;
+    }
+  }
+}
+
 td {
   padding-left: 5px;
   a {
@@ -225,6 +249,10 @@ td {
       margin-right: 8px;
     }
   }
+}
+
+.ng-table-group thead {
+  display: none;
 }
 
 .pagination {

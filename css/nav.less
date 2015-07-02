@@ -1,14 +1,27 @@
 #page-nav {
   height: 60px;
+  @media (max-height: @screen-xs-max) {
+    &.forging {
+      height: inherit;
+    }
+  }
   background-color: @white;
   margin: 0 -30px 20px;
-  .btn-floating.green{
+  .btn-floating.green {
     background-color: @dark-meant !important;
   }
 }
 
 .nav-underline {
   padding: 0 60px;
+  .forging & {
+    @media (max-height: @screen-xs-max) {
+      padding: 0 10px 0 30px;
+      li {
+        float: none;
+      }
+    }
+  }
   &.registration {
     font-weight: 500;
     position: relative;
@@ -25,7 +38,8 @@
   }
   & > li {
     float: left;
-     &.active a {
+
+    &.active a {
       font-weight: 500;
       border-bottom: solid 4px @blue;
     }

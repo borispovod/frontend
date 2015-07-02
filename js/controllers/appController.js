@@ -26,9 +26,9 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                         var setBestPeer = function () {
                             dbFactory.getRandom(10, function () {
                                 var key = (Math.floor((Math.random() * 10) + 1) - 1);
-                                peerFactory.checkPeer(dbFactory.randomList[key].key.url, function (resp) {
+                                peerFactory.checkPeer(dbFactory.randomList[key].doc.url, function (resp) {
                                     if (resp.status == 200) {
-                                        peerFactory.setPeer(ip.fromLong(dbFactory.randomList[key].key._id), dbFactory.randomList[key].key.port);
+                                        peerFactory.setPeer(ip.fromLong(dbFactory.randomList[key].id), dbFactory.randomList[key].doc.port);
                                         $scope.peerexists = true;
                                         $('#soketIoScript').remove();
                                         (function (d, script) {
@@ -46,7 +46,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
 
                                     }
                                     else {
-                                        dbFactory.delete(dbFactory.randomList[key].key._id, function () {
+                                        dbFactory.delete(dbFactory.randomList[key].id, function () {
                                             setBestPeer();
                                         });
                                     }
@@ -435,7 +435,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         $scope.updateViews = function (views) {
             $scope.$broadcast('updateControllerData', views);
         }
-
+        supersonic.logger.log('app start');
         $scope.getAppData();
         $scope.getUSDPrice();
     }]);

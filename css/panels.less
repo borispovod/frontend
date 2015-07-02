@@ -331,7 +331,6 @@
 
   }
   &.info-panel-grey {
-    height: 54px;
     line-height: 54px;
     //background-color: @white;
     border-color: @light-cloud;
@@ -374,6 +373,12 @@
   @media (max-width: @screen-xs-max) {
     height: inherit;
     line-height: inherit;
+    .nav-info {
+      margin-left: -26px;
+    }
+    a {
+      line-height: 54px;
+    }
     span {
       width: 100%;
       float: left;

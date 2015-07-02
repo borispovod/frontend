@@ -137,6 +137,9 @@ angular.module('webApp').controller('delegatesController', ['$scope', '$rootScop
                 rate: 'asc'     // initial sorting
             }
         }, {
+            groupBy: function (item) {
+                return item.address;
+            },
             counts: [],
             total: delegateService.topRate,
             getData: function ($defer, params) {
@@ -171,6 +174,9 @@ angular.module('webApp').controller('delegatesController', ['$scope', '$rootScop
                 rate: 'asc'     // initial sorting
             }
         }, {
+            groupBy: function (item) {
+                return item.address;
+            },
             total: 0,
             counts: [],
             getData: function ($defer, params) {

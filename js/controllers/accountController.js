@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('accountController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionInfo', 'userInfo', '$filter', 'peerFactory', 'ngTableParams',
-    function ($rootScope, $scope, $http, userService, $interval, $timeout, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionInfo, userInfo, $filter, peerFactory, ngTableParams) {
+angular.module('webApp').controller('accountController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "sendCryptiModal",  "delegateService", 'viewFactory',  '$filter', 'peerFactory', 'ngTableParams',
+    function ($rootScope, $scope, $http, userService, $interval, $timeout, sendCryptiModal,  delegateService, viewFactory, $filter, peerFactory, ngTableParams) {
 
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Dashboard', previos: null};

@@ -3,25 +3,19 @@ require('angular-ui-router');
 require('angular-modal');
 require('angular-resource');
 require('browserify-angular-animate');
-require('ng-clip');
-//require('../bower_components//angular-animate/angular-animate.js')
-require('../bower_components/angular-chart.js/dist/angular-chart.js');
 require('../bower_components/angular-socket-io/socket.js');
-//require('../bower_components/angular-materialize/src/angular-materialize.js');
 require('../node_modules/ng-table/dist/ng-table.js');
 
-webApp = angular.module('webApp', ['ui.router', 'btford.modal', 'ngTable', 'ngAnimate', 'chart.js', 'btford.socket-io', 'ui.bootstrap', 'ngClipboard', 'stBlurredDialog']);
+webApp = angular.module('webApp', ['ui.router', 'btford.modal', 'ngTable', 'ngAnimate', 'btford.socket-io', 'ui.bootstrap', 'stBlurredDialog']);
 
-webApp.config(["ngClipProvider",
-    "$locationProvider",
+webApp.config(["$locationProvider",
     "$stateProvider",
     "$urlRouterProvider", "$httpProvider",
-    function (ngClipProvider, $locationProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
-        ngClipProvider.setPath("../node_modules/zeroclipboard/dist/ZeroClipboard.swf");
+    function ($locationProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
         $httpProvider.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
-      //  $locationProvider.html5Mode(true);
+        //$locationProvider.html5Mode(true);
         $urlRouterProvider.otherwise("/");
-        // Now set up the states
+        //Now set up the states
         $stateProvider
             .state('main', {
                 abstract: true,
@@ -33,61 +27,11 @@ webApp.config(["ngClipProvider",
                 templateUrl: "partials/account.html",
                 controller: "accountController"
             })
-            .state('main.multi', {
-                url: "/wallets",
-                templateUrl: "partials/multi.html",
-                controller: "walletsController"
-            })
 
-            .state('main.multiPendings', {
-                url: "/wallets/pendings",
-                templateUrl: "partials/wallet-pendings.html",
-                controller: "walletPendingsController"
-            })
-            .state('main.walletTransactions', {
-                url: "/wallets/transactions",
-                templateUrl: "partials/wallet-transactions.html",
-                controller: "walletTransactionsController"
-            })
-            .state('main.settings', {
-                url: "/settings",
-                templateUrl: "partials/settings.html",
-                controller: "settingsController"
-            })
             .state('main.transactions', {
                 url: "/transactions",
                 templateUrl: "partials/transactions.html",
                 controller: "transactionsController"
-            })
-            .state('main.delegates', {
-                url: "/delegates",
-                templateUrl: "partials/delegates.html",
-                controller: "delegatesController"
-            })
-            .state('main.votes', {
-                url: "/delegates/votes",
-                templateUrl: "partials/votes.html",
-                controller: "votedDelegatesController"
-            })
-            .state('main.forging', {
-                url: "/forging",
-                templateUrl: "partials/forging.html",
-                controller: "forgingController"
-            })
-            .state('main.blockchain', {
-                url: "/blockchain",
-                templateUrl: "partials/blockchain.html",
-                controller: "blockchainController"
-            })
-            .state('main.contacts', {
-                url: "/contacts",
-                templateUrl: "partials/contacts.html",
-                controller: "contactsController"
-            })
-            .state('main.pending', {
-                url: "/pending",
-                templateUrl: "partials/pendings.html",
-                controller: "pendingsController"
             })
             .state('passphrase', {
                 url: "/",

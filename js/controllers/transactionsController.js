@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('transactionsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionsService', 'ngTableParams', 'transactionInfo', '$timeout', 'userInfo',
-    function ($rootScope, $scope, $http, userService, $interval, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo, $timeout, userInfo) {
+angular.module('webApp').controller('transactionsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendCryptiModal",  "delegateService", 'viewFactory', 'transactionsService', 'ngTableParams',  '$timeout',
+    function ($rootScope, $scope, $http, userService, $interval, sendCryptiModal, delegateService, viewFactory, transactionsService, ngTableParams, $timeout) {
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Transactions', previos: 'main.dashboard'};
         $scope.view.bar = {showTransactionsSearchBar: true};

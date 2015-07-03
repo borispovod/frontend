@@ -3,8 +3,8 @@ var compareVersion = require('../../node_modules/compare-version/index.js');
 var ip = require('ip');
 var ipRegex = require('ip-regex');
 
-angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal', 'userInfo', 'transactionsService', 'secondPassphraseModal', 'peerFactory', 'dbFactory', "serverSocket",
-    function ($rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal, userInfo, transactionsService, secondPassphraseModal, peerFactory, dbFactory, serverSocket) {
+angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal',  'serverSocket', 'delegateService', '$window',  'contactsService'  , 'transactionsService',  'peerFactory', 'dbFactory', "serverSocket",
+    function ($rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, serverSocket, delegateService, $window, contactsService, transactionsService,  peerFactory, dbFactory, serverSocket) {
 
         $scope.inError = false;
 

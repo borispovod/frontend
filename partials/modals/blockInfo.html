@@ -4,7 +4,7 @@
             <div class="col-md-9 col-md-offset-2 height100 valign-wrapper">
                 <div class="modal-content" ng-click="$event.stopPropagation();">
                     <div class="modal-header"><h2>Block ID: </h2>{{block.id}}<span class="blockchain-icon"
-                                                                                   clip-copy="block.id"></span>
+                                                                                   ng-click="copyToClip(block.id)"></span>
 
                         <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div>
                     </div>

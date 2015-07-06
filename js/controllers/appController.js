@@ -3,6 +3,8 @@ var compareVersion = require('../../node_modules/compare-version/index.js');
 var ip = require('ip');
 var ipRegex = require('ip-regex');
 
+
+
 angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal', 'userInfo', 'transactionsService', 'secondPassphraseModal', 'peerFactory', 'dbFactory', "serverSocket",
     function ($rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal, userInfo, transactionsService, secondPassphraseModal, peerFactory, dbFactory, serverSocket) {
 
@@ -18,6 +20,10 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                 $scope.checkPeer()
             }, 10000);
         });
+
+        $scope.copyToClip = function(text){
+            clipboard.writeText(text);
+        }
 
         $scope.checkPeer = function () {
             peerFactory.checkPeer(peerFactory.getUrl(), function (resp) {

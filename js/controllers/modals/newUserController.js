@@ -23,8 +23,13 @@ angular.module('webApp').controller('newUserController', ["$scope", "$http", "ne
     }
 
     $scope.savePassToFile = function (pass) {
-        var blob = new Blob([pass], {type: "text/plain;charset=utf-8"});
-        FS.saveAs(blob, "cryptiPassphrase.txt");
+        var crypti = require('crypti-js');
+        var keys = crypti.crypto.getKeys(pass);
+        var address = crypti.crypto.getAddress(keys.publicKey);
+        fs.writeFile('pass for '+address+'.txt', pass, function (err) {
+            if (err) throw err;
+            Materialize.toast('Passphrase was saved in root directory', 4000);
+        });
     }
 
     $scope.login = function (pass) {
@@ -42,9 +47,17 @@ angular.module('webApp').controller('newUserController', ["$scope", "$http", "ne
                         userService.setForging(resp.data.account.forging);
                         userService.setSecondPassphrase(resp.data.account.secondSignature);
                         userService.unconfirmedPassphrase = resp.data.account.unconfirmedSignature;
-
-                        //angular.element(document.getElementById("forgingButton")).hide();
-                        $state.go('main.dashboard');
+                        (function (d, script) {
+                            script = d.createElement('script');
+                            script.id = "soketIoScript";
+                            script.type = 'text/javascript';
+                            script.async = true;
+                            script.onload = function () {
+                                $state.go('main.dashboard');
+                            };
+                            script.src = peerFactory.getUrl() + '/socket.io/socket.io.js';
+                            d.getElementsByTagName('head')[0].appendChild(script);
+                        }(document));
                     } else {
                         alert("Something wrong. Restart server please.");
                     }

@@ -6,7 +6,7 @@ module.exports = function (grunt) {
         "bower_components/angular-blurred-modal/st-blurred-dialog.js"
     ];
 
-   var withounBrowserify = ['static/js/br_app.js', 'bower_components/materialize/bin/materialize.js'];
+   var withounBrowserify = ['js/electron.js', 'static/js/br_app.js', 'bower_components/materialize/bin/materialize.js'];
 
     // Project configuration.
     grunt.initConfig({

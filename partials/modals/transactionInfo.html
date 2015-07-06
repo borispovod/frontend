@@ -1,7 +1,7 @@
 <div class="app-modal" id="transaction-modal">
     <div class="modal-content">
         <div class="modal-header"><h2>Transaction ID: </h2>{{block.id}}<span class="blockchain-icon"
-                                                                             clip-copy="block.id"></span>
+                                                                             ng-click="copyToClip(block.id)"></span>
 
             <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div>
         </div>

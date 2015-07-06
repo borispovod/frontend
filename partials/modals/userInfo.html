@@ -12,7 +12,7 @@
                             </div>
                             <div class="media-body text-left">
                                 <h2 class="media-heading">Account: <span class="id">{{account.address}}</span><span
-                                        class="blockchain-icon" clip-copy="account.address"></span></h2>
+                                        class="blockchain-icon" ng-click="copyToClip(account.address)"></span></h2>
                                 {{account.username}}
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                         </div>
                         <div ng-repeat="transaction in transactions.list" ng-show="transactions.view">
                             <div class="modal-header"><h2>Transaction ID: </h2>
-                                {{transaction.id}}<span class="blockchain-icon" clip-copy="transaction.id"></span>
+                                {{transaction.id}}<span class="blockchain-icon" ng-click="copyToClip(transaction.id)"></span>
                             </div>
                             <div class="modal-body">
                                 <ul class="list-group">

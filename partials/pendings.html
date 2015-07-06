@@ -18,10 +18,10 @@
                         <div class="dropdown-more-group" dropdown><span class="table-more-actions" dropdown-toggle><span
                                 class="dots"></span></span>
                             <ul class="list-group" role="menu">
-                                <li class="list-group-item"><a clip-copy="follower.address">Copy Address</a>
+                                <li class="list-group-item"><a ng-click="copyToClip(follower.address)">Copy Address</a>
                                 </li>
                                 <li ng-if="follower.username" class="list-group-item"><a
-                                                                                        clip-copy="follower.username">Copy
+                                                                                        ng-click="copyToClip(follower.username)">Copy
                                     Name</a></li>
                             </ul>
                         </div>

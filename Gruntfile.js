@@ -85,16 +85,6 @@ module.exports = function (grunt) {
             },
             package: {
                 command: [
-                    'mkdir -p ./app',
-                    'rm -rf ./app',
-                    'mkdir ./app',
-                    'cp -rf ./font ./app/',
-                    'cp -rf ./images ./app/',
-                    'cp -rf ./partials ./app/',
-                    'cp -rf ./static ./app/',
-                    'cp -rf ./main.js ./app/',
-                    'cp -rf ./wallet.html ./app/',
-                    'cp electron.package.json ./app/package.json',
                     'npm run-script pack'
                 ].join('&&')
             }
@@ -111,5 +101,5 @@ module.exports = function (grunt) {
     grunt.registerTask("default", ["less", "cssmin", "concat:develop", 'browserify', "concat:ignoringBrowserify"]);
     grunt.registerTask("release", ["default", "uglify:release"]);
     grunt.registerTask("build", ["release", "shell:build"]);
-    grunt.registerTask("package", ["release", "shell:package"]);
+    grunt.registerTask("package", ["build", "shell:package"]);
 };

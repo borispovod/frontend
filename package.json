@@ -26,7 +26,7 @@
     "build:osx": "npm run clean:osx && electron-packager ./app \"Crypti\" --out=dist/osx --platform=darwin --arch=x64 --version=0.25.3 --icon=assets/osx/loopline.icns",
     "build:win": "npm run clean:win && electron-packager ./app \"Crypti\" --out=dist/win --platform=win32 --arch=ia32 --version=0.25.3 --icon=assets/win/icon.ico",
     "pack": "npm run pack:osx && npm run pack:win",
-    "pack:osx": "npm run build:osx && electron-builder \"dist/osx/Crypti.app\" --platform=osx --out=\"dist/osx\" --config=packager.json",
+    "pack:osx": "npm run build:osx && electron-builder \"dist/osx/Crypti-darwin-x64/Crypti.app\" --platform=osx --out=\"dist/osx\" --config=packager.json",
     "pack:win": "npm run build:win && electron-builder \"dist/win/Crypti\" --platform=win --out=\"dist/win\" --config=packager.json"
   },
   "dependencies": {

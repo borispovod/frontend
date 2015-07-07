@@ -66,6 +66,38 @@ module.exports = function (grunt) {
                     "static/js/app.js": files
                 }
             }
+        },
+        shell: {
+            build: {
+                command: [
+                    'mkdir -p ./app',
+                    'rm -rf ./app',
+                    'mkdir ./app',
+                    'cp -rf ./font ./app/',
+                    'cp -rf ./images ./app/',
+                    'cp -rf ./partials ./app/',
+                    'cp -rf ./static ./app/',
+                    'cp -rf ./main.js ./app/',
+                    'cp -rf ./wallet.html ./app/',
+                    'cp electron.package.json ./app/package.json',
+                    'npm run-script build'
+                ].join('&&')
+            },
+            package: {
+                command: [
+                    'mkdir -p ./app',
+                    'rm -rf ./app',
+                    'mkdir ./app',
+                    'cp -rf ./font ./app/',
+                    'cp -rf ./images ./app/',
+                    'cp -rf ./partials ./app/',
+                    'cp -rf ./static ./app/',
+                    'cp -rf ./main.js ./app/',
+                    'cp -rf ./wallet.html ./app/',
+                    'cp electron.package.json ./app/package.json',
+                    'npm run-script pack'
+                ].join('&&')
+            }
         }
     });
 

@@ -13,6 +13,7 @@ angular.module('webApp').controller('newUserController', ["$scope", "$http", "ne
         var code = new Mnemonic(Mnemonic.Words.ENGLISH);
         //$scope.newPassphrase = code.toHDPrivateKey();
         $scope.newPassphrase = code.toString();
+        $scope.newPassphrase = $scope.newPassphrase.length > 100 ? $scope.newPassphrase.substr(0, 99) : $scope.newPassphrase;
     };
 
     $scope.step = function () {

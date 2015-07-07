@@ -5,6 +5,8 @@
   "devDependencies": {
     "bower": "^1.4.1",
     "browserify": "latest",
+    "electron-builder": "^2.0.0",
+    "electron-packager": "^5.0.0",
     "grunt": "^0.4.5",
     "grunt-browserify": "^3.8.0",
     "grunt-contrib-concat": "^0.3.0",
@@ -14,6 +16,18 @@
     "grunt-contrib-nodeunit": "~0.4.0",
     "grunt-contrib-uglify": "^0.9.1",
     "grunt-shell": "^1.1.2"
+  },
+  "scripts": {
+    "dev": "electron ./app",
+    "clean": "rm -rf ./dist",
+    "clean:osx": "rm -rf ./dist/osx",
+    "clean:win": "rm -rf ./dist/win",
+    "build": "npm run clean && npm run build:osx && npm run build:win",
+    "build:osx": "npm run clean:osx && electron-packager ./app \"Crypti\" --out=dist/osx --platform=darwin --arch=x64 --version=0.25.3 --icon=assets/osx/loopline.icns",
+    "build:win": "npm run clean:win && electron-packager ./app \"Crypti\" --out=dist/win --platform=win32 --arch=ia32 --version=0.25.3 --icon=assets/win/icon.ico",
+    "pack": "npm run pack:osx && npm run pack:win",
+    "pack:osx": "npm run build:osx && electron-builder \"dist/osx/Crypti.app\" --platform=osx --out=\"dist/osx\" --config=packager.json",
+    "pack:win": "npm run build:win && electron-builder \"dist/win/Crypti\" --platform=win --out=\"dist/win\" --config=packager.json"
   },
   "dependencies": {
     "angular": "~1.2.8",

@@ -106,11 +106,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-less");
     grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-shell');
 
-
-    // Default task.
     grunt.registerTask("default", ["less", "cssmin", "concat:develop", 'browserify', "concat:ignoringBrowserify"]);
-    // Release task
     grunt.registerTask("release", ["default", "uglify:release"]);
-
+    grunt.registerTask("build", ["release", "shell:build"]);
+    grunt.registerTask("package", ["release", "shell:package"]);
 };

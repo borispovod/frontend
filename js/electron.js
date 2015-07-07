@@ -14,7 +14,6 @@ menu.append(new MenuItem({
     label: 'Copy',
     accelerator: 'CommandOrControl+C',
     selector: 'copy:'
-
 }));
 menu.append(new MenuItem({
     label: 'Paste',

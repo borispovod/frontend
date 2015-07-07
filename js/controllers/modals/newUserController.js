@@ -26,9 +26,9 @@ angular.module('webApp').controller('newUserController', ["$scope", "$http", "ne
         var crypti = require('crypti-js');
         var keys = crypti.crypto.getKeys(pass);
         var address = crypti.crypto.getAddress(keys.publicKey);
-        fs.writeFile('pass for '+address+'.txt', pass, function (err) {
+        fs.writeFile('pass for ' + address + '.txt', 'address: ' + address + ' password: ' + pass, function (err) {
             if (err) throw err;
-            Materialize.toast('Passphrase was saved in root directory', 4000);
+            Materialize.toast('Password was saved in file: \'pass for ' + address + '.txt\' in root directory', 4000);
         });
     }
 

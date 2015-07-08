@@ -20,8 +20,10 @@
                     </div>
                     <div class="modal-nav">
                         <ul class="nav nav-justified nav-actions">
-                            <li><a class="green-link" ng-click="sendCryptiToUser()"><i class="mdi-content-send"></i> Send XCR</a></li>
-                            <li><a ng-click="addContact(account.address)"><i class="mdi-social-person-add"></i> Contact Request</a></li>
+                            <li><a class="green-link" ng-click="sendCryptiToUser()"><i class="mdi-content-send"></i>
+                                Send XCR</a></li>
+                            <li><a ng-click="addContact(account.address)"><i class="mdi-social-person-add"></i> Contact
+                                Request</a></li>
                         </ul>
                     </div>
                     <div class="scrolling">
@@ -30,7 +32,8 @@
                                 <li class="list-group-item summary">Summary
                                 </li>
                                 <li class="list-group-item bordered">Total Balance<span
-                                        class="pull-right small-text">{{account.unconfirmedBalance  | xcrFilter }} XCR</span></li>
+                                        class="pull-right small-text">{{account.unconfirmedBalance  | xcrFilter }} XCR</span>
+                                </li>
                                 <li class="list-group-item">USD Equivalent<span class="pull-right small-text">{{convertToUSD(account.unconfirmedBalance)| number: 2}}$</span>
                                 </li>
                             </ul>
@@ -46,7 +49,8 @@
                         </div>
                         <div ng-repeat="transaction in transactions.list" ng-show="transactions.view">
                             <div class="modal-header"><h2>Transaction ID: </h2>
-                                {{transaction.id}}<span class="blockchain-icon" ng-click="copyToClip(transaction.id)"></span>
+                                {{transaction.id}}<span class="blockchain-icon"
+                                                        ng-click="copyToClip(transaction.id)"></span>
                             </div>
                             <div class="modal-body">
                                 <ul class="list-group">
@@ -56,7 +60,8 @@
                                     <li class="list-group-item">Amount<span class="pull-right small-text">{{transaction.amount / 100000000}} XCR</span>
                                     </li>
                                     <li class="list-group-item bordered">Fee<span
-                                            class="pull-right small-text">{{transaction.fee / 100000000}} XCR</span></li>
+                                            class="pull-right small-text">{{transaction.fee / 100000000}} XCR</span>
+                                    </li>
                                     <li class="list-group-item">USD Equivalent<span
                                             class="pull-right small-text">{{convertToUSD(transaction.amount)| number: 2}}$</span>
                                     </li>
@@ -70,20 +75,20 @@
                                         </div>
                                         <div class="transaction-path">
                                             <div class="transaction-part pull-left"><a
-                                                    href="#" ng-click="getAccountDetail(transaction.senderId)">{{transaction.senderId}}</a> <span
+                                                    ng-click="getAccountDetail(transaction.senderId)">{{transaction.senderId}}</a> <span
                                                     class="xcr">{{transaction.amount  | xcrFilter}} XCR</span>
                                             </div>
                                             <div class="transaction-direction"></div>
-                                            <div class="transaction-part pull-right"><a href="#"
-                                                                                        ng-click="getAccountDetail(transaction.recipientId)">{{transaction.recipientId
+                                            <div class="transaction-part pull-right"><a
+                                                    ng-click="getAccountDetail(transaction.recipientId)">{{transaction.recipientId
                                                 || ""}}</a><span
                                                     class="xcr">{{transaction.amount  | xcrFilter}} XCR</span>
                                             </div>
                                         </div>
                                         <div class="transaction-bottom">
-                                            <div class="fee">FEE: {{transaction.fee  | xcrFilter}} XCR
+                                            <div class="fee">FEE: {{transaction.fee | xcrFilter}} XCR
                                             </div>
-                                            <div class="xcr">{{transaction.amount  | xcrFilter}} XCR
+                                            <div class="xcr">{{transaction.amount | xcrFilter}} XCR
                                             </div>
                                             <div class="confirmations">{{transaction.confirmations || 0 }} CONFIRMATIONS
                                             </div>

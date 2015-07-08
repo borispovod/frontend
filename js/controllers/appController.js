@@ -190,11 +190,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                 .then(function (resp) {
                     var account = resp.data.account;
                     if (!account) {
-                        userService.balance = 0;
-                        userService.unconfirmedBalance = 0;
-                        userService.secondPassphrase = '';
-                        userService.unconfirmedPassphrase = '';
-                        userService.username = '';
+
                     }
                     else {
                         userService.balance = account.balance;

@@ -83,18 +83,37 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
                 userService.setSessionPassword(pass);
             }
 
-            (function (d, script) {
-                script = d.createElement('script');
-                script.id = "soketIoScript";
-                script.type = 'text/javascript';
-                script.async = true;
-                script.onload = function () {
-                    $scope.logging = false;
-                    $state.go('main.dashboard');
-                };
-                script.src = peerFactory.getUrl() + '/socket.io/socket.io.js';
-                d.getElementsByTagName('head')[0].appendChild(script);
-            }(document));
+            $http.get(peerFactory.getUrl() + "/api/accounts", {params: {address: userService.address}})
+                .then(function (resp) {
+                    var account = resp.data.account;
+                    if (!account) {
+                        $http.post(peerFactory.getUrl() + "/api/accounts/open/", {secret: pass})
+                            .then(function (resp) {
+                                if (resp.data.success) {
+                                    userService.setData(resp.data.account.address, resp.data.account.publicKey, resp.data.account.balance, resp.data.account.unconfirmedBalance, resp.data.account.effectiveBalance);
+                                    userService.setForging(resp.data.account.forging);
+                                    userService.setSecondPassphrase(resp.data.account.secondSignature);
+                                    userService.unconfirmedPassphrase = resp.data.account.unconfirmedSignature;
+                                } else {
+                                    console.log("Something wrong. Restart server please.");
+                                }
+                            });
+                    }
+                    (function (d, script) {
+                        script = d.createElement('script');
+                        script.id = "soketIoScript";
+                        script.type = 'text/javascript';
+                        script.async = true;
+                        script.onload = function () {
+                            $scope.logging = false;
+                            $state.go('main.dashboard');
+                        };
+                        script.src = peerFactory.getUrl() + '/socket.io/socket.io.js';
+                        d.getElementsByTagName('head')[0].appendChild(script);
+                    }(document));
+
+                });
+
 
         }
 

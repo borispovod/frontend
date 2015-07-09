@@ -1,8 +1,8 @@
 require('angular');
 var compareVersion = require('../../node_modules/compare-version/index.js');
 
-angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal', 'userInfo', 'transactionsService', 'secondPassphraseModal',
-    function ($rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal, userInfo, transactionsService, secondPassphraseModal) {
+angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal', 'userInfo', 'transactionsService', 'secondPassphraseModal', 'focusFactory',
+    function ($rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal, userInfo, transactionsService, secondPassphraseModal, focusFactory) {
 
         $scope.searchTransactions = transactionsService;
         $scope.searchBlocks = blockService;
@@ -12,6 +12,37 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         $scope.version = 'ersion load';
         $scope.diffVersion = 0;
         $scope.subForgingCollapsed = true;
+        $scope.categories = [[
+            {label: 'Business', uuid: '1'},
+            {label: 'Catalogs', uuid: '1'},
+            {label: 'Education', uuid: '1'},
+            {label: 'Entertainment', uuid: '1'},
+            {label: 'Health & Fitness', uuid: '1'},
+            {label: 'Music', uuid: '1'},
+            {label: 'Photo & Video', uuid: '1'},
+            {label: 'Productivity', uuid: '1'},
+            {label: 'Networking', uuid: '1'},
+            {label: 'Travel', uuid: '1'},
+            {label: 'Utilities', uuid: '1'}
+
+        ],
+            [
+                {label: 'Games', uuid: '1'},
+                {label: 'Action', uuid: '1'},
+                {label: 'Adventure', uuid: '1'},
+                {label: 'Board', uuid: '1'},
+                {label: 'Dice', uuid: '1'},
+                {label: 'Educational', uuid: '1'},
+                {label: 'Puzzle', uuid: '1'},
+                {label: 'Racing', uuid: '1'},
+                {label: 'games', uuid: '1'},
+                {label: 'Simulation', uuid: '1'},
+                {label: 'Sports', uuid: '1'},
+                {label: 'Strategy', uuid: '1'},
+                {label: 'Word', uuid: '1'}
+            ]
+
+        ]
 
         $scope.collapseMenu = function () {
             $scope.subForgingCollapsed = !$scope.subForgingCollapsed;
@@ -20,6 +51,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         $scope.toggleMenu = function () {
             $scope.toggled = !$scope.toggled;
         }
+
 
         $scope.moreDropdownStatus = {
             isopen: false
@@ -67,6 +99,10 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         };
         $scope.view = viewFactory;
 
+        $scope.toggleSearchDapps = function () {
+            $scope.view.bar.searchDapps = !$scope.view.bar.searchDapps;
+        }
+
         $scope.modules = [
             'main.dashboard',
             'main.delegates',
@@ -75,7 +111,9 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
             'main.forging',
             'main.blockchain',
             'passphrase',
-            'main.contacts'
+            'main.contacts',
+            'main.multi',
+            'main.dappstore'
 
         ];
 

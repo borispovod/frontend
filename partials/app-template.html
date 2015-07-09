@@ -14,7 +14,7 @@
                   ng-hide="username">Welcome, click to edit profile</span>
             <span class="address">{{address}}</span>
         </div>
-      <!--  <div class="white-glow"></div>-->
+        <!--  <div class="white-glow"></div>-->
         <ul id="menu">
             <li ng-show="showMenuItem('main.dashboard')" ui-sref-active="active"><a ui-sref="main.dashboard"
                                                                                     class="waves-effect waves-blue">
@@ -56,10 +56,10 @@
                                                                                      class="waves-effect waves-blue">
                 <div class="nav-icon" id="blockchain-icon"></div>
                 <span class="menu-text">Blockchain</span></a></li>
-            <li ng-show="showMenuItem('main.network')" ui-sref-active="active"><a ui-sref="main.network"
-                                                                                  class="waves-effect waves-blue">
+            <li ng-show="showMenuItem('main.multi')" ui-sref-active="active"><a ui-sref="main.multi"
+                                                                                class="waves-effect waves-blue">
                 <div class="nav-icon" id="network-icon"></div>
-                <span class="menu-text">Network</span></a></li>
+                <span class="menu-text">Multi</span></a></li>
 
         </ul>
         <div id="inc"></div>
@@ -69,18 +69,18 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="header-wrapper">
-            <div class="nav-bar" id="header">
-                <button type="button" class="toggle-menu" ng-click="toggleMenu()">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <h1 id="title"><span class="title-icon" ng-show="view.page.previos" ng-click="goToPrevios()">
+            <div class="nav-bar clearfix" id="header">
+                <div class="logo">
+                    <button type="button" class="toggle-menu" ng-click="toggleMenu()">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <h1 id="title"><span class="title-icon" ng-show="view.page.previos" ng-click="goToPrevios()">
             <span class="sr-only">Go to previos page</span></span>{{view.page.title}}</h1>
-                <span class="forging-state" ng-show="view.forgingState">{{view.forgingState}}</span>
-
-                <div id="top-menu" class="valign-wrapper">
+                    <span class="forging-state" ng-show="view.forgingState">{{view.forgingState}}</span></div>
+                <div id="top-menu">
                 <span id="balance">
                 {{unconfirmedBalance | xcrFilter}} XCR
             </span>
@@ -108,7 +108,9 @@
                             <li><a href="#" ng-click="myUserInfo()">My Profile</a></li>
                             <li ng-if="!secondPassphrase"><a href="#" ng-click="setSecondPassphrase()">2nd
                                 Passphrase</a></li>
+                            <li><a ui-sref="main.settings">Settings</a></li>
                             <li><a href="/">Logout</a></li>
+
                         </ul>
                     </div>
                 </div>
@@ -118,7 +120,8 @@
                     <span class="input-group-addon">
                         <i class="mdi-action-search"></i>
                     </span>
-                    <input type="text" class="form-control" placeholder="Search for transactions (Transaction ID, Sender address, Recipient address)"
+                    <input type="text" class="form-control"
+                           placeholder="Search for transactions (Transaction ID, Sender address, Recipient address)"
                            ng-model="searchTransactions.searchForTransaction">
                        <span class="input-group-addon spinner-addon">
                             <div class="preloader-wrapper active" ng-if="searchTransactions.inSearch">
@@ -174,16 +177,48 @@
                 <a class="btn-floating btn-large waves-effect waves-light green" ng-click="disableForging()"
                    ng-show="delegate.username && forging" style="
     position: absolute;
-    top: 96px;
-    right: 30px;
+   right: 60px;
+  top: 36px;
 "><i class="factory"></i></a>
                 <a class="btn-floating btn-large waves-effect waves-light red" ng-click="enableForging()"
                    ng-show="(delegate.username && !forging)"
                    style="
     position: absolute;
-    top: 96px;
-    right: 30px;
+     right: 60px;
+  top: 36px;
 "><i class="factory"></i></a>
+            </div>
+            <div id="page-nav" class="clearfix mobile-nav" ng-if="view.bar.showDappsBar">
+                <ul class="nav nav-underline categories pull-left">
+                    <li><a ng-click="view.bar.showCategories=!view.bar.showCategories">CATEGORIES <span
+                            class="dropdown-toggle"></span></a>
+                    </li>
+                </ul>
+                <div class="categories-menu" ng-class="{'open': view.bar.showCategories}">
+                    <ul class="clearfix">
+                        <li ng-repeat="sublist in categories">
+                            <ul>
+                                <li ng-repeat="item in sublist"><a>{{item.label}}</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <ul class="nav nav-underline fast-sort pull-left">
+                    <li ui-sref-active="active"><a href="#" ui-sref="main.dappstore">HOME</a></li>
+                    <li><a href="#">TOP RATED</a></li>
+                    <li><a href="#">MOST USED</a>
+                    </li>
+                    <li><a href="#">INSTALLED</a></li>
+                </ul>
+                <div class="search-toggle"><i ng-click="toggleSearchDapps()" class="mdi-action-search small"
+                                              ng-class="{'mdi-content-clear': view.bar.searchDapps}"></i></div>
+                <div class="search-container" ng-class="{'open': view.bar.searchDapps}">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="mdi-action-search"></i></span>
+                        <input type="text" focus-on="true" class="form-control" placeholder="Search for Dapps">
+                    </div>
+                </div>
+
             </div>
             <div id="page-nav" ng-if="view.bar.showContactsBar">
                 <ul class="nav nav-underline pull-left">
@@ -193,8 +228,8 @@
                 </ul>
                 <a ng-click="addContact()" class="btn-floating btn-large waves-effect waves-light green" style="
     position: absolute;
-    right: 30px;
-  top: 96px;
+     right: 60px;
+  top: 36px;
 "><i class="mdi-content-add"></i></a>
             </div>
         </div>

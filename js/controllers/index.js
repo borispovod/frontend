@@ -16,6 +16,7 @@ require('../../js/controllers/walletsController');
 require('../../js/controllers/walletTransactionsController');
 require('../../js/controllers/walletPendingsController');
 require('../../js/controllers/dappsController');
+require('../../js/controllers/dappController');
 //modals
 require('../../js/controllers/modals/userSettingsModalController');
 require('../../js/controllers/modals/blockModalController');

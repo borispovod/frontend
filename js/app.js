@@ -44,6 +44,11 @@ webApp.config(["ngClipProvider",
                 templateUrl: "/partials/dapps.html",
                 controller: "dappsController"
             })
+            .state('main.dappentry', {
+                url: "/dapp",
+                templateUrl: "/partials/dapp-entry.html",
+                controller: "dappController"
+            })
             .state('main.multiPendings', {
                 url: "/wallets/pendings",
                 templateUrl: "/partials/wallet-pendings.html",

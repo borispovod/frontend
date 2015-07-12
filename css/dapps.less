@@ -159,12 +159,28 @@
     display: inline-block;
     float: left;
     margin: 26px 0 26px 26px;
+    @media (max-width: @screen-sm-min) {
+      display: block;
+      position: relative;
+      float: none;
+      margin: 26px;
+      img {
+        display: block;
+        margin: 0 auto;
+      }
+    }
     img {
       height: 208px;
       width: 208px;
     }
   }
   .info-container {
+    @media (max-width: @screen-sm-min) {
+      display: block;
+      position: relative;
+      padding-left: 26px;
+      min-height: 256px;
+    }
     min-height: 195px;
     padding: 24px 50px 23px 260px;
     .details-info-divider {
@@ -342,6 +358,12 @@
     margin-top: 8px;
   }
 }
+
+.show-more-reviews {
+  @media (max-width: 1337px) and (min-width: @screen-sm-max) {
+    margin-top: -19px;
+  }
+}
 .comments-wrapper {
   display: table;
   width: 100%;
@@ -393,6 +415,7 @@
         height: 64px;
         border-radius: 50%;
       }
+
       .reason-set {
         display: inline-block;
         position: relative;
@@ -400,8 +423,14 @@
         border-radius: 2px;
         box-sizing: border-box;
         background: #fff;
-        bottom: 20px;
-
+        @media (max-width: 1337px) and (min-width: @screen-sm-max) {
+          display: block;
+          margin-left: 80px;
+        }
+        @media (max-width: @screen-sm-min) {
+          display: inline-block;
+          margin-left: 0;
+        }
         .stars-container {
           display: block;
           position: relative;

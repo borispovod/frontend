@@ -3,7 +3,7 @@ var compareVersion = require('../../node_modules/compare-version/index.js');
 
 angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal', 'userInfo', 'transactionsService', 'secondPassphraseModal', 'focusFactory',
     function ($rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal, userInfo, transactionsService, secondPassphraseModal, focusFactory) {
-
+        $scope.categoryType = {'0': 'COMMON', '1': 'GAMES'}
         $scope.searchTransactions = transactionsService;
         $scope.searchBlocks = blockService;
         $scope.toggled = false;

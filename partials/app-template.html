@@ -220,6 +220,15 @@
                 </div>
 
             </div>
+            <div id="page-nav" class="clearfix mobile-nav" ng-if="view.bar.showDappsCategoryBar">
+                <div class="search-container open">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="mdi-action-search"></i></span>
+                        <input type="text" focus-on="true" class="form-control" placeholder="Search for Dapps">
+                    </div>
+                </div>
+
+            </div>
             <div id="page-nav" ng-if="view.bar.showContactsBar">
                 <ul class="nav nav-underline pull-left">
                     <li ui-sref-active="active"><a href="#" ui-sref="main.contacts">Contacts</a></li>

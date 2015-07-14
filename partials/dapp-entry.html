@@ -6,15 +6,15 @@
             </div>
             <div class="info-container">
                 <div class="document-title">
-                    Inbox
+                    {{dapp.name}}
                 </div>
                 <div class="subtitle-container">
-                    <a class="document-subtitle primary" href="#"><span>Max Minimum</span> </a>
+                    <a class="document-subtitle primary" href="#"><span>{{dapp.nikname}}</span> </a>
 
                     <div class="document-subtitle">- 25 Mar 2015</div>
                 </div>
                 <div class="details-info-divider"></div>
-                <div class="details-actions"><a class="btn btn-sky-blue waves-effect waves-light"><i
+                <div class="details-actions"><a class="btn btn-sky-blue waves-effect waves-light" ng-click="installDapp()"><i
                         class="mdi-file-file-download left"></i>INSTALL
                 </a>
                     <a class="btn btn-white waves-effect left-margin-14">SHARE
@@ -24,8 +24,7 @@
                 </div>
                 <div class="subtitle-container">
                     <div class="document-subtitle large-subtitle">Category:</div>
-                    <a class="document-subtitle primary" href="#"><span>Productivity</span> </a>
-
+                    <a class="document-subtitle primary" href="#" ui-sref="main.dappsCategory({categoryId:{{dapp.category}}})"><span>{{categoryType[dapp.category]}}</span> </a>
                 </div>
                 <div class="details-info-divider"></div>
                 <div class="reason-set"><span class="stars-container">
@@ -42,7 +41,6 @@
     </div>
 </div>
 
-
 <div class="row clearfix">
     <div class="col-xs-12">
         <div class="dapp-info clearfix">
@@ -50,77 +48,7 @@
                 <h1 class="heading">Description</h1>
 
                 <div class="text-body" ng-class="{'expanded': showMore}">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                        ex ea commodo
-                        consequat.</p>
-
-                    <p> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                        pariatur. Excepteur
-                        sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                        laborum. Sed ut
-                        perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
-                        rem aperiam,
-                        eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta.
-                        explicabo.</p>
-
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et
-                        dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                        ex ea
-                        commodo
-                        consequat.</p>
-
-                    <p> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                        pariatur.
-                        Excepteur
-                        sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                        laborum. Sed ut
-                        perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
-                        rem
-                        aperiam,
-                        eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta.
-                        explicabo.</p>
-
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et
-                        dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                        ex ea
-                        commodo
-                        consequat.</p>
-
-                    <p> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                        pariatur.
-                        Excepteur
-                        sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                        laborum. Sed ut
-                        perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
-                        rem
-                        aperiam,
-                        eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta.
-                        explicabo.</p>
-
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et
-                        dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                        ex ea
-                        commodo
-                        consequat.</p>
-
-                    <p> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                        pariatur.
-                        Excepteur
-                        sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                        laborum. Sed ut
-                        perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
-                        rem
-                        aperiam,
-                        eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta.
-                        explicabo.</p>
+                    <p>{{dapp.description}}</p>
                 </div>
                 <div class="show-more clearfix" ng-if="!showMore"><a class="btn btn-white" ng-click="changeShowMore()">READ
                     MORE

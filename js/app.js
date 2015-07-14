@@ -2,6 +2,7 @@ require('angular');
 require('angular-ui-router');
 require('angular-modal');
 require('angular-resource');
+require('angular-filter');
 require('browserify-angular-animate');
 require('ng-clip');
 //require('../bower_components//angular-animate/angular-animate.js')
@@ -10,7 +11,7 @@ require('../bower_components/angular-socket-io/socket.js');
 //require('../bower_components/angular-materialize/src/angular-materialize.js');
 require('../node_modules/ng-table/dist/ng-table.js');
 
-webApp = angular.module('webApp', ['ui.router', 'btford.modal', 'ngTable', 'ngAnimate',  'chart.js', 'btford.socket-io', 'ui.bootstrap', 'ngClipboard']);
+webApp = angular.module('webApp', ['ui.router', 'btford.modal', 'ngTable', 'ngAnimate',  'chart.js', 'btford.socket-io', 'ui.bootstrap', 'ngClipboard', 'angular.filter']);
 
 webApp.config(["ngClipProvider",
     "$locationProvider",
@@ -44,8 +45,14 @@ webApp.config(["ngClipProvider",
                 templateUrl: "/partials/dapps.html",
                 controller: "dappsController"
             })
+            .state('main.dappsCategory', {
+                url: "dappstore/:categoryId",
+                templateUrl: "/partials/dapps-category.html",
+                controller: "dappsCategoryController"
+
+            })
             .state('main.dappentry', {
-                url: "/dapp",
+                url: "/dapp/:dappId",
                 templateUrl: "/partials/dapp-entry.html",
                 controller: "dappController"
             })

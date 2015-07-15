@@ -1,10 +1,10 @@
 require('angular');
 var compareVersion = require('../../node_modules/compare-version/index.js');
 
-angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal', 'userInfo', 'transactionsService', 'secondPassphraseModal', 'focusFactory',
-    function ($rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal, userInfo, transactionsService, secondPassphraseModal, focusFactory) {
-        $scope.categoryType = {'0': 'COMMON', '1': 'GAMES'}
+angular.module('webApp').controller('appController', ['dappsService','$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal', 'userInfo', 'transactionsService', 'secondPassphraseModal', 'focusFactory',
+    function (dappsService, $rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal, userInfo, transactionsService, secondPassphraseModal, focusFactory) {
         $scope.searchTransactions = transactionsService;
+        $scope.searchDapp = dappsService;
         $scope.searchBlocks = blockService;
         $scope.toggled = false;
         $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
@@ -12,37 +12,28 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         $scope.version = 'ersion load';
         $scope.diffVersion = 0;
         $scope.subForgingCollapsed = true;
-        $scope.categories = [[
-            {label: 'Business', uuid: '1'},
-            {label: 'Catalogs', uuid: '1'},
-            {label: 'Education', uuid: '1'},
-            {label: 'Entertainment', uuid: '1'},
-            {label: 'Health & Fitness', uuid: '1'},
-            {label: 'Music', uuid: '1'},
-            {label: 'Photo & Video', uuid: '1'},
-            {label: 'Productivity', uuid: '1'},
-            {label: 'Networking', uuid: '1'},
-            {label: 'Travel', uuid: '1'},
-            {label: 'Utilities', uuid: '1'}
+        $scope.categories = {};
 
-        ],
-            [
-                {label: 'Games', uuid: '1'},
-                {label: 'Action', uuid: '1'},
-                {label: 'Adventure', uuid: '1'},
-                {label: 'Board', uuid: '1'},
-                {label: 'Dice', uuid: '1'},
-                {label: 'Educational', uuid: '1'},
-                {label: 'Puzzle', uuid: '1'},
-                {label: 'Racing', uuid: '1'},
-                {label: 'games', uuid: '1'},
-                {label: 'Simulation', uuid: '1'},
-                {label: 'Sports', uuid: '1'},
-                {label: 'Strategy', uuid: '1'},
-                {label: 'Word', uuid: '1'}
-            ]
+        $scope.getCategoryName = function(id){
+            for (var key in $scope.categories) {
+                if ($scope.categories.hasOwnProperty(key)) {
+                    if (id== $scope.categories[key])
+                    {return key;}
+                }
+            }
+        }
 
-        ]
+        $scope.getCategories = function(){
+            $http.get("/api/dapps/categories").then(function (response) {
+                if (response.data.success) {
+                    $scope.categories = response.data.categories;
+                }
+                else {
+                    $scope.categories = {};
+                }
+            });
+
+        }
 
         $scope.collapseMenu = function () {
             $scope.subForgingCollapsed = !$scope.subForgingCollapsed;
@@ -177,6 +168,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                     $scope.getMyVotesCount();
                     $scope.getContacts();
                     $scope.getVersion();
+                    $scope.getCategories();
 
                 });
         };

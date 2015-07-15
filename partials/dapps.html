@@ -151,8 +151,8 @@
 <div class="row clearfix margin"></div>-->
 <div class="row clearfix" ng-repeat-start="cat in dapps | groupBy: 'category'">
     <div class="col-xs-12">
-        <div class="panel  panel-default no-margin-bottom" ui-sref="main.dappsCategory({categoryId:{{cat[0].category}}})">
-            <div class="panel-heading cursor"><h2>{{categoryType[cat[0].category]}}</h2>
+        <div class="panel  panel-default no-margin-bottom" ui-sref='main.dappsCategory({categoryId:"{{getCategoryName(cat[0].category)}}"})'>
+            <div class="panel-heading cursor"><h2>{{getCategoryName(cat[0].category)}} {{searchedText}}</h2>
                 <div class="more"><span class="sr-only">More</span></div>
             </div>
         </div>
@@ -161,7 +161,7 @@
 <div class="row clearfix">
     <div ng-repeat="dapp in cat | limitTo: 6" class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
         <div class="dapp-content small-dapp clearfix cursor"
-             ui-sref='main.dappentry({"dappId":"{{dapp.transactionId}}"})'>
+          >
             <div class="cover">
                 <div class="cover-image-container">
                     <div class="cover-outer-align">
@@ -174,7 +174,7 @@
             <div class="details">
                 <h2><span class="title" href="#">{{dapp.name}}</span></h2>
 
-                <div class="subtitle-container"><span class="subtitle">{{dapp.nikname}}{{dapp.transactionId}}</span></div>
+                <div class="subtitle-container"><span class="subtitle">{{dapp.nikname}}</span></div>
             </div>
             <div class="reason-set"><span class="stars-container">
                 <div class="reason-set-star-rating">
@@ -190,17 +190,18 @@
                           data-server-cookie="CAIaIgogEh4KGGNvbS5oYWxmYnJpY2suZnJ1aXRuaW5qYRABGAM=" data-uitype="200">
                <span class="display-price">0,91&nbsp;€</span></button>   <span class="acquired-label"> <span
                    class="acquired-icon"></span> </span> </span>     </span> </span></div>
+            <a ng-if="dapp.type==1" class="target-link" target-blank ng-href="{{dapp.link}}"></a>
+            <a ng-if="dapp.type!=1" class="target-link" href="#" ui-sref='main.dappentry({"dappId":"{{dapp.transactionId}}"})'></a>
         </div>
-
-
     </div>
 
 </div>
 <div class="row clearfix margin" ng-repeat-end></div>
 <div class="row clearfix">
     <div class="col-xs-12">
-        <div class="panel  panel-default no-margin-bottom">
-            <div class="panel-heading cursor"><h2>Installed Dapps</h2>
+        <div class="panel  panel-default no-margin-bottom"
+             ui-sref='main.dappsCategory({categoryId:"Installed"})'>
+            <div class="panel-heading cursor"><h2>Installed Dapps {{searchedInstalledText}}</h2>
 
                 <div class="more" ng-show="transactions.length"><span class="sr-only">More</span></div>
             </div>
@@ -208,21 +209,22 @@
     </div>
 </div>
 <div class="row clearfix">
-    <div class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
-        <div class="dapp-content small-dapp clearfix">
+    <div ng-repeat="dapp in installedDapps | limitTo: 6" class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
+        <div class="dapp-content small-dapp clearfix cursor"
+                >
             <div class="cover">
                 <div class="cover-image-container">
                     <div class="cover-outer-align">
-                        <div class="cover-inner-align"><img alt="EMAIL (Peer-to-peer)" class="cover-image"
+                        <div class="cover-inner-align"><img class="cover-image"
                                                             src="https://placeholdit.imgix.net/~text?txtsize=33&txt=132%C3%97132&w=132&h=132">
                         </div>
                     </div>
                 </div>
             </div>
             <div class="details">
-                <h2><span class="title" href="#">Inbox</span></h2>
+                <h2><span class="title" href="#">{{dapp.name}}</span></h2>
 
-                <div class="subtitle-container"><span class="subtitle">Martin West</span></div>
+                <div class="subtitle-container"><span class="subtitle">{{dapp.nikname}}</span></div>
             </div>
             <div class="reason-set"><span class="stars-container">
                 <div class="reason-set-star-rating">
@@ -238,179 +240,10 @@
                           data-server-cookie="CAIaIgogEh4KGGNvbS5oYWxmYnJpY2suZnJ1aXRuaW5qYRABGAM=" data-uitype="200">
                <span class="display-price">0,91&nbsp;€</span></button>   <span class="acquired-label"> <span
                    class="acquired-icon"></span> </span> </span>     </span> </span></div>
+            <a ng-if="dapp.type==1" class="target-link" target-blank ng-href="{{dapp.link}}"></a>
+            <a ng-if="dapp.type!=1" class="target-link" href="#"
+               ui-sref='main.dappentry({"dappId":"{{dapp.transactionId}}"})'></a>
         </div>
-
-
-    </div>
-    <div class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
-        <div class="dapp-content small-dapp clearfix">
-            <div class="cover">
-                <div class="cover-image-container">
-                    <div class="cover-outer-align">
-                        <div class="cover-inner-align"><img alt="EMAIL (Peer-to-peer)" class="cover-image"
-                                                            src="https://placeholdit.imgix.net/~text?txtsize=33&txt=132%C3%97132&w=132&h=132">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="details">
-                <h2><span class="title" href="#">Inbox</span></h2>
-
-                <div class="subtitle-container"><span class="subtitle">Martin West</span></div>
-            </div>
-            <div class="reason-set"><span class="stars-container">
-                <div class="reason-set-star-rating">
-                    <div class="small-star star-rating-non-editable-container" aria-label="Средняя оценка: 4,3 из 5">
-                        <div class="current-rating" style="width: 68.29926300048828%;"></div>
-                    </div>
-                </div>
-           <span class="price-container"> <span class="paragraph-end"></span>   <span
-                   class="apps is-price-tag buy-button-container" data-doc-fetch-skip-cache="0"
-                   data-doc-fetch-vouchers="0" data-docid="com.halfbrick.fruitninja"> <div class="pon"
-                                                                                           style="display:none">1
-           </div> <button style="display:none" class="price buy id-track-click"
-                          data-server-cookie="CAIaIgogEh4KGGNvbS5oYWxmYnJpY2suZnJ1aXRuaW5qYRABGAM=" data-uitype="200">
-               <span class="display-price">0,91&nbsp;€</span></button>   <span class="acquired-label"> <span
-                   class="acquired-icon"></span> </span> </span>     </span> </span></div>
-        </div>
-
-
-    </div>
-    <div class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
-        <div class="dapp-content small-dapp clearfix">
-            <div class="cover">
-                <div class="cover-image-container">
-                    <div class="cover-outer-align">
-                        <div class="cover-inner-align"><img alt="EMAIL (Peer-to-peer)" class="cover-image"
-                                                            src="https://placeholdit.imgix.net/~text?txtsize=33&txt=132%C3%97132&w=132&h=132">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="details">
-                <h2><span class="title" href="#">Inbox</span></h2>
-
-                <div class="subtitle-container"><span class="subtitle">Martin West</span></div>
-            </div>
-            <div class="reason-set"><span class="stars-container">
-                <div class="reason-set-star-rating">
-                    <div class="small-star star-rating-non-editable-container" aria-label="Средняя оценка: 4,3 из 5">
-                        <div class="current-rating" style="width: 68.29926300048828%;"></div>
-                    </div>
-                </div>
-           <span class="price-container"> <span class="paragraph-end"></span>   <span
-                   class="apps is-price-tag buy-button-container" data-doc-fetch-skip-cache="0"
-                   data-doc-fetch-vouchers="0" data-docid="com.halfbrick.fruitninja"> <div class="pon"
-                                                                                           style="display:none">1
-           </div> <button style="display:none" class="price buy id-track-click"
-                          data-server-cookie="CAIaIgogEh4KGGNvbS5oYWxmYnJpY2suZnJ1aXRuaW5qYRABGAM=" data-uitype="200">
-               <span class="display-price">0,91&nbsp;€</span></button>   <span class="acquired-label"> <span
-                   class="acquired-icon"></span> </span> </span>     </span> </span></div>
-        </div>
-
-
-    </div>
-    <div class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
-        <div class="dapp-content small-dapp clearfix">
-            <div class="cover">
-                <div class="cover-image-container">
-                    <div class="cover-outer-align">
-                        <div class="cover-inner-align"><img alt="EMAIL (Peer-to-peer)" class="cover-image"
-                                                            src="https://placeholdit.imgix.net/~text?txtsize=33&txt=132%C3%97132&w=132&h=132">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="details">
-                <h2><span class="title" href="#">Inbox</span></h2>
-
-                <div class="subtitle-container"><span class="subtitle">Martin West</span></div>
-            </div>
-            <div class="reason-set"><span class="stars-container">
-                <div class="reason-set-star-rating">
-                    <div class="small-star star-rating-non-editable-container" aria-label="Средняя оценка: 4,3 из 5">
-                        <div class="current-rating" style="width: 68.29926300048828%;"></div>
-                    </div>
-                </div>
-           <span class="price-container"> <span class="paragraph-end"></span>   <span
-                   class="apps is-price-tag buy-button-container" data-doc-fetch-skip-cache="0"
-                   data-doc-fetch-vouchers="0" data-docid="com.halfbrick.fruitninja"> <div class="pon"
-                                                                                           style="display:none">1
-           </div> <button style="display:none" class="price buy id-track-click"
-                          data-server-cookie="CAIaIgogEh4KGGNvbS5oYWxmYnJpY2suZnJ1aXRuaW5qYRABGAM=" data-uitype="200">
-               <span class="display-price">0,91&nbsp;€</span></button>   <span class="acquired-label"> <span
-                   class="acquired-icon"></span> </span> </span>     </span> </span></div>
-        </div>
-
-
-    </div>
-    <div class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
-        <div class="dapp-content small-dapp clearfix">
-            <div class="cover">
-                <div class="cover-image-container">
-                    <div class="cover-outer-align">
-                        <div class="cover-inner-align"><img alt="EMAIL (Peer-to-peer)" class="cover-image"
-                                                            src="https://placeholdit.imgix.net/~text?txtsize=33&txt=132%C3%97132&w=132&h=132">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="details">
-                <h2><span class="title" href="#">Inbox</span></h2>
-
-                <div class="subtitle-container"><span class="subtitle">Martin West</span></div>
-            </div>
-            <div class="reason-set"><span class="stars-container">
-                <div class="reason-set-star-rating">
-                    <div class="small-star star-rating-non-editable-container" aria-label="Средняя оценка: 4,3 из 5">
-                        <div class="current-rating" style="width: 68.29926300048828%;"></div>
-                    </div>
-                </div>
-           <span class="price-container"> <span class="paragraph-end"></span>   <span
-                   class="apps is-price-tag buy-button-container" data-doc-fetch-skip-cache="0"
-                   data-doc-fetch-vouchers="0" data-docid="com.halfbrick.fruitninja"> <div class="pon"
-                                                                                           style="display:none">1
-           </div> <button style="display:none" class="price buy id-track-click"
-                          data-server-cookie="CAIaIgogEh4KGGNvbS5oYWxmYnJpY2suZnJ1aXRuaW5qYRABGAM=" data-uitype="200">
-               <span class="display-price">0,91&nbsp;€</span></button>   <span class="acquired-label"> <span
-                   class="acquired-icon"></span> </span> </span>     </span> </span></div>
-        </div>
-
-
-    </div>
-    <div class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
-        <div class="dapp-content small-dapp clearfix">
-            <div class="cover">
-                <div class="cover-image-container">
-                    <div class="cover-outer-align">
-                        <div class="cover-inner-align"><img alt="EMAIL (Peer-to-peer)" class="cover-image"
-                                                            src="https://placeholdit.imgix.net/~text?txtsize=33&txt=132%C3%97132&w=132&h=132">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="details">
-                <h2><span class="title" href="#">Inbox</span></h2>
-
-                <div class="subtitle-container"><span class="subtitle">Martin West</span></div>
-            </div>
-            <div class="reason-set"><span class="stars-container">
-                <div class="reason-set-star-rating">
-                    <div class="small-star star-rating-non-editable-container" aria-label="Средняя оценка: 4,3 из 5">
-                        <div class="current-rating" style="width: 68.29926300048828%;"></div>
-                    </div>
-                </div>
-           <span class="price-container"> <span class="paragraph-end"></span>   <span
-                   class="apps is-price-tag buy-button-container" data-doc-fetch-skip-cache="0"
-                   data-doc-fetch-vouchers="0" data-docid="com.halfbrick.fruitninja"> <div class="pon"
-                                                                                           style="display:none">1
-           </div> <button style="display:none" class="price buy id-track-click"
-                          data-server-cookie="CAIaIgogEh4KGGNvbS5oYWxmYnJpY2suZnJ1aXRuaW5qYRABGAM=" data-uitype="200">
-               <span class="display-price">0,91&nbsp;€</span></button>   <span class="acquired-label"> <span
-                   class="acquired-icon"></span> </span> </span>     </span> </span></div>
-        </div>
-
-
     </div>
 </div>
 <div class="row clearfix margin"></div>

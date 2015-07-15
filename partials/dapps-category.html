@@ -1,7 +1,7 @@
 <div class="row clearfix" ng-repeat-start="cat in dapps | groupBy: 'category'">
     <div class="col-xs-12">
         <div class="panel  panel-default no-margin-bottom">
-            <div class="panel-heading"><h2>{{categoryType[cat[0].category]}}</h2>
+            <div class="panel-heading"><h2>{{getCategoryName(cat[0].category)}} {{searchedText}}</h2>
 
             </div>
         </div>
@@ -9,12 +9,15 @@
 </div>
 <div class="row clearfix">
     <div ng-repeat="dapp in cat" class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
-        <div class="dapp-content small-dapp clearfix">
+        <div class="dapp-content small-dapp clearfix cursor"
+                >
             <div class="cover">
                 <div class="cover-image-container">
                     <div class="cover-outer-align">
-                        <div class="cover-inner-align"><img class="cover-image"
+                        <div class="cover-inner-align"><img ng-if="!dapp.icon" class="cover-image"
                                                             src="https://placeholdit.imgix.net/~text?txtsize=33&txt=132%C3%97132&w=132&h=132">
+                            <img class="cover-image"
+                                 ng-if="!!dapp.icon" ng-src="{{dapp.icon}}">
                         </div>
                     </div>
                 </div>
@@ -38,9 +41,10 @@
                           data-server-cookie="CAIaIgogEh4KGGNvbS5oYWxmYnJpY2suZnJ1aXRuaW5qYRABGAM=" data-uitype="200">
                <span class="display-price">0,91&nbsp;€</span></button>   <span class="acquired-label"> <span
                    class="acquired-icon"></span> </span> </span>     </span> </span></div>
+            <a ng-if="dapp.type==1" class="target-link" target-blank ng-href="{{dapp.link}}"></a>
+            <a ng-if="dapp.type!=1" class="target-link" href="#"
+               ui-sref='main.dappentry({"dappId":"{{dapp.transactionId}}"})'></a>
         </div>
-
-
     </div>
 
 </div>

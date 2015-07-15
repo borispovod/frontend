@@ -1,8 +1,10 @@
 <div class="row clearfix">
     <div class="col-xs-12">
         <div class="dapp-info clearfix">
-            <div class="cover-container"><img class="cover-image"
-                                              src="http://placekitten.com/g/208/208">
+            <div class="cover-container"><img ng-if="!dapp.icon" class="cover-image"
+                                              src="https://placeholdit.imgix.net/~text?txtsize=33&txt=208%C3%97208&w=208&h=208">
+                <img ng-if="!!dapp.icon" class="cover-image"
+                     ng-src="{{dapp.icon}}">
             </div>
             <div class="info-container">
                 <div class="document-title">
@@ -24,7 +26,7 @@
                 </div>
                 <div class="subtitle-container">
                     <div class="document-subtitle large-subtitle">Category:</div>
-                    <a class="document-subtitle primary" href="#" ui-sref="main.dappsCategory({categoryId:{{dapp.category}}})"><span>{{categoryType[dapp.category]}}</span> </a>
+                    <a class="document-subtitle primary" href="#" ui-sref="main.dappsCategory({categoryId:{{getCategoryName(dapp.category)}}})"><span>{{getCategoryName(dapp.category)}}</span> </a>
                 </div>
                 <div class="details-info-divider"></div>
                 <div class="reason-set"><span class="stars-container">

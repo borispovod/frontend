@@ -52,6 +52,7 @@ angular.module('webApp').controller('dappsController', ['$scope', 'viewFactory',
                 else {
                     $http.get("/api/dapps/search?q=" + $scope.searchDapp.searchForDappGlobal).then(function (response) {
                         $scope.dapps = response.data.dapps;
+                        $scope.searchDapp.inSearch = false;
                         $scope.searchedText = '(search for "' + $scope.searchDapp.searchForDappGlobal + '")';
                     });
 

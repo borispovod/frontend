@@ -214,6 +214,28 @@
                 <div class="search-toggle"><i ng-click="toggleSearchDapps()" class="mdi-action-search small"
                                               ng-class="{'mdi-content-clear': view.bar.searchDapps}"></i></div>
                 <div class="search-container" ng-class="{'open': view.bar.searchDapps}">
+                      <span class="input-group-addon spinner-addon" style="
+    position: absolute;
+    right: 0;
+    top: 13px;
+">
+                            <div class="preloader-wrapper small" ng-class="{'active':searchDapp.inSearch}" style="
+    width: 22px;
+    height: 22px;
+">
+                                <div class="spinner-layer spinner-blue-only">
+                                    <div class="circle-clipper left">
+                                        <div class="circle"></div>
+                                    </div>
+                                    <div class="gap-patch">
+                                        <div class="circle"></div>
+                                    </div>
+                                    <div class="circle-clipper right">
+                                        <div class="circle"></div>
+                                    </div>
+                                </div>
+                            </div>
+                    </span>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="mdi-action-search"></i></span>
                         <input type="text" focus-on="true" ng-model="searchDapp.searchForDappGlobal" class="form-control" placeholder="Search for Dapps">
@@ -223,11 +245,33 @@
             </div>
             <div id="page-nav" class="clearfix mobile-nav" ng-if="view.bar.showDappsCategoryBar">
                 <div class="search-container open">
+                    <span class="input-group-addon spinner-addon" style="
+    position: absolute;
+    right: 0;
+    top: 13px;
+">
+                            <div class="preloader-wrapper small" ng-class="{'active':searchDapp.inSearch}" style="
+    width: 22px;
+    height: 22px;
+">
+                                <div class="spinner-layer spinner-blue-only">
+                                    <div class="circle-clipper left">
+                                        <div class="circle"></div>
+                                    </div>
+                                    <div class="gap-patch">
+                                        <div class="circle"></div>
+                                    </div>
+                                    <div class="circle-clipper right">
+                                        <div class="circle"></div>
+                                    </div>
+                                </div>
+                            </div>
+                    </span>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="mdi-action-search"></i></span>
                         <input type="text" focus-on="true" class="form-control"
                                ng-model="searchDapp.searchForDapp" placeholder="Search for Dapps">
-                        
+
                     </div>
                 </div>
 

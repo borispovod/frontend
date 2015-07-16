@@ -41,6 +41,7 @@ angular.module('webApp').controller('dappsCategoryController', ['$scope', 'viewF
                 if ($scope.searchDapp.searchForDapp.trim() != '') {
                     $http.get("/api/dapps/search?q=" + $scope.searchDapp.searchForDapp + "&installed=1").then(function (response) {
                         $scope.dapps = response.data.dapps;
+                        $scope.searchDapp.inSearch=false;
                         $scope.searchedText = '(search for "' + $scope.searchDapp.searchForDapp + '")';
                     });
                 }
@@ -55,12 +56,14 @@ angular.module('webApp').controller('dappsCategoryController', ['$scope', 'viewF
                 if ($scope.searchDapp.searchForDapp.trim() != '') {
                     $http.get("/api/dapps/search?q=" + $scope.searchDapp.searchForDapp + "&category=" + $scope.category).then(function (response) {
                         $scope.dapps = response.data.dapps;
+                        $scope.searchDapp.inSearch = false;
                         $scope.searchedText = '(search for "' + $scope.searchDapp.searchForDapp + '")';
                     });
                 }
                 else {
                     $http.get("/api/dapps/?category=" + $scope.category).then(function (response) {
                         $scope.dapps = response.data.dapps;
+                        $scope.searchDapp.inSearch = false;
                         $scope.searchedText = '';
                     });
                 }

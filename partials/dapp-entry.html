@@ -11,17 +11,25 @@
                     {{dapp.name}}
                 </div>
                 <div class="subtitle-container">
-                    <a class="document-subtitle primary" href="#"><span>{{dapp.nikname}}</span> </a>
+                    <!--<a class="document-subtitle primary" href="#"><span>{{dapp.nikname}}</span> </a>-->
 
-                    <div class="document-subtitle">- 25 Mar 2015</div>
+                    <div class="document-subtitle">25 Mar 2015</div>
                 </div>
                 <div class="details-info-divider"></div>
-                <div class="details-actions"><a class="btn btn-sky-blue waves-effect waves-light" ng-click="installDapp()"><i
-                        class="mdi-file-file-download left"></i>INSTALL
+                <div ng-show="!loading && !installed" class="details-actions"><a class="btn btn-sky-blue waves-effect waves-light" ng-click="installDapp()" ng-switch on="dapp.type"><i
+                        class="mdi-file-file-download left"></i><span ng-switch-default>INSTALL</span><span ng-switch-when="1">DOWNLOAD</span>
                 </a>
                     <a class="btn btn-white waves-effect left-margin-14">SHARE
                     </a>
-                    <a class="btn btn-white waves-effect pull-right">SOURCE CODE
+                    <a ng-show="dapp.type==0" class="btn btn-white waves-effect pull-right">SOURCE CODE
+                    </a>
+                </div>
+                <div ng-show="!loading && installed" class="details-actions"><a class="btn btn-sky-blue waves-effect waves-light" ng-click="runDApp()" ng-switch on="dapp.type"><i
+                        class="mdi-file-file-download left"></i><span ng-switch-default>LAUNCH</span><span ng-switch-when="1">DOWNLOAD</span>
+                </a>
+                    <a class="btn btn-white waves-effect left-margin-14">SHARE
+                    </a>
+                    <a ng-show="dapp.type==0" class="btn btn-white waves-effect pull-right">SOURCE CODE
                     </a>
                 </div>
                 <div class="subtitle-container">
@@ -94,25 +102,20 @@
                         <div class="comment">
                             <div class="author"><img
                                     class="author-image"
-                                    src="http://placekitten.com/g/64/64"></div>
-                            <div><span class="author-name">Martha Matthews</span>
+                                    src="http://chantalducharme.com/wp-content/uploads/2014/03/Round-Avatar.png"></div>
+                            <div><span class="author-name">Alexis Peterson</span>
 
                                 <div class="reason-set"><span class="stars-container">
                 <div class="reason-set-star-rating">
                     <div class="small-star star-rating-non-editable-container">
-                        <div class="current-rating" style="width: 60%;"></div>
+                        <div class="current-rating" style="width: 70%;"></div>
 
                     </div>
                 </div>
           </span></div>
                                 <div class="quoted-review">
                                     <div class="review-text">
-                                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                                        culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde
-                                        omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
-                                        rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
-                                        beatae vitae dicta. explicabo.
+                                        {{'A whole new way to watch movies'| cut:true:30:' ...'}}
                                     </div>
                                 </div>
                             </div>
@@ -129,23 +132,14 @@
                                     <div class="reason-set"><span class="stars-container">
                 <div class="reason-set-star-rating">
                     <div class="small-star star-rating-non-editable-container">
-                        <div class="current-rating" style="width: 60%;"></div>
+                        <div class="current-rating" style="width: 80%;"></div>
 
                     </div>
                 </div>
           </span></div>
                                     <div class="quoted-review">
                                         <div class="review-text">
-                                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
-                                            eu
-                                            fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-                                            in
-                                            culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis
-                                            unde
-                                            omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-                                            totam
-                                            rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
-                                            beatae vitae dicta. explicabo.
+                                            {{'Just take care of the popcorn & leave the rest to us.'| cut:true:30:' ...'}}
                                         </div>
                                     </div>
                                 </div>
@@ -177,16 +171,16 @@
             <div class="cover">
                 <div class="cover-image-container">
                     <div class="cover-outer-align">
-                        <div class="cover-inner-align"><img alt="EMAIL (Peer-to-peer)" class="cover-image"
-                                                            src="https://placeholdit.imgix.net/~text?txtsize=33&txt=132%C3%97132&w=132&h=132">
+                        <div class="cover-inner-align"><img alt="PeerNotes" class="cover-image"
+                                                            src="http://icons.iconarchive.com/icons/igh0zt/ios7-style-metro-ui/512/MetroUI-Apps-Notepad-Alt-icon.png">
                         </div>
                     </div>
                 </div>
             </div>
             <div class="details">
-                <h2><span class="title" href="#">Inbox</span></h2>
+                <h2><span class="title" href="#">PeerNotes</span></h2>
 
-                <div class="subtitle-container"><span class="subtitle">Martin West</span></div>
+                <div class="subtitle-container"><span class="subtitle">Peer-to-Peer Notes</span></div>
             </div>
             <div class="reason-set"><span class="stars-container">
                 <div class="reason-set-star-rating">
@@ -211,16 +205,16 @@
             <div class="cover">
                 <div class="cover-image-container">
                     <div class="cover-outer-align">
-                        <div class="cover-inner-align"><img alt="EMAIL (Peer-to-peer)" class="cover-image"
-                                                            src="https://placeholdit.imgix.net/~text?txtsize=33&txt=132%C3%97132&w=132&h=132">
+                        <div class="cover-inner-align"><img alt="Angry Birds" class="cover-image"
+                                                            src="http://icons.iconarchive.com/icons/alecive/flatwoken/512/Apps-Angry-Birds-icon.png">
                         </div>
                     </div>
                 </div>
             </div>
             <div class="details">
-                <h2><span class="title" href="#">Inbox</span></h2>
+                <h2><span class="title" href="#">Angry Birds</span></h2>
 
-                <div class="subtitle-container"><span class="subtitle">Martin West</span></div>
+                <div class="subtitle-container"><span class="subtitle">Must Popular Game</span></div>
             </div>
             <div class="reason-set"><span class="stars-container">
                 <div class="reason-set-star-rating">
@@ -245,16 +239,16 @@
             <div class="cover">
                 <div class="cover-image-container">
                     <div class="cover-outer-align">
-                        <div class="cover-inner-align"><img alt="EMAIL (Peer-to-peer)" class="cover-image"
-                                                            src="https://placeholdit.imgix.net/~text?txtsize=33&txt=132%C3%97132&w=132&h=132">
+                        <div class="cover-inner-align"><img alt="Fitness" class="cover-image"
+                                                            src="http://www.prolater.com/blog/wp-content/uploads/2013/10/nike-plus-gps-icon.png">
                         </div>
                     </div>
                 </div>
             </div>
             <div class="details">
-                <h2><span class="title" href="#">Inbox</span></h2>
+                <h2><span class="title" href="#">Nike Fitness</span></h2>
 
-                <div class="subtitle-container"><span class="subtitle">Martin West</span></div>
+                <div class="subtitle-container"><span class="subtitle">Your records in blockchain</span></div>
             </div>
             <div class="reason-set"><span class="stars-container">
                 <div class="reason-set-star-rating">
@@ -279,84 +273,16 @@
             <div class="cover">
                 <div class="cover-image-container">
                     <div class="cover-outer-align">
-                        <div class="cover-inner-align"><img alt="EMAIL (Peer-to-peer)" class="cover-image"
-                                                            src="https://placeholdit.imgix.net/~text?txtsize=33&txt=132%C3%97132&w=132&h=132">
+                        <div class="cover-inner-align"><img alt="Btc Exchange" class="cover-image"
+                                                            src="http://www.emoneyblog.ru/images/upload/001/31_btc-2.png">
                         </div>
                     </div>
                 </div>
             </div>
             <div class="details">
-                <h2><span class="title" href="#">Inbox</span></h2>
+                <h2><span class="title" href="#">Btc Exchange</span></h2>
 
-                <div class="subtitle-container"><span class="subtitle">Martin West</span></div>
-            </div>
-            <div class="reason-set"><span class="stars-container">
-                <div class="reason-set-star-rating">
-                    <div class="small-star star-rating-non-editable-container" aria-label="Средняя оценка: 4,3 из 5">
-                        <div class="current-rating" style="width: 68.29926300048828%;"></div>
-                    </div>
-                </div>
-           <span class="price-container"> <span class="paragraph-end"></span>   <span
-                   class="apps is-price-tag buy-button-container" data-doc-fetch-skip-cache="0"
-                   data-doc-fetch-vouchers="0" data-docid="com.halfbrick.fruitninja"> <div class="pon"
-                                                                                           style="display:none">1
-           </div> <button style="display:none" class="price buy id-track-click"
-                          data-server-cookie="CAIaIgogEh4KGGNvbS5oYWxmYnJpY2suZnJ1aXRuaW5qYRABGAM=" data-uitype="200">
-               <span class="display-price">0,91&nbsp;€</span></button>   <span class="acquired-label"> <span
-                   class="acquired-icon"></span> </span> </span>     </span> </span></div>
-        </div>
-
-
-    </div>
-    <div class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
-        <div class="dapp-content small-dapp clearfix">
-            <div class="cover">
-                <div class="cover-image-container">
-                    <div class="cover-outer-align">
-                        <div class="cover-inner-align"><img alt="EMAIL (Peer-to-peer)" class="cover-image"
-                                                            src="https://placeholdit.imgix.net/~text?txtsize=33&txt=132%C3%97132&w=132&h=132">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="details">
-                <h2><span class="title" href="#">Inbox</span></h2>
-
-                <div class="subtitle-container"><span class="subtitle">Martin West</span></div>
-            </div>
-            <div class="reason-set"><span class="stars-container">
-                <div class="reason-set-star-rating">
-                    <div class="small-star star-rating-non-editable-container" aria-label="Средняя оценка: 4,3 из 5">
-                        <div class="current-rating" style="width: 68.29926300048828%;"></div>
-                    </div>
-                </div>
-           <span class="price-container"> <span class="paragraph-end"></span>   <span
-                   class="apps is-price-tag buy-button-container" data-doc-fetch-skip-cache="0"
-                   data-doc-fetch-vouchers="0" data-docid="com.halfbrick.fruitninja"> <div class="pon"
-                                                                                           style="display:none">1
-           </div> <button style="display:none" class="price buy id-track-click"
-                          data-server-cookie="CAIaIgogEh4KGGNvbS5oYWxmYnJpY2suZnJ1aXRuaW5qYRABGAM=" data-uitype="200">
-               <span class="display-price">0,91&nbsp;€</span></button>   <span class="acquired-label"> <span
-                   class="acquired-icon"></span> </span> </span>     </span> </span></div>
-        </div>
-
-
-    </div>
-    <div class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
-        <div class="dapp-content small-dapp clearfix">
-            <div class="cover">
-                <div class="cover-image-container">
-                    <div class="cover-outer-align">
-                        <div class="cover-inner-align"><img alt="EMAIL (Peer-to-peer)" class="cover-image"
-                                                            src="https://placeholdit.imgix.net/~text?txtsize=33&txt=132%C3%97132&w=132&h=132">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="details">
-                <h2><span class="title" href="#">Inbox</span></h2>
-
-                <div class="subtitle-container"><span class="subtitle">Martin West</span></div>
+                <div class="subtitle-container"><span class="subtitle">Trade btc clear</span></div>
             </div>
             <div class="reason-set"><span class="stars-container">
                 <div class="reason-set-star-rating">

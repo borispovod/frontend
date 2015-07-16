@@ -18,7 +18,7 @@ angular.module('webApp').controller('appController', ['dappsService','$scope', '
             for (var key in $scope.categories) {
                 if ($scope.categories.hasOwnProperty(key)) {
                     if (id== $scope.categories[key])
-                    {return key;}
+                    {return key.toString();}
                 }
             }
         }
@@ -92,6 +92,7 @@ angular.module('webApp').controller('appController', ['dappsService','$scope', '
 
         $scope.toggleSearchDapps = function () {
             $scope.view.bar.searchDapps = !$scope.view.bar.searchDapps;
+            $scope.searchDapp.searchForDappGlobal = '';
         }
 
         $scope.modules = [

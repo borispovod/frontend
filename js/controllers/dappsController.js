@@ -4,10 +4,11 @@ angular.module('webApp').controller('dappsController', ['$scope', 'viewFactory',
     function ($scope, viewFactory, $http, dappsService, $timeout) {
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Dapp Store', previos: null};
-        $scope.view.bar = {showDappsBar: true, searchDapps: false, showCategories:false};
+        $scope.view.bar = {showDappsBar: true, searchDapps: false, showCategories: false};
         $scope.searchDapp = dappsService;
         $scope.searchDapp.searchForDappGlobal = '';
         $scope.searchDapp.inSearch = false;
+        $scope.showPlaceholder = false;
 
         //Search dapps watcher
         var tempsearchForDappID = '',
@@ -37,30 +38,34 @@ angular.module('webApp').controller('dappsController', ['$scope', 'viewFactory',
         $scope.searchedInstalledText = '';
 
         $scope.searchDappText = function () {
-                if ($scope.searchDapp.searchForDappGlobal.trim() == '') {
+            if ($scope.searchDapp.searchForDappGlobal.trim() == '') {
 
-                    $http.get("/api/dapps").then(function (response) {
-                        $scope.dapps = response.data.dapps;
-                        $scope.searchedText = '';
-                    });
-                    $http.get("/api/dapps/installed").then(function (response) {
-                        $scope.installedDapps = response.data.dapps;
-                        $scope.searchedInstalledText = '';
-                    });
+                $http.get("/api/dapps").then(function (response) {
+                    $scope.dapps = response.data.dapps;
+                    $scope.searchedText = '';
+                });
+                $http.get("/api/dapps/installed").then(function (response) {
+                    $scope.installedDapps = response.data.dapps;
+                    $scope.searchedInstalledText = '';
+                    if (!$scope.installedDapps.length) {
+                        $scope.showPlaceholder = true;
+                    }
+                });
 
-                }
-                else {
-                    $http.get("/api/dapps/search?q=" + $scope.searchDapp.searchForDappGlobal).then(function (response) {
-                        $scope.dapps = response.data.dapps;
-                        $scope.searchDapp.inSearch = false;
-                        $scope.searchedText = '(search for "' + $scope.searchDapp.searchForDappGlobal + '")';
-                    });
-
+            }
+            else {
+                $http.get("/api/dapps/search?q=" + $scope.searchDapp.searchForDappGlobal).then(function (response) {
+                    $scope.dapps = response.data.dapps;
+                    $scope.searchDapp.inSearch = false;
+                    $scope.searchedText = '(search for "' + $scope.searchDapp.searchForDappGlobal + '")';
+                });
+                if (!$scope.showPlaceholder) {
                     $http.get("/api/dapps/search?q=" + $scope.searchDapp.searchForDappGlobal + "&installed=1").then(function (response) {
                         $scope.installedDapps = response.data.dapps;
                         $scope.searchedInstalledText = '(search for "' + $scope.searchDapp.searchForDappGlobal + '")';
                     });
                 }
+            }
 
         };
 

@@ -160,13 +160,12 @@
 </div>
 <div class="row clearfix">
     <div ng-repeat="dapp in cat | limitTo: 6" class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
-        <div class="dapp-content small-dapp clearfix cursor"
-          >
+        <div class="dapp-content small-dapp clearfix cursor">
             <div class="cover">
                 <div class="cover-image-container">
                     <div class="cover-outer-align">
-                        <div class="cover-inner-align"><img class="cover-image"
-                                                            src="https://placeholdit.imgix.net/~text?txtsize=33&txt=132%C3%97132&w=132&h=132">
+                        <div class="cover-inner-align">
+                            <img class="cover-image" src="{{ dapp.icon || 'https://placeholdit.imgix.net/~text?txtsize=33&txt=132%C3%97132&w=132&h=132' }}">
                         </div>
                     </div>
                 </div>
@@ -174,7 +173,7 @@
             <div class="details">
                 <h2><span class="title" href="#">{{dapp.name}}</span></h2>
 
-                <div class="subtitle-container"><span class="subtitle">{{dapp.nikname}}</span></div>
+                <div class="subtitle-container"><span class="subtitle">{{dapp.description | cut:true:30:' ...'}}</span></div>
             </div>
             <div class="reason-set"><span class="stars-container">
                 <div class="reason-set-star-rating">
@@ -190,8 +189,8 @@
                           data-server-cookie="CAIaIgogEh4KGGNvbS5oYWxmYnJpY2suZnJ1aXRuaW5qYRABGAM=" data-uitype="200">
                <span class="display-price">0,91&nbsp;€</span></button>   <span class="acquired-label"> <span
                    class="acquired-icon"></span> </span> </span>     </span> </span></div>
-            <a ng-if="dapp.type==1" class="target-link" target-blank ng-href="{{dapp.link}}"></a>
-            <a ng-if="dapp.type!=1" class="target-link" href="#" ui-sref='main.dappentry({"dappId":"{{dapp.transactionId}}"})'></a>
+            <!--<a ng-if="dapp.type==1" class="target-link" target-blank ng-href="{{dapp.link}}"></a>-->
+            <a class="target-link" href="#" ui-sref='main.dappentry({"dappId":"{{dapp.transactionId}}"})'></a>
         </div>
     </div>
 
@@ -216,7 +215,7 @@
                 <div class="cover-image-container">
                     <div class="cover-outer-align">
                         <div class="cover-inner-align"><img class="cover-image"
-                                                            src="https://placeholdit.imgix.net/~text?txtsize=33&txt=132%C3%97132&w=132&h=132">
+                                                            src="{{ dapp.icon || 'https://placeholdit.imgix.net/~text?txtsize=33&txt=132%C3%97132&w=132&h=132' }}">
                         </div>
                     </div>
                 </div>
@@ -224,7 +223,7 @@
             <div class="details">
                 <h2><span class="title" href="#">{{dapp.name}}</span></h2>
 
-                <div class="subtitle-container"><span class="subtitle">{{dapp.nikname}}</span></div>
+                <div class="subtitle-container"><span class="subtitle">{{dapp.description | cut:true:30:' ...'}}</span></div>
             </div>
             <div class="reason-set"><span class="stars-container">
                 <div class="reason-set-star-rating">

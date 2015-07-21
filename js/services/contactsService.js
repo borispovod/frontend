@@ -51,7 +51,7 @@ angular.module('webApp').service('contactsService', function ($http, userService
                 params: queryParams
             })
                 .then(function (response) {
-                    params.total(response.data.following.length);
+                    params.total(response.data.following ? response.data.following.length : 0);
                     var filteredData = $filter('filter')(response.data.following, filter);
                     var transformedData = transformData(response.data.following, filter, params);
                     $defer.resolve(transformedData);
@@ -82,14 +82,14 @@ angular.module('webApp').service('contactsService', function ($http, userService
             var checkBeforSending = transactionService.checkTransaction(contactTransaction, queryParams.secret);
 
             if (checkBeforSending.err) {
-                return cb({data:{success: false, err: checkBeforSending.message}});
+                return cb({data: {success: false, err: checkBeforSending.message}});
             }
 
-                $http.post(peerFactory.getUrl() + "/peer/transactions",
-                    {transaction: contactTransaction},
-                    transactionService.createHeaders()).then(function (response) {
-                        cb(response);
-                    });
+            $http.post(peerFactory.getUrl() + "/peer/transactions",
+                {transaction: contactTransaction},
+                transactionService.createHeaders()).then(function (response) {
+                    cb(response);
+                });
         }
     }
 

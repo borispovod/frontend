@@ -1,5 +1,7 @@
 var app = require('app');  // Module to control application life.
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
+var globalShortcut = require('global-shortcut');
+var dialog = require('dialog');
 
 // Report crashes to our server.
 require('crash-reporter').start();
@@ -19,6 +21,21 @@ app.on('window-all-closed', function () {
 // initialization and ready for creating browser windows.
 app.on('ready', function () {
     // Create the browser window.
+
+    console.log('Your app is ready!');
+    // Register a 'ctrl+c' shortcut listener.
+    var qsCopy = globalShortcut.register('CommandOrControl+c', function () {
+        mainWindow.webContents.copy();
+    })
+    // Register a 'ctrl+v' shortcut listener.
+    var qsPaste = globalShortcut.register('CommandOrControl+v', function () {
+        mainWindow.webContents.paste();
+    })
+    // Register a 'ctrl+x' shortcut listener.
+    var qsCut = globalShortcut.register('CommandOrControl+x', function () {
+        mainWindow.webContents.cut();
+    })
+
     mainWindow = new BrowserWindow({width: 1300, height: 800 , title: 'Crypti',
 
         icon: 'file://' + __dirname + '/coin.png'
@@ -38,4 +55,22 @@ app.on('ready', function () {
         mainWindow = null;
     });
 
+    mainWindow.on('blur', function(){
+        globalShortcut.unregisterAll();
+    });
+
+    mainWindow.on('focus', function () {
+        // Register a 'ctrl+c' shortcut listener.
+        var qsCopy = globalShortcut.register('CommandOrControl+c', function () {
+            mainWindow.webContents.copy();
+        })
+        // Register a 'ctrl+v' shortcut listener.
+        var qsPaste = globalShortcut.register('CommandOrControl+v', function () {
+            mainWindow.webContents.paste();
+        })
+        // Register a 'ctrl+x' shortcut listener.
+        var qsCut = globalShortcut.register('CommandOrControl+x', function () {
+            mainWindow.webContents.cut();
+        })
+    })
 });

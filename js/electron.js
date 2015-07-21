@@ -8,17 +8,26 @@ var menu = new Menu();
 menu.append(new MenuItem({
     label: 'Cut',
     accelerator: 'CommandOrControl+X',
-    selector: 'cut:'
+    selector: 'cut:',
+    click: function () {
+        remote.getCurrentWindow().webContents.cut();
+    }
 }));
 menu.append(new MenuItem({
     label: 'Copy',
     accelerator: 'CommandOrControl+C',
-    selector: 'copy:'
+    selector: 'copy:',
+    click: function () {
+        remote.getCurrentWindow().webContents.copy();
+    }
 }));
 menu.append(new MenuItem({
     label: 'Paste',
     accelerator: 'CommandOrControl+V',
-    selector: 'paste:'
+    selector: 'paste:',
+    click: function () {
+        remote.getCurrentWindow().webContents.paste();
+    }
 }));
 
 

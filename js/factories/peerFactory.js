@@ -4,10 +4,7 @@ angular.module('webApp').factory('peerFactory', ['$http',  '$interval', 'transac
 
     var factory = {
         editing: false,
-        peer: {
-            "ip": "127.0.0.1",
-            "port": 4060
-        },
+        peer: null,
         peerList: [
 			{
 				"ip": "130.211.72.188",

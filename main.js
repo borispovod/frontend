@@ -36,7 +36,6 @@ app.on('ready', function () {
         mainWindow.webContents.cut();
     })
 
-  
     mainWindow = new BrowserWindow({width: 1300, height: 800 , title: 'Crypti',
 
         icon: 'file://' + __dirname + '/coin.png'

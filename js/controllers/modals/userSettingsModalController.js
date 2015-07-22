@@ -78,7 +78,7 @@ angular.module('webApp').controller('userSettingsModalController',
                 transactionService.createHeaders()).then(function (resp) {
                     $scope.sending = !$scope.sending;
                     if (!resp.data.success) {
-                        $scope.error = resp.data.message;
+                        $scope.error = resp.data.error;
                     }
                     else {
                         if ($scope.destroy) {

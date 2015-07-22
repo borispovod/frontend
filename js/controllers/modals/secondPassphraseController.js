@@ -65,7 +65,7 @@ angular.module('webApp').controller('secondPassphraseModalController',
         $http.post(peerFactory.getUrl() + "/peer/transactions", {transaction: transaction}, transactionService.createHeaders()).then(function (resp) {
             $scope.sending = false;
             if (!resp.data.success) {
-                $scope.fromServer = resp.data.message;
+                $scope.fromServer = resp.data.error;
             }
             else {
                 if ($scope.destroy) {

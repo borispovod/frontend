@@ -271,7 +271,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
                     transactionService.createHeaders()).then(function (resp) {
                         $scope.sending = !$scope.sending;
                         if (!resp.data.success) {
-                            $scope.errorMessage = resp.data.message;
+                            $scope.errorMessage = resp.data.error;
                         }
                         else {
                             if ($scope.destroy) {

@@ -34,7 +34,7 @@ angular.module('webApp').service('transactionService', function (userService) {
         if (!userService.balance) {
             return {
                 err: true,
-                message: "Account doesn't has balance"
+                message: "Account doesn't have balance"
             }
         }
 

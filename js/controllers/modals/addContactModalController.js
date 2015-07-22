@@ -10,6 +10,7 @@ angular.module('webApp').controller('addContactModalController', ["$scope", "add
         $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
         $scope.checkSecondPass = false;
         $scope.focus = 'contact';
+        $scope.presendError = false;
 
         $scope.passcheck = function (fromSecondPass) {
             if (fromSecondPass) {
@@ -26,12 +27,43 @@ angular.module('webApp').controller('addContactModalController', ["$scope", "add
                 return;
             }
             if ($scope.rememberedPassword) {
-                $scope.addFolower($scope.rememberedPassword);
+                var isAddress = /^[0-9]+[C|c]$/g;
+                var allowSymbols = /^[a-z0-9!@$&_.]+$/g;
+                if ($scope.contact.trim() == '') {
+                    $scope.errorMessage = 'Empty contact'
+                    $scope.presendError = true;
+                } else {
+                    if (isAddress.test($scope.contact) || allowSymbols.test($scope.contact.toLowerCase())) {
+                        $scope.presendError = false;
+                        $scope.errorMessage = ''
+                        $scope.addFolower($scope.rememberedPassword);
+                    }
+                    else {
+                        $scope.errorMessage = 'Incorrect contact name or address'
+                        $scope.presendError = true;
+                    }
+                }
+
             }
             else {
-                $scope.passmode = !$scope.passmode;
-                $scope.focus = 'secretPhrase';
-                $scope.pass = '';
+                var isAddress = /^[0-9]+[C|c]$/g;
+                var allowSymbols = /^[a-z0-9!@$&_.]+$/g;
+                if ($scope.contact.trim() == '') {
+                    $scope.errorMessage = 'Empty contact'
+                    $scope.presendError = true;
+                } else {
+                    if (isAddress.test($scope.contact) || allowSymbols.test($scope.contact.toLowerCase())) {
+                        $scope.presendError = false;
+                        $scope.errorMessage = ''
+                        $scope.passmode = !$scope.passmode;
+                        $scope.focus = 'secretPhrase';
+                        $scope.pass = '';
+                    }
+                    else {
+                        $scope.errorMessage = 'Incorrect contact name or address'
+                        $scope.presendError = true;
+                    }
+                }
             }
         }
 

@@ -36,6 +36,8 @@ app.on('ready', function () {
         mainWindow.webContents.cut();
     })
 
+    
+
     mainWindow = new BrowserWindow({width: 1300, height: 800 , title: 'Crypti',
 
         icon: 'file://' + __dirname + '/coin.png'
@@ -66,7 +68,7 @@ app.on('ready', function () {
         })
         // Register a 'ctrl+v' shortcut listener.
         var qsPaste = globalShortcut.register('CommandOrControl+v', function () {
-            mainWindow.webContents.paste();
+            mainWindow.webContents.paste()  ;
         })
         // Register a 'ctrl+x' shortcut listener.
         var qsCut = globalShortcut.register('CommandOrControl+x', function () {

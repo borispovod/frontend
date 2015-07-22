@@ -82,7 +82,7 @@ angular.module('webApp').service('contactsService', function ($http, userService
             var checkBeforSending = transactionService.checkTransaction(contactTransaction, queryParams.secret);
 
             if (checkBeforSending.err) {
-                return cb({data: {success: false, err: checkBeforSending.message}});
+                return cb({data: {success: false, error: checkBeforSending.message}});
             }
 
             $http.post(peerFactory.getUrl() + "/peer/transactions",

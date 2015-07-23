@@ -24,14 +24,14 @@
                 <tr ng-repeat="transaction in $data">
                     <td data-title="'Height'" sortable="'b_height'">{{transaction.height}}
                     </td>
-                    <td ng-show="showAllColumns" data-title="'Transaction ID'" class="pointer"><a href="#"
+                    <td class="td-amount" ng-show="showAllColumns" data-title="'Transaction ID'" class="pointer"><a href="#"
                                                                                                   ng-click="transactionInfo(transaction)">{{transaction.id}}</a>
                     </td>
-                    <td data-title="'Sender'" class="pointer" sortable="'t_senderId'"><a href="#"
+                    <td class="td-amount" data-title="'Sender'" class="pointer" sortable="'t_senderId'"><a href="#"
                                                                                          ng-click="userInfo(transaction.senderId)">{{transaction.senderUsername
                         || transaction.senderId}}</a>
                     </td>
-                    <td data-title="'Recipient'" class="pointer" sortable="'t_recipientId'"><a href="#"
+                    <td class="td-amount" data-title="'Recipient'" class="pointer" sortable="'t_recipientId'"><a href="#"
                                                                                                ng-click="userInfo(transaction.recipientId)">{{transaction.recipientUsername
                         || transaction.recipientId}}</a>
                     </td>

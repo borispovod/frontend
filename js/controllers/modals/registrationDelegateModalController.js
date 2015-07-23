@@ -56,7 +56,7 @@ angular.module('webApp').controller('registrationDelegateModalController', ["$sc
                 if ($scope.delegateData.username.trim() == '' && !$scope.username) {
                     $scope.error = 'Empty username'
                 } else {
-                    if (isAddress.test($scope.delegateData.username) || !!$scope.username) {
+                    if (!isAddress.test($scope.delegateData.username) || !!$scope.username) {
                         if (allowSymbols.test($scope.delegateData.username.toLowerCase()) || !!$scope.username) {
                             $scope.error = null;
                             $scope.registrationDelegate($scope.rememberedPassword);
@@ -77,7 +77,7 @@ angular.module('webApp').controller('registrationDelegateModalController', ["$sc
                 if ($scope.delegateData.username.trim() == '' && !$scope.username) {
                     $scope.error = 'Empty username'
                 } else {
-                    if (isAddress.test($scope.delegateData.username) || !!$scope.username) {
+                    if (!isAddress.test($scope.delegateData.username) || !!$scope.username) {
                         if (allowSymbols.test($scope.delegateData.username.toLowerCase()) || !!$scope.username) {
                             $scope.error = null;
                             $scope.focus = 'secretPhrase';

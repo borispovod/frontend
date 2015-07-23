@@ -31,7 +31,7 @@ angular.module('webApp').controller('userSettingsModalController', ["$scope", "$
                 $scope.error = 'Empty username'
                 $scope.presendError = true;
             } else {
-                if (isAddress.test($scope.username)) {
+                if (!isAddress.test($scope.username)) {
                     if (allowSymbols.test($scope.username.toLowerCase())) {
                         $scope.presendError = false;
                         $scope.error = null;
@@ -54,7 +54,7 @@ angular.module('webApp').controller('userSettingsModalController', ["$scope", "$
                 $scope.error = 'Empty username'
                 $scope.presendError = true;
             } else {
-                if (isAddress.test($scope.username)) {
+                if (!isAddress.test($scope.username)) {
                     if (allowSymbols.test($scope.username.toLowerCase())) {
                         $scope.presendError = false;
                         $scope.error = null;

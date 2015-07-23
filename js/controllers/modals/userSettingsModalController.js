@@ -9,7 +9,7 @@ angular.module('webApp').controller('userSettingsModalController', ["$scope", "$
     $scope.presendError = false;
 
     $scope.passcheck = function (fromSecondPass) {
-        $scope.errorMessage = '';
+        $scope.error =  null;
         if (fromSecondPass) {
             $scope.checkSecondPass = false;
             $scope.passmode = $scope.rememberedPassword ? false : true;
@@ -27,22 +27,22 @@ angular.module('webApp').controller('userSettingsModalController', ["$scope", "$
             var isAddress = /^[0-9]+[C|c]$/g;
             var allowSymbols = /^[a-z0-9!@$&_.]+$/g;
             if ($scope.username.trim() == '') {
-                $scope.errorMessage = 'Empty username'
+                $scope.error = 'Empty username'
                 $scope.presendError = true;
             } else {
                 if (isAddress.test($scope.username)) {
                     if (allowSymbols.test($scope.username.toLowerCase())) {
                         $scope.presendError = false;
-                        $scope.errorMessage = ''
+                        $scope.error = null;
                         $scope.saveName($scope.rememberedPassword);
                     }
                     else {
-                        $scope.errorMessage = 'Username can only contain alphanumeric characters with the exception of !@$&_.'
+                        $scope.error = 'Username can only contain alphanumeric characters with the exception of !@$&_.'
                         $scope.presendError = true;
                     }
                 }
                 else {
-                    $scope.errorMessage = 'Username cannot be a potential address.'
+                    $scope.error = 'Username cannot be a potential address.'
                     $scope.presendError = true;
                 }
             }
@@ -50,24 +50,24 @@ angular.module('webApp').controller('userSettingsModalController', ["$scope", "$
         }
         else {
             if ($scope.username.trim() == '') {
-                $scope.errorMessage = 'Empty username'
+                $scope.error = 'Empty username'
                 $scope.presendError = true;
             } else {
                 if (isAddress.test($scope.username)) {
                     if (allowSymbols.test($scope.username.toLowerCase())) {
                         $scope.presendError = false;
-                        $scope.errorMessage = ''
+                        $scope.error = null;
                         $scope.focus = 'passPhrase';
                         $scope.passmode = !$scope.passmode;
                         $scope.pass = '';
                     }
                     else {
-                        $scope.errorMessage = 'Username can only contain alphanumeric characters with the exception of !@$&_.'
+                        $scope.error = 'Username can only contain alphanumeric characters with the exception of !@$&_.'
                         $scope.presendError = true;
                     }
                 }
                 else {
-                    $scope.errorMessage = 'Username cannot be a potential address.'
+                    $scope.error = 'Username cannot be a potential address.'
                     $scope.presendError = true;
                 }
             }

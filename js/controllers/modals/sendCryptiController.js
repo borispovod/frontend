@@ -10,6 +10,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
     $scope.secondPassphrase = userService.secondPassphrase;
     $scope.address = userService.address;
     $scope.focus = $scope.to ? 'amount' : 'to';
+    $scope.presendError = false;
 
     $scope.submit = function () {
         console.log('submited');
@@ -52,12 +53,54 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
             return;
         }
         if ($scope.rememberedPassword) {
-            $scope.sendXCR($scope.rememberedPassword);
+            var isAddress = /^[0-9]+[C|c]$/g;
+            var allowSymbols = /^[a-z0-9!@$&_.]+$/g;
+            if ($scope.to.trim() == '') {
+                $scope.errorMessage = 'Empty recipient'
+                $scope.presendError = true;
+            } else {
+                if (isAddress.test($scope.to) || allowSymbols.test($scope.to.toLowerCase())) {
+                    if ($scope.isCorrectValue($scope.amount)){
+                    $scope.presendError = false;
+                    $scope.errorMessage = ''
+                    $scope.sendXCR($scope.rememberedPassword);}
+                    else {
+                        $scope.presendError = true;
+                    }
+                }
+                else {
+                    $scope.errorMessage = 'Incorrect recipient name or address'
+                    $scope.presendError = true;
+                }
+            }
+
+
         }
         else {
-            $scope.passmode = !$scope.passmode;
-            $scope.focus = 'secretPhrase';
-            $scope.secretPhrase = '';
+
+
+            var isAddress = /^[0-9]+[C|c]$/g;
+            var allowSymbols = /^[a-z0-9!@$&_.]+$/g;
+            if ($scope.to.trim() == '') {
+                $scope.errorMessage = 'Empty recipient'
+                $scope.presendError = true;
+            } else {
+                if (isAddress.test($scope.to) || allowSymbols.test($scope.to.toLowerCase())) {
+                    if ($scope.isCorrectValue($scope.amount)) {
+                    $scope.presendError = false;
+                    $scope.errorMessage = ''
+                    $scope.passmode = !$scope.passmode;
+                    $scope.focus = 'secretPhrase';
+                    $scope.secretPhrase = '';}
+                    else {
+                        $scope.presendError = true;
+                    }
+                }
+                else {
+                    $scope.errorMessage = 'Incorrect recipient name or address'
+                    $scope.presendError = true;
+                }
+            }
         }
     }
 
@@ -213,6 +256,43 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
 
         return parseInt(result);
     }
+
+    $scope.isCorrectValue = function(currency){
+        currency = String(currency);
+
+        var parts = currency.split(".");
+
+        var amount = parts[0];
+
+        //no fractional part
+        if (parts.length == 1) {
+            var fraction = "00000000";
+        } else if (parts.length == 2) {
+            if (parts[1].length <= 8) {
+                var fraction = parts[1];
+            } else {
+                var fraction = parts[1].substring(0, 8);
+            }
+        } else {
+            $scope.errorMessage = "Wrong XCR value";
+            return false;
+        }
+
+        for (var i = fraction.length; i < 8; i++) {
+            fraction += "0";
+        }
+
+        var result = amount + "" + fraction;
+
+        //in case there's a comma or something else in there.. at this point there should only be numbers
+        if (!/^\d+$/.test(result)) {
+            $scope.errorMessage = "Wrong XCR value";
+         return false;
+        }
+
+        return true;
+    }
+
     $scope.clearRecipient = function () {
         $scope.to = '';
     }

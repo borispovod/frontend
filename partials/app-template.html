@@ -124,7 +124,7 @@
                            placeholder="Search for transactions (Transaction ID, Sender address, Recipient address)"
                            ng-model="searchTransactions.searchForTransaction">
                        <span class="input-group-addon spinner-addon">
-                            <div class="preloader-wrapper active" ng-if="searchTransactions.inSearch">
+                            <div class="preloader-wrapper" ng-class="{'active': searchTransactions.inSearch}">
                                 <div class="spinner-layer spinner-blue-only">
                                     <div class="circle-clipper left">
                                         <div class="circle"></div>
@@ -147,7 +147,7 @@
                     <input type="text" class="form-control" placeholder="Search for blocks"
                            ng-model="searchBlocks.searchForBlock">
                          <span class="input-group-addon spinner-addon">
-                            <div class="preloader-wrapper active" ng-if="searchBlocks.inSearch">
+                            <div class="preloader-wrapper" ng-class="{'active': searchBlocks.inSearch}">
                                 <div class="spinner-layer spinner-blue-only">
                                     <div class="circle-clipper left">
                                         <div class="circle"></div>

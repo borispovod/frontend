@@ -7,6 +7,7 @@ angular.module('webApp').controller('userSettingsModalController', ["$scope", "$
     $scope.secondPassphrase = userService.secondPassphrase;
     $scope.focus = 'username';
     $scope.presendError = false;
+    $scope.username = '';
 
     $scope.passcheck = function (fromSecondPass) {
         $scope.error =  null;

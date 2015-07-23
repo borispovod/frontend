@@ -37,6 +37,7 @@ angular.module('webApp').controller('registrationDelegateModalController',
         }
 
         $scope.passcheck = function (fromSecondPass) {
+            $scope.error = null;
             if (fromSecondPass) {
                 $scope.checkSecondPass = false;
                 $scope.passmode = $scope.rememberedPassword ? false : true;
@@ -51,15 +52,52 @@ angular.module('webApp').controller('registrationDelegateModalController',
                 return;
             }
             if ($scope.rememberedPassword) {
+                var isAddress = /^[0-9]+[C|c]$/g;
+                var allowSymbols = /^[a-z0-9!@$&_.]+$/g;
+                if ($scope.delegateData.username.trim() == '' && !$scope.username) {
+                    $scope.error = 'Empty username'
+                } else {
+                    if (!isAddress.test($scope.delegateData.username) || !!$scope.username) {
+                        if (allowSymbols.test($scope.delegateData.username.toLowerCase()) || !!$scope.username) {
+                            $scope.error = null;
+                            $scope.registrationDelegate($scope.rememberedPassword);
+                        }
+                        else {
+                            $scope.error = 'Username can only contain alphanumeric characters with the exception of !@$&_.'
+                        }
+                    }
+                    else {
+                        $scope.error = 'Username cannot be a potential address.'
+                    }
+                }
 
-                $scope.registrationDelegate($scope.rememberedPassword);
             }
             else {
-                $scope.focus = 'secretPhrase';
-                $scope.passmode = !$scope.passmode;
-                $scope.pass = '';
+                var isAddress = /^[0-9]+[C|c]$/g;
+                var allowSymbols = /^[a-z0-9!@$&_.]+$/g;
+                if ($scope.delegateData.username.trim() == '' && !$scope.username) {
+                    $scope.error = 'Empty username'
+                } else {
+                    if (!isAddress.test($scope.delegateData.username) || !!$scope.username) {
+                        if (allowSymbols.test($scope.delegateData.username.toLowerCase()) || !!$scope.username) {
+                            $scope.error = null;
+                            $scope.focus = 'secretPhrase';
+                            $scope.passmode = !$scope.passmode;
+                            $scope.pass = '';
+                        }
+                        else {
+                            $scope.error = 'Username can only contain alphanumeric characters with the exception of !@$&_.'
+                        }
+                    }
+                    else {
+                        $scope.error = 'Username cannot be a potential address.'
+                    }
+                }
+
+
             }
         }
+
 
         $scope.registrationDelegate = function (pass, withSecond) {
             if ($scope.secondPassphrase && !withSecond) {
@@ -74,7 +112,7 @@ angular.module('webApp').controller('registrationDelegateModalController',
             var data = {
                 secret: pass,
                 secondSecret: $scope.secondPhrase,
-                username: $scope.delegateData.username,
+                username: $scope.delegateData.username || $scope.username,
                 publicKey: userService.publicKey
             };
             if ($scope.secondPassphrase) {

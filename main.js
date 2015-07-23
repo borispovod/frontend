@@ -35,6 +35,7 @@ app.on('ready', function () {
     var qsCut = globalShortcut.register('CommandOrControl+x', function () {
         mainWindow.webContents.cut();
     })
+    
 
     mainWindow = new BrowserWindow({width: 1300, height: 800 , title: 'Crypti',
 

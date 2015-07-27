@@ -19,7 +19,7 @@ webApp.config(["ngClipProvider",
     function (ngClipProvider, $locationProvider, $stateProvider, $urlRouterProvider) {
         ngClipProvider.setPath("../node_modules/zeroclipboard/dist/ZeroClipboard.swf");
 
-      //  $locationProvider.html5Mode(true);
+        //  $locationProvider.html5Mode(true);
         $urlRouterProvider.otherwise("/");
         // Now set up the states
         $stateProvider

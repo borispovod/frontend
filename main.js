@@ -20,7 +20,11 @@ app.on('window-all-closed', function () {
 // This method will be called when Electron has done everything
 // initialization and ready for creating browser windows.
 app.on('ready', function () {
-    // Create the browser window.
+
+
+    process.on('uncaughtException', function (err) {
+        console.log(err);
+    })
 
     console.log('Your app is ready!');
     // Register a 'ctrl+c' shortcut listener.
@@ -35,8 +39,9 @@ app.on('ready', function () {
     var qsCut = globalShortcut.register('CommandOrControl+x', function () {
         mainWindow.webContents.cut();
     })
-    
 
+
+    // Create the browser window.
     mainWindow = new BrowserWindow({width: 1300, height: 800 , title: 'Crypti',
 
         icon: 'file://' + __dirname + '/coin.png'

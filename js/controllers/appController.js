@@ -4,9 +4,8 @@ var ip = require('ip');
 var ipRegex = require('ip-regex');
 
 
-
-angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal', 'userInfo', 'transactionsService', 'secondPassphraseModal', 'peerFactory', 'dbFactory', "serverSocket",
-    function ($rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal, userInfo, transactionsService, secondPassphraseModal, peerFactory, dbFactory, serverSocket) {
+angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal', 'userInfo', 'transactionsService', 'secondPassphraseModal', 'peerFactory', 'dbFactory', "serverSocket", 'transactionService',
+    function ($rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal, userInfo, transactionsService, secondPassphraseModal, peerFactory, dbFactory, serverSocket, transactionService) {
 
         $scope.inError = false;
 
@@ -21,20 +20,59 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
             }, 10000);
         });
 
-        $scope.copyToClip = function(text){
+        $scope.copyToClip = function (text) {
             clipboard.writeText(text);
         }
 
-        $scope.checkPeer = function () {
-            peerFactory.checkPeer(peerFactory.getUrl(), function (resp) {
-                if (resp.status != 200) {
-                    if ($scope.inError) {
-                        var setBestPeer = function () {
+
+
+        $scope.getPeers = function getPeers(cb, index) {
+            index = index || 0;
+            var peer = peerFactory.peerList[index]
+            if (!!peer) {
+                peerFactory.setPeer(peer.ip, peer.port);
+                dbFactory.add({ip: ip.toLong(peer.ip).toString(), port: peer.port});
+                $http.get("http://" + peer.ip + ':' + peer.port + "/peer/list", transactionService.createHeaders(10000))
+                    .then(function (resp) {
+                        //console.log(resp);
+                        if (!!resp.data && !!resp.data.peers) {
+                            resp.data.peers.forEach(function (peer) {
+                                if (peer.sharePort) {
+                                    dbFactory.add(peer);
+                                }
+                            });
+                        }
+                        getPeers(cb, ++index);
+                    }, function (reject) {
+                        getPeers(cb, ++index);
+                    });
+            }
+            else {
+                cb();
+            }
+
+
+        }
+
+        $scope.setBestPeer = function(){
+                dbFactory.emptydb(
+                    function (empty) {
+                        if (empty) {
+                            console.log('empty peer list');
+                            console.log('no peers to search');
+                            console.log('new turn for peers in config');
+                            $scope.getPeers(function () {
+                                $scope.setBestPeer();
+                            });
+                        }
+                        else {
                             dbFactory.getRandom(10, function () {
                                 var key = (Math.floor((Math.random() * 10) + 1) - 1);
+                                if (!!dbFactory.randomList[key]){
                                 peerFactory.checkPeer(dbFactory.randomList[key].key.url, function (resp) {
                                     if (resp.status == 200) {
-                                        peerFactory.setPeer(ip.fromLong(dbFactory.randomList[key].key._id), dbFactory.randomList[key].key.port);
+                                        peerFactory.setPeer(ip.fromLong(dbFactory.randomList[key].key.ip), dbFactory.randomList[key].key.port);
+                                        console.log('newPeer', ip.fromLong(dbFactory.randomList[key].key.ip) + ':' + dbFactory.randomList[key].key.port);
                                         $scope.peerexists = true;
                                         $('#soketIoScript').remove();
                                         (function (d, script) {
@@ -53,12 +91,24 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                                     }
                                     else {
                                         dbFactory.delete(dbFactory.randomList[key].key._id, function () {
-                                            setBestPeer();
+                                            $scope.setBestPeer();
                                         });
                                     }
-                                })
+                                })}
+                                else {
+                                    $scope.setBestPeer();
+                                }
                             });
-                        }();
+                        }
+                    }
+                );
+        };
+
+        $scope.checkPeer = function () {
+            peerFactory.checkPeer(peerFactory.getUrl(), function (resp) {
+                if (resp.status != 200) {
+                    if ($scope.inError) {
+                            $scope.setBestPeer();
                     }
                     else {
                         $scope.inError = true;

@@ -10,47 +10,71 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
         $scope.rememberPassword = true;
         $scope.errorMessage = "";
 
-        $scope.getPeers = function (cb) {
-            peerFactory.peerList.forEach(function (peer) {
+        $scope.getPeers = function getPeers(cb, index) {
+            index = index || 0;
+            var peer = peerFactory.peerList[index]
+            if (!!peer) {
                 peerFactory.setPeer(peer.ip, peer.port);
                 dbFactory.add({ip: ip.toLong(peer.ip).toString(), port: peer.port});
-                $http.get("http://" + peer.ip + ':' + peer.port + "/peer/list", transactionService.createHeaders())
+                $http.get("http://" + peer.ip + ':' + peer.port + "/peer/list", transactionService.createHeaders(10000))
                     .then(function (resp) {
                         //console.log(resp);
-                        resp.data.peers.forEach(function (peer) {
-                            if (peer.sharePort) {
-                                dbFactory.add(peer);
-                            }
-                        });
-                        cb();
+                        if (!!resp.data && !!resp.data.peers) {
+                            resp.data.peers.forEach(function (peer) {
+                                if (peer.sharePort) {
+                                    dbFactory.add(peer);
+                                }
+                            });
+                        }
+                        getPeers(cb, ++index);
+                    }, function (reject) {
+                        getPeers(cb, ++index);
                     });
-            });
+            }
+            else {
+                cb();
+            }
+
+
         }
 
-        $scope.setBestPeer = function () {
+        $scope.setBestPeer = function (cb) {
             dbFactory.emptydb(function (empty) {
                 if (empty) {
                     console.log('empty peer list');
+                    console.log('no peers to search');
+                    console.log('new turn for peers in config');
+                    $scope.getPeers(function () {
+                        $scope.setBestPeer(cb);
+                    });
                 }
                 else {
                     dbFactory.getRandom(10, function () {
                         var key = (Math.floor((Math.random() * 10) + 1) - 1);
                         // console.log(dbFactory.randomList);
-                        peerFactory.checkPeer(dbFactory.randomList[key].key.url, function (resp) {
-                            if (resp.status == 200) {
-                                peerFactory.setPeer(ip.fromLong(dbFactory.randomList[key].key._id), dbFactory.randomList[key].key.port);
-                                console.log('newPeer', ip.fromLong(dbFactory.randomList[key].key._id) + ':' + dbFactory.randomList[key].key.port);
-                                $scope.peerexists = true;
-                                stBlurredDialog.close();
-                            }
-                            else {
-                                console.log('errorPeer', ip.fromLong(dbFactory.randomList[key].key._id) + ':' + dbFactory.randomList[key].key.port);
-                                dbFactory.delete(dbFactory.randomList[key].key._id, function () {
-                                    $scope.setBestPeer();
-                                });
-                            }
+                        if (!!dbFactory.randomList[key]) {
+                            peerFactory.checkPeer(dbFactory.randomList[key].key.url, function (resp) {
+                                if (resp.status == 200) {
+                                    peerFactory.setPeer(ip.fromLong(dbFactory.randomList[key].key.ip), dbFactory.randomList[key].key.port);
+                                    console.log('newPeer', ip.fromLong(dbFactory.randomList[key].key.ip) + ':' + dbFactory.randomList[key].key.port);
+                                    $scope.peerexists = true;
+                                    if (!!cb){
+                                        cb();
+                                    }
+                                    stBlurredDialog.close();
+                                }
+                                else {
+                                    console.log('errorPeer', ip.fromLong(dbFactory.randomList[key].key.ip) + ':' + dbFactory.randomList[key].key.port);
+                                    dbFactory.delete(dbFactory.randomList[key].key._id, function () {
+                                        $scope.setBestPeer(cb);
+                                    });
+                                }
 
-                        })
+                            })
+                        }
+                        else {
+                            $scope.setBestPeer(cb);
+                        }
                     });
                 }
             });
@@ -112,6 +136,10 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
                         d.getElementsByTagName('head')[0].appendChild(script);
                     }(document));
 
+                }, function(reasone){
+                    $scope.getPeers(function () {
+                        $scope.setBestPeer(function(){$scope.login(pass, remember)});
+                    });
                 });
 
 
@@ -124,7 +152,7 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
                         peer.key.url,
                         function (resp) {
                             if (resp.status == 200) {
-                                console.log('workingPeer', ip.fromLong(peer.key._id));
+                                console.log('workingPeer', ip.fromLong(peer.key.ip) + ':' + peer.key.port);
                                 resp.data.peers.forEach(function (peer) {
                                     if (peer.sharePort) {
                                         dbFactory.add(peer);
@@ -133,7 +161,7 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
                                 dbFactory.updatepeer(peer);
                             }
                             else {
-                                console.log('errorPeer', ip.fromLong(peer.key._id));
+                                console.log('errorPeer', ip.fromLong(peer.key.ip) + ':' + peer.key.port);
                                 dbFactory.delete(peer.key._id,
                                     function () {
 
@@ -146,12 +174,12 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
         }, 1000 * 60 * 1);
 
         dbFactory.createdb();
-
+       // dbFactory.destroydb();
         if (!peerFactory.peer) {
             stBlurredDialog.open('partials/modals/blurredModal.html', {err: false});
             dbFactory.emptydb(
                 function (empty) {
-                    if (empty) {
+                    if (true) {
                         $scope.getPeers(function () {
                             $scope.setBestPeer();
                         });

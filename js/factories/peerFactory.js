@@ -20,7 +20,7 @@ angular.module('webApp').factory('peerFactory', ['$http',  '$interval', 'transac
             }
         ],
         checkPeer: function (url, cb, timeout) {
-            $http.get(url + "/peer/list", transactionService.createHeaders(timeout))
+            $http.get(url + "/peer/list", transactionService.createHeaders(10000))
                 .then(function (resp) {
                     cb(resp);
                 }, function (err) {
@@ -41,3 +41,4 @@ angular.module('webApp').factory('peerFactory', ['$http',  '$interval', 'transac
     return factory;
 
 }]);
+

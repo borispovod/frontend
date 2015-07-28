@@ -34,7 +34,9 @@ angular.module('webApp').factory('peerFactory', ['$http',  '$interval', 'transac
             };
         },
         getUrl: function () {
-            return "http://" + this.peer.ip + ":" + this.peer.port + "";
+            if (this.peer){
+            return "http://" + this.peer.ip + ":" + this.peer.port + "";}
+            return "";
         }
     }
 

@@ -130,7 +130,7 @@ angular.module('webApp').factory('dbFactory', function (peerFactory) {
                         return err;
                     }
                     response.rows.forEach(function (peer) {
-                        if (peer.doc._id != 'customPeer' && peer.doc._id != 'bestPeer' && doc._id != "ipVersion") {
+                        if (peer.doc._id != 'customPeer' && peer.doc._id != 'bestPeer' && peer.doc._id != "ipVersion") {
                             factory.db.get(peer.doc._id, function (err, doc) {
                                 if (err) {
                                     return err;

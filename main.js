@@ -40,6 +40,11 @@ app.on('ready', function () {
         mainWindow.webContents.cut();
     })
 
+    // Register a 'ctrl+x' shortcut listener.
+    var qsCute = globalShortcut.register('CommandOrControl+i+0', function () {
+        mainWindow.openDevTools();
+    })
+
     // Create the browser window.
     mainWindow = new BrowserWindow({width: 1300, height: 800 , title: 'Crypti',
 

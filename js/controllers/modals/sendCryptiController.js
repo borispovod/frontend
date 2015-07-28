@@ -98,7 +98,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
                     $scope.errorMessage = 'Empty recipient'
                     $scope.presendError = true;
                 } else {
-                    if (isAddress.test($scope.to) || allowSymbols.test($scope.to.toLowerCase())) {
+                    if (correctAddress || allowSymbols.test($scope.to.toLowerCase())) {
                         if ($scope.isCorrectValue($scope.amount)) {
                             $http.get(peerFactory.getUrl() + "/api/accounts/username/get?username=" + $scope.to).then(function (response) {
                                 if (response.data.success || correctAddress) {
@@ -135,7 +135,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
                     $scope.errorMessage = 'Empty recipient'
                     $scope.presendError = true;
                 } else {
-                    if (isAddress.test($scope.to) || allowSymbols.test($scope.to.toLowerCase())) {
+                    if (correctAddress || allowSymbols.test($scope.to.toLowerCase())) {
                         if ($scope.isCorrectValue($scope.amount)) {
                             $http.get(peerFactory.getUrl() + "/api/accounts/username/get?username=" + $scope.to).then(function (response) {
                                 if (response.data.success || correctAddress) {

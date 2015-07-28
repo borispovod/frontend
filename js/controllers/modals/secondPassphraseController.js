@@ -51,9 +51,13 @@ angular.module('webApp').controller('secondPassphraseModalController',
             $scope.fromServer = 'Password and Confirm Password don\'t match';
             return;
         }
+        if ((($scope.repeatSecretPhrase ? $scope.repeatSecretPhrase.trim() : '') == '') || (($scope.newSecretPhrase ? $scope.newSecretPhrase.trim() : '') == '')) {
+            $scope.fromServer = 'Missing Password or Confirm Password';
+            return;
+        }
 
         var transaction = crypti.signature.createSignature(pass, $scope.newSecretPhrase);
-        var checkBeforSending = transactionService.checkTransaction(transaction,pass);
+        var checkBeforSending = transactionService.checkTransaction(transaction, pass);
 
         if (checkBeforSending.err) {
             $scope.fromServer = checkBeforSending.message;

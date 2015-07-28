@@ -110,8 +110,8 @@ angular.module('webApp').controller('votedDelegatesController', ['$scope', '$roo
                     $scope.loading = false;
                     $timeout(function () {
                         $scope.unconfirmedTransactions.getList();
-                    }, 1000);
-                });
+                    },1);
+                }, $scope.myVotes);
             }
         });
 

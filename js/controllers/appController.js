@@ -427,6 +427,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
             $http.get(peerFactory.getUrl() + "/api/accounts/delegates/", {params: {address: userService.address}})
                 .then(function (response) {
                     $scope.myVotesCount = response.data.delegates ? response.data.delegates.length : 0;
+                    $scope.myVotes = response.data.delegates;
                 });
         }
 

@@ -90,32 +90,15 @@ angular.module('webApp').service('delegateService', function ($http, $filter, pe
                 }
             }
         },
-        getMyDelegates: function ($defer, params, filter, address, cb) {
-            if (!this.gettingVoted) {
-                this.gettingVoted = !this.gettingVoted;
-                if (delegates.cachedVotedDelegates.data.length > 0 && new Date() - delegates.cachedVotedDelegates.time < 1000 * 10) {
-                    var filteredData = filterData(delegates.cachedVotedDelegates.data, filter);
-                    var transformedData = sliceData(orderData(filteredData, params), params);
-                    params.total(filteredData.length);
-                    this.gettingVoted = !this.gettingVoted;
-                    $defer.resolve(transformedData);
-                    cb();
-                }
-                else {
-                    $http.get(peerFactory.getUrl() +"/api/accounts/delegates/", {params: {address: address}})
-                        .then(function (response) {
-                            angular.copy(response.data.delegates ? response.data.delegates : [], delegates.cachedVotedDelegates.data);
+        getMyDelegates: function ($defer, params, filter, address, cb, table) {
+        angular.copy(table ? table : [], delegates.cachedVotedDelegates.data);
                             delegates.cachedVotedDelegates.time = new Date();
-                            params.total(response.data.delegates ? response.data.delegates.length : 0);
+                            params.total(table ? table.length : 0);
                             var filteredData = $filter('filter')(delegates.cachedVotedDelegates.data, filter);
                             var transformedData = transformData(delegates.cachedVotedDelegates.data, filter, params);
                             delegates.gettingVoted = !delegates.gettingVoted;
                             $defer.resolve(transformedData);
                             cb();
-                        });
-
-                }
-            }
         },
         getDelegate: function (publicKey, cb) {
             $http.get(peerFactory.getUrl() +"/api/delegates/get/", {params: {publicKey: publicKey}})

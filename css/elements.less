@@ -562,6 +562,7 @@ a {
   }
   &.open {
     & > .dropdown-menu {
+      z-index: 1000;
       opacity: 1;
       display: block;
       max-height: 200px;
@@ -578,7 +579,7 @@ a {
     -moz-transition: max-height 0.2s;
     transition: 0.5s;
     position: absolute;
-    z-index: 1000;
+    z-index: -1;
     display: block;
     float: left;
     padding: 15px 0;
@@ -654,7 +655,7 @@ a {
     -moz-transition: max-height 0.2s;
     transition: 0.5s;
     position: absolute;
-    z-index: 1000;
+    z-index: -1;
     display: block;
     float: left;
     padding: 15px 0;
@@ -688,6 +689,7 @@ a {
   &.open {
     background-color: rgba(0, 0, 0, .12);
     & > .dropdown-menu {
+      z-index: 1000;
       opacity: 1;
       display: block;
       max-height: 200px;
@@ -725,7 +727,7 @@ a {
     -moz-transition: max-height 0.2s;
     transition: 0.5s;
     position: absolute;
-    z-index: 1000;
+    z-index: -1;
     display: block;
     float: left;
     padding: 15px 20px;
@@ -762,6 +764,7 @@ a {
   &.open {
     background-color: rgba(0, 0, 0, .12);
     & > .dropdown-menu {
+      z-index: 1000;
       opacity: 1;
       display: block;
       max-height: 200px;

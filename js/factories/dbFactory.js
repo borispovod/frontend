@@ -5,9 +5,9 @@ var ip = require('ip');
 angular.module('webApp').factory('dbFactory', function (peerFactory) {
     var factory = {};
     factory.randomList = [];
-    factory.createdb = function () {
-        this.db = new LevelPouchDB('cryptidb', {adapter: 'websql'});
 
+    factory.createdb = function (cb) {
+        this.db = new LevelPouchDB('cryptidb', {adapter: 'websql'});
     };
 
     factory.compact = function (cb) {
@@ -20,7 +20,7 @@ angular.module('webApp').factory('dbFactory', function (peerFactory) {
 
     factory.emptydb = function (cb) {
         this.db.query(function (doc, emit) {
-            if (doc._id != 'bestPeer' && doc._id != 'customPeer') {
+            if (doc._id != 'bestPeer' && doc._id != 'customPeer' && doc._id != "ipVersion") {
                 emit(doc);
             }
         }, function (err, results) {
@@ -42,7 +42,7 @@ angular.module('webApp').factory('dbFactory', function (peerFactory) {
                 var key = (Math.floor((Math.random() * 10) + 1) - 1).toString();
 
                 factory.db.query(function (doc, emit) {
-                    if (doc._id.indexOf(key) != -1 && doc._id != 'bestPeer' && doc._id != 'customPeer') {
+                    if (doc._id.indexOf(key) != -1 && doc._id != 'bestPeer' && doc._id != "ipVersion" && doc._id != 'customPeer') {
                         emit(doc);
                     }
                 }, {limit: count}, function (err, results) {
@@ -97,8 +97,7 @@ angular.module('webApp').factory('dbFactory', function (peerFactory) {
             }
             cb(true);
         })
-    }
-    ;
+    };
 
     factory.getCustom = function (cb) {
         this.db.query(function (doc, emit) {
@@ -116,7 +115,7 @@ angular.module('webApp').factory('dbFactory', function (peerFactory) {
 
     factory.updatedb = function (cb) {
         this.db.query(function (doc, emit) {
-            if (doc.needtocheck && doc._id != 'bestPeer' && doc._id != 'customPeer') {
+            if (doc.needtocheck && doc._id != 'bestPeer' && doc._id != 'customPeer' && doc._id != "ipVersion") {
                 emit(doc);
             }
         }, {limit: 2}, function (err, results) {
@@ -131,7 +130,7 @@ angular.module('webApp').factory('dbFactory', function (peerFactory) {
                         return err;
                     }
                     response.rows.forEach(function (peer) {
-                        if (peer.doc._id != 'customPeer' && peer.doc._id != 'bestPeer') {
+                        if (peer.doc._id != 'customPeer' && peer.doc._id != 'bestPeer' && doc._id != "ipVersion") {
                             factory.db.get(peer.doc._id, function (err, doc) {
                                 if (err) {
                                     return err;
@@ -162,7 +161,7 @@ angular.module('webApp').factory('dbFactory', function (peerFactory) {
 
     factory.add = function (peer) {
         this.db.put({
-            _id: peer.ip+''+ peer.port,
+            _id: peer.ip + ''+ peer.port,
             port: peer.port,
             ip: peer.ip,
             url: "http://" + ip.fromLong(peer.ip) + ":" + peer.port + "",
@@ -170,7 +169,23 @@ angular.module('webApp').factory('dbFactory', function (peerFactory) {
             custom: false
         }, function (err, response) {
             if (err) {
-                //return console.log(err);
+                factory.db.get(peer.ip + '' + peer.port, function (err, doc) {
+                    if (err) {
+                        return err;
+                    }
+                    factory.db.put({
+                        ip: peer.ip,
+                        port: peer.port,
+                        url: "http://" + ip.fromLong(peer.ip) + ":" + peer.port + "",
+                        needtocheck: false,
+                        custom: false
+                    }, peer.ip + '' + peer.port, doc._rev, function (err, response) {
+                        if (err) {
+                            return (err);
+                        }
+                        console.log('updated ' + "http://" + ip.fromLong(peer.ip) + ":" + peer.port);
+                    });
+                });
             }
             // console.log(response);
         })
@@ -229,6 +244,7 @@ angular.module('webApp').factory('dbFactory', function (peerFactory) {
                 return err;
             }
             factory.db.put({
+                ip: peer.key.ip,
                 port: peer.key.port,
                 url: "http://" + ip.fromLong(peer.key.ip) + ":" + peer.key.port + "",
                 needtocheck: false,
@@ -263,17 +279,35 @@ angular.module('webApp').factory('dbFactory', function (peerFactory) {
         });
     };
 
-    factory.destroydb = function () {
-        this.db.destroy(function (error) {
-            if (error) {
-                return (error);
-            } else {
+    factory.ipVersion = function(cb){
+        factory.db.put({
+            _id: "ipVersion"
+        }, function (err, response) {
+            if (err) {
 
             }
-        });
+            cb();
+        })
     }
 
+    factory.destroydb = function (cb) {
+        this.db.get("ipVersion", function (err, doc) {
+            if (err) {
+                factory.db.destroy(function (error) {
+                    if (error) {
+                        return (error);
+                    } else {
+                        console.log('destroyed DB');
+cb();
+                    }
+                });
+            }
+            else {
+                cb();
+            }
+        });
 
+    }
     return factory;
 })
 ;

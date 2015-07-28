@@ -40,7 +40,6 @@ app.on('ready', function () {
         mainWindow.webContents.cut();
     })
 
-
     // Create the browser window.
     mainWindow = new BrowserWindow({width: 1300, height: 800 , title: 'Crypti',
 

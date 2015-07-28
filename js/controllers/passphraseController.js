@@ -2,8 +2,8 @@ require('angular');
 var ip = require('ip');
 var ipRegex = require('ip-regex');
 
-angular.module('webApp').controller('passphraseController', ['$scope', '$rootScope', '$http', "$state", "userService", "newUser", "peerFactory", "dbFactory", "$interval", "stBlurredDialog", "transactionService",
-    function ($rootScope, $scope, $http, $state, userService, newUser, peerFactory, dbFactory, $interval, stBlurredDialog, transactionService) {
+angular.module('webApp').controller('passphraseController', ['$scope', '$rootScope', '$http', "$state", "userService", "newUser", "peerFactory", "dbFactory", "$interval", "stBlurredDialog", "transactionService", "$timeout",
+    function ($rootScope, $scope, $http, $state, userService, newUser, peerFactory, dbFactory, $interval, stBlurredDialog, transactionService, $timeout) {
         userService.setData();
         userService.rememberPassword = false;
         userService.rememberedPassword = '';
@@ -174,24 +174,31 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
         }, 1000 * 60 * 1);
 
         dbFactory.createdb();
-       // dbFactory.destroydb();
-        if (!peerFactory.peer) {
-            stBlurredDialog.open('partials/modals/blurredModal.html', {err: false});
-            dbFactory.emptydb(
-                function (empty) {
-                    if (true) {
-                        $scope.getPeers(function () {
-                            $scope.setBestPeer();
-                        });
+        $timeout(function () {
+            dbFactory.destroydb(function () {
+                dbFactory.createdb();
+                dbFactory.ipVersion(function(){
+                    if (!peerFactory.peer) {
+                        stBlurredDialog.open('partials/modals/blurredModal.html', {err: false});
+                        dbFactory.emptydb(
+                            function (empty) {
+                                if (true) {
+                                    $scope.getPeers(function () {
+                                        $scope.setBestPeer();
+                                    });
+                                }
+                                else {
+                                    $scope.setBestPeer();
+                                }
+                            }
+                        );
                     }
                     else {
-                        $scope.setBestPeer();
-                    }
-                }
-            );
-        }
-        else {
-            $scope.peerexists = true;
-        }
+                        $scope.peerexists = true;
+                    }});
 
-    }]);
+
+            });
+        }, 1);
+
+         }]);

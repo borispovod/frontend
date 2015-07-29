@@ -164,12 +164,20 @@ angular.module('webApp').controller('appController', ['dappsService','$scope', '
                     $scope.secondPassphrase = userService.secondPassphrase;
                     $scope.unconfirmedPassphrase = userService.unconfirmedPassphrase;
                     $scope.delegateInRegistration = userService.delegateInRegistration;
-                    $scope.getForging();
-                    $scope.getDelegate();
-                    $scope.getMyVotesCount();
-                    $scope.getContacts();
-                    $scope.getVersion();
-                    $scope.getCategories();
+                    if ($state.current.name == 'main.dashboard') {
+                        $scope.getForging();
+                        $scope.getDelegate();
+                        $scope.getContacts();
+                        $scope.getVersion();
+                    }
+                    if ($state.current.name == 'main.pending' || $state.current.name == 'main.contacts') {
+                        $scope.getContacts();
+                    }
+                    if ($state.current.name == 'main.forging' || $state.current.name == 'main.votes' || $state.current.name == 'main.delegates') {
+                        $scope.getForging();
+                        $scope.getDelegate();
+                        $scope.getMyVotesCount();
+                    }
 
                 });
         };
@@ -334,6 +342,7 @@ angular.module('webApp').controller('appController', ['dappsService','$scope', '
             $http.get("/api/accounts/delegates/", {params: {address: userService.address}})
                 .then(function (response) {
                     $scope.myVotesCount = response.data.delegates ? response.data.delegates.length : 0;
+
                 });
         }
 
@@ -367,29 +376,40 @@ angular.module('webApp').controller('appController', ['dappsService','$scope', '
 
         $scope.$on('socket:transactions/change', function (ev, data) {
             $scope.getAppData();
-            $scope.updateViews([$state.current.name]);
+            $scope.updateViews([
+                'main.transactions'
+            ]);
         });
         $scope.$on('socket:blocks/change', function (ev, data) {
             console.log('new blocks ' + new Date());
             $scope.getAppData();
-            $scope.updateViews([$state.current.name]);
+            $scope.updateViews([
+                'main.blockchain'
+            ]);
         });
         $scope.$on('socket:delegates/change', function (ev, data) {
             $scope.getAppData();
-            $scope.updateViews([$state.current.name]);
+            $scope.updateViews([
+                'main.delegates',
+                'main.votes',
+                'main.forging'
+            ]);
         });
         $scope.$on('socket:contacts/change', function (ev, data) {
             $scope.getAppData();
-            $scope.updateViews([$state.current.name]);
+            $scope.updateViews([
+                'main.contacts'
+            ]);
         });
         $scope.$on('socket:followers/change', function (ev, data) {
             $scope.getAppData();
-            $scope.updateViews([$state.current.name]);
+            $scope.updateViews([
+                'main.pending'
+            ]);
         });
 
         $window.onfocus = function () {
             $scope.getAppData();
-            $scope.updateViews([$state.current.name]);
         }
 
         $scope.updateViews = function (views) {

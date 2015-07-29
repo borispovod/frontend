@@ -5,6 +5,7 @@ angular.module('webApp').factory('peerFactory', ['$http',  '$interval', 'transac
     var factory = {
         editing: false,
         peer: null,
+
         peerList: [
 			{
 				"ip": "130.211.72.188",
@@ -32,6 +33,9 @@ angular.module('webApp').factory('peerFactory', ['$http',  '$interval', 'transac
                 ip: ip,
                 port: port
             };
+        },
+        getUsernameUrl: function() {
+            return "";
         },
         getUrl: function () {
             if (this.peer){

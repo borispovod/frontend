@@ -25,7 +25,6 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         }
 
 
-
         $scope.getPeers = function getPeers(cb, index) {
             index = index || 0;
             var peer = peerFactory.peerList[index]
@@ -54,21 +53,21 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
 
         }
 
-        $scope.setBestPeer = function(){
-                dbFactory.emptydb(
-                    function (empty) {
-                        if (empty) {
-                            console.log('empty peer list');
-                            console.log('no peers to search');
-                            console.log('new turn for peers in config');
-                            $scope.getPeers(function () {
-                                $scope.setBestPeer();
-                            });
-                        }
-                        else {
-                            dbFactory.getRandom(10, function () {
-                                var key = (Math.floor((Math.random() * 10) + 1) - 1);
-                                if (!!dbFactory.randomList[key]){
+        $scope.setBestPeer = function () {
+            dbFactory.emptydb(
+                function (empty) {
+                    if (empty) {
+                        console.log('empty peer list');
+                        console.log('no peers to search');
+                        console.log('new turn for peers in config');
+                        $scope.getPeers(function () {
+                            $scope.setBestPeer();
+                        });
+                    }
+                    else {
+                        dbFactory.getRandom(10, function () {
+                            var key = (Math.floor((Math.random() * 10) + 1) - 1);
+                            if (!!dbFactory.randomList[key]) {
                                 peerFactory.checkPeer(dbFactory.randomList[key].key.url, function (resp) {
                                     if (resp.status == 200) {
                                         peerFactory.setPeer(ip.fromLong(dbFactory.randomList[key].key.ip), dbFactory.randomList[key].key.port);
@@ -94,21 +93,22 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                                             $scope.setBestPeer();
                                         });
                                     }
-                                })}
-                                else {
-                                    $scope.setBestPeer();
-                                }
-                            });
-                        }
+                                })
+                            }
+                            else {
+                                $scope.setBestPeer();
+                            }
+                        });
                     }
-                );
+                }
+            );
         };
 
         $scope.checkPeer = function () {
             peerFactory.checkPeer(peerFactory.getUrl(), function (resp) {
                 if (resp.status != 200) {
                     if ($scope.inError) {
-                            $scope.setBestPeer();
+                        $scope.setBestPeer();
                     }
                     else {
                         $scope.inError = true;
@@ -255,11 +255,23 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                     $scope.secondPassphrase = userService.secondPassphrase;
                     $scope.unconfirmedPassphrase = userService.unconfirmedPassphrase;
                     $scope.delegateInRegistration = userService.delegateInRegistration;
-                    $scope.getForging();
-                    $scope.getDelegate();
-                    $scope.getMyVotesCount();
-                    $scope.getContacts();
-                    $scope.getVersion();
+                    if ($state.current.name=='main.dashboard') {
+                        $scope.getForging();
+                        $scope.getDelegate();
+                        $scope.getContacts();
+                        $scope.getVersion();
+                    }
+                    if ($state.current.name == 'main.pending' || $state.current.name == 'main.contacts') {
+                        $scope.getContacts();
+                    }
+                    if ($state.current.name == 'main.forging' || $state.current.name == 'main.votes' || $state.current.name == 'main.delegates') {
+                        $scope.getForging();
+                        $scope.getDelegate();
+                        $scope.getMyVotesCount();
+                    }
+                    else {
+
+                    }
                     if (!$scope.$$phase) {
                         $scope.$apply();
                     }
@@ -461,29 +473,42 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
 
         $scope.$on('socket:transactions/change', function (ev, data) {
             $scope.getAppData();
-            $scope.updateViews([$state.current.name]);
+            $scope.updateViews([
+                'main.transactions'
+            ]);
         });
         $scope.$on('socket:blocks/change', function (ev, data) {
+            console.log('new blocks ' + new Date());
             $scope.getAppData();
-            $scope.updateViews([$state.current.name]);
+            $scope.updateViews([
+                'main.blockchain'
+            ]);
         });
         $scope.$on('socket:delegates/change', function (ev, data) {
             $scope.getAppData();
-            $scope.updateViews([$state.current.name]);
+            $scope.updateViews([
+                'main.delegates',
+                'main.votes',
+                'main.forging'
+            ]);
         });
         $scope.$on('socket:contacts/change', function (ev, data) {
             $scope.getAppData();
-            $scope.updateViews([$state.current.name]);
+            $scope.updateViews([
+                'main.contacts'
+            ]);
         });
         $scope.$on('socket:followers/change', function (ev, data) {
             $scope.getAppData();
-            $scope.updateViews([$state.current.name]);
+            $scope.updateViews([
+                'main.pending'
+            ]);
         });
 
         $window.onfocus = function () {
             $scope.getAppData();
-            $scope.updateViews([$state.current.name]);
         }
+
 
         $scope.updateViews = function (views) {
             $scope.$broadcast('updateControllerData', views);

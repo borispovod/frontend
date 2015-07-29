@@ -55,15 +55,26 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
         if ($scope.rememberedPassword) {
             var isAddress = /^[0-9]+[C|c]$/g;
             var allowSymbols = /^[a-z0-9!@$&_.]+$/g;
+            var correctAddress = isAddress.test($scope.to);
             if ($scope.to.trim() == '') {
                 $scope.errorMessage = 'Empty recipient'
                 $scope.presendError = true;
             } else {
-                if (isAddress.test($scope.to) || allowSymbols.test($scope.to.toLowerCase())) {
-                    if ($scope.isCorrectValue($scope.amount)){
-                    $scope.presendError = false;
-                    $scope.errorMessage = ''
-                    $scope.sendXCR($scope.rememberedPassword);}
+                if (correctAddress || allowSymbols.test($scope.to.toLowerCase())) {
+                    if ($scope.isCorrectValue($scope.amount)) {
+                        $http.get("/api/accounts/username/get?username=" + $scope.to).then(function (response) {
+                            if (response.data.success || correctAddress) {
+                                $scope.presendError = false;
+                                $scope.errorMessage = ''
+                                $scope.sendXCR($scope.rememberedPassword);
+                            }
+                            else {
+                                $scope.errorMessage = response.data.error;
+                                $scope.presendError = true;
+                            }
+                        });
+
+                    }
                     else {
                         $scope.presendError = true;
                     }
@@ -81,17 +92,28 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
 
             var isAddress = /^[0-9]+[C|c]$/g;
             var allowSymbols = /^[a-z0-9!@$&_.]+$/g;
+            var correctAddress = isAddress.test($scope.to);
             if ($scope.to.trim() == '') {
                 $scope.errorMessage = 'Empty recipient'
                 $scope.presendError = true;
             } else {
-                if (isAddress.test($scope.to) || allowSymbols.test($scope.to.toLowerCase())) {
+                if (correctAddress || allowSymbols.test($scope.to.toLowerCase())) {
                     if ($scope.isCorrectValue($scope.amount)) {
-                    $scope.presendError = false;
-                    $scope.errorMessage = ''
-                    $scope.passmode = !$scope.passmode;
-                    $scope.focus = 'secretPhrase';
-                    $scope.secretPhrase = '';}
+                        $http.get("/api/accounts/username/get?username=" + $scope.to).then(function (response) {
+                            if (response.data.success || correctAddress) {
+                                $scope.presendError = false;
+                                $scope.errorMessage = ''
+                                $scope.passmode = !$scope.passmode;
+                                $scope.focus = 'secretPhrase';
+                                $scope.secretPhrase = '';
+                            }
+                            else {
+                                $scope.errorMessage = response.data.error;
+                                $scope.presendError = true;
+                            }
+                        });
+
+                    }
                     else {
                         $scope.presendError = true;
                     }

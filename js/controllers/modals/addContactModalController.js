@@ -29,18 +29,17 @@ angular.module('webApp').controller('addContactModalController', ["$scope", "add
             }
             if ($scope.rememberedPassword) {
                 var isAddress = /^[0-9]+[C|c]$/g;
-                var allowSymbols = /^[a-z0-9!@$&_.]+$/g;
                 if ($scope.contact.trim() == '') {
                     $scope.errorMessage = 'Empty contact'
                     $scope.presendError = true;
                 } else {
-                    if (isAddress.test($scope.contact) || allowSymbols.test($scope.contact.toLowerCase())) {
+                    if (isAddress.test($scope.contact)) {
                         $scope.presendError = false;
                         $scope.errorMessage = ''
                         $scope.addFolower($scope.rememberedPassword);
                     }
                     else {
-                        $scope.errorMessage = 'Incorrect contact name or address'
+                        $scope.errorMessage = 'Incorrect contact address'
                         $scope.presendError = true;
                     }
                 }
@@ -49,12 +48,11 @@ angular.module('webApp').controller('addContactModalController', ["$scope", "add
             }
             else {
                 var isAddress = /^[0-9]+[C|c]$/g;
-                var allowSymbols = /^[a-z0-9!@$&_.]+$/g;
                 if ($scope.contact.trim() == '') {
                     $scope.errorMessage = 'Empty contact'
                     $scope.presendError = true;
                 } else {
-                    if (isAddress.test($scope.contact) || allowSymbols.test($scope.contact.toLowerCase())) {
+                    if (isAddress.test($scope.contact)) {
                         $scope.presendError = false;
                         $scope.errorMessage = ''
                         $scope.passmode = !$scope.passmode;
@@ -62,7 +60,7 @@ angular.module('webApp').controller('addContactModalController', ["$scope", "add
                         $scope.pass = '';
                     }
                     else {
-                        $scope.errorMessage = 'Incorrect contact name or address'
+                        $scope.errorMessage = 'Incorrect contact address'
                         $scope.presendError = true;
                     }
                 }
@@ -87,18 +85,6 @@ angular.module('webApp').controller('addContactModalController', ["$scope", "add
             var isAddress = /^[0-9]+[C|c]$/g;
             if (isAddress.test($scope.contact)) {
                 $scope.sendData(pass, withSecond);
-            }
-            else {
-
-                $http.get(peerFactory.getUrl() + "/api/accounts/username/get?username=" + $scope.contact).then(function (response) {
-                    if (response.data.success) {
-                        $scope.contact = response.data.account.address;
-                        $scope.sendData(pass, withSecond);
-                    }
-                    else {
-                        $scope.errorMessage = response.data.error
-                    }
-                });
             }
 
 

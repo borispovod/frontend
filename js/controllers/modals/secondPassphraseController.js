@@ -48,6 +48,11 @@ angular.module('webApp').controller('secondPassphraseModalController', ["$scope"
             $scope.fromServer = 'Password and Confirm Password don\'t match';
             return;
         }
+
+        if ((($scope.repeatSecretPhrase ? $scope.repeatSecretPhrase.trim() : '') == '') || (($scope.newSecretPhrase ? $scope.newSecretPhrase.trim() : '') == '')) {
+            $scope.fromServer = 'Missing Password or Confirm Password';
+            return;
+        }
         $http.put("/api/signatures", {
             secret: pass,
             secondSecret: $scope.newSecretPhrase,

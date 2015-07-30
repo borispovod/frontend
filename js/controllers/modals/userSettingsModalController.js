@@ -53,6 +53,8 @@ angular.module('webApp').controller('userSettingsModalController',
 
                 }
                 else {
+                    var isAddress = /^[0-9]+[C|c]$/g;
+                    var allowSymbols = /^[a-z0-9!@$&_.]+$/g;
                     if ($scope.username.trim() == '') {
                         $scope.error = 'Empty username'
                         $scope.presendError = true;

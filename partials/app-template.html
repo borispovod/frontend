@@ -20,6 +20,10 @@
                                                                                     class="waves-effect waves-blue">
                 <div class="nav-icon" id="dashboard-icon"></div>
                 <span class="menu-text">Dashboard</span></a></li>
+            <li ng-show="showMenuItem('main.multi')" ui-sref-active="active"><a ui-sref="main.multi"
+                                                                                class="waves-effect waves-blue">
+                <div class="nav-icon" id="network-icon"></div>
+                <span class="menu-text">Multisignature</span></a></li>
             <li ng-show="showMenuItem('main.contacts')" ui-sref-active="active"><a ui-sref="main.contacts"
                                                                                    class="waves-effect waves-blue">
                 <div class="nav-icon" id="contacts-icon"></div>
@@ -56,10 +60,7 @@
                                                                                      class="waves-effect waves-blue">
                 <div class="nav-icon" id="blockchain-icon"></div>
                 <span class="menu-text">Blockchain</span></a></li>
-            <li ng-show="showMenuItem('main.multi')" ui-sref-active="active"><a ui-sref="main.multi"
-                                                                                class="waves-effect waves-blue">
-                <div class="nav-icon" id="network-icon"></div>
-                <span class="menu-text">Multi</span></a></li>
+
 
         </ul>
         <div id="inc"></div>

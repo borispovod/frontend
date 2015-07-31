@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('walletTransactionsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionsService', 'ngTableParams', 'transactionInfo', '$timeout', 'userInfo',
-    function ($rootScope, $scope, $http, userService, $interval, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo, $timeout, userInfo) {
+angular.module('webApp').controller('walletTransactionsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionsService', 'ngTableParams', 'transactionInfo', '$timeout', 'userInfo', '$filter',
+    function ($rootScope, $scope, $http, userService, $interval, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo, $timeout, userInfo, $filter) {
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Transactions for 17649443584386761059C', previos: 'main.multi'};
         $scope.view.bar = {};
@@ -181,13 +181,16 @@ angular.module('webApp').controller('walletTransactionsController', ['$scope', '
             page: 1,
             count: 25,
             sorting: {
-                b_height: 'desc'
+                timestamp: 'desc'
             }
         }, {
             total: 0,
             counts: [],
             getData: function ($defer, params) {
-                $defer.resolve(data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                var orderedData = params.sorting() ?
+                    $filter('orderBy')(data, params.orderBy()) :
+                    data;
+                $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
             }
         });
 

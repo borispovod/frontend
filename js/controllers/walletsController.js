@@ -51,8 +51,10 @@ angular.module('webApp').controller('walletsController', ['$scope', '$rootScope'
                 recipientId: "9946841100442405851C"}
         ];
 
-        $scope.showMembers = function () {
+
+        $scope.showMembers = function (confirmed) {
             $scope.multiMembersModal = multiMembersModal.activate({
+                confirmed: confirmed,
                 destroy: function () {
                 }
             });

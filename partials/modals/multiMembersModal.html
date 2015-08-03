@@ -7,13 +7,13 @@
                         <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div>
                     </div>
                     <div class="modal-header clearfix">
-                        <div><h2>Members</h2>
+                        <div><h2>{{title}}</h2>
                         </div>
                     </div>
                     <div class="modal-body">
                         <ul class="collection without-margin-top">
                             <li class="collection-item avatar" ng-repeat="line in dataMembers">
-                                <img src="images/samples/account.png" alt="" class="circle">
+                                <img src="/images/samples/account.png" alt="" class="circle">
                                 <span class="title">{{line.address}}</span>
                                 <p>{{line.name}}</p>
                             </li>

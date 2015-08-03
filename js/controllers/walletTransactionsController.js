@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('walletTransactionsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionsService', 'ngTableParams', 'transactionInfo', '$timeout', 'userInfo', '$filter',
-    function ($rootScope, $scope, $http, userService, $interval, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo, $timeout, userInfo, $filter) {
+angular.module('webApp').controller('walletTransactionsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionsService', 'ngTableParams', 'transactionInfo', '$timeout', 'userInfo', '$filter', 'multiMembersModal',
+    function ($rootScope, $scope, $http, userService, $interval, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo, $timeout, userInfo, $filter, multiMembersModal) {
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Transactions for 17649443584386761059C', previos: 'main.multi'};
         $scope.view.bar = {};
@@ -211,5 +211,11 @@ angular.module('webApp').controller('walletTransactionsController', ['$scope', '
         });
 
         $scope.updateTransactions();
-
+        $scope.showMembers = function (confirmed) {
+            $scope.multiMembersModal = multiMembersModal.activate({
+                confirmed: confirmed,
+                destroy: function () {
+                }
+            });
+        }
     }]);

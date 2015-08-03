@@ -27,7 +27,7 @@
                     <td data-title="'Fee'" sortable="'fee'">{{transaction.fee | xcrFilter}}
                     </td>
                     <td data-title="'Confirmations'" sortable="'confirmations'">
-                        <span >{{transaction.multi.confirmations}}</span>
+                        <span><a href="#" ng-click="showMembers(true)">{{transaction.multi.confirmations}}</a></span>
                     </td>
 
                 </tr>

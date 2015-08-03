@@ -34,5 +34,6 @@ require('../../js/controllers/modals/transactionInfoController');
 require('../../js/controllers/modals/userInfoController');
 require('../../js/controllers/modals/multisignatureModalController');
 require('../../js/controllers/modals/newUserController');
+require('../../js/controllers/modals/multiMembersModalController');
 
 

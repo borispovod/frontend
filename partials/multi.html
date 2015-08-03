@@ -42,7 +42,7 @@
                 <tr  ng-repeat="wallet in $data">
                     <td data-title="'Group Name'" sortable="'address'">{{wallet.address}}</td>
                     <td data-title="'Members'" sortable="'confirmations'">
-                        {{wallet.confirmations}}
+                       <a href="#" ng-click="showMembers()">{{wallet.confirmations}}</a>
                     </td>
                     <td data-title="'Confirmations required'" sortable="'needed'">
                         {{wallet.needed}}

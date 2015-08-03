@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('walletsController', ['$scope', '$rootScope', '$http', 'viewFactory', 'ngTableParams', '$filter',
-    function ($rootScope, $scope, $http, viewFactory, ngTableParams, $filter) {
+angular.module('webApp').controller('walletsController', ['$scope', '$rootScope', '$http', 'viewFactory', 'ngTableParams', '$filter', 'multiMembersModal',
+    function ($rootScope, $scope, $http, viewFactory, ngTableParams, $filter, multiMembersModal) {
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Multisignature', previos: null};
         $scope.view.bar = {showWalletBar: true};
@@ -50,6 +50,14 @@ angular.module('webApp').controller('walletsController', ['$scope', '$rootScope'
                 timestamp: 12060576,
                 recipientId: "9946841100442405851C"}
         ];
+
+        $scope.showMembers = function () {
+            $scope.multiMembersModal = multiMembersModal.activate({
+                destroy: function () {
+                }
+            });
+        }
+
         //Wallets table
         $scope.tableWallets = new ngTableParams({
             page: 1,            // show first page

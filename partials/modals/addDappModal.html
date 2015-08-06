@@ -26,7 +26,7 @@
         </div>
 
         <div class="modal-footer">
-            <a class="waves-effect btn-flat primary-action" ng-click="step=step+1;">Acept / Next Step</a>
+            <a class="waves-effect btn-flat primary-action" ng-click="step=step+1;">Accept / Next Step</a>
             <a class="waves-effect btn-flat second-action" ng-click="close()">CANCEL</a>
         </div>
     </div>
@@ -39,7 +39,7 @@
         <div class="modal-header clearfix">
             <div><h2>Step 2/5 Dapp Specifications</h2>
             </div>
-            <div>Please set the dapp parameters bellow.
+            <div>Please set the dapp parameters below.
             </div>
         </div>
         <div class="modal-content pretty-scrolling" style="  height: calc(100% - 290px); padding: 0;  -webkit-box-shadow:none;
@@ -51,20 +51,20 @@
                 <div class="row clearfix" style="height: inherit;">
 
                     <div class="input-field">
-                        <input id="name" type="text" class="validate">
+                        <input id="name" type="text" class="validate" ng-model="newDapp.name">
                         <label for="name">Name</label>
                     </div>
                 </div>
                 <div class="row clearfix" style="height: inherit;">
                     <div class="input-field">
-                        <textarea id="description" class="materialize-textarea"></textarea>
+                        <textarea id="description" class="materialize-textarea validate" ng-model="newDapp.description"></textarea>
                         <label for="description">Description</label>
                     </div>
                 </div>
                 <div class="row clearfix" style="height: inherit;">
                     <div class="input-field">
-                        <input id="tags" type="text" class="validate">
-                        <label for="tags">Tags (separetad with comma)</label>
+                        <input id="tags" type="text" class="validate" ng-model="newDapp.tags">
+                        <label for="tags">Tags (separated with comma)</label>
                     </div>
                 </div>
 
@@ -117,7 +117,7 @@
                             class="filled-in violet" id="sia"/>
                     <label for="sia">Sia</label>
 
-                    <div style="margin-top: 10px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                    <div style="margin-top: 10px; margin-bottom: 10px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
                         Aenean
                         massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
                         Donec
@@ -166,7 +166,7 @@
                            class="filled-in violet" id="git"/>
                     <label for="git">Git</label>
 
-                    <div style="margin-top: 10px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
+                    <div style="margin-top: 10px;  margin-bottom: 10px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
                         commodo ligula eget dolor.
                         Aenean
                         massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
@@ -203,7 +203,7 @@
         <div class="modal-header clearfix">
             <div><h2>Step 4/5 - Storage Specifications</h2>
             </div>
-            <div>Please set the SIA parameters below.
+            <div>Please set the {{getRepositoryName()}} parameters below.
             </div>
         </div>
         <div class="modal-content pretty-scrolling" style="  height: calc(100% - 290px); padding: 0;  -webkit-box-shadow:none;
@@ -212,7 +212,7 @@
 
                 <div class="field-padding">
                     <div class="input-field">
-                        <input id="amount" type="text" ng-model="gitText" >
+                        <input id="amount" type="text" ng-model="newDapp.gitText" >
                         <label for="amount">Git repository link</label>
                     </div>
                     <a class="btn btn-sky-blue waves-effect waves-light right">Check
@@ -225,7 +225,7 @@
 
                 <div class="field-padding">
                     <div class="input-field">
-                        <textarea id="textarea1" class="materialize-textarea" ng-model="siaText"></textarea>
+                        <textarea id="textarea1" class="materialize-textarea" ng-model="newDapp.siaText"></textarea>
                         <label for="textarea1">Sia ASCII Code</label>
                     </div>
 
@@ -258,10 +258,10 @@
         <div class="modal-content pretty-scrolling" style="  height: calc(100% - 290px); padding: 0;  -webkit-box-shadow:none;
   box-shadow: none;">
             <ul class="collection dapp-collection">
-                <li class="collection-item"><h4>Name:</h4> {{name}}</li>
-                <li class="collection-item"><h4>Description:</h4> {{description}}</li>
-                <li class="collection-item"><h4>Tags:</h4> {{tags}}</li>
-                <li class="collection-item"><h4>Category:</h4> {{category}}</li>
+                <li class="collection-item"><h4>Name:</h4> {{newDapp.name}}</li>
+                <li class="collection-item"><h4>Description:</h4> {{newDapp.description}}</li>
+                <li class="collection-item"><h4>Tags:</h4> {{newDapp.tags}}</li>
+                <li class="collection-item"><h4>Category:</h4> {{newDapp.category}}</li>
                 <li class="collection-item"><h4>Hosted at {{getRepositoryName()}}:</h4> {{getRepositoryText()}}</li>
             </ul>
 

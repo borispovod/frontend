@@ -65,9 +65,9 @@ angular.module('webApp').service('contactsService', function ($http, userService
                 params: queryParams
             })
                 .then(function (response) {
-                    params.total(response.data.followers.length);
-                    var filteredData = $filter('filter')(response.data.followers, filter);
-                    var transformedData = transformData(response.data.followers, filter, params);
+                    params.total(response.data.followers ? response.data.followers.length : 0);
+                    var filteredData = $filter('filter')(response.data.followers ? response.data.followers : [], filter);
+                    var transformedData = transformData(response.data.followers ? response.data.followers : [], filter, params);
                     $defer.resolve(transformedData);
                     cb(null);
                 });

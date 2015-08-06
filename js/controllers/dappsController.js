@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('dappsController', ['$scope', 'viewFactory', '$http', 'dappsService', '$timeout',
-    function ($scope, viewFactory, $http, dappsService, $timeout) {
+angular.module('webApp').controller('dappsController', ['$scope', 'viewFactory', '$http', 'dappsService', '$timeout', 'addDappModal',
+    function ($scope, viewFactory, $http, dappsService, $timeout, addDappModal) {
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Dapp Store', previos: null};
         $scope.view.bar = {showDappsBar: true, searchDapps: false, showCategories: false};
@@ -33,6 +33,13 @@ angular.module('webApp').controller('dappsController', ['$scope', 'viewFactory',
                 $scope.searchDappText();
             }, 2000); // delay 2000 ms
         })
+
+        $scope.addNewDapp = function(){
+                $scope.addDappModal = addDappModal.activate({
+                    destroy: function () {
+                    }
+                });
+        }
 
         $scope.searchedText = '';
         $scope.searchedInstalledText = '';

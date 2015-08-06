@@ -1,0 +1,200 @@
+<div class="app-modal">
+    <div ng-show="false" class="modal modal-fixed-footer col-md-6"
+         style="height: 80%; max-height: 80%; z-index: 1003; display: block; opacity: 1; /* transform: scaleX(1); */ top: 0;bottom: 0;">
+        <div class="modal-header modal-iconed">
+            <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span>
+            </div>
+        </div>
+        <div class="modal-header clearfix">
+            <div><h2>Step 1/5 - Terms of Service</h2>
+            </div>
+            <div>Please read them carefully.
+            </div>
+        </div>
+        <div class="modal-content pretty-scrolling" style="  height: calc(100% - 290px); padding: 0;  -webkit-box-shadow:none;
+  box-shadow: none;">
+                        <span class="send-info-text flat-text"><p>Lorem ipsum dolor sit amet, consectetuer adipiscing
+                            elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis
+                            dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque
+                            eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel,
+                            aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae,
+                            justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus
+                            elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu,
+                            consequat vitae, eleifend ac, enim.
+                        </p><p></p> Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt.
+                            </p><p></p> Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc.</p></span>
+        </div>
+
+        <div class="modal-footer">
+            <a class="waves-effect btn-flat primary-action" ng-click="passcheck()">Acept / Next Step</a>
+            <a class="waves-effect btn-flat second-action" ng-click="close()">CANCEL</a>
+        </div>
+    </div>
+    <div ng-show="false" class="modal modal-fixed-footer col-md-6"
+         style="height: 80%; max-height: 80%; z-index: 1003; display: block; opacity: 1; /* transform: scaleX(1); */ top: 0;bottom: 0;">
+        <div class="modal-header modal-iconed">
+            <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span>
+            </div>
+        </div>
+        <div class="modal-header clearfix">
+            <div><h2>Step 2/5 Dapp Specifications</h2>
+            </div>
+            <div>Please set the dapp parameters bellow.
+            </div>
+        </div>
+        <div class="modal-content pretty-scrolling" style="  height: calc(100% - 290px); padding: 0;  -webkit-box-shadow:none;
+  box-shadow: none;">
+            <form class="clearfix" action="#" ng-submit="passcheck()" style="padding: 0 40px;">
+
+                <input type="submit" ng-show="false">
+
+                <div class="row clearfix" style="height: inherit;">
+
+                    <div class="input-field">
+                        <input id="name" type="text" class="validate">
+                        <label for="name">Name</label>
+                    </div>
+                </div>
+                <div class="row clearfix" style="height: inherit;">
+                    <div class="input-field">
+                        <textarea id="description" class="materialize-textarea"></textarea>
+                        <label for="description">Description</label>
+                    </div>
+                </div>
+                <div class="row clearfix" style="height: inherit;">
+                    <div class="input-field">
+                        <input id="tags" type="text" class="validate">
+                        <label for="tags">Tags (separetad with comma)</label>
+                    </div>
+                </div>
+
+                <div class="row clearfix" style="height: inherit;">
+                    <div class="file-field input-field">
+                        <input class="file-path validate" type="text"/>
+
+                        <div class="btn">
+                            <span>Icon</span>
+                            <input type="file"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix" style="height: inherit;">
+                    <div class="input-field col s12">
+
+                        <select class="browser-default">
+
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                            <option value="3">Option 3</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+            <div class="modal-footer">
+                <a class="waves-effect btn-flat primary-action" ng-click="passcheck()">Next Step</a>
+                <a class="waves-effect btn-flat second-action" ng-click="close()">Go back</a>
+            </div>
+        </div>
+    <div ng-show="true" class="modal modal-fixed-footer col-md-6"
+         style="height: 80%; max-height: 80%; z-index: 1003; display: block; opacity: 1; /* transform: scaleX(1); */ top: 0;bottom: 0;">
+        <div class="modal-header modal-iconed">
+            <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span>
+            </div>
+        </div>
+        <div class="modal-header clearfix">
+            <div><h2>Step 3/5 - Choose Storage Solution</h2>
+            </div>
+            <div>Please choose between the available options below..
+            </div>
+        </div>
+        <div class="modal-content pretty-scrolling" style="  height: calc(100% - 290px); padding: 0;  -webkit-box-shadow:none;
+  box-shadow: none;">
+            <ul class="collection with-header dapp-collection">
+                <li class="collection-header"><h4>Decentralized</h4></li>
+                <li class="collection-item">
+                    <input type="checkbox"
+                           class="filled-in violet" id="sia"/>
+                    <label for="sia">Sia</label>
+
+                    <div style="margin-top: 10px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                        Aenean
+                        massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                        Donec
+                        quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
+                        Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut,
+                        imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer
+                        tincidunt.
+                        Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo
+                        ligula,
+                        porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis,
+                        feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean
+                        imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui.
+                        Etiam
+                        rhoncus.
+                    </div>
+                    <a class="btn btn-sky-blue waves-effect waves-light right">MORE INFO
+                    </a></li>
+
+                <li class="collection-item">
+                    <input type="checkbox"
+                           class="filled-in violet" id="starj"/>
+                    <label for="starj">StarJ</label>
+
+                    <div style="margin-top: 10px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                        Aenean
+                        massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                        Donec
+                        quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
+                        Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut,
+                        imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer
+                        tincidunt.
+                        Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo
+                        ligula,
+                        porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis,
+                        feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean
+                        imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui.
+                        Etiam
+                        rhoncus.
+                    </div>
+                    <a class="btn btn-sky-blue waves-effect waves-light right">MORE INFO
+                    </a></li>
+
+            </ul>
+            <ul class="collection with-header dapp-collection">
+                <li class="collection-header"><h4>Centralized</h4></li>
+                <li class="collection-item">
+                    <input type="checkbox"
+                           class="filled-in violet" id="github"/>
+                    <label for="github">Github</label>
+
+                    <div style="margin-top: 10px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
+                        commodo ligula eget dolor.
+                        Aenean
+                        massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                        Donec
+                        quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
+                        Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut,
+                        imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer
+                        tincidunt.
+                        Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo
+                        ligula,
+                        porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis,
+                        feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean
+                        imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui.
+                        Etiam
+                        rhoncus.
+                    </div>
+                    <a class="btn btn-sky-blue waves-effect waves-light right">MORE INFO
+                    </a></li>
+
+
+            </ul>
+        </div>
+        <div class="modal-footer">
+            <a class="waves-effect btn-flat primary-action" ng-click="passcheck()">Next Step</a>
+            <a class="waves-effect btn-flat second-action" ng-click="close()">Go back</a>
+        </div>
+    </div>
+    </div>
+

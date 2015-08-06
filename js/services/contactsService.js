@@ -32,7 +32,7 @@ angular.module('webApp').service('contactsService', function ($http, userService
                     if (response.data.success) {
                         contacts.list = response.data.following;
                         contacts.count = response.data.following.length;
-                        contacts.followersCount = response.data.followers.length;
+                        contacts.followersCount = response.data.followers ? response.data.followers.length : 0;
                     }
                     else {
                         contacts.list = [];

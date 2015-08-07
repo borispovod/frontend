@@ -178,6 +178,9 @@ angular.module('webApp').controller('appController', ['dappsService','$scope', '
                         $scope.getDelegate();
                         $scope.getMyVotesCount();
                     }
+                    if ($state.current.name == 'main.dappstore' || 'main.dashboard') {
+                        $scope.getCategories();
+                    }
 
                 });
         };

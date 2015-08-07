@@ -6,15 +6,26 @@ angular.module('webApp').controller('addDappModalController', ["$scope", "$http"
         addDappModal.deactivate();
     }
 
+    $scope.urlSiaMode = 0;
+    $scope.changeUrlSiaMode = function(){
+        $scope.urlSiaMode = $scope.urlSiaMode ? 0 : 1;
+    }
+    $scope.getUlrSiaText = function () {
+        return $scope.urlSiaMode ? 'change to url link' : 'change to SIA ASCII';
+    }
+
     $scope.newDapp = {
         name: "",
         description: "",
-        category: "",
+        category: 0,
         tags: "",
         gitText: "",
-        siaText: ""
+        siaText: "",
+        iconUrl: "",
+        iconSIA: ""
 
     };
+
     $scope.step = 1;
 
     $scope.repository = 'sia';

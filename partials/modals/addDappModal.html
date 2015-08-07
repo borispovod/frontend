@@ -13,6 +13,11 @@
         </div>
         <div class="modal-content pretty-scrolling" style="  height: calc(100% - 290px); padding: 0;  -webkit-box-shadow:none;
   box-shadow: none;">
+            <form name="license_data-form" novalidate class="clearfix" ng-submit="goToStep2()" style="padding: 0 40px;">
+
+                <input type="submit" ng-show="false">
+
+            </form>
                         <span class="send-info-text flat-text"><p>Lorem ipsum dolor sit amet, consectetuer adipiscing
                             elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis
                             dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque
@@ -44,38 +49,67 @@
         </div>
         <div class="modal-content pretty-scrolling" style="  height: calc(100% - 290px); padding: 0;  -webkit-box-shadow:none;
   box-shadow: none;">
-            <form class="clearfix" action="#" ng-submit="passcheck()" style="padding: 0 40px;">
+            <form name="dapp_data_form" novalidate class="clearfix" ng-submit="goToStep3(dapp_data_form.$invalid)" style="padding: 0 40px;">
 
                 <input type="submit" ng-show="false">
 
                 <div class="row clearfix" style="height: inherit;">
 
                     <div class="input-field">
-                        <input id="name" type="text" class="validate" ng-model="newDapp.name">
+                        <input ng-minlength=1
+                               ng-maxlength=32 required ng-class="{'invalid': dapp_data_form.submitted && dapp_data_form.name.$invalid , 'valid':  dapp_data_form.submitted && dapp_data_form.name.$valid}"  id="name" name="name" type="text"  ng-model="newDapp.name">
                         <label for="name">Name</label>
+                    </div>
+                    <div class="error-newdapp-container"
+                         ng-show="dapp_data_form.name.$invalid && dapp_data_form.submitted">
+                        <small class="error"
+                               ng-show="dapp_data_form.name.$error.required">
+                            Your dapp name is required.
+                        </small>
+                        <small class="error"
+                               ng-show="dapp_data_form.name.$error.maxlength">
+                            Your dapp name cannot be longer than 32 characters
+                        </small>
                     </div>
                 </div>
                 <div class="row clearfix" style="height: inherit;">
                     <div class="input-field materialize-textarea-big">
-                        <textarea id="description" class="materialize-textarea validate" ng-model="newDapp.description"></textarea>
+                        <textarea ng-maxlength=160  id="description"
+                                  ng-class="{'invalid': dapp_data_form.submitted && dapp_data_form.description.$invalid , 'valid':  dapp_data_form.submitted && dapp_data_form.description.$valid}" name="description" class="materialize-textarea validate" ng-model="newDapp.description"></textarea>
                         <label for="description">Description</label>
+                    </div>
+                    <div class="error-newdapp-container"
+                         ng-show="dapp_data_form.description.$invalid && dapp_data_form.submitted">
+                        <small class="error"
+                               ng-show="dapp_data_form.description.$error.maxlength">
+                            Your dapp description cannot be longer than 160 characters
+                        </small>
                     </div>
                 </div>
                 <div class="row clearfix" style="height: inherit;">
                     <div class="input-field">
-                        <input id="tags" type="text" class="validate" ng-model="newDapp.tags">
+                        <input ng-class="{'invalid': dapp_data_form.submitted && dapp_data_form.tags.$invalid , 'valid':  dapp_data_form.submitted && dapp_data_form.tags.$valid}" ng-maxlength=160 id="tags" type="text" name="tags" class="validate" ng-model="newDapp.tags">
                         <label for="tags">Tags (separated with comma)</label>
+                    </div>
+                    <div class="error-newdapp-container"
+                         ng-show="dapp_data_form.tags.$invalid && dapp_data_form.submitted">
+                        <small class="error"
+                               ng-show="dapp_data_form.description.$error.maxlength">
+                            Your dapp tags cannot be longer than 160 characters
+                        </small>
                     </div>
                 </div>
 
                 <div class="row clearfix" style="height: inherit;">
+
                     <div ng-if="!urlSiaMode" class="file-field input-field">
-                        <input ng-model="newDapp.iconUrl" id="icon" class="file-path validate" style="margin-left: 250px;" type="text"/>
+                        <input ng-model="newDapp.iconUrl" id="icon" class="file-path" style="margin-left: 250px;" type="text"/>
                         <label for="icon" style="left:250px;">Icon url link</label>
                         <div class="btn btn-sky-blue" ng-click="changeUrlSiaMode()">
                             <span>{{getUlrSiaText()}}</span>
                         </div>
                     </div>
+
                     <div ng-if="!!urlSiaMode" class="file-field input-field materialize-textarea-big">
                         <textarea ng-model="newDapp.iconSIA" id="icon" class="materialize-textarea validate" style="margin-left: 250px;" type="text"/>
                         <label for="icon" style="left:250px;">Icon SIA ASCII text</label>
@@ -96,7 +130,7 @@
             </form>
         </div>
             <div class="modal-footer">
-                <a class="waves-effect btn-flat primary-action" ng-click="step=step+1;">Next Step</a>
+                <a class="waves-effect btn-flat primary-action" ng-click="goToStep3(dapp_data_form.$invalid)">Next Step</a>
                 <a class="waves-effect btn-flat second-action" ng-click="step=step-1;">Go back</a>
             </div>
         </div>

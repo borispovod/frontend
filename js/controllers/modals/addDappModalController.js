@@ -26,6 +26,20 @@ angular.module('webApp').controller('addDappModalController', ["$scope", "$http"
 
     };
 
+    $scope.goToStep3 = function(invalid){
+        if ($scope.dapp_data_form.$valid) {
+            $scope.step = 3;
+        } else {
+            $scope.dapp_data_form.submitted = true;
+        }
+
+
+    }
+    $scope.goToStep2 = function () {
+
+        $scope.step = 2;
+    }
+
     $scope.step = 1;
 
     $scope.repository = 'sia';

@@ -103,7 +103,7 @@
                 <div class="row clearfix" style="height: inherit;">
 
                     <div ng-if="!urlSiaMode" class="file-field input-field">
-                        <input ng-model="newDapp.iconUrl" id="icon" class="file-path" style="margin-left: 250px;" type="text"/>
+                        <input ng-model="newDapp.iconUrl" id="icon" class="file-path" style="margin-left: 250px;     width: calc(100%- 250px);" type="text"/>
                         <label for="icon" style="left:250px;">Icon url link</label>
                         <div class="btn btn-sky-blue" ng-click="changeUrlSiaMode()">
                             <span>{{getUlrSiaText()}}</span>
@@ -111,7 +111,7 @@
                     </div>
 
                     <div ng-if="!!urlSiaMode" class="file-field input-field materialize-textarea-big">
-                        <textarea ng-model="newDapp.iconSIA" id="icon" class="materialize-textarea validate" style="margin-left: 250px;" type="text"/>
+                        <textarea  ng-model="newDapp.iconSIA" id="icon" class="materialize-textarea validate" style="margin-left: 250px;     width: calc(100%- 250px);" type="text"/>
                         <label for="icon" style="left:250px;">Icon SIA ASCII text</label>
 
                         <div class="btn btn-sky-blue" ng-click="changeUrlSiaMode()">

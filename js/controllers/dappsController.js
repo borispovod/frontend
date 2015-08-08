@@ -12,6 +12,7 @@ angular.module('webApp').controller('dappsController', ['$scope', 'viewFactory',
         $scope.searchDapp.inSearch = false;
         $scope.showPlaceholder = false;
 
+
         //Search dapps watcher
         var tempsearchForDappID = '',
             searchForDappIDTimeout;
@@ -36,11 +37,11 @@ angular.module('webApp').controller('dappsController', ['$scope', 'viewFactory',
             }, 2000); // delay 2000 ms
         })
 
-        $scope.addNewDapp = function(){
-                $scope.addDappModal = addDappModal.activate({
-                    destroy: function () {
-                    }
-                });
+        $scope.addNewDapp = function () {
+            $scope.addDappModal = addDappModal.activate({
+                destroy: function () {
+                }
+            });
         }
 
         $scope.searchedText = '';
@@ -81,4 +82,5 @@ angular.module('webApp').controller('dappsController', ['$scope', 'viewFactory',
         };
 
         $scope.searchDappText();
+
     }]);

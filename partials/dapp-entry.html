@@ -18,26 +18,63 @@
                     <div class="document-subtitle">25 Mar 2015</div>
                 </div>
                 <div class="details-info-divider"></div>
-                <div ng-show="!loading && !installed" class="details-actions"><a class="btn btn-sky-blue waves-effect waves-light" ng-click="installDapp()" ng-switch on="dapp.type"><i
-                        class="mdi-file-file-download left"></i><span ng-switch-default>INSTALL</span><span ng-switch-when="1">DOWNLOAD</span>
+                <div ng-show="!loading && !installed && !isInstalling() && !isRemoving() && !isLaunched()"
+                     class="details-actions"><a class="btn btn-sky-blue waves-effect waves-light"
+                                                ng-click="installDapp()" ng-switch on="dapp.type"><i
+                        class="mdi-file-file-download left"></i><span ng-switch-default>INSTALL</span><span
+                        ng-switch-when="1">DOWNLOAD</span>
                 </a>
                     <!--<a class="btn btn-white waves-effect left-margin-14">SHARE
                     </a>-->
-                    <a ng-show="dapp.git" href="githubLink(dapp.git)" target="_blank" class="btn btn-white waves-effect pull-right">SOURCE CODE
+                    <a ng-show="dapp.git" href="githubLink(dapp.git)" target="_blank"
+                       class="btn btn-white waves-effect pull-right">SOURCE CODE
                     </a>
                 </div>
-                <div ng-show="!loading && installed" class="details-actions"><a class="btn btn-sky-blue waves-effect waves-light" ng-click="runDApp()" ng-switch on="dapp.type"><i
-                        class="mdi-file-file-download left"></i><span ng-switch-default>LAUNCH</span><span ng-switch-when="1">DOWNLOAD</span>
+                <div ng-show="!loading && installed  && !isInstalling() && !isRemoving() && !isLaunched()"
+                     class="details-actions"><a class="btn btn-sky-blue waves-effect waves-light" ng-click="runDApp()"
+                                                ng-switch on="dapp.type"><i
+                        class="mdi-file-file-download left"></i><span
+                                                                      ng-switch-default>LAUNCH</span><span
+                        ng-switch-when="1">DOWNLOAD</span>
                 </a>
                     <!--<a class="btn btn-white waves-effect left-margin-14">SHARE
                     </a>-->
-                    <a ng-show="dapp.git" href="githubLink(dapp.git)" target="_blank" class="btn btn-white waves-effect pull-right">SOURCE CODE
+                    <a ng-show="dapp.git" href="githubLink(dapp.git)" target="_blank"
+                       class="btn btn-white waves-effect pull-right">SOURCE CODE
+                    </a>
+                </div>
+                <div ng-show="!isInstalling() && !isRemoving() && isLaunched()"
+                     class="details-actions"><a class="btn btn-sky-blue waves-effect waves-light" ng-click="runDApp()"
+                                                ng-switch on="dapp.type"><i
+                        class="mdi-file-file-download left"></i><span ng-click="openDapp()"
+                                                                      ng-switch-default>OPEN</span><span
+                        ng-switch-when="1">DOWNLOAD</span>
+                </a>
+                    <!--<a class="btn btn-white waves-effect left-margin-14">SHARE
+                    </a>-->
+                    <a ng-show="dapp.git" href="githubLink(dapp.git)" target="_blank"
+                       class="btn btn-white waves-effect pull-right">SOURCE CODE
+                    </a>
+                </div>
+                <div ng-show="(isInstalling() || isRemoving()) && !isLaunched()"
+                     class="details-actions">
+                    <div class="progress" style="
+    display: inline-block;
+    width: 120px;
+">
+                        <div class="indeterminate"></div>
+                    </div>
+                    <!--<a class="btn btn-white waves-effect left-margin-14">SHARE
+                    </a>-->
+                    <a ng-show="dapp.git" href="githubLink(dapp.git)" target="_blank"
+                       class="btn btn-white waves-effect pull-right">SOURCE CODE
                     </a>
                 </div>
                 <div class="subtitle-container">
                     <div class="document-subtitle large-subtitle">Category:</div>
                     <a class="document-subtitle primary"
-                       ui-sref='main.dappsCategory({categoryId:"{{getCategoryName(dapp.category)}}"})'><span>{{getCategoryName(dapp.category)}}</span> </a>
+                       ui-sref='main.dappsCategory({categoryId:"{{getCategoryName(dapp.category)}}"})'><span>{{getCategoryName(dapp.category)}}</span>
+                    </a>
                 </div>
                 <div class="details-info-divider"></div>
                 <div class="reason-set"><span class="stars-container">
@@ -63,7 +100,8 @@
                 <div class="text-body" ng-class="{'expanded': showMore}">
                     <p>{{dapp.description | cut:true:100:' ...':!showMore}}</p>
                 </div>
-                <div class="show-more clearfix" ng-if="!showMore"><a ng-show="dapp.description.length > 100" class="btn btn-white" ng-click="changeShowMore()">READ
+                <div class="show-more clearfix" ng-if="!showMore"><a ng-show="dapp.description.length > 100"
+                                                                     class="btn btn-white" ng-click="changeShowMore()">READ
                     MORE
                 </a></div>
             </div>
@@ -141,7 +179,8 @@
           </span></div>
                                     <div class="quoted-review">
                                         <div class="review-text">
-                                            {{'Just take care of the popcorn & leave the rest to us.'| cut:true:30:' ...'}}
+                                            {{'Just take care of the popcorn & leave the rest to us.'| cut:true:30:'
+                                            ...'}}
                                         </div>
                                     </div>
                                 </div>

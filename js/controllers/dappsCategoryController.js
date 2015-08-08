@@ -2,7 +2,6 @@ require('angular');
 
 angular.module('webApp').controller('dappsCategoryController', ['$scope', 'viewFactory', '$http', '$stateParams', 'dappsService', '$timeout',
     function ($scope, viewFactory, $http, $stateParams, dappsService, $timeout) {
-        alert("1");
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
         $scope.view.loadingText = "Loading dapps";

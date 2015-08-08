@@ -111,7 +111,7 @@
                     </div>
 
                     <div ng-if="!!urlSiaMode" class="file-field input-field materialize-textarea-big">
-                        <textarea ng-model="newDapp.iconSIA" id="icon" class="materialize-textarea validate" style="margin-left: 250px;" type="text"/>
+                        <textarea ng-model="newDapp.siaIcon" id="icon" class="materialize-textarea validate" style="margin-left: 250px;" type="text"/>
                         <label for="icon" style="left:250px;">Icon SIA ASCII text</label>
 
                         <div class="btn btn-sky-blue" ng-click="changeUrlSiaMode()">
@@ -250,7 +250,7 @@
 
                 <div class="field-padding">
                     <div class="input-field">
-                        <input id="amount" type="text" ng-model="newDapp.gitText" >
+                        <input id="amount" type="text" ng-model="newDapp.git" >
                         <label for="amount">Git repository link</label>
                     </div>
                     <a class="btn btn-sky-blue waves-effect waves-light right">Check
@@ -263,7 +263,7 @@
 
                 <div class="field-padding">
                     <div class="input-field materialize-textarea-big">
-                        <textarea id="textarea1" class="materialize-textarea" ng-model="newDapp.siaText"></textarea>
+                        <textarea id="textarea1" class="materialize-textarea" ng-model="newDapp.siaAscii"></textarea>
                         <label for="textarea1">Sia ASCII Code</label>
                     </div>
 

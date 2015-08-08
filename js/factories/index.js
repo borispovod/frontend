@@ -2,6 +2,7 @@ require('../../js/factories/userFactory');
 require('../../js/factories/viewFactory');
 require('../../js/factories/socketFactory');
 require('../../js/factories/focusFactory');
+require('../../js/factories/cutFactory');
 //modals
 require('../../js/factories/modals/addContactModal');
 require('../../js/factories/modals/blockModal');

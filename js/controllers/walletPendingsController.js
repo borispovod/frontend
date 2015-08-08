@@ -2,6 +2,7 @@ require('angular');
 
 angular.module('webApp').controller('walletPendingsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionsService', 'ngTableParams', 'transactionInfo', '$timeout', 'userInfo',
     function ($rootScope, $scope, $http, userService, $interval, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo, $timeout, userInfo) {
+
         $scope.view = viewFactory;
         $scope.view.page = {title: 'Pending transactions', previos: null};
         $scope.view.bar = {showWalletBar: true};

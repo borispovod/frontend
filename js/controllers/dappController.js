@@ -39,6 +39,11 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
             });
         }
 
+        $scope.githubLink = function (git) {
+            //git@github.com:crypti/cryptipad.git
+            return git.replace("git@", "https://").replace(".com:", ".com/");
+        }
+
         $scope.runDApp = function () {
             // open dapp
             if ($scope.dapp.type == 1) {

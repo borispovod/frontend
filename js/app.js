@@ -49,7 +49,6 @@ webApp.config(["ngClipProvider",
                 url: "dappstore/:categoryId",
                 templateUrl: "/partials/dapps-category.html",
                 controller: "dappsCategoryController"
-
             })
             .state('main.dappentry', {
                 url: "/dapp/:dappId",

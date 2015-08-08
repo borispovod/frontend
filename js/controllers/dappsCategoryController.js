@@ -2,6 +2,7 @@ require('angular');
 
 angular.module('webApp').controller('dappsCategoryController', ['$scope', 'viewFactory', '$http', '$stateParams', 'dappsService', '$timeout',
     function ($scope, viewFactory, $http, $stateParams, dappsService, $timeout) {
+        alert("1");
         $scope.view = viewFactory;
         $scope.category = $stateParams.categoryId;
         $scope.view.page = {title: $scope.category, previos: 'main.dappstore'};
@@ -40,6 +41,7 @@ angular.module('webApp').controller('dappsCategoryController', ['$scope', 'viewF
             if ($scope.category == 'Installed') {
                 if ($scope.searchDapp.searchForDapp.trim() != '') {
                     $http.get("/api/dapps/search?q=" + $scope.searchDapp.searchForDapp + "&installed=1").then(function (response) {
+                        console.log("here");
                         $scope.dapps = response.data.dapps;
                         $scope.searchDapp.inSearch=false;
                         $scope.searchedText = '(search for "' + $scope.searchDapp.searchForDapp + '")';

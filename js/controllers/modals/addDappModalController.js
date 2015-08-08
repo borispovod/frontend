@@ -3,7 +3,10 @@ require('angular');
 angular.module('webApp').controller('addDappModalController', ["$scope", "$http", "addDappModal", function ($scope, $http, addDappModal) {
 
     $scope.close = function () {
-        addDappModal.deactivate();
+        $http.put('/api/dapps', $scope.newDapp).then(function (response) {
+            // catch error and show loading
+            addDappModal.deactivate();
+        });
     }
 
     $scope.urlSiaMode = 0;
@@ -18,12 +21,12 @@ angular.module('webApp').controller('addDappModalController', ["$scope", "$http"
         name: "",
         description: "",
         category: 0,
+        type: 0,
         tags: "",
-        gitText: "",
-        siaText: "",
-        iconUrl: "",
-        iconSIA: ""
-
+        git: "",
+        siaAscii: "",
+        siaIcon: "",
+        icon: ""
     };
 
     $scope.goToStep3 = function(invalid){

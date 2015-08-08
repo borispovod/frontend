@@ -1,10 +1,12 @@
 <div class="row clearfix">
     <div class="col-xs-12">
         <div class="dapp-info clearfix">
-            <div class="cover-container"><img ng-if="!dapp.icon" class="cover-image"
+            <div class="cover-container"><img ng-if="!dapp.icon && !dapp.siaIcon" class="cover-image"
                                               src="https://placeholdit.imgix.net/~text?txtsize=33&txt=208%C3%97208&w=208&h=208">
-                <img ng-if="!!dapp.icon" class="cover-image"
+                <img ng-if="dapp.icon" class="cover-image"
                      ng-src="{{dapp.icon}}">
+                <img ng-if="dapp.siaIcon" class="cover-image"
+                     ng-src="/api/dapps/icon?id={{dapp.transactionId}}">
             </div>
             <div class="info-container">
                 <div class="document-title">
@@ -19,17 +21,17 @@
                 <div ng-show="!loading && !installed" class="details-actions"><a class="btn btn-sky-blue waves-effect waves-light" ng-click="installDapp()" ng-switch on="dapp.type"><i
                         class="mdi-file-file-download left"></i><span ng-switch-default>INSTALL</span><span ng-switch-when="1">DOWNLOAD</span>
                 </a>
-                    <a class="btn btn-white waves-effect left-margin-14">SHARE
-                    </a>
-                    <a ng-show="dapp.type==0" class="btn btn-white waves-effect pull-right">SOURCE CODE
+                    <!--<a class="btn btn-white waves-effect left-margin-14">SHARE
+                    </a>-->
+                    <a ng-show="dapp.git" href="githubLink(dapp.git)" target="_blank" class="btn btn-white waves-effect pull-right">SOURCE CODE
                     </a>
                 </div>
                 <div ng-show="!loading && installed" class="details-actions"><a class="btn btn-sky-blue waves-effect waves-light" ng-click="runDApp()" ng-switch on="dapp.type"><i
                         class="mdi-file-file-download left"></i><span ng-switch-default>LAUNCH</span><span ng-switch-when="1">DOWNLOAD</span>
                 </a>
-                    <a class="btn btn-white waves-effect left-margin-14">SHARE
-                    </a>
-                    <a ng-show="dapp.type==0" class="btn btn-white waves-effect pull-right">SOURCE CODE
+                    <!--<a class="btn btn-white waves-effect left-margin-14">SHARE
+                    </a>-->
+                    <a ng-show="dapp.git" href="githubLink(dapp.git)" target="_blank" class="btn btn-white waves-effect pull-right">SOURCE CODE
                     </a>
                 </div>
                 <div class="subtitle-container">
@@ -52,16 +54,16 @@
     </div>
 </div>
 
-<div class="row clearfix">
+<div ng-show="dapp.description" class="row clearfix">
     <div class="col-xs-12">
         <div class="dapp-info clearfix">
             <div class="description">
                 <h1 class="heading">Description</h1>
 
                 <div class="text-body" ng-class="{'expanded': showMore}">
-                    <p>{{dapp.description}}</p>
+                    <p>{{dapp.description | cut:true:100:' ...':!showMore}}</p>
                 </div>
-                <div class="show-more clearfix" ng-if="!showMore"><a class="btn btn-white" ng-click="changeShowMore()">READ
+                <div class="show-more clearfix" ng-if="!showMore"><a ng-show="dapp.description.length > 100" class="btn btn-white" ng-click="changeShowMore()">READ
                     MORE
                 </a></div>
             </div>

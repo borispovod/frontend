@@ -49,6 +49,37 @@ angular.module('webApp').controller('addDappModalController', ["$scope", "$http"
             icon: ""
         };
         $scope.sendData = function (pass, withSecond) {
+            var data = {
+                name: $scope.newDapp.name,
+                description: $scope.newDapp.description,
+                category: $scope.newDapp.category,
+                type: $scope.newDapp.type,
+                tags: $scope.newDapp.tags,
+            }
+            if (!!$scope.urlSiaMode || $scope.newDapp.icon.trim() == '') {
+            }
+            else {
+                data.icon = $scope.newDapp.icon.trim();
+            }
+
+            if (!$scope.urlSiaMode || $scope.newDapp.siaIcon.trim() == '') {
+            }
+            else {
+               data.siaIcon =  $scope.newDapp.siaIcon.trim();
+            }
+
+            if ($scope.repository == 'sia' || $scope.newDapp.git.trim() == '') {
+            }
+            else {
+                data.git =  $scope.newDapp.git.trim();
+            }
+
+            if ($scope.repository != 'sia' || $scope.newDapp.siaAscii.trim() == '') {
+            }
+            else {
+                data.siaAscii = $scope.newDapp.siaAscii.trim();
+            }
+
             $scope.errorMessage = "";
             if ($scope.secondPassphrase && !withSecond) {
                 $scope.checkSecondPass = true;
@@ -59,17 +90,17 @@ angular.module('webApp').controller('addDappModalController', ["$scope", "$http"
 
             $scope.view.inLoading = true;
 
-            $scope.newDapp.secret = pass;
-            $scope.newDapp.category = $scope.newDapp.category || 0;
+            data.secret = pass;
+            data.category = $scope.newDapp.category || 0;
 
             if ($scope.secondPassphrase) {
-                $scope.newDapp.secondSecret = $scope.secondPhrase;
+                data.secondSecret = $scope.secondPhrase;
                 if ($scope.rememberedPassword) {
-                    $scope.newDapp.secret = $scope.rememberedPassword;
+                    data.secret = $scope.rememberedPassword;
                 }
             }
 
-            $http.put('/api/dapps', $scope.newDapp).then(function (response) {
+            $http.put('/api/dapps', data).then(function (response) {
                 $scope.view.inLoading = false;
                 if (response.data.error) {
                     $scope.errorMessage = response.data.error;

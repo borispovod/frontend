@@ -2,6 +2,8 @@ require('angular');
 angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', '$stateParams', '$http', "$window",
     function ($scope, viewFactory, $stateParams, $http, $window) {
         $scope.view = viewFactory;
+        $scope.view.inLoading = true;
+        $scope.view.loadingText = "Loading dapp";
         $scope.loading = true;
         $scope.installed = false;
         $scope.isInstalled = function () {
@@ -23,6 +25,7 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
         $http.get("/api/dapps/get?id=" + $stateParams.dappId).then(function (response) {
             $scope.dapp = response.data.dapp;
             $scope.view.page = {title: $scope.dapp.name, previos: 'main.dappstore'};
+            $scope.view.inLoading = false;
         });
 
         $scope.installDapp = function() {

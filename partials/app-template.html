@@ -1,3 +1,81 @@
+<div ng-show="view.inLoading" ng-class="{'fadeInAnimation': view.inLoading}" class=" loading-wrapper ng-scope" style="
+    /* display: none; */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999999;
+    background: rgba(225,225,225,.6);
+">
+    <div class="valign-wrapper" style="
+    height: 100%;
+">
+        <div class="valign" style="
+    margin: 0 auto;
+">
+            <div class="preloader-wrapper big active" style="
+    margin: 0 auto;
+    display: block;
+">
+                <div class="spinner-layer spinner-blue">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+
+                <div class="spinner-layer spinner-red">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+
+                <div class="spinner-layer spinner-yellow">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+
+                <div class="spinner-layer spinner-green">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+            <h2 style="
+    display: block;
+    text-align: center;
+    margin-top: 1.8rem;
+    line-height: 1.4rem;
+    font-size: 1.4rem;
+">{{view.loadingText}}</h2>
+        </div>
+    </div>
+</div>
 <div id="wrapper" ng-controller="appController" ng-class="{'toggled': !toggled}">
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
@@ -237,9 +315,11 @@
                                 </div>
                             </div>
                     </span>
+
                     <div class="input-group">
                         <span class="input-group-addon"><i class="mdi-action-search"></i></span>
-                        <input type="text" focus-on="true" ng-model="searchDapp.searchForDappGlobal" class="form-control" placeholder="Search for Dapps">
+                        <input type="text" focus-on="true" ng-model="searchDapp.searchForDappGlobal"
+                               class="form-control" placeholder="Search for Dapps">
                     </div>
                 </div>
 
@@ -268,6 +348,7 @@
                                 </div>
                             </div>
                     </span>
+
                     <div class="input-group">
                         <span class="input-group-addon"><i class="mdi-action-search"></i></span>
                         <input type="text" focus-on="true" class="form-control"

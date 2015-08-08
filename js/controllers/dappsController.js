@@ -3,6 +3,8 @@ require('angular');
 angular.module('webApp').controller('dappsController', ['$scope', 'viewFactory', '$http', 'dappsService', '$timeout', 'addDappModal',
     function ($scope, viewFactory, $http, dappsService, $timeout, addDappModal) {
         $scope.view = viewFactory;
+        $scope.view.inLoading = true;
+        $scope.view.loadingText = "Loading dapps";
         $scope.view.page = {title: 'Dapp Store', previos: null};
         $scope.view.bar = {showDappsBar: true, searchDapps: false, showCategories: false};
         $scope.searchDapp = dappsService;
@@ -50,6 +52,7 @@ angular.module('webApp').controller('dappsController', ['$scope', 'viewFactory',
                 $http.get("/api/dapps").then(function (response) {
                     $scope.dapps = response.data.dapps;
                     $scope.searchedText = '';
+                    $scope.view.inLoading = false;
                 });
                 $http.get("/api/dapps/installed").then(function (response) {
                     $scope.installedDapps = response.data.dapps;
@@ -64,6 +67,7 @@ angular.module('webApp').controller('dappsController', ['$scope', 'viewFactory',
                 $http.get("/api/dapps/search?q=" + $scope.searchDapp.searchForDappGlobal).then(function (response) {
                     $scope.dapps = response.data.dapps;
                     $scope.searchDapp.inSearch = false;
+                    $scope.view.inLoading = false;
                     $scope.searchedText = '(search for "' + $scope.searchDapp.searchForDappGlobal + '")';
                 });
                 if (!$scope.showPlaceholder) {

@@ -62,6 +62,12 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
             } else {
                 if (correctAddress || allowSymbols.test($scope.to.toLowerCase())) {
                     if ($scope.isCorrectValue($scope.amount)) {
+                      if (correctAddress) {
+                          $scope.presendError = false;
+                          $scope.errorMessage = ''
+                          $scope.sendXCR($scope.rememberedPassword);
+                      }
+                        else{
                         $http.get("/api/accounts/username/get?username=" + $scope.to).then(function (response) {
                             if (response.data.success || correctAddress) {
                                 $scope.presendError = false;
@@ -72,7 +78,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
                                 $scope.errorMessage = response.data.error;
                                 $scope.presendError = true;
                             }
-                        });
+                        });}
 
                     }
                     else {
@@ -99,6 +105,14 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
             } else {
                 if (correctAddress || allowSymbols.test($scope.to.toLowerCase())) {
                     if ($scope.isCorrectValue($scope.amount)) {
+                        if (correctAddress){
+                            $scope.presendError = false;
+                            $scope.errorMessage = ''
+                            $scope.passmode = !$scope.passmode;
+                            $scope.focus = 'secretPhrase';
+                            $scope.secretPhrase = '';
+                        }
+                        else {
                         $http.get("/api/accounts/username/get?username=" + $scope.to).then(function (response) {
                             if (response.data.success || correctAddress) {
                                 $scope.presendError = false;
@@ -111,7 +125,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
                                 $scope.errorMessage = response.data.error;
                                 $scope.presendError = true;
                             }
-                        });
+                        });}
 
                     }
                     else {

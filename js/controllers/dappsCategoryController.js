@@ -4,6 +4,8 @@ angular.module('webApp').controller('dappsCategoryController', ['$scope', 'viewF
     function ($scope, viewFactory, $http, $stateParams, dappsService, $timeout) {
         alert("1");
         $scope.view = viewFactory;
+        $scope.view.inLoading = true;
+        $scope.view.loadingText = "Loading dapps";
         $scope.category = $stateParams.categoryId;
         $scope.view.page = {title: $scope.category, previos: 'main.dappstore'};
         $scope.view.bar = {showDappsCategoryBar: true};
@@ -44,6 +46,7 @@ angular.module('webApp').controller('dappsCategoryController', ['$scope', 'viewF
                         console.log("here");
                         $scope.dapps = response.data.dapps;
                         $scope.searchDapp.inSearch=false;
+                        $scope.view.inLoading = false;
                         $scope.searchedText = '(search for "' + $scope.searchDapp.searchForDapp + '")';
                     });
                 }
@@ -51,6 +54,7 @@ angular.module('webApp').controller('dappsCategoryController', ['$scope', 'viewF
                     $http.get("/api/dapps/installed").then(function (response) {
                         $scope.dapps = response.data.dapps;
                         $scope.searchedText = '';
+                        $scope.view.inLoading = false;
                     });
                 }
             }
@@ -59,6 +63,7 @@ angular.module('webApp').controller('dappsCategoryController', ['$scope', 'viewF
                     $http.get("/api/dapps/search?q=" + $scope.searchDapp.searchForDapp + "&category=" + $scope.category).then(function (response) {
                         $scope.dapps = response.data.dapps;
                         $scope.searchDapp.inSearch = false;
+                        $scope.view.inLoading = false;
                         $scope.searchedText = '(search for "' + $scope.searchDapp.searchForDapp + '")';
                     });
                 }
@@ -67,6 +72,7 @@ angular.module('webApp').controller('dappsCategoryController', ['$scope', 'viewF
                         $scope.dapps = response.data.dapps;
                         $scope.searchDapp.inSearch = false;
                         $scope.searchedText = '';
+                        $scope.view.inLoading = false;
                     });
                 }
             }

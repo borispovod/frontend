@@ -54,6 +54,16 @@ module.exports = function (grunt) {
                 dest: 'static/js/br_app.js'
             }
         },
+        copy: {
+            main: {
+                src: 'static/*',
+                dest: 'mobWallet/www/static'
+            },
+            partials: {
+                src: 'partials/*',
+                dest: 'mobWallet/www/partials'
+            }
+        },
         uglify: {
             release: {
                 options: {
@@ -69,6 +79,7 @@ module.exports = function (grunt) {
     });
 
     grunt.loadNpmTasks("grunt-contrib-concat");
+    grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks("grunt-contrib-cssmin");
     grunt.loadNpmTasks("grunt-contrib-less");
     grunt.loadNpmTasks("grunt-contrib-uglify");
@@ -76,7 +87,7 @@ module.exports = function (grunt) {
 
 
     // Default task.
-    grunt.registerTask("default", ["less", "cssmin", "concat:develop", 'browserify', "concat:ignoringBrowserify"]);
+    grunt.registerTask("default", ["less", "cssmin", "concat:develop", 'browserify', "concat:ignoringBrowserify", "copy", "copy:partials"]);
     // Release task
     grunt.registerTask("release", ["default", "uglify:release"]);
 

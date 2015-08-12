@@ -6,7 +6,7 @@ module.exports = function (grunt) {
         "bower_components/angular-blurred-modal/st-blurred-dialog.js"
     ];
 
-   var withounBrowserify = ['static/js/br_app.js', 'bower_components/materialize/bin/materialize.js'];
+    var withounBrowserify = ['static/js/br_app.js', 'bower_components/materialize/bin/materialize.js'];
 
     // Project configuration.
     grunt.initConfig({
@@ -55,13 +55,63 @@ module.exports = function (grunt) {
             }
         },
         copy: {
-            main: {
-                src: 'static/*',
-                dest: 'mobWallet/www/static'
+            static: {
+                files: [
+                    {
+                        expand: true,
+                        dest: 'mobWallet/www/static',
+                        cwd: 'static',
+                        src: [
+                            '**/*'
+                        ]
+                    }
+                ]
             },
             partials: {
-                src: 'partials/*',
-                dest: 'mobWallet/www/partials'
+                files: [
+                    {
+                        expand: true,
+                        dest: 'mobWallet/www/partials',
+                        cwd: 'partials',
+                        src: [
+                            '**/*'
+                        ]
+                    }
+                ]
+            },
+            images: {
+                files: [
+                    {
+                        expand: true,
+                        dest: 'mobWallet/www/images',
+                        cwd: 'images',
+                        src: [
+                            '**/*'
+                        ]
+                    }
+                ]
+            },
+            font: {
+                files: [
+                    {
+                        expand: true,
+                        dest: 'mobWallet/www/font',
+                        cwd: 'font',
+                        src: [
+                            '**/*'
+                        ]
+                    }
+                ]
+            },
+            wallet: {
+                files: [
+                    {
+                        expand: true,
+                        dest: 'mobWallet/www/',
+
+                        src: 'wallet.html'
+                    }
+                ]
             }
         },
         uglify: {
@@ -87,7 +137,7 @@ module.exports = function (grunt) {
 
 
     // Default task.
-    grunt.registerTask("default", ["less", "cssmin", "concat:develop", 'browserify', "concat:ignoringBrowserify", "copy", "copy:partials"]);
+    grunt.registerTask("default", ["less", "cssmin", "concat:develop", 'browserify', "concat:ignoringBrowserify", "copy:static", "copy:partials", "copy:images", "copy:font", "copy:wallet"]);
     // Release task
     grunt.registerTask("release", ["default", "uglify:release"]);
 

@@ -22,13 +22,13 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
         $scope.launchedIds = [];
 
         $scope.isInstalling = function () {
-            return (installingIds.indexOf($stateParams.dappId) >= 0);
+            return ($scope.installingIds.indexOf($stateParams.dappId) >= 0);
         }
         $scope.isLaunched = function () {
-            return (launchedIds.indexOf($stateParams.dappId) >= 0);
+            return ($scope.launchedIds.indexOf($stateParams.dappId) >= 0);
         }
         $scope.isRemoving = function () {
-            return (removingIds.indexOf($stateParams.dappId) >= 0);
+            return ($scope.removingIds.indexOf($stateParams.dappId) >= 0);
         }
 
         $scope.getInstalling = function () {
@@ -62,6 +62,10 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
         };
         $http.get("/api/dapps/get?id=" + $stateParams.dappId).then(function (response) {
             $scope.dapp = response.data.dapp;
+            if ($scope.dapp.git) {
+                $scope.dapp.githublink = $scope.githubLink($scope.dapp.git);
+                console.log($scope.githublink);
+            }
             $scope.view.page = {title: $scope.dapp.name, previos: 'main.dappstore'};
             $scope.view.inLoading = false;
         });
@@ -84,8 +88,10 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
 
         $scope.githubLink = function (git) {
             //git@github.com:crypti/cryptipad.git
-            return git.replace("git@", "https://").replace(".com:", ".com/");
+            return git.replace("git@", "https://").replace(".com:", ".com/").replace('.git', '');
         }
+
+
 
         $scope.runDApp = function () {
             // open dapp
@@ -123,6 +129,8 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
         $scope.getInstalling();
         $scope.getLaunched();
         $scope.getRemoving();
+
+        console.log($scope.installed, $scope.loading, $scope.isInstalling(), $scope.isRemoving(), $scope.isLaunched());
 
         $scope.$on('$destroy', function () {
             $interval.cancel($scope.stateDappInterval);

@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('dappsController', ['$scope', 'viewFactory', '$http', 'dappsService', '$timeout', 'addDappModal',
-    function ($scope, viewFactory, $http, dappsService, $timeout, addDappModal) {
+angular.module('webApp').controller('dappsController', ['$scope', 'viewFactory', '$http', 'dappsService', '$timeout', 'addDappModal', "$interval",
+    function ($scope, viewFactory, $http, dappsService, $timeout, addDappModal, $interval) {
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
         $scope.view.loadingText = "Loading dapps";
@@ -81,6 +81,9 @@ angular.module('webApp').controller('dappsController', ['$scope', 'viewFactory',
 
         };
 
-        $scope.searchDappText();
+        $scope.stateDappInterval = $interval(function () {
+            $scope.searchDappText();
+        }, 2000);
 
+        $scope.searchDappText();
     }]);

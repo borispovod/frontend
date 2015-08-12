@@ -11,7 +11,7 @@
          <script src="/components/supersonic/supersonic.js"></script>
          <script src="/components/webcomponentsjs/webcomponents.js"></script>
     </head>
-    <body>
-        <div ui-view class="container-app" ng-class="{{'modal_open': modalIsOpen}}"></div>
+    <body ng-class="{'modal_open': modalIsOpen}">
+        <div ui-view class="container-app"></div>
     </body>
 </html>

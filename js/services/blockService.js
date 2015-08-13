@@ -20,7 +20,7 @@ angular.module('webApp').service('blockService', function ($http) {
                 }
             );
         },
-        getBlocks: function (searchForBlock, $defer, params, filter, cb, publicKey) {
+        getBlocks: function (searchForBlock, $defer, params, filter, cb, publicKey, fromBlocks) {
             blocks.searchForBlock = searchForBlock.trim();
             if (blocks.searchForBlock != '') {
                 this.getBlock(blocks.searchForBlock, function (response) {
@@ -74,32 +74,57 @@ angular.module('webApp').service('blockService', function ($http) {
                     params: queryParams
                 })
                     .then(function (response) {
-                        var queryParams = {orderBy: "height:desc", limit: 1, offset: 0}
-                        if (publicKey) {
-                            queryParams.generatorPublicKey = publicKey;
-                        }
-                        $http.get("/api/blocks/", {params: queryParams})
-                            .then(function (res) {
-                                if (publicKey) {
-                                    params.total(res.data.count);
-                                }
-                                else {
-                                    if (res.data.count) {
-                                        params.total(res.data.blocks[0].height);
+                        if (fromBlocks) {
+                            $http.get("/api/blocks/getHeight")
+                                .then(function (res) {
+                                    if (res.data.success) {
+                                        params.total(res.data.height);
                                     }
                                     else {
                                         params.total(0);
                                     }
-                                }
-                                $defer.resolve(response.data.blocks);
-                                if (response.data.blocks.length) {
-                                    blocks.lastBlockId = response.data.blocks[response.data.blocks.length - 1].id;
-                                }
-                                else {
-                                    blocks.lastBlockId = 0;
-                                }
-                                cb();
-                            });
+
+                                    if (response.data.success) {
+                                        blocks.lastBlockId = response.data.blocks[response.data.blocks.length - 1].id;
+                                        $defer.resolve(response.data.blocks);
+                                    }
+                                    else {
+                                        blocks.lastBlockId = 0;
+                                        $defer.resolve([]);
+                                    }
+                                    cb();
+                                });
+                        }
+                        else {
+                            var queryParams = {orderBy: "height:desc", limit: 1, offset: 0}
+                            if (publicKey) {
+                                queryParams.generatorPublicKey = publicKey;
+                            }
+                            $http.get("/api/blocks/", {params: queryParams})
+                                .then(function (res) {
+                                    if (publicKey) {
+                                        params.total(res.data.count);
+                                    }
+                                    else {
+                                        if (res.data.count) {
+                                            params.total(res.data.blocks[0].height);
+                                        }
+                                        else {
+                                            params.total(0);
+                                        }
+                                    }
+
+                                    if (response.data.success) {
+                                        blocks.lastBlockId = response.data.blocks[response.data.blocks.length - 1].id;
+                                        $defer.resolve(response.data.blocks);
+                                    }
+                                    else {
+                                        blocks.lastBlockId = 0;
+                                        $defer.resolve([]);
+                                    }
+                                    cb();
+                                });
+                        }
                     });
             }
         }

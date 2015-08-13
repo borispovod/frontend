@@ -28,7 +28,7 @@ angular.module('webApp').controller('blockchainController', ['$scope', '$timeout
                     $scope.searchBlocks.inSearch = false;
                     $scope.countForgingBlocks = params.total();
                     $scope.loading = false;
-                });
+                }, null, true);
             }
         });
 

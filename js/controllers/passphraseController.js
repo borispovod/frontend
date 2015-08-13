@@ -9,7 +9,7 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
         userService.rememberedPassword = '';
         $scope.rememberPassword = true;
         $scope.errorMessage = "";
-        $scope.modalIsOpen = false;
+        $rootScope.modalIsOpen = false;
 
         $scope.getPeers = function (cb) {
 
@@ -67,10 +67,10 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
         }
 
         $scope.newUser = function () {
-            $scope.modalIsOpen = true;
+            $rootScope.modalIsOpen = true;
             $scope.newUserModal = newUser.activate({
                 destroy: function () {
-                    $scope.modalIsOpen = false;
+                    $rootScope.modalIsOpen = false;
                 }
             });
         }

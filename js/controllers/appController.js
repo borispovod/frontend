@@ -5,7 +5,7 @@ var ipRegex = require('ip-regex');
 
 angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal',  'serverSocket', 'delegateService', '$window',  'contactsService'  , 'transactionsService',  'peerFactory', 'dbFactory', "serverSocket",
     function ($rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, serverSocket, delegateService, $window, contactsService, transactionsService,  peerFactory, dbFactory, serverSocket) {
-
+        $rootScope.modalIsOpen = false;
         $scope.inError = false;
 
         $scope.dbCompact = $interval(function () {
@@ -216,11 +216,13 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         };
 
         $scope.sendCrypti = function (to) {
+            $rootScope.modalIsOpen = true;
             to = to || '';
             $scope.sendCryptiModal = sendCryptiModal.activate({
                 totalBalance: $scope.unconfirmedBalance,
                 to: to,
                 destroy: function () {
+                    $rootScope.modalIsOpen = false;
                 }
             });
         }

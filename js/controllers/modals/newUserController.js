@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('newUserController', ["$scope", "$http", "newUser", "userService", "$state", "peerFactory",
-    function ($scope, $http, newUser, userService, $state, peerFactory) {
+angular.module('webApp').controller('newUserController', ["$rootScope","$scope", "$http", "newUser", "userService", "$state", "peerFactory",
+    function ($rootScope,$scope, $http, newUser, userService, $state, peerFactory) {
     $scope.noMatch = false;
     $scope.firstStep = true;
 
@@ -67,7 +67,9 @@ angular.module('webApp').controller('newUserController', ["$scope", "$http", "ne
         }
     }
     $scope.close = function () {
+        $rootScope.modalIsOpen = false;
         newUser.deactivate();
+
     }
 
     //runtime

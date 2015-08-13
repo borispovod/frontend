@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryptiModal", "$http", "userService", "$timeout", "peerFactory", "transactionService",
-    function ($scope, sendCryptiModal, $http, userService, $timeout, peerFactory, transactionService) {
+angular.module('webApp').controller('sendCryptiController', ["$rootScope", "$scope", "sendCryptiModal", "$http", "userService", "$timeout", "peerFactory", "transactionService",
+    function ($rootScope, $scope, sendCryptiModal, $http, userService, $timeout, peerFactory, transactionService) {
 
         $scope.sending = false;
         $scope.passmode = false;
@@ -43,6 +43,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
         }
 
         $scope.passcheck = function (fromSecondPass) {
+
             if (fromSecondPass) {
                 $scope.checkSecondPass = false;
                 $scope.passmode = $scope.rememberedPassword ? false : true;
@@ -54,6 +55,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
                 return;
             }
             if ($scope.rememberedPassword) {
+
                 $scope.sendXCR($scope.rememberedPassword);
             }
             else {
@@ -64,7 +66,9 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
         }
 
         $scope.close = function () {
+            $rootScope.modalIsOpen = false;
             if ($scope.destroy) {
+
                 $scope.destroy();
             }
             sendCryptiModal.deactivate();
@@ -100,7 +104,10 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
                 //($scope.amount / 100 * $scope.currentFee).roundTo(8);
 
                 if ($scope.amount == 0) {
-                    fee = 0;
+
+                    $scope.fee = 0;
+                    $scope.errorMessage = "Must be more than 0 XCR";
+                    throw "Invalid input";
                 } else if (parseFloat(fee) == 0) {
                     fee = "0.00000001";
                     $scope.fee = fee;
@@ -173,7 +180,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
                 });
         }
 
-        $scope.convertXCR = function (currency) {
+        $scope.convertXCR = function (currency, from) {
             currency = String(currency);
 
             var parts = currency.split(".");
@@ -215,19 +222,23 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
 
             return parseInt(result);
         }
+
         $scope.clearRecipient = function () {
             $scope.to = '';
         }
 
         $scope.sendXCR = function (secretPhrase, withSecond) {
+            $scope.errorMessage = "";
 
             if ($scope.secondPassphrase && !withSecond) {
                 $scope.checkSecondPass = true;
                 $scope.focus = 'secondPhrase';
                 return;
             }
+
             $scope.recalculateFee();
-            $scope.errorMessage = "";
+
+
             if (($scope.amount + '').indexOf('.') != -1) {
                 $scope.lengthError = $scope.amount.split('.')[1].length > 8;
                 $scope.errorMessage = $scope.lengthError ? "More than 8 numbers in decimal part" : '';
@@ -239,10 +250,14 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
 
             $scope.amountError = $scope.convertXCR($scope.fee) + $scope.convertXCR($scope.amount) > userService._unconfirmedBalance;
             $scope.errorMessage = $scope.amountError ? "Not enough XCR" : "";
+            if ($scope.amountError) {
+                return;
+            }
+
 
             var data = {
                 secret: secretPhrase,
-                amount: $scope.convertXCR($scope.amount),
+                amount: $scope.convertXCR($scope.amount, 3),
                 recipientId: $scope.to
             };
 
@@ -271,10 +286,12 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
                     {transaction: sendTransaction},
                     transactionService.createHeaders()).then(function (resp) {
                         $scope.sending = !$scope.sending;
+
                         if (!resp.data.success) {
                             $scope.errorMessage = resp.data.message;
                         }
                         else {
+                            $rootScope.modalIsOpen = false;
                             if ($scope.destroy) {
                                 $scope.destroy();
                             }
@@ -282,6 +299,9 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
                         }
                     });
 
+            }
+            else {
+                $scope.errorMessage = 'Error during send XCR.';
             }
         }
         $scope.getCurrentFee();

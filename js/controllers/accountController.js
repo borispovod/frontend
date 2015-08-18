@@ -49,6 +49,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
         }
 
         $scope.getTransactions = function () {
+
             $http.get("/api/transactions", {
                 params: {
                     senderPublicKey: userService.publicKey,
@@ -68,7 +69,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
                     })
                         .then(function (resp) {
                             var unconfirmedTransactions = resp.data.transactions;
-                            $scope.view.inLoading = false;
+
                             $timeout(function () {
                                 $scope.transactions = unconfirmedTransactions.concat(transactions).slice(0, 8);
 
@@ -81,6 +82,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
         $scope.getAccount = function () {
             $http.get("/api/accounts", {params: {address: userService.address}})
                 .then(function (resp) {
+                    $scope.view.inLoading = false;
                     var account = resp.data.account;
                     userService.balance = account.balance;
                     userService.unconfirmedBalance = account.unconfirmedBalance ;

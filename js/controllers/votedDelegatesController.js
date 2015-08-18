@@ -111,9 +111,10 @@ angular.module('webApp').controller('votedDelegatesController', ['$scope', '$roo
                 delegateService.getMyDelegates($defer, params, $scope.filter, userService.address, function () {
                     $scope.count = params.total();
                     $scope.loading = false;
+                    $scope.view.inLoading = false;
                     $timeout(function () {
                         $scope.unconfirmedTransactions.getList();
-                        $scope.view.inLoading = false;
+
                     }, 1000);
                 });
             }

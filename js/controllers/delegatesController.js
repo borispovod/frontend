@@ -146,12 +146,13 @@ angular.module('webApp').controller('delegatesController', ['$scope', '$rootScop
                 delegateService.getTopList($defer, params, $scope.filter, function () {
                     $scope.countTop = params.total();
                     $scope.loadingTop = false;
+                    $scope.view.inLoading = false;
                     $timeout(function () {
                         $scope.delegates.getList(function () {
                             $scope.unconfirmedTransactions.getList();
-                            $scope.view.inLoading = false;
+
                         });
-                    }, 10000);
+                    }, 1);
                 });
             }
         });

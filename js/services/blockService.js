@@ -86,13 +86,15 @@ angular.module('webApp').service('blockService', function ($http) {
 
                                     if (response.data.success) {
                                         blocks.lastBlockId = response.data.blocks[response.data.blocks.length - 1].id;
+                                        cb();
                                         $defer.resolve(response.data.blocks);
                                     }
                                     else {
                                         blocks.lastBlockId = 0;
+                                        cb();
                                         $defer.resolve([]);
                                     }
-                                    cb();
+
                                 });
                         }
                         else {
@@ -115,14 +117,16 @@ angular.module('webApp').service('blockService', function ($http) {
                                     }
 
                                     if (response.data.success) {
-                                        blocks.lastBlockId = response.data.blocks[response.data.blocks.length - 1].id;
+                                        blocks.lastBlockId = response.data.blocks.length ? response.data.blocks[response.data.blocks.length - 1].id : 0;
+                                        cb();
                                         $defer.resolve(response.data.blocks);
                                     }
                                     else {
                                         blocks.lastBlockId = 0;
+                                        cb();
                                         $defer.resolve([]);
                                     }
-                                    cb();
+
                                 });
                         }
                     });

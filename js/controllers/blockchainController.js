@@ -3,6 +3,8 @@ require('angular');
 angular.module('webApp').controller('blockchainController', ['$scope', '$timeout', '$rootScope', '$http', "userService", "$interval", 'blockService', 'blockModal', 'blockInfo', 'userInfo', 'ngTableParams', 'viewFactory',
     function ($rootScope, $timeout, $scope, $http, userService, $interval, blockService, blockModal, blockInfo, userInfo, ngTableParams, viewFactory) {
         $scope.view = viewFactory;
+        $scope.view.inLoading = true;
+        $scope.view.loadingText = "Loading blockchain";
         $scope.view.page = {title: 'Blockchain', previos: null};
         $scope.view.bar = {showBlockSearchBar: true};
         $scope.address = userService.address;
@@ -28,6 +30,7 @@ angular.module('webApp').controller('blockchainController', ['$scope', '$timeout
                     $scope.searchBlocks.inSearch = false;
                     $scope.countForgingBlocks = params.total();
                     $scope.loading = false;
+                    $scope.view.inLoading = false;
                 }, null, true);
             }
         });
@@ -49,9 +52,9 @@ angular.module('webApp').controller('blockchainController', ['$scope', '$timeout
             }
         });
 
-        $scope.blocksInterval = $interval(function () {
-            $scope.updateBlocks();
-        }, 1000 * 60);
+
+        $scope.updateBlocks();
+
 
         $scope.$on('$destroy', function () {
             $interval.cancel($scope.blocksInterval);

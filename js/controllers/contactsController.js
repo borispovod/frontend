@@ -3,6 +3,8 @@ require('angular');
 angular.module('webApp').controller('contactsController', ['$scope', '$rootScope', '$http', 'viewFactory', 'contactsService', 'ngTableParams',
     function ($rootScope, $scope, $http, viewFactory, contactsService, ngTableParams) {
         $scope.view = viewFactory;
+        $scope.view.inLoading = true;
+        $scope.view.loadingText = "Loading contacts";
         $scope.view.page = {title: 'Contacts', previos: null};
         $scope.view.bar = {showContactsBar: true};
         $scope.contactsView = contactsService;
@@ -18,6 +20,7 @@ angular.module('webApp').controller('contactsController', ['$scope', '$rootScope
             total: 0,
             getData: function ($defer, params) {
                 contactsService.getSortedContacts($defer, params, $scope.filter, function(err){
+                    $scope.view.inLoading = false;
                 });
             }
         });

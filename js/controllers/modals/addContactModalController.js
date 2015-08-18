@@ -1,8 +1,11 @@
 require('angular');
 
-angular.module('webApp').controller('addContactModalController', ["$scope", "addContactModal", "$http", "userService", "contactsService",
-    function ($scope, addContactModal, $http, userService, contactsService) {
+angular.module('webApp').controller('addContactModalController', ["$scope", "addContactModal", "$http", "userService", "contactsService", "viewFactory",
+    function ($scope, addContactModal, $http, userService, contactsService, viewFactory) {
         $scope.passmode = false;
+        $scope.view = viewFactory;
+        $scope.view.loadingText = "Adding new contact";
+        $scope.view.inLoading = false;
         $scope.accountValid = true;
         $scope.errorMessage = "";
         $scope.secondPassphrase = userService.secondPassphrase;
@@ -92,7 +95,9 @@ angular.module('webApp').controller('addContactModalController', ["$scope", "add
                     queryParams.secret = $scope.rememberedPassword;
                 }
             }
+            $scope.view.inLoading = true;
             contactsService.addContact(queryParams, function (response) {
+                $scope.view.inLoading = false;
                 if (response.data.success) {
                     $scope.close();
                 }

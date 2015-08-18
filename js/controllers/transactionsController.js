@@ -3,6 +3,8 @@ require('angular');
 angular.module('webApp').controller('transactionsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionsService', 'ngTableParams', 'transactionInfo', '$timeout', 'userInfo',
     function ($rootScope, $scope, $http, userService, $interval, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo, $timeout, userInfo) {
         $scope.view = viewFactory;
+        $scope.view.inLoading = true;
+        $scope.view.loadingText = "Loading transactions";
         $scope.view.page = {title: 'Transactions', previos: 'main.dashboard'};
         $scope.view.bar = {showTransactionsSearchBar: true};
         $scope.showAllColumns = true;
@@ -10,7 +12,7 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
         $scope.transactionsView = transactionsService;
         $scope.searchTransactions = transactionsService;
         $scope.countForgingBlocks = 0;
-
+        $scope.unconfirmedTransactions = [];
         $scope.userInfo = function (userId) {
             $scope.modal = userInfo.activate({userId: userId});
         }
@@ -36,7 +38,21 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
                         $scope.searchTransactions.inSearch = false;
                         $scope.countForgingBlocks = params.total();
                         $scope.loading = false;
+                        $http.get('/api/transactions/unconfirmed', {
+                            params: {
+                                senderPublicKey: userService.publicKey,
+                                address: userService.address
+                            }
+                        })
+                            .then(function (resp) {
+                                var unconfirmedTransactions = resp.data.transactions;
+                                $scope.view.inLoading = false;
+                                $timeout(function () {
+                                    $scope.unconfirmedTransactions = unconfirmedTransactions;
+                                    $scope.$apply();
+                                }, 1);
 
+                            });
                     });
             }
         });
@@ -60,7 +76,7 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
 
         $scope.$on('updateControllerData', function (event, data) {
             if (data.indexOf('main.transactions') != -1) {
-                //$scope.updateTransactions();
+                $scope.updateTransactions();
             }
         });
 

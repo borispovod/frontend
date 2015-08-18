@@ -3,6 +3,8 @@ require('angular');
 angular.module('webApp').controller('walletsController', ['$scope', '$rootScope', '$http', 'viewFactory', 'ngTableParams', '$filter', 'multiMembersModal',
     function ($rootScope, $scope, $http, viewFactory, ngTableParams, $filter, multiMembersModal) {
         $scope.view = viewFactory;
+        $scope.view.inLoading = true;
+        $scope.view.loadingText = "Loading multisignature wallets";
         $scope.view.page = {title: 'Multisignature', previos: null};
         $scope.view.bar = {showWalletBar: true};
         var data = [
@@ -101,6 +103,7 @@ angular.module('webApp').controller('walletsController', ['$scope', '$rootScope'
                     $filter('orderBy')(dataConfirmed, params.orderBy()) :
                     dataConfirmed;
                 $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                $scope.view.inLoading = false;
             }
         });
 

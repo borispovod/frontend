@@ -2,8 +2,9 @@ require('angular');
 
 angular.module('webApp').controller('accountController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionInfo', 'userInfo', '$filter',
     function ($rootScope, $scope, $http, userService, $interval, $timeout, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionInfo, userInfo, $filter) {
-
         $scope.view = viewFactory;
+        $scope.view.inLoading = true;
+        $scope.view.loadingText = "Loading dashboard";
         $scope.view.page = {title: 'Dashboard', previos: null};
         $scope.view.bar = {};
         $scope.delegate = undefined;
@@ -67,8 +68,10 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
                     })
                         .then(function (resp) {
                             var unconfirmedTransactions = resp.data.transactions;
+                            $scope.view.inLoading = false;
                             $timeout(function () {
                                 $scope.transactions = unconfirmedTransactions.concat(transactions).slice(0, 8);
+
                             });
 
                         });
@@ -91,6 +94,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
                     }
                     $scope.secondPassphrase = userService.secondPassphrase;
                     $scope.unconfirmedPassphrase = userService.unconfirmedPassphrase;
+
                 });
         }
 
@@ -110,7 +114,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
 
 
         $scope.$on('updateControllerData', function (event, data) {
-            if (data.indexOf('main.dashboard') != -1) {
+            if (data.indexOf('main.transactions') != -1) {
                 $scope.updateView();
             }
         });
@@ -141,6 +145,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
             delegateService.getDelegate($scope.publicKey, function (response) {
                 $timeout(function () {
                     $scope.delegate = response;
+
                 });
             });
         }

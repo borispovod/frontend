@@ -3,6 +3,8 @@ require('angular');
 angular.module('webApp').controller('votedDelegatesController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "$filter", "ngTableParams", "delegateService", "voteModal", "viewFactory",
     function ($rootScope, $scope, $http, userService, $interval, $timeout, $filter, ngTableParams, delegateService, voteModal, viewFactory) {
         $scope.view = viewFactory;
+        $scope.view.inLoading = true;
+        $scope.view.loadingText = "Loading delegates";
         $scope.view.page = {title: 'Forging', previos: null};
         $scope.view.bar = {forgingMenu: true};
         $scope.allVotes = 100
@@ -82,6 +84,7 @@ angular.module('webApp').controller('votedDelegatesController', ['$scope', '$roo
                         $scope.unconfirmedTransactions.list = [];
                         response.data.transactions.forEach(function (transaction) {
                             $scope.unconfirmedTransactions.list = $scope.unconfirmedTransactions.list.concat(transaction.asset.votes);
+
                         });
                     });
 
@@ -110,6 +113,7 @@ angular.module('webApp').controller('votedDelegatesController', ['$scope', '$roo
                     $scope.loading = false;
                     $timeout(function () {
                         $scope.unconfirmedTransactions.getList();
+                        $scope.view.inLoading = false;
                     }, 1000);
                 });
             }

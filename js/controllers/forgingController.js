@@ -92,6 +92,8 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
         $scope.rank = 0;
         $scope.uptime = 0;
         $scope.view = viewFactory;
+        $scope.view.inLoading = true;
+        $scope.view.loadingText = "Loading forging states";
         $scope.view.page = {title: 'Forging', previos: null};
         $scope.view.bar = {forgingMenu: true};
         $scope.address = userService.address;
@@ -115,6 +117,7 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
                 blockService.getBlocks('', $defer, params, $scope.filter, function () {
                     $scope.loading = false;
                     $scope.countForgingBlocks = params.total();
+                    $scope.view.inLoading = false;
                 }, userService.publicKey);
             }
         });

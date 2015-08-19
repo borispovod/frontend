@@ -403,6 +403,11 @@ angular.module('webApp').controller('appController', ['dappsService','$scope', '
                 'main.contacts'
             ]);
         });
+        $scope.$on('socket:dapps/change', function (ev, data) {
+            $scope.updateViews([
+                'main.dapps'
+            ]);
+        });
         $scope.$on('socket:followers/change', function (ev, data) {
             $scope.getAppData();
             $scope.updateViews([

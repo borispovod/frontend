@@ -81,9 +81,11 @@ angular.module('webApp').controller('dappsController', ['$scope', 'viewFactory',
 
         };
 
-        $scope.stateDappInterval = $interval(function () {
-            $scope.searchDappText();
-        }, 2000);
+        $scope.$on('updateControllerData', function (event, data) {
+            if (data.indexOf('main.dapps') != -1) {
+                $scope.searchDappText();
+            }
+        });
 
         $scope.searchDappText();
     }]);

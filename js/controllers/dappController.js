@@ -136,9 +136,12 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
             $interval.cancel($scope.stateDappInterval);
         });
 
-        $scope.stateDappInterval = $interval(function () {
-            $scope.getInstalling();
-            $scope.getLaunched();
-            $scope.getRemoving();
-        }, 2000);
+        $scope.$on('updateControllerData', function (event, data) {
+            if (data.indexOf('main.dapps') != -1) {
+                $scope.getInstalling();
+                $scope.getLaunched();
+                $scope.getRemoving();
+            }
+        });
+
     }]);

@@ -77,5 +77,11 @@ angular.module('webApp').controller('dappsCategoryController', ['$scope', 'viewF
             }
         };
 
-        $scope.searchDappText();
+
+
+        $scope.$on('updateControllerData', function (event, data) {
+            if (data.indexOf('main.dapps') != -1) {
+                $scope.searchDappText();
+            }
+        });
     }]);

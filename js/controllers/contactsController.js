@@ -22,7 +22,7 @@ angular.module('webApp').controller('contactsController', ['$scope', '$rootScope
             getData: function ($defer, params) {
                 contactsService.getSortedContacts($defer, params, $scope.filter, function (err) {
                     $scope.view.inLoading = false;
-                    $http.get('/api/transactions/unconfirmed', {
+                    $http.get('/api/contacts/unconfirmed', {
                         params: {
                             senderPublicKey: userService.publicKey
                         }

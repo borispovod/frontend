@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('addContactModalController', ["$scope", "addContactModal", "$http", "userService", "contactsService", "viewFactory",
-    function ($scope, addContactModal, $http, userService, contactsService, viewFactory) {
+angular.module('webApp').controller('addContactModalController', ["$scope", "addContactModal", "$http", "userService", "contactsService", "viewFactory","$timeout",
+    function ($scope, addContactModal, $http, userService, contactsService, viewFactory, $timeout) {
         $scope.passmode = false;
         $scope.view = viewFactory;
         $scope.view.loadingText = "Adding new contact";
@@ -19,7 +19,7 @@ angular.module('webApp').controller('addContactModalController', ["$scope", "add
             if (fromSecondPass) {
                 $scope.checkSecondPass = false;
                 $scope.passmode = $scope.rememberedPassword ? false : true;
-                if ($scope.passmode){
+                if ($scope.passmode) {
                     $scope.focus = 'secretPhrase';
                 }
                 else {
@@ -99,6 +99,9 @@ angular.module('webApp').controller('addContactModalController', ["$scope", "add
             contactsService.addContact(queryParams, function (response) {
                 $scope.view.inLoading = false;
                 if (response.data.success) {
+                    $timeout(function () {
+                        $scope.$broadcast('updateControllerData', ['main.contacts']);
+                    });
                     $scope.close();
                 }
                 else {

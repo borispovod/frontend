@@ -1,7 +1,7 @@
 require('angular');
 var compareVersion = require('../../node_modules/compare-version/index.js');
 
-angular.module('webApp').controller('appController', ['dappsService','$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal', 'userInfo', 'transactionsService', 'secondPassphraseModal', 'focusFactory',
+angular.module('webApp').controller('appController', ['dappsService', '$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal', 'userInfo', 'transactionsService', 'secondPassphraseModal', 'focusFactory',
     function (dappsService, $rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal, userInfo, transactionsService, secondPassphraseModal, focusFactory) {
         $scope.searchTransactions = transactionsService;
         $scope.searchDapp = dappsService;
@@ -14,16 +14,17 @@ angular.module('webApp').controller('appController', ['dappsService','$scope', '
         $scope.subForgingCollapsed = true;
         $scope.categories = {};
 
-        $scope.getCategoryName = function(id){
+        $scope.getCategoryName = function (id) {
             for (var key in $scope.categories) {
                 if ($scope.categories.hasOwnProperty(key)) {
-                    if (id== $scope.categories[key])
-                    {return key.toString();}
+                    if (id == $scope.categories[key]) {
+                        return key.toString();
+                    }
                 }
             }
         }
 
-        $scope.getCategories = function(){
+        $scope.getCategories = function () {
             $http.get("/api/dapps/categories").then(function (response) {
                 if (response.data.success) {
                     $scope.categories = response.data.categories;
@@ -379,7 +380,8 @@ angular.module('webApp').controller('appController', ['dappsService','$scope', '
         $scope.$on('socket:transactions/change', function (ev, data) {
             $scope.getAppData();
             $scope.updateViews([
-                'main.transactions'
+                'main.transactions',
+                'main.contacts'
             ]);
         });
         $scope.$on('socket:blocks/change', function (ev, data) {
@@ -421,7 +423,9 @@ angular.module('webApp').controller('appController', ['dappsService','$scope', '
         }
 
         $scope.updateViews = function (views) {
-            $scope.$broadcast('updateControllerData', views);
+            $timeout(function () {
+                $scope.$broadcast('updateControllerData', views);
+            });
         }
 
         $scope.getAppData();

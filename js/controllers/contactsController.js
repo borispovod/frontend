@@ -28,7 +28,7 @@ angular.module('webApp').controller('contactsController', ['$scope', '$rootScope
                         }
                     })
                         .then(function (resp) {
-                            var unconfirmedTransactions = resp.data.transactions;
+                            var unconfirmedTransactions = resp.data.contacts;
                             $scope.view.inLoading = false;
                             $timeout(function () {
 

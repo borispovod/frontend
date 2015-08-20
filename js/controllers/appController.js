@@ -169,7 +169,7 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
                         $scope.getForging();
                         $scope.getDelegate();
                         $scope.getContacts();
-                        $scope.getVersion();
+
                     }
                     if ($state.current.name == 'main.pending' || $state.current.name == 'main.contacts') {
                         $scope.getContacts();
@@ -430,4 +430,8 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
 
         $scope.getAppData();
         $scope.getUSDPrice();
+        $scope.getVersion();
+        $timeout(function () {
+            $scope.getVersion();
+        }, 60 * 10 * 1000);
     }]);

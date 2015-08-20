@@ -175,8 +175,6 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
                         $scope.getContacts();
                     }
                     if ($state.current.name == 'main.forging' || $state.current.name == 'main.votes' || $state.current.name == 'main.delegates') {
-                        $scope.getForging();
-                        $scope.getDelegate();
                         $scope.getMyVotesCount();
                     }
                     if ($state.current.name == 'main.dappstore' || 'main.dashboard') {

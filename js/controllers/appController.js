@@ -474,7 +474,8 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         $scope.$on('socket:transactions/change', function (ev, data) {
             $scope.getAppData();
             $scope.updateViews([
-                'main.transactions'
+                'main.transactions',
+                'main.contacts'
             ]);
         });
         $scope.$on('socket:blocks/change', function (ev, data) {
@@ -511,7 +512,9 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
 
 
         $scope.updateViews = function (views) {
-            $scope.$broadcast('updateControllerData', views);
+            $timeout(function () {
+                $scope.$broadcast('updateControllerData', views);
+            });
         }
 
         $scope.getAppData();

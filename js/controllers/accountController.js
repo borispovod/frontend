@@ -4,6 +4,8 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
     function ($rootScope, $scope, $http, userService, $interval, $timeout, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionInfo, userInfo, $filter, peerFactory) {
 
         $scope.view = viewFactory;
+        $scope.view.inLoading = true;
+        $scope.view.loadingText = "Loading dashboard";
         $scope.view.page = {title: 'Dashboard', previos: null};
         $scope.view.bar = {};
         $scope.delegate = undefined;
@@ -77,6 +79,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
         $scope.getAccount = function () {
             $http.get(peerFactory.getUrl() +"/api/accounts", {params: {address: userService.address}})
                 .then(function (resp) {
+                    $scope.view.inLoading = false;
                     var account = resp.data.account;
                     if (!account) {
                         userService.balance = 0;

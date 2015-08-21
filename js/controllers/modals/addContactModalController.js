@@ -1,8 +1,11 @@
 require('angular');
 
-angular.module('webApp').controller('addContactModalController', ["$scope", "addContactModal", "$http", "userService", "contactsService", "peerFactory",
-    function ($scope, addContactModal, $http, userService, contactsService, peerFactory) {
+angular.module('webApp').controller('addContactModalController', ["$scope", "addContactModal", "$http", "userService", "contactsService", "peerFactory","viewFactory",
+    function ($scope, addContactModal, $http, userService, contactsService, peerFactory ,viewFactory) {
         $scope.passmode = false;
+        $scope.view = viewFactory;
+        $scope.view.loadingText = "Adding new contact";
+        $scope.view.inLoading = false;
         $scope.accountValid = true;
         $scope.errorMessage = "";
         $scope.secondPassphrase = userService.secondPassphrase;
@@ -89,8 +92,9 @@ angular.module('webApp').controller('addContactModalController', ["$scope", "add
                 $scope.sendData(pass, withSecond);
             }
             else {
-
+                $scope.view.inLoading = true;
                 $http.get(peerFactory.getUsernameUrl() + "/api/accounts/username/get?username=" + $scope.contact).then(function (response) {
+                    $scope.view.inLoading = false;
                     if (response.data.success) {
                         $scope.contact = response.data.account.address;
                         $scope.sendData(pass, withSecond);

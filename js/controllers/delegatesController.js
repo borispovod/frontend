@@ -3,6 +3,9 @@ require('angular');
 angular.module('webApp').controller('delegatesController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "$filter", "ngTableParams", "delegateService", "voteModal", "viewFactory", "userInfo", "peerFactory",
     function ($rootScope, $scope, $http, userService, $interval, $timeout, $filter, ngTableParams, delegateService, voteModal, viewFactory, userInfo, peerFactory) {
         $scope.view = viewFactory;
+        $scope.view.inLoading = true;
+        $scope.view.loadingText = "Loading delegates";
+
         $scope.view.page = {title: 'Forging', previos: null};
         $scope.view.bar = {forgingMenu: true};
         $scope.allVotes = 100
@@ -143,6 +146,7 @@ angular.module('webApp').controller('delegatesController', ['$scope', '$rootScop
                 delegateService.getTopList($defer, params, $scope.filter, function () {
                     $scope.countTop = params.total();
                     $scope.loadingTop = false;
+                    $scope.view.inLoading = false;
                     $timeout(function () {
                         $scope.delegates.getList(function () {
                             $scope.unconfirmedTransactions.getList();

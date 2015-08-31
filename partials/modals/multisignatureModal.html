@@ -2,7 +2,7 @@
     <div class="container height100">
         <div class="row height100">
             <div class="col-md-6 col-md-offset-4 height100 valign-wrapper">
-                <div class="modal-content" ng-show="false">
+                <div class="modal-content" ng-show="step==1">
                     <div class="modal-header modal-iconed">
                         <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div>
                     </div>
@@ -17,17 +17,10 @@
                     <div class="modal-body">
 
                     </div>
-                    <div class="scrolling">
+                    <div class="scrolling" style="margin-left: 10px">
                         <div class="modal-body">
                         <span class="multi-info-text flat-text"><p>Lorem ipsum dolor sit amet, consectetur adipisicing
                             elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-
-                        </p><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                            dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                            culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste
-                            natus error sit voluptatem accusantium.
-
                         </p>
                             <p>Ddoloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et
                                 quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
@@ -39,27 +32,7 @@
                                 et
                                 dolore magnam aliquam quaerat voluptatem.</span>
                             </p>
-                            <p>Ddoloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et
-                                quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
-                                voluptas
-                                sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
-                                voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit
-                                amet,
-                                consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore
-                                et
-                                dolore magnam aliquam quaerat voluptatem.</span>
-                            </p>
-
-                            <p>Ddoloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et
-                                quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
-                                voluptas
-                                sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
-                                voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit
-                                amet,
-                                consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore
-                                et
-                                dolore magnam aliquam quaerat voluptatem.</span>
-                            </p></div>
+                         </div>
                     </div>
                     <div class="modal-body">
                         <ul class="nav modal-buttons pull-right">
@@ -67,11 +40,11 @@
                                 <a href="#" ng-click="close()">visit faq.
                                 </a>
                             </li>
-                            <li><a href="#" class="green-link" ng-click="passcheck()">NEXT</a></li>
+                            <li><a href="#" class="green-link" ng-click="step=2;">NEXT</a></li>
                         </ul>
                     </div>
                 </div>
-                <div class="modal-content" ng-show="true">
+                <div class="modal-content" ng-show="step==2">
                     <div class="modal-header modal-iconed">
                         <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div>
                     </div>
@@ -83,7 +56,7 @@
                         </div>
                     </div>
                     <div class="modal-body">
-                        <form ng-submit="passcheck()">
+                        <form ng-submit="addMember(contact)">
                             <div class="input-group app-addon">
                                 <span class="input-group-addon search"></span>
                                 <input ng-focus="focus == 'contact'" id="contact" type="text" class="form-control"
@@ -91,13 +64,34 @@
                                        ng-model="contact">
                                 <span class="input-group-addon clear" ng-click="contact='';"></span>
                             </div>
-                            <span class="app-addon-error"
-                                  ng-show="errorMessage && rememberedPassword">{{errorMessage}}</span>
+                            <span class="app-addon-error" style="margin-top: 3px;"
+                                  ng-show="addingError">{{addingError}}</span>
                             <input type="submit" ng-show="false">
                         </form>
                     </div>
                     <div class="modal-body">
-                        <span class="send-info-text flat-text">Start adding owners in order to setup the authorizations.</span>
+                        <ul class="owners-list" ng-class="{'add-border': totalCount}">
+                            <li ng-repeat="(key, member) in members">
+                                <span>{{member.address}}</span><span class="delete"
+                                                                     ng-click="deleteMember(member.publicKey)"></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="modal-body"  id="multi-range" ng-show="totalCount">
+                        <div class="range-wrapper" style="padding: 20px 40px; display: table; width: 100%;">
+                            <div style="display: table-row;">
+                                <label style="display: table-cell; font-size: 16px;">Confirmations needed:</label>
+
+                                <p class="range-field">
+                                    <input style="display: table-cell;" type="range" ng-model="sign" min="0"
+                                           max="{{totalCount}}">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-body">
+                        <span class="send-info-text flat-text"> Start adding owners in order to setup the authorizations.</span>
                     </div>
                     <div class="modal-body">
                         <ul class="nav modal-buttons pull-right">
@@ -105,7 +99,43 @@
                                 <a href="#" ng-click="close()">Cancel
                                 </a>
                             </li>
-                            <li><a href="#" class="green-link" ng-click="passcheck()">next</a></li>
+                            <li><a href="#" class="green-link" ng-click="step=3;">next</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-content" ng-show="step==3">
+                    <div class="modal-header modal-iconed">
+                        <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div>
+                    </div>
+                    <div class="modal-header clearfix">
+                        <div><h2>Step 3/3 - Confirmation</h2>
+                        </div>
+                        <div>Please confirm your input. To enuse a secure account, its very
+                            important that everything is correct.
+                        </div>
+                    </div>
+                    <div class="modal-body">
+<ul class="multi-total">
+    <li>Number of owners:<span>{{totalCount}}</span></li>
+    <li>Confirmations needed:<span>{{sign}}</span></li>
+</ul>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="owners-list" ng-class="{'add-border': totalCount}">
+                            <li ng-repeat="(key, member) in members">
+                                <span>{{member.address}}</span>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                    <div class="modal-body">
+                        <ul class="nav modal-buttons pull-right">
+                            <li>
+                                <a href="#" ng-click="step = 2;">BACK
+                                </a>
+                            </li>
+                            <li><a href="#" class="green-link" ng-click="close();">confirm</a></li>
                         </ul>
                     </div>
                 </div>

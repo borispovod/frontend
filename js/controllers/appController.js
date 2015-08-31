@@ -383,7 +383,6 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
             ]);
         });
         $scope.$on('socket:blocks/change', function (ev, data) {
-            console.log('new blocks ' + new Date());
             $scope.getAppData();
             $scope.updateViews([
                 'main.blockchain'

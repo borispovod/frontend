@@ -7,7 +7,7 @@
             <table ng-table="tableTransactions" border="0" width="100%" cellpadding="0" cellspacing="0"
                    template-pagination="custom/pager">
                 <tr ng-class="{'voted': transaction.confirmations>=transaction.needed}" style="height: 63px;" ng-repeat="transaction in $data">
-                    <td data-title="'Group Name'" sortable="'address'">{{transaction.address}}</td>
+                    <td data-title="'Transaction ID'" sortable="'id'">{{transaction.id}}</td>
                     <td data-title="'Recipient'" sortable="'recipientId'">
                         {{transaction.recipientId}}
                     </td>
@@ -23,7 +23,7 @@
                     <td data-title="'Confirmations'" sortable="'confirmations'">
                         {{transaction.confirmations}}/{{transaction.needed}}
                     </td>
-                    <td data-title=""><a ng-if="transaction.confirmations<transaction.needed"
+                    <td data-title=""><a ng-click="confirmTransaction(transaction.id)" ng-if="true"
                                          class="btn btn-dark-meant"><i
                             class="mdi-action-done left"></i>CONFIRM
                     </a></td>

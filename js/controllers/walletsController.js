@@ -1,9 +1,9 @@
 require('angular');
 
-angular.module('webApp').controller('walletsController', ['$scope', '$rootScope', '$http', 'viewFactory', 'ngTableParams', '$filter', 'multiMembersModal',
-    function ($rootScope, $scope, $http, viewFactory, ngTableParams, $filter, multiMembersModal) {
+angular.module('webApp').controller('walletsController', ['$scope', '$rootScope', '$http', 'viewFactory', 'ngTableParams', '$filter', 'multiMembersModal', 'multiService',
+    function ($rootScope, $scope, $http, viewFactory, ngTableParams, $filter, multiMembersModal, multiService) {
         $scope.view = viewFactory;
-        $scope.view.inLoading = true;
+        $scope.view.inLoading = false;
         $scope.view.loadingText = "Loading multisignature wallets";
         $scope.view.page = {title: 'Multisignature', previos: null};
         $scope.view.bar = {showWalletBar: true};
@@ -27,30 +27,42 @@ angular.module('webApp').controller('walletsController', ['$scope', '$rootScope'
                 timestamp: 9730609,
                 recipientId: "9946841100442405851C"
             },
-            {address: "Test Group", confirmations: 6, needed: 3, amount: 100900000000,
+            {
+                address: "Test Group", confirmations: 6, needed: 3, amount: 100900000000,
                 fee: 100900000,
                 timestamp: 12060576,
-                recipientId: "9946841100442405851C"},
-            {address: "17649443584386761059C", confirmations: 5, needed: 5, amount: 100900000000,
+                recipientId: "9946841100442405851C"
+            },
+            {
+                address: "17649443584386761059C", confirmations: 5, needed: 5, amount: 100900000000,
                 fee: 100900000,
                 timestamp: 9730609,
-                recipientId: "9946841100442405851C"},
-            {address: "Shopping", confirmations: 2, needed: 7, amount: 100900000000,
+                recipientId: "9946841100442405851C"
+            },
+            {
+                address: "Shopping", confirmations: 2, needed: 7, amount: 100900000000,
                 fee: 100900000,
                 timestamp: 9730609,
-                recipientId: "9946841100442405851C"},
-            {address: "Crypti Foundation", confirmations: 1, needed: 6, amount: 100900000000,
+                recipientId: "9946841100442405851C"
+            },
+            {
+                address: "Crypti Foundation", confirmations: 1, needed: 6, amount: 100900000000,
                 fee: 100900000,
                 timestamp: 12060576,
-                recipientId: "9946841100442405851C"},
-            {address: "17649443584386761059C", confirmations: 3, needed: 5, amount: 100900000000,
+                recipientId: "9946841100442405851C"
+            },
+            {
+                address: "17649443584386761059C", confirmations: 3, needed: 5, amount: 100900000000,
                 fee: 100900000,
                 timestamp: 9730609,
-                recipientId: "9946841100442405851C"},
-            {address: "Crypti Foundation", confirmations: 2, needed: 2, amount: 100900000000,
+                recipientId: "9946841100442405851C"
+            },
+            {
+                address: "Crypti Foundation", confirmations: 2, needed: 2, amount: 100900000000,
                 fee: 100900000,
                 timestamp: 12060576,
-                recipientId: "9946841100442405851C"}
+                recipientId: "9946841100442405851C"
+            }
         ];
 
 
@@ -61,6 +73,11 @@ angular.module('webApp').controller('walletsController', ['$scope', '$rootScope'
                 }
             });
         }
+
+        $scope.confirmTransaction = function (transactionId) {
+            multiService.confirmTransaction(transactionId, function () {
+            })
+        };
 
         //Wallets table
         $scope.tableWallets = new ngTableParams({
@@ -73,10 +90,11 @@ angular.module('webApp').controller('walletsController', ['$scope', '$rootScope'
             counts: [],
             total: 0,
             getData: function ($defer, params) {
-                var orderedData = params.sorting() ?
-                    $filter('orderBy')(data, params.orderBy()) :
-                    data;
-                $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                $scope.view.inLoading = true;
+                multiService.getWallets($defer, params, $scope.filter, function () {
+                    $scope.view.inLoading = false;
+                });
+
             }
         });
 
@@ -99,11 +117,10 @@ angular.module('webApp').controller('walletsController', ['$scope', '$rootScope'
             counts: [],
             total: 0,
             getData: function ($defer, params) {
-                var orderedData = params.sorting() ?
-                    $filter('orderBy')(dataConfirmed, params.orderBy()) :
-                    dataConfirmed;
-                $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-                $scope.view.inLoading = false;
+                $scope.view.inLoading = true;
+                multiService.getPendings($defer, params, $scope.filter, function () {
+                    $scope.view.inLoading = false;
+                });
             }
         });
 

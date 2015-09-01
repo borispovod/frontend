@@ -4,7 +4,7 @@ angular.module('webApp').controller('multisignatureModalController',
     ["$scope", "$http", "multisignatureModal", "viewFactory", "userService",
         function ($scope, $http, multisignatureModal, viewFactory, userService) {
             $scope.view = viewFactory;
-            $scope.view.loadingText = "Set members of multiaccount";
+            $scope.view.loadingText = "Set members of account";
             $scope.secondPassphrase = userService.secondPassphrase;
             $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
             $scope.addingError = '';
@@ -15,6 +15,7 @@ angular.module('webApp').controller('multisignatureModalController',
             $scope.step = 1;
 
             $scope.totalCount = 0;
+            $scope.sign = 1;
 
             $scope.members = {};
 
@@ -88,9 +89,9 @@ angular.module('webApp').controller('multisignatureModalController',
                     secret: $scope.rememberedPassword,
                     publicKey: userService.publicKey,
                     min: $scope.sign,
-                    lifetime: 72,
-                    keysgroup: $scope.members.map(function (element) {
-                        return element.publicKey;
+                    lifetime: 24,
+                    keysgroup: Object.keys($scope.members).map(function (element) {
+                        return '+' + element;
                     })
                 };
                 $scope.view.inLoading = true;
@@ -98,7 +99,6 @@ angular.module('webApp').controller('multisignatureModalController',
                     $scope.view.inLoading = false;
                     if (response.data.error) {
                         $scope.errorMessage = response.data.error;
-                        console.log($scope.errorMessage);
                     }
                     else {
                         if ($scope.destroy) {

@@ -32,7 +32,7 @@
                                 et
                                 dolore magnam aliquam quaerat voluptatem.</span>
                             </p>
-                         </div>
+                        </div>
                     </div>
                     <div class="modal-body">
                         <ul class="nav modal-buttons pull-right">
@@ -77,13 +77,13 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="modal-body"  id="multi-range" ng-show="totalCount">
+                    <div class="modal-body" id="multi-range" ng-show="totalCount">
                         <div class="range-wrapper" style="padding: 20px 40px; display: table; width: 100%;">
                             <div style="display: table-row;">
                                 <label style="display: table-cell; font-size: 16px;">Confirmations needed:</label>
 
                                 <p class="range-field">
-                                    <input style="display: table-cell;" type="range" ng-model="sign" min="0"
+                                    <input style="display: table-cell;" type="range" ng-model="sign" min="1"
                                            max="{{totalCount}}">
                                 </p>
                             </div>
@@ -115,10 +115,10 @@
                         </div>
                     </div>
                     <div class="modal-body">
-<ul class="multi-total">
-    <li>Number of owners:<span>{{totalCount}}</span></li>
-    <li>Confirmations needed:<span>{{sign}}</span></li>
-</ul>
+                        <ul class="multi-total">
+                            <li>Number of owners:<span>{{totalCount}}</span></li>
+                            <li>Confirmations needed:<span>{{sign}}</span></li>
+                        </ul>
                     </div>
                     <div class="modal-body">
                         <ul class="owners-list" ng-class="{'add-border': totalCount}">
@@ -127,7 +127,9 @@
                             </li>
                         </ul>
                     </div>
-
+                    <div class="modal-body" ng-show="errorMessage">
+                        <span class="app-addon-error" style="margin-top: 3px;">{{errorMessage}}</span>
+                    </div>
 
                     <div class="modal-body">
                         <ul class="nav modal-buttons pull-right">
@@ -135,7 +137,7 @@
                                 <a href="#" ng-click="step = 2;">BACK
                                 </a>
                             </li>
-                            <li><a href="#" class="green-link" ng-click="close();">confirm</a></li>
+                            <li><a href="#" class="green-link" ng-click="putMembers();">confirm</a></li>
                         </ul>
                     </div>
                 </div>

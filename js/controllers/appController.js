@@ -379,7 +379,8 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
             $scope.getAppData();
             $scope.updateViews([
                 'main.transactions',
-                'main.contacts'
+                'main.contacts',
+                'main.multi'
             ]);
         });
         $scope.$on('socket:blocks/change', function (ev, data) {
@@ -411,6 +412,20 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
             $scope.getAppData();
             $scope.updateViews([
                 'main.pending'
+            ]);
+        });
+
+        $scope.$on('socket:multisignatures/change', function (ev, data) {
+            $scope.getAppData();
+            $scope.updateViews([
+                'main.multi'
+            ]);
+        });
+
+        $scope.$on('socket:multisignatures/signatures/change', function (ev, data) {
+            $scope.getAppData();
+            $scope.updateViews([
+                'main.multi'
             ]);
         });
 

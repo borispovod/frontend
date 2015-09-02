@@ -23,7 +23,7 @@ angular.module('webApp').service('multiService', function ($http, userService, $
                     params: queryParams
                 })
                     .then(function (response) {
-                        service.gettingWallets = !service.gettingWallets;
+                        service.gettingPendings = !service.gettingPendings;
                         if (response.data.success) {
                             params.total(response.data.transactions.length);
                             cb();
@@ -86,9 +86,9 @@ angular.module('webApp').service('multiService', function ($http, userService, $
                 transactionId: transactionId,
                 secret: userService.rememberedPassword
             }
-            $http.post("/api/multisignatures/sign", {
-                params: queryParams
-            })
+            $http.post("/api/multisignatures/sign",
+                queryParams
+            )
                 .then(function (response) {
                     if (response.data.success) {
 

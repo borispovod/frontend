@@ -1,70 +1,20 @@
 require('angular');
 
-angular.module('webApp').controller('walletsController', ['$scope', '$rootScope', '$http', 'viewFactory', 'ngTableParams', '$filter', 'multiMembersModal', 'multiService',
-    function ($rootScope, $scope, $http, viewFactory, ngTableParams, $filter, multiMembersModal, multiService) {
+angular.module('webApp').controller('walletsController', ['$scope', '$rootScope', '$http', 'viewFactory', 'ngTableParams', '$filter', 'multiMembersModal', 'multiService', 'userService',
+    function ($rootScope, $scope, $http, viewFactory, ngTableParams, $filter, multiMembersModal, multiService, userService) {
         $scope.view = viewFactory;
         $scope.view.inLoading = false;
         $scope.view.loadingText = "Loading multisignature wallets";
         $scope.view.page = {title: 'Multisignature', previos: null};
         $scope.view.bar = {showWalletBar: true};
-        var data = [
-            {address: "Crypti Foundation", confirmations: 4, needed: 3, pending: 2},
-            {address: "Test Group", confirmations: 6, needed: 3, pending: 0},
-            {address: "17649443584386761059C", confirmations: 5, needed: 5, pending: 0},
-            {address: "Shopping", confirmations: 2, needed: 1, pending: 2},
-            {address: "Crypti Foundation", confirmations: 6, needed: 1, pending: 4},
-            {address: "17649443584386761059C", confirmations: 5, needed: 5, pending: 0},
-            {address: "Crypti Foundation", confirmations: 2, needed: 2, pending: 5}
-        ];
 
-        var dataConfirmed = [
-            {
-                address: "Crypti Foundation",
-                confirmations: 4,
-                needed: 3,
-                amount: 100900000000,
-                fee: 100900000,
-                timestamp: 9730609,
-                recipientId: "9946841100442405851C"
-            },
-            {
-                address: "Test Group", confirmations: 6, needed: 3, amount: 100900000000,
-                fee: 100900000,
-                timestamp: 12060576,
-                recipientId: "9946841100442405851C"
-            },
-            {
-                address: "17649443584386761059C", confirmations: 5, needed: 5, amount: 100900000000,
-                fee: 100900000,
-                timestamp: 9730609,
-                recipientId: "9946841100442405851C"
-            },
-            {
-                address: "Shopping", confirmations: 2, needed: 7, amount: 100900000000,
-                fee: 100900000,
-                timestamp: 9730609,
-                recipientId: "9946841100442405851C"
-            },
-            {
-                address: "Crypti Foundation", confirmations: 1, needed: 6, amount: 100900000000,
-                fee: 100900000,
-                timestamp: 12060576,
-                recipientId: "9946841100442405851C"
-            },
-            {
-                address: "17649443584386761059C", confirmations: 3, needed: 5, amount: 100900000000,
-                fee: 100900000,
-                timestamp: 9730609,
-                recipientId: "9946841100442405851C"
-            },
-            {
-                address: "Crypti Foundation", confirmations: 2, needed: 2, amount: 100900000000,
-                fee: 100900000,
-                timestamp: 12060576,
-                recipientId: "9946841100442405851C"
-            }
-        ];
+        $scope.countSign = function(transaction){
+            return transaction.signatures ? transaction.signatures.length: 0;
+        }
 
+        $scope.signedByUser = function (transaction) {
+            return transaction.signatures ? (transaction.signatures.indexOf(userService.publicKey)!=-1) : false;
+        }
 
         $scope.showMembers = function (confirmed) {
             $scope.multiMembersModal = multiMembersModal.activate({
@@ -129,8 +79,19 @@ angular.module('webApp').controller('walletsController', ['$scope', '$rootScope'
         $scope.$watch("filter.$", function () {
             $scope.tableTransactions.reload();
         });
-
         //end
+
+
+        $scope.$on('updateControllerData', function (event, data) {
+            if (data.indexOf('main.multi') != -1) {
+                $scope.updateWallets();
+            }
+        });
+
+        $scope.updateWallets = function () {
+            $scope.tableTransactions.reload();
+            $scope.tableWallets.reload();
+        };
 
 
     }]);

@@ -61,7 +61,7 @@ webApp.config(["ngClipProvider",
                 controller: "walletPendingsController"
             })
             .state('main.walletTransactions', {
-                url: "/wallets/transactions",
+                url: "/wallets/:walletId",
                 templateUrl: "/partials/wallet-transactions.html",
                 controller: "walletTransactionsController"
             })

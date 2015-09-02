@@ -14,7 +14,7 @@
                                                                                                ng-click="userInfo(transaction.recipientId)">{{transaction.recipientUsername
                         || transaction.recipientId}}</a>
                     </td>
-                    <td data-title="'Time'" sortable="'timestamp'">{{transaction.timestamp | timeAgoFilter :
+                    <td data-title="'Time'" sortable="'t_timestamp'">{{transaction.timestamp | timeAgoFilter :
                         showFullTime}}
                     </td>
                     <td class="td-amount" data-title="'Amount'" sortable="'amount'">

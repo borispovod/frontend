@@ -156,6 +156,8 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
                     else {
                         userService.balance = account.balance;
                         userService.unconfirmedBalance = account.unconfirmedBalance;
+                        userService.multisignatures = account.multisignatures;
+                        userService.u_multisignatures = account.u_multisignatures;
                         userService.secondPassphrase = account.secondSignature;
                         userService.unconfirmedPassphrase = account.unconfirmedSignature;
                         userService.username = account.username;

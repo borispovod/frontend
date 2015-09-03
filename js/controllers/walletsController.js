@@ -7,26 +7,33 @@ angular.module('webApp').controller('walletsController', ['$scope', '$rootScope'
         $scope.view.loadingText = "Loading multisignature wallets";
         $scope.view.page = {title: 'Multisignature', previos: null};
         $scope.view.bar = {showWalletBar: true};
+        $scope.secondPassphrase = userService.secondPassphrase;
+        $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
 
-        $scope.countSign = function(transaction){
-            return transaction.signatures ? transaction.signatures.length: 0;
+        $scope.countSign = function (transaction) {
+            return transaction.signatures ? transaction.signatures.length : 0;
         }
 
         $scope.signedByUser = function (transaction) {
-            return transaction.signatures ? (transaction.signatures.indexOf(userService.publicKey)!=-1) : false;
+            return false;
+            return transaction.signatures ? (transaction.signatures.indexOf(userService.publicKey) != -1) : false;
         }
 
-        $scope.showMembers = function (confirmed) {
+        $scope.showMembers = function (confirmed, dataMembers) {
             $scope.multiMembersModal = multiMembersModal.activate({
                 confirmed: confirmed,
+                dataMembers: dataMembers,
                 destroy: function () {
                 }
             });
         }
 
         $scope.confirmTransaction = function (transactionId) {
-            multiService.confirmTransaction(transactionId, function () {
-            })
+            if (!$scope.secondPassphrase && $scope.rememberedPassword) {
+                multiService.confirmTransaction(transactionId, function () {
+                    $scope.tableTransactions.reload();
+                })
+            }
         };
 
         //Wallets table

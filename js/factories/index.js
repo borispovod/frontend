@@ -19,4 +19,5 @@ require('../../js/factories/modals/voteModal');
 require('../../js/factories/modals/registrationDelegateModal');
 require('../../js/factories/modals/multiMembersModal');
 require('../../js/factories/modals/addDappModal');
+require('../../js/factories/modals/signTransactionModal');
 require('../../js/factories/modals/multisignatureModal');

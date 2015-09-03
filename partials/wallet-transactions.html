@@ -5,28 +5,29 @@
             <table ng-table="tableTransactions" border="0" width="100%" cellpadding="0"
                    cellspacing="0">
                 <tr ng-repeat="transaction in $data">
-                    <td data-title="'Height'" sortable="'height'">{{transaction.height}}
+                    <td data-title="'Height'" sortable="'b_height'">{{transaction.height}}
                     </td>
-                    <td data-title="'Transaction ID'" sortable="'id'" class="pointer"><a href="#"
+                    <td data-title="'Transaction ID'" sortable="'t_id'" class="pointer"><a href="#"
                                                                          ng-click="transactionInfo(transaction, transaction.signList)">{{transaction.id}}</a>
                     </td>
-                    <td data-title="'Recipient'" class="pointer" sortable="'recipientId'"><a href="#"
+                    <td data-title="'Recipient'" class="pointer" sortable="'t_recipientId'"><a href="#"
                                                                                                ng-click="userInfo(transaction.recipientId)">{{transaction.recipientUsername
                         || transaction.recipientId}}</a>
                     </td>
                     <td data-title="'Time'" sortable="'t_timestamp'">{{transaction.timestamp | timeAgoFilter :
                         showFullTime}}
                     </td>
-                    <td class="td-amount" data-title="'Amount'" sortable="'amount'">
+                    <td class="td-amount" data-title="'Amount'" sortable="'t_amount'">
                         <i ng-if="transaction.recipientId==transaction.senderId"
-                           class="vertical-text mdi-image-brightness-1 cloud-font"></i>
+                           class="vertical-text mdi-image-brightness-1 cloud-font">
+                        </i>
                         <i ng-if="transaction.recipientId!=transaction.senderId" class="vertical-text"
-                           ng-class="{'mdi-content-add-circle dark-meent-font': transaction.recipientId==address, 'mdi-content-remove-circle dark-red-font': transaction.senderId==address}"></i>
+                           ng-class="{'mdi-content-add-circle dark-meent-font': transaction.recipientId==walletAddress, 'mdi-content-remove-circle dark-red-font': transaction.senderId==walletAddress}"></i>
                         {{transaction.amount | xcrFilter}}
                     </td>
-                    <td data-title="'Fee'" sortable="'fee'">{{transaction.fee | xcrFilter}}
+                    <td data-title="'Fee'">{{transaction.fee | xcrFilter}}
                     </td>
-                    <td data-title="'Confirmations'" sortable="'confirmations'">
+                    <td data-title="'Confirmations'">
                         <span><a href="#" ng-click="showMembers(true)">{{transaction.multi.confirmations}}</a></span>
                     </td>
 

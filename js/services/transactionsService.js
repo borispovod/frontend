@@ -2,7 +2,6 @@ require('angular');
 
 angular.module('webApp').service('transactionsService', function ($http, userService) {
 
-
     var transactionsList = {
         requestTransactions: function (params, cb) {
             $http.get("/api/transactions", {

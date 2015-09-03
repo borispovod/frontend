@@ -30,8 +30,10 @@ angular.module('webApp').controller('walletsController', ['$scope', '$rootScope'
 
         $scope.confirmTransaction = function (transactionId) {
             if (!$scope.secondPassphrase && $scope.rememberedPassword) {
-                multiService.confirmTransaction(transactionId, function () {
-                    $scope.tableTransactions.reload();
+                multiService.confirmTransaction(transactionId, function (err) {
+                    if (!err) {
+                        $scope.tableTransactions.reload();
+                    }
                 })
             }
         };

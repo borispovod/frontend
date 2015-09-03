@@ -91,12 +91,12 @@ angular.module('webApp').service('multiService', function ($http, userService, $
             )
                 .then(function (response) {
                     if (response.data.success) {
-
+                        cb(null);
                     }
                     else {
-
+                        cb(true);
                     }
-                    cb();
+
                 });
         }
     }

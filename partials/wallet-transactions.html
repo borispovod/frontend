@@ -28,7 +28,7 @@
                     <td data-title="'Fee'">{{transaction.fee | xcrFilter}}
                     </td>
                     <td data-title="'Confirmations'">
-                        <span><a href="#" ng-click="showMembers(true)">{{transaction.multi.confirmations}}</a></span>
+                        <span>{{transaction.signatures.length}}</span>
                     </td>
 
                 </tr>

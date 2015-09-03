@@ -105,10 +105,11 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
             'main.blockchain',
             'passphrase',
             'main.contacts',
-            'main.multi',
-            'main.dappstore'
-
+            'main.dappstore',
+            'main.multi'
         ];
+
+
 
         $scope.getUSDPrice = function () {
             $http.get("//146.148.61.64:4060/api/1/ticker/XCR_BTC")
@@ -165,6 +166,10 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
                     $scope.secondPassphrase = userService.secondPassphrase;
                     $scope.unconfirmedPassphrase = userService.unconfirmedPassphrase;
                     $scope.delegateInRegistration = userService.delegateInRegistration;
+                    $scope.getMultisignatureAccounts(function(multisignature){
+                        $scope.multisignature = multisignature;
+                    });
+
                     if ($state.current.name == 'main.dashboard') {
                         $scope.getForging();
                         $scope.getDelegate();
@@ -269,6 +274,46 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
                     userService.setForging($scope.forging);
                 });
         }
+
+        $scope.getMultisignatureAccounts = function (cb) {
+            var queryParams = {
+                publicKey: userService.publicKey
+            }
+
+            $http.get("/api/multisignatures/accounts", {
+                params: queryParams
+            })
+                .then(function (response) {
+                    if (response.data.success) {
+                        if (response.data.accounts.length) {
+                            return userService.setMultisignature(true,cb);
+                        }
+                        else {
+                            $http.get("/api/multisignatures/pending", {
+                                params: queryParams
+                            })
+                                .then(function (response) {
+                                    if (response.data.success) {
+                                        if (response.data.transactions.length) {
+                                            return userService.setMultisignature(true,cb);
+                                        }
+                                        else {
+                                            return userService.setMultisignature(false,cb);
+                                        }
+                                    }
+                                    else {
+                                        return userService.setMultisignature(false,cb);
+                                    }
+                                });
+
+                        }
+                    }
+                    else {
+                        return userService.setMultisignature(false,cb);
+                    }
+                });
+        }
+
 
         $scope.getContacts = function () {
             contactsService.getContacts(userService.publicKey, function () {

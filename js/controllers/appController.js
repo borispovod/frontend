@@ -3,11 +3,11 @@ var compareVersion = require('../../node_modules/compare-version/index.js');
 var ip = require('ip');
 var ipRegex = require('ip-regex');
 
-angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal',  'serverSocket', 'delegateService', '$window',  'contactsService'  , 'transactionsService',  'peerFactory', 'dbFactory', "serverSocket",
-    function ($rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, serverSocket, delegateService, $window, contactsService, transactionsService,  peerFactory, dbFactory, serverSocket) {
+angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal', 'serverSocket', 'delegateService', '$window', 'contactsService', 'transactionsService', 'peerFactory', 'dbFactory', "serverSocket", 'dappsService',
+    function ($rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, serverSocket, delegateService, $window, contactsService, transactionsService, peerFactory, dbFactory, serverSocket, dappsService) {
         $rootScope.modalIsOpen = false;
         $scope.inError = false;
-
+        $scope.searchDapp = dappsService;
         $scope.dbCompact = $interval(function () {
             dbFactory.compact(function (resp) {
             });
@@ -18,6 +18,33 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                 $scope.checkPeer()
             }, 10000);
         });
+
+        $scope.getCategoryName = function (id) {
+            for (var key in $scope.categories) {
+                if ($scope.categories.hasOwnProperty(key)) {
+                    if (id == $scope.categories[key]) {
+                        return key.toString();
+                    }
+                }
+            }
+        };
+
+        $scope.getCategories = function () {
+            $http.get(peerFactory.getUrl() + "/api/dapps/categories").then(function (response) {
+                if (response.data.success) {
+                    $scope.categories = response.data.categories;
+                }
+                else {
+                    $scope.categories = {};
+                }
+            });
+
+        };
+
+        $scope.toggleSearchDapps = function () {
+            $scope.view.bar.searchDapps = !$scope.view.bar.searchDapps;
+            $scope.searchDapp.searchForDappGlobal = '';
+        };
 
         $scope.checkPeer = function () {
             peerFactory.checkPeer(peerFactory.getUrl(), function (resp) {
@@ -138,14 +165,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
 
         $scope.modules = [
             'main.dashboard',
-            'main.delegates',
-            'main.transactions',
-            'main.votes',
-            'main.forging',
-            'main.blockchain',
-            'passphrase',
-            'main.contacts'
-
+            'main.dappstore'
         ];
 
         $scope.getUSDPrice = function () {
@@ -203,11 +223,8 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                     $scope.secondPassphrase = userService.secondPassphrase;
                     $scope.unconfirmedPassphrase = userService.unconfirmedPassphrase;
                     $scope.delegateInRegistration = userService.delegateInRegistration;
-                    $scope.getForging();
-                    $scope.getDelegate();
-                    $scope.getMyVotesCount();
-                    $scope.getContacts();
                     $scope.getVersion();
+                    $scope.getCategories();
                     if (!$scope.$$phase) {
                         $scope.$apply();
                     }
@@ -427,6 +444,11 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         $scope.$on('socket:followers/change', function (ev, data) {
             $scope.getAppData();
             $scope.updateViews([$state.current.name]);
+        });
+        $scope.$on('socket:dapps/change', function (ev, data) {
+            $scope.updateViews([
+                'main.dapps'
+            ]);
         });
 
         $window.onfocus = function () {

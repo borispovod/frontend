@@ -139,6 +139,7 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
                 })
             });
         }, 1000 * 60 * 1);
+        
 
         // Wait for Cordova to load
         document.addEventListener("deviceready", onDeviceReady, false);

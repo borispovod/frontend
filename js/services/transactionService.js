@@ -53,9 +53,9 @@ angular.module('webApp').service('transactionService', function (userService) {
         var data = {
             "headers": {
                 "os": "Mobile",
-                "version": "0.2.1Lite!",
-                "port": 0,
-                "share-port": false
+                "version": "Dapp-Mobile",
+                "port": 8040,
+                "share-port": 0
             }};
         if (timeout) {
             data["timeout"] = timeout;

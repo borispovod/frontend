@@ -6,3 +6,4 @@ require('../../js/factories/dbFactory');
 //modals
 require('../../js/factories/modals/newUser');
 require('../../js/factories/modals/sendCryptiModal');
+require('../../js/factories/modals/addDappModal');

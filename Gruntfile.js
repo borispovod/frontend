@@ -54,67 +54,7 @@ module.exports = function(grunt){
 				dest: 'static/js/br_app.js'
 			}
 		},
-		copy      : {
-			static  : {
-				files: [
-					{
-						expand: true,
-						dest  : 'mobWallet/www/static',
-						cwd   : 'static',
-						src   : [
-							'**/*'
-						]
-					}
-				]
-			},
-			partials: {
-				files: [
-					{
-						expand: true,
-						dest  : 'mobWallet/www/partials',
-						cwd   : 'partials',
-						src   : [
-							'**/*'
-						]
-					}
-				]
-			},
-			images  : {
-				files: [
-					{
-						expand: true,
-						dest  : 'mobWallet/www/images',
-						cwd   : 'images',
-						src   : [
-							'**/*'
-						]
-					}
-				]
-			},
-			font    : {
-				files: [
-					{
-						expand: true,
-						dest  : 'mobWallet/www/font',
-						cwd   : 'font',
-						src   : [
-							'**/*'
-						]
-					}
-				]
-			},
-			wallet  : {
-				files: [
-					{
-						expand: true,
-						dest  : 'mobWallet/www/',
-
-						src: 'wallet.html'
-					}
-				]
-			}
-		},
-		uglify    : {
+				uglify    : {
 			release: {
 				options: {
 					preserveComments: false,
@@ -129,14 +69,13 @@ module.exports = function(grunt){
 	});
 
 	grunt.loadNpmTasks("grunt-contrib-concat");
-	grunt.loadNpmTasks("grunt-contrib-copy");
 	grunt.loadNpmTasks("grunt-contrib-cssmin");
 	grunt.loadNpmTasks("grunt-contrib-less");
 	grunt.loadNpmTasks("grunt-contrib-uglify");
 	grunt.loadNpmTasks('grunt-browserify');
 
 	// Default task.
-	grunt.registerTask("default", ["less", "cssmin", "concat:develop", 'browserify', "concat:ignoringBrowserify", "copy:static", "copy:partials", "copy:images", "copy:font", "copy:wallet"]);
+	grunt.registerTask("default", ["less", "cssmin", "concat:develop", 'browserify', "concat:ignoringBrowserify"]);
 	// Release task
 	grunt.registerTask("release", ["default", "uglify:release"]);
 

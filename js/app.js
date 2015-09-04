@@ -2,11 +2,12 @@ require('angular');
 require('angular-ui-router');
 require('angular-modal');
 require('angular-resource');
+require('angular-filter');
 require('browserify-angular-animate');
 require('../bower_components/angular-socket-io/socket.js');
 require('../node_modules/ng-table/dist/ng-table.js');
 
-webApp = angular.module('webApp', ['ui.router', 'btford.modal', 'ngTable', 'ngAnimate', 'btford.socket-io', 'ui.bootstrap', 'stBlurredDialog']);
+webApp = angular.module('webApp', ['ui.router', 'btford.modal', 'ngTable', 'ngAnimate', 'btford.socket-io', 'ui.bootstrap', 'stBlurredDialog', 'angular.filter']);
 
 webApp.config(["$locationProvider",
     "$stateProvider",
@@ -32,6 +33,21 @@ webApp.config(["$locationProvider",
                 url: "/transactions",
                 templateUrl: "partials/transactions.html",
                 controller: "transactionsController"
+            })
+            .state('main.dappstore', {
+                url: "/dappstore",
+                templateUrl: "partials/dapps.html",
+                controller: "dappsController"
+            })
+            .state('main.dappsCategory', {
+                url: "/dappstore/:categoryId",
+                templateUrl: "partials/dapps-category.html",
+                controller: "dappsCategoryController"
+            })
+            .state('main.dappentry', {
+                url: "/dapp/:dappId",
+                templateUrl: "partials/dapp-entry.html",
+                controller: "dappController"
             })
             .state('passphrase', {
                 url: "/",

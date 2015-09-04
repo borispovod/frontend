@@ -7,6 +7,42 @@
   font-style: normal
 }
 
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/font/material-google/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+  local('MaterialIcons-Regular'),
+  url(../../font/material-google/MaterialIcons-Regular.woff2) format('woff2'),
+  url(../../font/material-google/MaterialIcons-Regular.woff) format('woff'),
+  url(../../font/material-google/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
 /*JOINT STYLES*/
 /* html5doctor.com Reset v1.6.1 - http://cssreset.com */
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
@@ -495,3 +531,4 @@ input:-webkit-autofill {
 @import "pie-chart";
 @import "settings";
 @import "blurred";
+@import "dapps";

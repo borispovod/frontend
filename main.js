@@ -20,7 +20,7 @@ app.on('window-all-closed', function () {
 // initialization and ready for creating browser windows.
 app.on('ready', function () {
     // Create the browser window.
-    mainWindow = new BrowserWindow({width: 640, height: 960});
+    mainWindow = new BrowserWindow({width: 1200, height: 960});
 
     // and load the index.html of the app.
     mainWindow.loadUrl('file://' + __dirname + '/wallet.html');

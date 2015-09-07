@@ -103,7 +103,7 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
                 script.async = true;
                 script.onload = function () {
                     $scope.logging = false;
-                    $state.go('main.dashboard');
+                    $state.go('main.dappstore');
                 };
 
                 script.src = peerFactory.getUrl() + '/socket.io/socket.io.js';
@@ -139,30 +139,26 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
                 })
             });
         }, 1000 * 60 * 1);
-        
 
-        // Wait for Cordova to load
-        document.addEventListener("deviceready", onDeviceReady, false);
-        // Cordova is ready
-        function onDeviceReady() {
-            dbFactory.createdb();
-            if (!peerFactory.peer) {
-                stBlurredDialog.open('partials/modals/blurredModal.html', {err: false});
-                dbFactory.emptydb(
-                    function (empty) {
-                        if (empty) {
-                            $scope.getPeers(function () {
-                                $scope.setBestPeer();
-                            });
-                        }
-                        else {
+
+        dbFactory.createdb();
+        if (!peerFactory.peer) {
+            stBlurredDialog.open('partials/modals/blurredModal.html', {err: false});
+            dbFactory.emptydb(
+                function (empty) {
+                    if (empty) {
+                        $scope.getPeers(function () {
                             $scope.setBestPeer();
-                        }
+                        });
                     }
-                );
-            }
-            else {
-                $scope.peerexists = true;
-            }
+                    else {
+                        $scope.setBestPeer();
+                    }
+                }
+            );
         }
+        else {
+            $scope.peerexists = true;
+        }
+
     }]);

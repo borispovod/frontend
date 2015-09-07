@@ -78,7 +78,7 @@
 </div>
 <div id="wrapper" ng-controller="appController" ng-class="{'toggled': !toggled}">
     <!-- Sidebar -->
-    <div id="sidebar-wrapper">
+ <!--   <div id="sidebar-wrapper">
         <a ui-sref="main.account">
             <div id="logo"></div>
         </a>
@@ -92,7 +92,7 @@
                   ng-hide="username">Welcome, click to edit profile</span>
             <span class="address">{{address}}</span>
         </div>
-        <!--  <div class="white-glow"></div>-->
+        &lt;!&ndash;  <div class="white-glow"></div>&ndash;&gt;
         <ul id="menu">
             <li ng-show="showMenuItem('main.dashboard')" ui-sref-active="active"><a ui-sref="main.dashboard"
                                                                                     class="waves-effect waves-blue">
@@ -107,7 +107,7 @@
 
         </ul>
         <div id="inc"></div>
-    </div>
+    </div>-->
     <!-- /#sidebar-wrapper -->
 
     <div id="page-content-wrapper">
@@ -115,15 +115,15 @@
             <div class="nav-bar clearfix" id="header">
                 <h1 id="title"><span class="title-icon" ng-show="view.page.previos" ng-click="goToPrevios()">
             <span class="sr-only">Go to previos page</span></span>{{view.page.title}}</h1>
-                <span class="forging-state" ng-show="view.forgingState">{{view.forgingState}}</span>
+   <!--             <span class="forging-state" ng-show="view.forgingState">{{view.forgingState}}</span>-->
 
                 <div id="top-menu" class="valign-wrapper">
-                <span id="balance">
+    <!--            <span id="balance">
                 {{unconfirmedBalance | xcrFilter}} XCR
-            </span>
-                    <a class="btn btn-sky-blue waves-effect waves-light left-margin-20" ng-click="sendCrypti()"><i
+            </span>-->
+                  <!--  <a class="btn btn-sky-blue waves-effect waves-light left-margin-20" ng-click="sendCrypti()"><i
                             class="mdi-content-send left"></i>SEND
-                    </a>
+                    </a>-->
                     <div class="more-down left-margin-20" dropdown is-open="moreDropdownStatus.isopen">
                         <i class="mdi-navigation-more-vert" dropdown-toggle></i>
                         <ul class="dropdown-menu" role="menu">

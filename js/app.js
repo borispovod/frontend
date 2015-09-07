@@ -3,11 +3,10 @@ require('angular-ui-router');
 require('angular-modal');
 require('angular-resource');
 require('angular-filter');
-require('browserify-angular-animate');
 require('../bower_components/angular-socket-io/socket.js');
 require('../node_modules/ng-table/dist/ng-table.js');
 
-webApp = angular.module('webApp', ['ui.router', 'btford.modal', 'ngTable', 'ngAnimate', 'btford.socket-io', 'ui.bootstrap', 'stBlurredDialog', 'angular.filter']);
+webApp = angular.module('webApp', ['ui.router', 'btford.modal', 'btford.socket-io', 'ui.bootstrap', 'stBlurredDialog', 'angular.filter']);
 
 webApp.config(["$locationProvider",
     "$stateProvider",

@@ -3,8 +3,8 @@ var compareVersion = require('../../node_modules/compare-version/index.js');
 var ip = require('ip');
 var ipRegex = require('ip-regex');
 
-angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal', 'serverSocket', 'delegateService', '$window', 'contactsService', 'transactionsService', 'peerFactory', 'dbFactory', "serverSocket", 'dappsService',
-    function ($rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, serverSocket, delegateService, $window, contactsService, transactionsService, peerFactory, dbFactory, serverSocket, dappsService) {
+angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'serverSocket', '$window',  'peerFactory', 'dbFactory', 'dappsService',
+    function ($rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, serverSocket,  $window, peerFactory, dbFactory, dappsService) {
         $rootScope.modalIsOpen = false;
         $scope.inError = false;
         $scope.searchDapp = dappsService;
@@ -100,9 +100,6 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
             $interval.cancel($scope.dbCompact);
         });
 
-        $scope.searchTransactions = transactionsService;
-        $scope.searchBlocks = blockService;
-        $scope.toggled = false;
         $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
         $scope.xcr_usd = 0;
         $scope.version = 'ersion load';
@@ -244,141 +241,6 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
             });
         }
 
-        $scope.addContact = function (contact) {
-            contact = contact || "";
-            $scope.addContactModal = addContactModal.activate({
-                contact: contact,
-                destroy: function () {
-                }
-            });
-        }
-
-        $scope.setSecondPassphrase = function () {
-            $scope.addSecondPassModal = secondPassphraseModal.activate({
-                totalBalance: $scope.unconfirmedBalance,
-                destroy: function () {
-                }
-            });
-        }
-
-        $scope.enableForging = function () {
-            if ($scope.rememberedPassword) {
-                $http.post(peerFactory.getUrl() + "/api/delegates/forging/enable", {
-                    secret: $scope.rememberedPassword,
-                    publicKey: userService.publicKey
-                })
-                    .then(function (resp) {
-                        userService.setForging(resp.data.success);
-                        $scope.forging = resp.data.success;
-                    });
-
-
-            }
-            else {
-                $scope.forgingModal = forgingModal.activate({
-                    forging: false,
-                    totalBalance: userService.unconfirmedBalance,
-                    destroy: function () {
-                        $scope.forging = userService.forging;
-                        $scope.getForging();
-                    }
-                })
-            }
-        }
-
-        $scope.disableForging = function () {
-            if ($scope.rememberedPassword) {
-
-                $scope.error = null;
-
-                $http.post(peerFactory.getUrl() + "/api/delegates/forging/disable", {
-                    secret: $scope.rememberedPassword,
-                    publicKey: userService.publicKey
-                })
-                    .then(function (resp) {
-                        userService.setForging(!resp.data.success);
-                        $scope.forging = !resp.data.success;
-                    });
-            }
-            else {
-                $scope.forgingModal = forgingModal.activate({
-                    forging: true,
-                    totalBalance: userService.unconfirmedBalance,
-                    destroy: function () {
-                        $scope.forging = userService.forging;
-                        $scope.getForging();
-                    }
-                })
-            }
-        }
-
-        $scope.getForging = function () {
-            $http.get(peerFactory.getUrl() + "/api/delegates/forging/status", {params: {publicKey: userService.publicKey}})
-                .then(function (resp) {
-                    $scope.forging = resp.data.enabled;
-                    userService.setForging($scope.forging);
-                });
-        }
-
-        $scope.getContacts = function () {
-            contactsService.getContacts(userService.publicKey, function () {
-                $scope.contacts = {
-                    count: contactsService.count,
-                    followersCount: contactsService.followersCount,
-                    list: contactsService.list
-                };
-            });
-        }
-
-        $scope.registrationDelegate = function () {
-            $scope.registrationDelegateModal = registrationDelegateModal.activate({
-                totalBalance: userService.unconfirmedBalance,
-                destroy: function () {
-                    $scope.delegateInRegistration = userService.delegateInRegistration;
-                    $scope.getDelegate();
-                }
-            })
-        }
-
-        $scope.userSettings = function () {
-            $scope.userSettingsModal = userSettingsModal.activate({
-                destroy: function () {
-                }
-            });
-        }
-
-        $scope.getDelegate = function () {
-            delegateService.getDelegate(userService.publicKey, function (response) {
-                if (response.username && !$scope.username) {
-                    $scope.username = response.username;
-                    userService.username = response.username;
-
-                }
-                if ($scope.delegateInRegistration) {
-                    $scope.delegateInRegistration = !(!!response);
-                    userService.setDelegateProcess($scope.delegateInRegistration);
-                }
-                $scope.delegate = response;
-                userService.setDelegate($scope.delegate);
-                if (!response.noDelegate) {
-                    $http.get(peerFactory.getUrl() + "/api/transactions", {
-                        params: {
-                            senderPublicKey: userService.publicKey,
-                            limit: 1,
-                            type: 2
-                        }
-                    }).then(function (response) {
-                        if (response.data.success) {
-                            userService.setDelegateTime(response.data.transactions);
-                        }
-                        else {
-                            userService.setDelegateTime([{timestamp: null}]);
-                        }
-                    });
-                }
-            });
-        }
-
         $scope.getSync = function () {
             $http.get(peerFactory.getUrl() + "/api/loader/status/sync").then(function (resp) {
                 if (resp.data.success) {
@@ -390,23 +252,12 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
             });
         }
 
-        $scope.getMyVotesCount = function () {
-            $http.get(peerFactory.getUrl() + "/api/accounts/delegates/", {params: {address: userService.address}})
-                .then(function (response) {
-                    $scope.myVotesCount = response.data.delegates ? response.data.delegates.length : 0;
-                });
-        }
-
-        $scope.myUserInfo = function () {
-            $scope.modal = userInfo.activate({userId: userService.address});
-        }
 
         $scope.syncInterval = $interval(function () {
             $scope.getSync();
         }, 1000 * 30);
 
         $scope.getSync();
-        $scope.getDelegate();
 
         $scope.showMenuItem = function (state) {
             return $scope.modules.indexOf(state) != -1;

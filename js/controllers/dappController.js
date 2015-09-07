@@ -1,6 +1,6 @@
 require('angular');
-angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', '$stateParams', '$http', "$window", "$interval", "userService", "peerFactory",
-    function ($scope, viewFactory, $stateParams, $http, $window, $interval, userService, peerFactory) {
+angular.module('webApp').controller('dappController', ['$scope', '$sce', 'viewFactory', '$stateParams', '$http', "$window", "$interval", "userService", "peerFactory",
+    function ($scope, $sce, viewFactory, $stateParams, $http, $window, $interval, userService, peerFactory) {
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
         $scope.view.loadingText = "Loading dapp";
@@ -16,6 +16,13 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
             });
         }
 
+        $scope.getImageUrl = function (url) {
+            return peerFactory.getUrl() + url;
+        }
+
+        $scope.getImageSia = function (transactionId) {
+            return peerFactory.getUrl() + '/api/dapps/icon?id=' + transactionId;
+        }
 
         $scope.installingIds = [];
         $scope.removingIds = [];
@@ -62,6 +69,7 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
         };
         $http.get(peerFactory.getUrl() + "/api/dapps/get?id=" + $stateParams.dappId).then(function (response) {
             $scope.dapp = response.data.dapp;
+            $scope.fileUrl = peerFactory.getUrl() + '/api/dapps/file?id=' + $scope.dapp.transactionId;
             if ($scope.dapp.git) {
                 $scope.dapp.githublink = $scope.githubLink($scope.dapp.git);
                 console.log($scope.githublink);
@@ -74,11 +82,13 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
 
         }
 
-        $scope.downloadDapp = function(){
-            //after doing
-            //$scope.getInstalling();
-            //$scope.getLaunched();
-            //$scope.getRemoving();
+        $scope.trustSrc = function(src) {
+            return $sce.trustAsResourceUrl(src);
+        }
+
+        $scope.downloadDapp = function(transactionId){
+            $scope.fileUrl = peerFactory.getUrl() + '/api/dapps/file?id=' + transactionId;
+            $window.open($scope.fileUrl, '_system');
         }
 
         $scope.githubLink = function (git) {

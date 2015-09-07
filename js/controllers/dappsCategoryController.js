@@ -14,6 +14,15 @@ angular.module('webApp').controller('dappsCategoryController', ['$scope', 'viewF
         $scope.searchDapp.inSearch = false;
 
 
+
+        $scope.getImageUrl = function (url) {
+            return peerFactory.getUrl() + url;
+        }
+
+        $scope.getImageSia = function (transactionId) {
+            return peerFactory.getUrl() + '/api/dapps/icon?id=' + transactionId;
+        }
+
         $scope.filterCat = function(value){
             return true;
         }

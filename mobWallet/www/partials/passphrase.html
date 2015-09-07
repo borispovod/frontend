@@ -1,0 +1,36 @@
+<div id="pass"  class="clearfix" st-blurred-dialog-region>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="pass-window clearfix col-xs-12 col-md-6 col-md-offset-3">
+                <div class="pass-window-icon"></div>
+                <form class="clearfix pass-window-form" _lpchecked="1" ng-submit="login(pass, rememberPassword)">
+                    <div class="input-field ">
+                        <input id="password" type="password" ng-model="pass" ng-trim="false" autofocus>
+                        <label for="password">Your Passphrase</label>
+                    </div>
+                    <span class="pass-error" ng-show="errorMessage">{{errorMessage}}</span>
+
+                    <div class="switch blue-switch margin">
+                        <label>
+                            <input type="checkbox" ng-model="rememberPassword">
+                            <span class="lever"></span>
+                            <span class="lever-legend">Remember during this session</span>
+                        </label>
+                    </div>
+                    <div class="buttons-panel">
+                        <a class="btn btn-blue waves-effect waves-light" ng-click="login(pass, rememberPassword)"
+                           ng-disabled="!pass">SIGN IN
+                        </a>
+                        <div class="top-margin"></div>
+                        <a class="btn btn-white waves-effect" ng-click="newUser()">NEW ACCOUNT
+                        </a>
+
+                    </div>
+                </form>
+                <div class="pass-footer">Crypti © 2015. All Rights Reserved.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<st-blurred-dialog-overlay></st-blurred-dialog-overlay>

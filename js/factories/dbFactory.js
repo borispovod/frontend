@@ -24,7 +24,9 @@ angular.module('webApp').factory('dbFactory', function (peerFactory) {
             if (err) {
                 return console.log(err);
             }
-            cb(info.doc_count == 0);
+            this.db.destroy(function (err) {
+                cb(info.doc_count == 0);
+            });
         });
     };
 

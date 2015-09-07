@@ -62,12 +62,12 @@ angular.module('webApp').controller('dappsController', ['$scope', 'viewFactory',
                     $scope.searchedText = '';
                     $scope.view.inLoading = false;
                 });
-                $http.get(peerFactory.getUrl() + "/api/dapps/installed").then(function (response) {
+                /*$http.get(peerFactory.getUrl() + "/api/dapps/installed").then(function (response) {
                     $scope.installedDapps = response.data.dapps;
                     $scope.searchedInstalledText = '';
                         $scope.showPlaceholder = !response.data.success ? true : !response.data.length;
 
-                });
+                });*/
 
             }
             else {

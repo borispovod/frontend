@@ -54,7 +54,7 @@ module.exports = function(grunt){
 				dest: 'static/js/br_app.js'
 			}
 		},
-				uglify    : {
+		uglify    : {
 			release: {
 				options: {
 					preserveComments: false,

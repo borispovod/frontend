@@ -4,12 +4,11 @@ angular.module('webApp').factory('peerFactory', ['$http', '$interval', 'transact
 
 	var factory = {
 		editing  : false,
-		peer     : null,
+		peer     : {
+			"ip": "5.165.203.4",
+			"port": 7040
+		},
 		peerList : [
-			{
-				"ip"  : "130.211.72.188",
-				"port": 7040
-			}
 		],
 		checkPeer: function(url, cb, timeout){
 			$http.get(url + "/peer/list", transactionService.createHeaders())

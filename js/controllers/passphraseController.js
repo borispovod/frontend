@@ -18,7 +18,7 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
 
                 dbFactory.add({ip: ip.toLong(peer.ip).toString(), port: peer.port});
 
-                $http.get("http://" + peer.ip + ':' + peer.port + "/peer/list")
+                $http.get("http://" + peer.ip + ':' + peer.port + "/peer/list", transactionService.createHeaders())
                     .then(function (resp) {
 
                         resp.data.peers.forEach(function (peer) {

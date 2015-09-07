@@ -13,7 +13,7 @@ webApp.config(["$locationProvider",
     "$urlRouterProvider", "$httpProvider",
     function ($locationProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
         $httpProvider.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
-        //$locationProvider.html5Mode(true);
+        $locationProvider.html5Mode(true);
         $urlRouterProvider.otherwise("/");
         //Now set up the states
         $stateProvider

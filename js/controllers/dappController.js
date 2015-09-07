@@ -16,7 +16,6 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
             });
         }
 
-
         $scope.installingIds = [];
         $scope.removingIds = [];
         $scope.launchedIds = [];

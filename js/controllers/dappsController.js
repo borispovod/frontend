@@ -58,9 +58,8 @@ angular.module('webApp').controller('dappsController', ['$scope', 'viewFactory',
                 $http.get("/api/dapps/installed").then(function (response) {
                     $scope.installedDapps = response.data.dapps;
                     $scope.searchedInstalledText = '';
-                    if (!$scope.installedDapps.length) {
-                        $scope.showPlaceholder = true;
-                    }
+
+                        $scope.showPlaceholder = !response.data.success;
                 });
 
             }

@@ -25,6 +25,7 @@ angular.module('webApp').controller('blockchainController', ['$scope', '$timeout
             total: 0,
             counts: [],
             getData: function ($defer, params) {
+                blockService.gettingBlocks = false;
                 $scope.loading = true;
                 blockService.getBlocks($scope.searchBlocks.searchForBlock, $defer, params, $scope.filter, function () {
                     $scope.searchBlocks.inSearch = false;

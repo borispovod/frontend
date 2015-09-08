@@ -58,7 +58,7 @@ angular.module('webApp').service('blockService', function ($http) {
             }
             else {
                 if (!this.gettingBlocks) {
-                    this.gettingBlocks = !this.gettingBlocks;
+                    this.gettingBlocks = true;
                     var sortString = '';
                     var keys = [];
                     for (var key in params.$params.sorting) {
@@ -81,8 +81,7 @@ angular.module('webApp').service('blockService', function ($http) {
                             if (fromBlocks) {
                                 $http.get("/api/blocks/getHeight")
                                     .then(function (res) {
-
-                                        this.gettingBlocks = !this.gettingBlocks;
+                                        this.gettingBlocks = false;
                                         if (res.data.success) {
                                             params.total(res.data.height);
                                         }
@@ -110,8 +109,7 @@ angular.module('webApp').service('blockService', function ($http) {
                                 }
                                 $http.get("/api/blocks/", {params: queryParams})
                                     .then(function (res) {
-
-                                        this.gettingBlocks = !this.gettingBlocks;
+                                        this.gettingBlocks = false;
 
                                         if (publicKey) {
                                             params.total(res.data.count);

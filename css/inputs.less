@@ -87,7 +87,7 @@ textarea.materialize-textarea {
   overflow-y: hidden;
   padding: 0;
   resize: none;
-  min-height: 4rem
+  min-height: 3rem
 }
 
 .input-field label {
@@ -104,4 +104,22 @@ textarea.materialize-textarea {
 
 [type=checkbox].filled-in:not(:checked) + label:after {
   top: 2px;
+}
+
+[type=checkbox].filled-in:checked + label.imaged:before {
+  top: 15px;
+}
+
+[type=checkbox].filled-in:checked + label.imaged:after {
+  top: 15px;
+}
+
+[type=checkbox].filled-in:not(:checked) + label.imaged:after {
+  top: 15px;
+}
+
+label.imaged {
+  img {
+    height: 50px;
+  }
 }

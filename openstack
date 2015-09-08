@@ -1,0 +1,13 @@
+server {
+	listen 80;
+
+	server_name openstack.veralimita.com;
+
+	root /usr/share/nginx/www/openstack/apexview;
+
+	 location / {
+                try_files $uri $uri/ /index.html;
+
+           }
+                    error_page  405     =200 $uri;
+}

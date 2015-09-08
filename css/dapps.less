@@ -518,6 +518,70 @@
   }
 }
 
+#addDapp {
+  background-color: #7cb342 !important;
+  @media (max-width: @screen-xs-max) {
+
+    i {
+    }
+  }
+}
+
+.hide-in-small {
+  @media (max-width: @screen-xs-max) {
+    display: none;
+  }
+}
+
+.show-in-small {
+  display: none;
+  @media (max-width: @screen-xs-max) {
+    display: block;
+  }
+}
+
+.panel-new-dapp {
+  .panel-heading {
+    line-height: 55.5px;
+    a {
+      float: right;
+    }
+  }
+
+}
+
+.app-modal {
+  .dapp-modal {
+    display: block;
+    height: 80% !important;
+    max-height: 80% !important;
+    z-index: 1003 !important;
+    opacity: 1 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    @media (max-width: @screen-xs-max) {
+      height: 100% !important;
+      max-height: 100% !important;
+      width: 100% !important;
+      #change-btn {
+        position: relative;
+      }
+
+      .file-field input.file-path {
+        margin-left: 0;
+      }
+      .modal-header.modal-header-mobile {
+        h2 {
+          font-size: 16px;
+        }
+        font-size: 14px;
+        padding: 20px 6px 5px !important;
+        margin: 0 !important;
+      }
+    }
+  }
+}
+
 @media (min-width: 992px) {
   .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9 {
     float: left

@@ -149,6 +149,16 @@
     </div>
 </div>
 <div class="row clearfix margin"></div>-->
+<div class="row clearfix show-in-small">
+    <div class="col-xs-12">
+        <div class="panel panel-new-dapp">
+            <div class="panel-heading cursor">
+                ADD NEW DAPP
+                <a ng-click="addNewDapp()" class="btn-floating btn-large waves-effect waves-light green"><i class="mdi-content-add"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row clearfix" ng-repeat-start="cat in dapps | groupBy: 'category'">
     <div class="col-xs-12">
         <div class="panel  panel-default no-margin-bottom" ui-sref='main.dappsCategory({categoryId:"{{getCategoryName(cat[0].category)}}"})'>
@@ -277,9 +287,8 @@
     </div>
 </div>
 <div class="row clearfix margin"></div>
-<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-    <a class="btn-floating btn-large green" style="background-color: #7cb342!important;"  ng-click="addNewDapp()">
+<div  class="fixed-action-btn hide-in-small" style="bottom: 45px; right: 24px;">
+    <a id="addDapp" class="btn-floating btn-large green"  ng-click="addNewDapp()">
         <i class="large material-icons">add</i>
     </a>
-
 </div>

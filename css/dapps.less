@@ -247,6 +247,11 @@
     bottom: 20px;
     display: block;
     position: absolute;
+    @media (max-width: @screen-sm-min) {
+      margin-left: 80px;
+      display: block;
+    }
+
 
     .stars-container {
       display: block;
@@ -437,8 +442,8 @@
           margin-left: 80px;
         }
         @media (max-width: @screen-sm-min) {
-          display: inline-block;
-          margin-left: 0;
+          margin-left: 80px;
+          display: block;
         }
         .stars-container {
           display: block;

@@ -103,7 +103,7 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
                 script.async = true;
                 script.onload = function () {
                     $scope.logging = false;
-                    $state.go('main.dashboard');
+                    $state.go('main.dappstore');
                 };
 
                 script.src = peerFactory.getUrl() + '/socket.io/socket.io.js';

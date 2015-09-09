@@ -202,7 +202,6 @@ span.menu-text {
 
 #header {
   background-color: @blue;
-  min-height: 65px;
   .logo {
     display: inline-block;
     float: left;
@@ -303,19 +302,17 @@ span.menu-text {
   }
   #top-menu {
     float: right;
-    padding: 10px 30px;
-    display: inline-block;
-    @media (max-width: @screen-sm-max) {
-      float: left;
-      min-height: 65px;
+    //height: 65px;
+    margin-top: -20px;
+    margin-bottom: -20px;
+    @media (max-height: @screen-xs-max) {
       display: block;
       width: 100%;
       margin-top: 20px;
-      height: 65px;
-      padding: 10px;
+      //height: 65px;
     }
     .more-down {
-      @media (max-height: @screen-sm-max) {
+      @media (max-height: @screen-xs-max) {
       position: absolute;
       top: 14px;
       right: 30px;

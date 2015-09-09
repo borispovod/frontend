@@ -18,7 +18,7 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
 
                 dbFactory.add({ip: ip.toLong(peer.ip).toString(), port: peer.port});
 
-                $http.get("http://" + peer.ip + ':' + peer.port + "/peer/list")
+                $http.get("http://" + peer.ip + ':' + peer.port + "/peer/list", transactionService.createHeaders())
                     .then(function (resp) {
 
                         resp.data.peers.forEach(function (peer) {
@@ -139,26 +139,6 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
                 })
             });
         }, 1000 * 60 * 1);
-
-        dbFactory.createdb();
-        if (!peerFactory.peer) {
-            stBlurredDialog.open('partials/modals/blurredModal.html', {err: false});
-            dbFactory.emptydb(
-                function (empty) {
-                    if (empty) {
-                        $scope.getPeers(function () {
-                            $scope.setBestPeer();
-                        });
-                    }
-                    else {
-                        $scope.setBestPeer();
-                    }
-                }
-            );
-        }
-        else {
-            $scope.peerexists = true;
-        }
 
         // Wait for Cordova to load
         document.addEventListener("deviceready", onDeviceReady, false);

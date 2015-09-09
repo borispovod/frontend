@@ -55,3 +55,35 @@ input[type=text], input[type=password], input[type=email], input[type=url], inpu
     transition: width .3s linear;
   }
 }
+
+.materialize-textarea-big {
+  textarea.materialize-textarea {
+    font-size: 1.14rem;
+    overflow-y: hidden;
+    padding: 0;
+    resize: none;
+    min-height: 3rem;
+    margin: 0;
+  }
+  label.active {
+    top: 0;
+  }
+}
+
+[type=checkbox].filled-in:checked + label.imaged:before {
+  top: 15px;
+}
+
+[type=checkbox].filled-in:checked + label.imaged:after {
+  top: 15px;
+}
+
+[type=checkbox].filled-in:not(:checked) + label.imaged:after {
+  top: 15px;
+}
+
+label.imaged {
+  img{
+    height: 50px;
+  }
+}

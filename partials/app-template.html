@@ -113,22 +113,31 @@
     <div id="page-content-wrapper">
         <div class="header-wrapper">
             <div class="nav-bar clearfix" id="header">
-                <h1 id="title"><span class="title-icon" ng-show="view.page.previos" ng-click="goToPrevios()">
+                <div class="logo">
+                    <button type="button" class="toggle-menu" ng-click="toggleMenu()">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <h1 id="title"><span class="title-icon" ng-show="view.page.previos" ng-click="goToPrevios()">
             <span class="sr-only">Go to previos page</span></span>{{view.page.title}}</h1>
-                <span class="forging-state" ng-show="view.forgingState">{{view.forgingState}}</span>
+                    <span class="forging-state" ng-show="view.forgingState">{{view.forgingState}}</span>
 
-                <div id="top-menu" class="valign-wrapper">
+                    <div id="top-menu" class="valign-wrapper">
                 <span id="balance">
                 {{unconfirmedBalance | xcrFilter}} XCR
             </span>
-                    <a class="btn btn-sky-blue waves-effect waves-light left-margin-20" ng-click="sendCrypti()"><i
-                            class="mdi-content-send left"></i>SEND
-                    </a>
-                    <div class="more-down left-margin-20" dropdown is-open="moreDropdownStatus.isopen">
-                        <i class="mdi-navigation-more-vert" dropdown-toggle></i>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a ui-sref="passphrase">Logout</a></li>
-                        </ul>
+                        <a class="btn btn-sky-blue waves-effect waves-light left-margin-20" ng-click="sendCrypti()"><i
+                                class="mdi-content-send left"></i>SEND
+                        </a>
+
+                        <div class="more-down left-margin-20" dropdown is-open="moreDropdownStatus.isopen">
+                            <i class="mdi-navigation-more-vert" dropdown-toggle></i>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a ui-sref="passphrase">Logout</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -137,7 +146,8 @@
                     <span class="input-group-addon">
                         <i class="mdi-action-search"></i>
                     </span>
-                    <input type="text" class="form-control" placeholder="Search for transactions (Transaction ID, Sender address, Recipient address)"
+                    <input type="text" class="form-control"
+                           placeholder="Search for transactions (Transaction ID, Sender address, Recipient address)"
                            ng-model="searchTransactions.searchForTransaction">
                        <span class="input-group-addon spinner-addon">
                             <div class="preloader-wrapper active" ng-if="searchTransactions.inSearch">

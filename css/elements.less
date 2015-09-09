@@ -814,7 +814,22 @@ a {
     }
   }
 }
+.pretty-scrolling {
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
 
+  &::-webkit-scrollbar-track {
+    background-color: rgba(207, 216, 220, 0.4);
+    opacity: 0.1;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgba(55, 71, 79, 0.2);
+  }
+}
 .scrolling {
   max-height: 410px;
   overflow-y: auto;

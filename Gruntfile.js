@@ -75,7 +75,7 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-browserify');
 
 	// Default task.
-	grunt.registerTask("default", ["less", "cssmin", "concat:develop", 'browserify', "concat:ignoringBrowserify"]);
+	grunt.registerTask("default",  ["less", "cssmin", "concat:develop", 'browserify', "concat:ignoringBrowserify"]);
 	// Release task
 	grunt.registerTask("release", ["default", "uglify:release"]);
 

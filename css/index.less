@@ -14,6 +14,9 @@
   background-repeat: no-repeat;
   height: 48px;
   width: 95px;
+  @media (max-width: @screen-sm-max) {
+   padding-left: 10px;
+  }
 }
 
 .white-glow {
@@ -205,10 +208,14 @@ span.menu-text {
     float: left;
     padding: 19px 30px;
     margin-right: 30px;
+    @media (max-width: @screen-sm-max) {
+      padding: 19px 10px;
+      margin-right: 10px;
+    }
   }
   .more-down {
     display: inline-block;
-    @media (max-width: @screen-xs-max) {
+    @media (max-width: @screen-sm-max) {
       position: absolute;
       top: 14px;
       right: 16px;
@@ -298,16 +305,17 @@ span.menu-text {
     float: right;
     padding: 10px 30px;
     display: inline-block;
-    @media (max-width: @screen-xs-max) {
+    @media (max-width: @screen-sm-max) {
       float: left;
       min-height: 65px;
       display: block;
       width: 100%;
       margin-top: 20px;
       height: 65px;
+      padding: 10px;
     }
     .more-down {
-      @media (max-height: @screen-xs-max) {
+      @media (max-height: @screen-sm-max) {
       position: absolute;
       top: 14px;
       right: 30px;

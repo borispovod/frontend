@@ -18,6 +18,12 @@ angular.module('webApp').controller('blockInfoController', ["$scope", "$http", "
         blockInfo.deactivate();
     }
 
+    $scope.userInfo = function (userId) {
+        blockInfo.deactivate();
+        $scope.userInfo = userInfo.activate({userId: userId});
+    }
+
+
     $scope.showGenerator = function(generatorId){
         blockInfo.deactivate();
         $scope.userInfo = userInfo.activate({userId: generatorId});

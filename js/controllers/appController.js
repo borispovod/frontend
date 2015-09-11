@@ -110,7 +110,6 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
         ];
 
 
-
         $scope.getUSDPrice = function () {
             $http.get("//146.148.61.64:4060/api/1/ticker/XCR_BTC")
                 .then(function (response) {
@@ -142,6 +141,11 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
             return (xcr / 100000000) * $scope.xcr_usd;
         };
 
+        $scope.clearSearch = function () {
+            $scope.searchTransactions.searchForTransaction = '';
+            $scope.searchBlocks.searchForBlock = '';
+        }
+
         $scope.getAppData = function () {
             $http.get("/api/accounts", {params: {address: userService.address}})
                 .then(function (resp) {
@@ -168,12 +172,14 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
                     $scope.secondPassphrase = userService.secondPassphrase;
                     $scope.unconfirmedPassphrase = userService.unconfirmedPassphrase;
                     $scope.delegateInRegistration = userService.delegateInRegistration;
-                    $scope.getMultisignatureAccounts(function(multisignature){
+                    if ($state.current.name != 'passphrase') {
+                    $scope.getMultisignatureAccounts(function (multisignature) {
                         $scope.multisignature = multisignature;
                     });
+                    }
 
                     if ($state.current.name == 'main.dashboard') {
-                        $scope.getForging();
+                        $scope.getForging($scope.setForgingText);
                         $scope.getDelegate();
                         $scope.getContacts();
 
@@ -183,6 +189,7 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
                     }
                     if ($state.current.name == 'main.forging' || $state.current.name == 'main.votes' || $state.current.name == 'main.delegates') {
                         $scope.getMyVotesCount();
+                        $scope.getForging($scope.setForgingText);
                     }
                     if ($state.current.name == 'main.dappstore' || 'main.dashboard') {
                         $scope.getCategories();
@@ -237,7 +244,7 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
                     totalBalance: userService.unconfirmedBalance,
                     destroy: function () {
                         $scope.forging = userService.forging;
-                        $scope.getForging();
+                        $scope.getForging($scope.setForgingText);
                     }
                 })
             }
@@ -263,17 +270,28 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
                     totalBalance: userService.unconfirmedBalance,
                     destroy: function () {
                         $scope.forging = userService.forging;
-                        $scope.getForging();
+                        $scope.getForging($scope.setForgingText);
                     }
                 })
             }
         }
 
-        $scope.getForging = function () {
+        $scope.setForgingText = function (forging) {
+            if ($state.current.name == 'main.forging' || $state.current.name == 'main.votes' || $state.current.name == 'main.delegates') {
+                $scope.forgingStatus = forging ? 'Enabled' : 'Disabled';
+                $scope.forgingEnabled = forging;
+            }
+            else {
+                $scope.forgingStatus = null;
+            }
+        }
+
+        $scope.getForging = function (cb) {
             $http.get("/api/delegates/forging/status", {params: {publicKey: userService.publicKey}})
                 .then(function (resp) {
                     $scope.forging = resp.data.enabled;
                     userService.setForging($scope.forging);
+                    cb($scope.forging);
                 });
         }
 
@@ -288,7 +306,7 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
                 .then(function (response) {
                     if (response.data.success) {
                         if (response.data.accounts.length) {
-                            return userService.setMultisignature(true,cb);
+                            return userService.setMultisignature(true, cb);
                         }
                         else {
                             $http.get("/api/multisignatures/pending", {
@@ -297,21 +315,21 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
                                 .then(function (response) {
                                     if (response.data.success) {
                                         if (response.data.transactions.length) {
-                                            return userService.setMultisignature(true,cb);
+                                            return userService.setMultisignature(true, cb);
                                         }
                                         else {
-                                            return userService.setMultisignature(false,cb);
+                                            return userService.setMultisignature(false, cb);
                                         }
                                     }
                                     else {
-                                        return userService.setMultisignature(false,cb);
+                                        return userService.setMultisignature(false, cb);
                                     }
                                 });
 
                         }
                     }
                     else {
-                        return userService.setMultisignature(false,cb);
+                        return userService.setMultisignature(false, cb);
                     }
                 });
         }
@@ -427,13 +445,15 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
             $scope.updateViews([
                 'main.transactions',
                 'main.contacts',
-                'main.multi'
+                'main.multi',
+                'main.dashboard'
             ]);
         });
         $scope.$on('socket:blocks/change', function (ev, data) {
             $scope.getAppData();
             $scope.updateViews([
-                'main.blockchain'
+                'main.blockchain',
+                'main.dashboard'
             ]);
         });
         $scope.$on('socket:delegates/change', function (ev, data) {

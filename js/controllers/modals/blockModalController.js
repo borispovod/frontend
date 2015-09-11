@@ -1,6 +1,6 @@
 require('angular');
 
-angular.module('webApp').controller('blockModalController', ["$scope", "$http", "blockModal", function ($scope, $http, blockModal) {
+angular.module('webApp').controller('blockModalController', ["$scope", "$http", "blockModal", "userInfo", function ($scope, $http, blockModal, userInfo) {
     $scope.loading = true;
     $scope.transactions = [];
     $scope.getTransactionsOfBlock = function (blockId) {
@@ -16,4 +16,10 @@ angular.module('webApp').controller('blockModalController', ["$scope", "$http", 
     $scope.close = function () {
         blockModal.deactivate();
     }
+
+    $scope.userInfo = function (userId) {
+        blockModal.deactivate();
+        $scope.userInfo = userInfo.activate({userId: userId});
+    }
+
 }]);

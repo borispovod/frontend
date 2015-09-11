@@ -9,8 +9,8 @@
                     </div>
                     <div class="modal-nav">
                         <ul class="nav nav-vote">
-                            <li><a href="#" class="green-link" ng-click="passcheck()"><i
-                                    class="mdi-action-favorite-outline left"></i> CONFIRM VOTE</a></li>
+                            <li><a href="#" class="red-link" ng-class="{'green-link': adding}" ng-click="passcheck()"><i
+                                    class="mdi-action-favorite-outline left"></i> {{confirmText}}</a></li>
                             <li><a href="#" ng-click="close()"><i class="mdi-navigation-close left"></i> CANCEL</a></li>
 
                         </ul>

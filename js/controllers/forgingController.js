@@ -13,7 +13,6 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
         $scope.showAllColumns = false;
         $scope.showFullTime = false;
         $scope.countForgingBlocks = 0;
-
         $scope.graphs = {
             amountForged: {
                 labels: ['1', '2', '3', '4'],
@@ -101,6 +100,7 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
         $scope.totalBalance = userService.balance;
         $scope.unconfirmedBalance = userService.unconfirmedBalance;
         $scope.loadingBlocks = true;
+        $scope.setForgingText(userService.forging);
 
         //Blocks
         $scope.tableBlocks = new ngTableParams({

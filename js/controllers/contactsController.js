@@ -24,7 +24,7 @@ angular.module('webApp').controller('contactsController', ['$scope', '$rootScope
                     $scope.view.inLoading = false;
                     $http.get('/api/contacts/unconfirmed', {
                         params: {
-                            senderPublicKey: userService.publicKey
+                            publicKey: userService.publicKey
                         }
                     })
                         .then(function (resp) {

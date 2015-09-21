@@ -9,6 +9,9 @@ angular.module('webApp').controller('multisignatureModalController',
             $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
             $scope.addingError = '';
             $scope.close = function () {
+                if ($scope.destroy) {
+                    $scope.destroy();
+                }
                 multisignatureModal.deactivate();
             }
 
@@ -47,6 +50,7 @@ angular.module('webApp').controller('multisignatureModalController',
                                     }
                                     $scope.members[response.data.account.publicKey] = response.data.account;
                                     $scope.totalCount = $scope.totalCount + 1;
+                                    $scope.contact = '';
                                 }
                                 else {
                                     $scope.addingError = response.data.error;
@@ -65,6 +69,7 @@ angular.module('webApp').controller('multisignatureModalController',
                                     }
                                     $scope.members[response.data.account.publicKey] = response.data.account;
                                     $scope.totalCount = $scope.totalCount + 1;
+                                    $scope.contact = '';
                                 }
                                 else {
                                     $scope.addingError = response.data.error;

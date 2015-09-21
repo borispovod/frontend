@@ -77,9 +77,10 @@
 
                     <div class="input-field">
                         <input ng-minlength=1
-                               ng-maxlength=32 required
+                               ng-maxlength=32
+                               required
                                ng-class="{'invalid': dapp_data_form.submitted && dapp_data_form.name.$invalid , 'valid':  dapp_data_form.submitted && dapp_data_form.name.$valid}"
-                               id="name" name="name" type="text" ng-model="newDapp.name">
+                               id="name" name="name" type="text" class="validate" ng-model="newDapp.name">
                         <label for="name">Name</label>
                     </div>
                     <div class="error-newdapp-container"
@@ -117,10 +118,12 @@
                                ng-model="newDapp.tags">
                         <label for="tags">Tags (separated with comma)</label>
                     </div>
+
                     <div class="error-newdapp-container"
                          ng-show="dapp_data_form.tags.$invalid && dapp_data_form.submitted">
+                        {{dapp_data_form.tags.$error}}
                         <small class="error"
-                               ng-show="dapp_data_form.description.$error.maxlength">
+                               ng-show="dapp_data_form.tags.$error">
                             Your dapp tags cannot be longer than 160 characters
                         </small>
                     </div>
@@ -173,7 +176,7 @@
                         <input ng-minlength=1
                                ng-maxlength=32 required
                                ng-class="{'invalid': dapp_data_form.submitted && dapp_data_form.name.$invalid , 'valid':  dapp_data_form.submitted && dapp_data_form.name.$valid}"
-                               id="name" name="name" type="text" ng-model="newDapp.name">
+                               id="name" name="name" class="validate" type="text" ng-model="newDapp.name">
                         <label for="name">Name</label>
                     </div>
                     <div class="error-newdapp-container"

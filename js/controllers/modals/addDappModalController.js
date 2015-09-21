@@ -54,7 +54,7 @@ angular.module('webApp').controller('addDappModalController', ["$scope", "$http"
                 description: $scope.newDapp.description,
                 category: $scope.newDapp.category,
                 type: $scope.newDapp.type,
-                tags: $scope.newDapp.tags,
+                tags: $scope.newDapp.tags
             }
             if (!!$scope.urlSiaMode || $scope.newDapp.icon.trim() == '') {
             }

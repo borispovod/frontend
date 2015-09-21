@@ -91,25 +91,29 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
         }
 
 
-
-        $scope.runDApp = function () {
+        $scope.runDApp = function (type) {
             // open dapp
-            $http.post("/api/dapps/launch", {
-                "params": [userService.rememberPassword],
-                "id": $stateParams.dappId
-            }).then(function (response) {
-                $scope.getInstalling();
-                $scope.getLaunched();
-                $scope.getRemoving();
-                if (response.data.success == true) {
-                    if ($scope.dapp.type == 1) {
-                        $window.open($scope.dapp.link, '_blank');
+            if (type == 1) {
+                $scope.openDapp();
+            }
+            else {
+                $http.post("/api/dapps/launch", {
+                    "params": [userService.rememberPassword],
+                    "id": $stateParams.dappId
+                }).then(function (response) {
+                    $scope.getInstalling();
+                    $scope.getLaunched();
+                    $scope.getRemoving();
+                    if (response.data.success == true) {
+                        if ($scope.dapp.type == 1) {
+                            $window.open($scope.dapp.link, '_blank');
+                        }
+                        else {
+                            $window.open('/dapps/' + $stateParams.dappId, '_blank');
+                        }
                     }
-                    else {
-                        $window.open('/dapps/' + $stateParams.dappId, '_blank');
-                    }
-                }
-            });
+                });
+            }
         }
 
         $scope.openDapp = function () {

@@ -174,7 +174,8 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
                     $scope.delegateInRegistration = userService.delegateInRegistration;
                     if ($state.current.name != 'passphrase') {
                     $scope.getMultisignatureAccounts(function (multisignature) {
-                        $scope.multisignature = multisignature;
+                        $scope.multisignature = userService.u_multisignatures.length || userService.multisignatures.length
+                       || multisignature;
                     });
                     }
 

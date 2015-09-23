@@ -20,6 +20,12 @@ angular.module('webApp').controller('multisignatureModalController',
             $scope.totalCount = 0;
             $scope.sign = 1;
 
+            $scope.goToStep3 = function () {
+                if ($scope.totalCount) {
+                    $scope.step = 3;
+                }
+            }
+
             $scope.members = {};
 
             $scope.deleteMember = function (publicKey) {

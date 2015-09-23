@@ -95,6 +95,7 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
         $scope.view.loadingText = "Loading forging states";
         $scope.view.page = {title: 'Forging', previos: null};
         $scope.view.bar = {forgingMenu: true};
+
         $scope.address = userService.address;
         $scope.effectiveBalance = userService.effectiveBalance;
         $scope.totalBalance = userService.balance;

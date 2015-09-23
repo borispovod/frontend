@@ -57,7 +57,7 @@ angular.module('webApp').service('blockService', function ($http) {
                 });
             }
             else {
-                if (!this.gettingBlocks) {
+                if (true) {
                     this.gettingBlocks = true;
                     var sortString = '';
                     var keys = [];

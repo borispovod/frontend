@@ -24,7 +24,7 @@
                                                      ng-model="newPassphrase" autofocus ng-trim="false"></textarea>
                                         <label for="newPassphrase" ng-class="{'active':activeLabel(newPassphrase)}">Passphrase</label>
                                     </div>
-                                    <span class="pull-right generate"
+                                    <span class="pull-right generate no-select"
                                           ng-click="generatePassword()"><span>Generate New</span></span>
                                 </div>
 
@@ -57,7 +57,7 @@
                                                      ng-trim="false" ng-model="repeatPassphrase" ng-class="{'invalid': noMatch}" autofocus></textarea>
                                         <label for="repeatPassphrase" ng-class="{'active':activeLabel(repeatPassphrase)}">Passphrase</label>
                                     </div>
-                                    <span class="pass-error" ng-show="noMatch">Passphrase doesn't match.</span>
+                                    <span class="pass-error" style="margin-top: 0;" ng-show="noMatch">Passphrase doesn't match.</span>
                                 </div>
 
                             </div>

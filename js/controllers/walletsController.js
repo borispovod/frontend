@@ -11,7 +11,7 @@ angular.module('webApp').controller('walletsController', ['$scope', '$rootScope'
         $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
 
         $scope.countSign = function (transaction) {
-            return transaction.signatures ? transaction.signatures.length : 0;
+            return (transaction.signatures ? transaction.signatures.length : 0) + 1;
         }
 
         $scope.signedByUser = function (transaction) {

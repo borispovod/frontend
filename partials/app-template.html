@@ -158,7 +158,7 @@
                     </button>
                     <h1 id="title"><span class="title-icon" ng-show="view.page.previos" ng-click="goToPrevios()">
             <span class="sr-only">Go to previos page</span></span>{{view.page.title}}</h1>
-                    <span class="forging-state" ng-class="{'disabled': !forgingEnabled}" ng-if="forgingStatus">{{forgingStatus}}</span></div>
+                    <span class="forging-state" ng-class="{'disabled': !forgingEnabled}" ng-if="forgingStatus && view.bar.forgingMenu">{{forgingStatus}}</span></div>
                 <div id="top-menu">
                 <span id="balance">
                 {{unconfirmedBalance | xcrFilter}} XCR

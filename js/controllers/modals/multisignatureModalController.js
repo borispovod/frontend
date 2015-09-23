@@ -18,7 +18,7 @@ angular.module('webApp').controller('multisignatureModalController',
             $scope.step = 1;
 
             $scope.totalCount = 0;
-            $scope.sign = 1;
+            $scope.sign = 2;
 
             $scope.goToStep3 = function () {
                 if ($scope.totalCount) {

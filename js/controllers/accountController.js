@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('accountController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionInfo', 'userInfo', '$filter',
-    function ($rootScope, $scope, $http, userService, $interval, $timeout, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionInfo, userInfo, $filter) {
+angular.module('webApp').controller('accountController', ['$state','$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionInfo', 'userInfo', '$filter',
+    function ($state, $rootScope, $scope, $http, userService, $interval, $timeout, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionInfo, userInfo, $filter) {
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
         $scope.view.loadingText = "Loading dashboard";
@@ -155,7 +155,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
         }
 
         $scope.$on('updateControllerData', function (event, data) {
-            if (data.indexOf('main.dashboard') != -1) {
+            if (data.indexOf('main.dashboard') != -1 && $state.current.name=="main.dashboard") {
                 $scope.updateView();
             }
         });

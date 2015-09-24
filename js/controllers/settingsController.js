@@ -6,6 +6,11 @@ angular.module('webApp').controller('settingsController', ['$scope', '$rootScope
         $scope.view.page = {title: 'Settings', previos: null};
         $scope.view.bar = {};
 
+        $scope.settings = {
+            user: userService,
+            enabledMultisign: false
+        }
+
         $scope.checkEnabledMultisign = function () {
             if (userService.multisignatures) {
                 if (userService.multisignatures.length) {
@@ -20,23 +25,24 @@ angular.module('webApp').controller('settingsController', ['$scope', '$rootScope
             return false;
         }
 
-        $scope.enabledMultisign = $scope.checkEnabledMultisign();
+        $scope.settings.enabledMultisign = $scope.checkEnabledMultisign();
 
         $scope.updateSettings = $interval(function () {
-            $scope.enabledMultisign = $scope.checkEnabledMultisign();
+            $scope.settings.enabledMultisign = $scope.checkEnabledMultisign();
         }, 1000);
-
-        $interval.cancel($scope.updateSettings);
 
 
         $scope.setMultisignature = function () {
-            if ($scope.enabledMultisign) {
+            if ($scope.settings.enabledMultisign) {
                 return;
             }
-
+            $interval.cancel($scope.updateSettings);
             $scope.multisignatureModal = multisignatureModal.activate({
                 destroy: function () {
+                    $scope.settings.enabledMultisign = $scope.checkEnabledMultisign();
+                    $scope.settings.updateSettings = $interval(function () {
                         $scope.enabledMultisign = $scope.checkEnabledMultisign();
+                    }, 1000);
 
                 }
             });

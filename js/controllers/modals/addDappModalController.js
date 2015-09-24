@@ -138,9 +138,7 @@ angular.module('webApp').controller('addDappModalController', ["$scope", "$http"
             return $scope.urlSiaMode ? 'change to url link' : 'change to SIA ASCII';
         }
 
-
         $scope.goToStep2 = function () {
-
             $scope.step = 2;
         }
 
@@ -153,8 +151,17 @@ angular.module('webApp').controller('addDappModalController', ["$scope", "$http"
         }
 
         $scope.getRepositoryName = function () {
-            return $scope.repository == 'sia' ? 'SIA' : 'GIT';
+            return $scope.repository == 'sia' ? 'Sia' : 'GitHub';
         }
+
+        $scope.getRepositoryHeaderText = function () {
+            return $scope.repository == 'sia' ? 'Please set the Sia ASCII code below.' : 'Please set the GitHub repository link below.';
+        }
+
+        $scope.getRepositoryHelpText = function(){
+            return $scope.repository == 'sia' ? 'Please make sure you copy and paste the whole Sia ASCII code. Additionally please check that there were no characters added.' : 'Please make sure you copy the complete repository link from GitHub. It ends in .git.';
+        }
+
         $scope.selectRepository = function (name) {
             $scope.repository = name;
         }

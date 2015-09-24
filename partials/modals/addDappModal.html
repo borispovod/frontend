@@ -443,11 +443,12 @@
         </div>
         <div class="modal-content pretty-scrolling hide-in-small" style="  height: calc(100% - 290px); padding: 0;  -webkit-box-shadow:none;
   box-shadow: none;">
-            <form ng-if="repository=='git'" ng-submit="passcheck()" style="padding-bottom: 30px;">
+            <form ng-if="repository=='git'" ng-submit="goToStep5()" style="padding-bottom: 30px;">
 
                 <div class="field-padding">
                     <div class="input-field">
-                        <input id="amount" type="text" ng-model="newDapp.git">
+                        <input id="amount" type="text" ng-model="newDapp.git"  class="validate" ng-class="{'invalid': errorAppLink}">
+
                         <label for="amount">Git repository link</label>
                     </div>
                     <a class="btn btn-sky-blue waves-effect waves-light right">Check
@@ -456,11 +457,13 @@
                 <input type="submit" ng-show="false">
             </form>
 
-            <form ng-if="repository=='sia'" ng-submit="passcheck()" style="padding-bottom: 30px;">
+            <form  ng-if="repository=='sia'" ng-submit="goToStep5()" style="padding-bottom: 30px;">
 
                 <div class="field-padding">
                     <div class="input-field materialize-textarea-big">
-                        <textarea id="textarea1" class="materialize-textarea" ng-model="newDapp.siaAscii" style="max-height:
+                        <textarea id="textarea1" class="materialize-textarea validate"
+                                  ng-class="{'invalid': errorAppLink}"
+                                  ng-model="newDapp.siaAscii" style="max-height:
                                   250px;"></textarea>
                         <label for="textarea1">Sia ASCII Code</label>
                     </div>
@@ -476,7 +479,7 @@
         </div>
         <div class="modal-content pretty-scrolling show-in-small" style="  height: calc(100% - 130px); padding: 0;  -webkit-box-shadow:none;
   box-shadow: none;">
-            <form ng-if="repository=='git'" ng-submit="passcheck()" style="padding-bottom: 30px;">
+            <form ng-if="repository=='git'" ng-submit="goToStep5()" style="padding-bottom: 30px;">
 
                 <div class="field-padding">
                     <div class="input-field">
@@ -508,7 +511,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <a class="waves-effect btn-flat primary-action" ng-click="step=step+1;">Next Step</a>
+            <a class="waves-effect btn-flat primary-action" ng-click="goToStep5()">Next Step</a>
             <a class="waves-effect btn-flat second-action" ng-click="step=step-1;">Go back</a>
         </div>
     </div>

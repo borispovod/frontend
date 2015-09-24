@@ -37,6 +37,7 @@ angular.module('webApp').controller('addDappModalController', ["$scope", "$http"
             }
         }
 
+
         $scope.newDapp = {
             name: "",
             description: "",
@@ -65,13 +66,13 @@ angular.module('webApp').controller('addDappModalController', ["$scope", "$http"
             if (!$scope.urlSiaMode || $scope.newDapp.siaIcon.trim() == '') {
             }
             else {
-               data.siaIcon =  $scope.newDapp.siaIcon.trim();
+                data.siaIcon = $scope.newDapp.siaIcon.trim();
             }
 
             if ($scope.repository == 'sia' || $scope.newDapp.git.trim() == '') {
             }
             else {
-                data.git =  $scope.newDapp.git.trim();
+                data.git = $scope.newDapp.git.trim();
             }
 
             if ($scope.repository != 'sia' || $scope.newDapp.siaAscii.trim() == '') {
@@ -117,6 +118,7 @@ angular.module('webApp').controller('addDappModalController', ["$scope", "$http"
         $scope.goToStep4 = function () {
             $scope.errorMessage = "";
             $scope.step = 4;
+            $scope.errorAppLink = false;
         }
 
         $scope.goToStep3 = function (invalid) {
@@ -127,6 +129,14 @@ angular.module('webApp').controller('addDappModalController', ["$scope", "$http"
                 $scope.dapp_data_form.submitted = true;
             }
         }
+
+        $scope.goToStep5 = function () {
+            $scope.errorAppLink = $scope.repository == 'sia' ? $scope.newDapp.siaAscii.trim() == '' : $scope.newDapp.git.trim() == '';
+            if (!$scope.errorAppLink) {
+                $scope.step = 5;
+            }
+
+        };
 
         $scope.urlSiaMode = 0;
 
@@ -158,7 +168,7 @@ angular.module('webApp').controller('addDappModalController', ["$scope", "$http"
             return $scope.repository == 'sia' ? 'Please set the Sia ASCII code below.' : 'Please set the GitHub repository link below.';
         }
 
-        $scope.getRepositoryHelpText = function(){
+        $scope.getRepositoryHelpText = function () {
             return $scope.repository == 'sia' ? 'Please make sure you copy and paste the whole Sia ASCII code. Additionally please check that there were no characters added.' : 'Please make sure you copy the complete repository link from GitHub. It ends in .git.';
         }
 

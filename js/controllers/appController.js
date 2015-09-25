@@ -1,8 +1,8 @@
 require('angular');
 var compareVersion = require('../../node_modules/compare-version/index.js');
 
-angular.module('webApp').controller('appController', ['dappsService', '$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'contactsService', 'addContactModal', 'userInfo', 'transactionsService', 'secondPassphraseModal', 'focusFactory',
-    function (dappsService, $rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, contactsService, addContactModal, userInfo, transactionsService, secondPassphraseModal, focusFactory) {
+angular.module('webApp').controller('appController', ['dappsService', '$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", 'viewFactory', '$state', 'blockService', 'sendCryptiModal', 'registrationDelegateModal', 'userSettingsModal', 'serverSocket', 'delegateService', '$window', 'forgingModal', 'errorModal', 'contactsService', 'addContactModal', 'userInfo', 'transactionsService', 'secondPassphraseModal', 'focusFactory',
+    function (dappsService, $rootScope, $scope, $http, userService, $interval, $timeout, viewFactory, $state, blockService, sendCryptiModal, registrationDelegateModal, userSettingsModal, serverSocket, delegateService, $window, forgingModal, errorModal, contactsService, addContactModal, userInfo, transactionsService, secondPassphraseModal, focusFactory) {
         $scope.searchTransactions = transactionsService;
         $scope.searchDapp = dappsService;
         $scope.searchBlocks = blockService;
@@ -13,6 +13,7 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
         $scope.diffVersion = 0;
         $scope.subForgingCollapsed = true;
         $scope.categories = {};
+        $scope.dataToShow = {forging: false}
 
         $scope.getCategoryName = function (id) {
             for (var key in $scope.categories) {
@@ -173,15 +174,18 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
                     $scope.unconfirmedPassphrase = userService.unconfirmedPassphrase;
                     $scope.delegateInRegistration = userService.delegateInRegistration;
                     if ($state.current.name != 'passphrase') {
-                    $scope.getMultisignatureAccounts(function (multisignature) {
-                        $scope.multisignature = userService.u_multisignatures.length || userService.multisignatures.length
-                       || multisignature;
-                    });
+                        $scope.getMultisignatureAccounts(function (multisignature) {
+                            $scope.multisignature = userService.u_multisignatures.length || userService.multisignatures.length
+                                || multisignature;
+                        });
+                    }
+
+                    if ($state.current.name == 'main.dashboard' || $state.current.name == 'main.forging' || $state.current.name == 'main.votes' || $state.current.name == 'main.delegates') {
+                        $scope.getForging($scope.setForgingText);
+                        $scope.getDelegate();
                     }
 
                     if ($state.current.name == 'main.dashboard') {
-                        $scope.getForging($scope.setForgingText);
-                        $scope.getDelegate();
                         $scope.getContacts();
 
                     }
@@ -233,8 +237,19 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
                     publicKey: userService.publicKey
                 })
                     .then(function (resp) {
+                        if (resp.data.success){
                         userService.setForging(resp.data.success);
-                        $scope.forging = resp.data.success;
+                            $scope.forging = resp.data.success;
+                            $scope.dataToShow.forging = $scope.forging;}
+                        else {
+                            $scope.errorModal = errorModal.activate({
+                                error: resp.data.error,
+                                destroy: function () {
+                                    $scope.forging = false;
+                                    $scope.dataToShow.forging = $scope.forging;
+                                }
+                            })
+                        }
                     });
 
 
@@ -244,8 +259,11 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
                     forging: false,
                     totalBalance: userService.unconfirmedBalance,
                     destroy: function () {
-                        $scope.forging = userService.forging;
+                        userService.setForging(resp.data.success);
                         $scope.getForging($scope.setForgingText);
+                        $scope.forging = userService.forging;
+                        $scope.dataToShow.forging = $scope.forging;
+
                     }
                 })
             }
@@ -261,8 +279,22 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
                     publicKey: userService.publicKey
                 })
                     .then(function (resp) {
-                        userService.setForging(!resp.data.success);
-                        $scope.forging = !resp.data.success;
+                        if (resp.data.success) {
+                            userService.setForging(!resp.data.success);
+                            $scope.forging = !resp.data.success;
+                            $scope.dataToShow.forging = $scope.forging;
+                        }
+                        else {
+                            $scope.errorModal = errorModal.activate({
+                                error: resp.data.error,
+                                destroy: function () {
+                                    $scope.forging = true;
+                                    $scope.dataToShow.forging = $scope.forging;
+                                }
+                            })
+                        }
+
+
                     });
             }
             else {
@@ -271,9 +303,19 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
                     totalBalance: userService.unconfirmedBalance,
                     destroy: function () {
                         $scope.forging = userService.forging;
+                        $scope.dataToShow.forging = $scope.forging;
                         $scope.getForging($scope.setForgingText);
                     }
                 })
+            }
+        }
+
+        $scope.toggleForging = function(){
+            if ($scope.forging){
+                $scope.disableForging();
+            }
+            else {
+                $scope.enableForging();
             }
         }
 
@@ -291,6 +333,7 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
             $http.get("/api/delegates/forging/status", {params: {publicKey: userService.publicKey}})
                 .then(function (resp) {
                     $scope.forging = resp.data.enabled;
+                    $scope.dataToShow.forging = $scope.forging;
                     userService.setForging($scope.forging);
                     cb($scope.forging);
                 });

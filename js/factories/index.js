@@ -21,3 +21,4 @@ require('../../js/factories/modals/multiMembersModal');
 require('../../js/factories/modals/addDappModal');
 require('../../js/factories/modals/signTransactionModal');
 require('../../js/factories/modals/multisignatureModal');
+require('../../js/factories/modals/errorModal');

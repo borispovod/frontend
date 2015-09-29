@@ -110,7 +110,7 @@ angular.module('webApp').controller('registrationDelegateModalController', ["$sc
             var data = {
                 secret: pass,
                 secondSecret: $scope.secondPhrase,
-                username: $scope.delegateData.username,
+                username:  $scope.delegateData.username.trim() =='' ? null : $scope.delegateData.username.trim(),
                 publicKey: userService.publicKey
             };
             if ($scope.secondPassphrase) {

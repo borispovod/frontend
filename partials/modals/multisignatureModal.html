@@ -73,6 +73,7 @@
                                 <span>{{member.address}}</span><span class="delete"
                                                                      ng-click="deleteMember(member.publicKey)"></span>
                             </li>
+                            <li><span>{{currentAddress}}</span></li>
                         </ul>
                     </div>
                     <div class="modal-body" id="multi-range" ng-show="totalCount">
@@ -114,7 +115,7 @@
                     </div>
                     <div class="modal-body">
                         <ul class="multi-total">
-                            <li>Number of owners:<span>{{totalCount}}</span></li>
+                            <li>Number of members:<span>{{totalCount+1}}</span></li>
                             <li>Confirmations needed:<span>{{sign}}</span></li>
                         </ul>
                     </div>
@@ -123,6 +124,7 @@
                             <li ng-repeat="(key, member) in members">
                                 <span>{{member.address}}</span>
                             </li>
+                            <li>{{currentAddress}}</li>
                         </ul>
                     </div>
                     <div class="modal-body" ng-show="errorMessage">

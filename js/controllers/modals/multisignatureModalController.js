@@ -8,6 +8,7 @@ angular.module('webApp').controller('multisignatureModalController',
             $scope.secondPassphrase = userService.secondPassphrase;
             $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
             $scope.addingError = '';
+            $scope.currentAddress = userService.address;
             $scope.close = function () {
                 if ($scope.destroy) {
                     $scope.destroy();

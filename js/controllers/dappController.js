@@ -1,6 +1,6 @@
 require('angular');
-angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', '$stateParams', '$http', "$window", "$interval", "userService",
-    function ($scope, viewFactory, $stateParams, $http, $window, $interval, userService) {
+angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', '$stateParams', '$http', "$window", "$interval", "userService", "errorModal",
+    function ($scope, viewFactory, $stateParams, $http, $window, $interval, userService, errorModal) {
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
         $scope.view.loadingText = "Loading dapp";
@@ -70,6 +70,7 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
         });
 
         $scope.installDapp = function () {
+            $scope.installingIds.push($stateParams.dappId);
             $http.post("/api/dapps/install", {
                 "id": $stateParams.dappId
             }).then(function (response) {
@@ -81,6 +82,14 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
                     if ($scope.dapp.type == 1) {
                         $window.open($scope.dapp.link, '_blank');
                     }
+                }
+                else {
+                    $scope.errorModal = errorModal.activate({
+                        error: resp.data.error,
+                        destroy: function () {
+
+                        }
+                    })
                 }
             });
         }

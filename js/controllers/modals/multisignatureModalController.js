@@ -15,7 +15,7 @@ angular.module('webApp').controller('multisignatureModalController',
             $scope.currentAddress = userService.address;
             $scope.close = function () {
                 if ($scope.destroy) {
-                    $scope.destroy();
+                    $scope.destroy(false);
                 }
                 multisignatureModal.deactivate();
             }
@@ -122,6 +122,9 @@ angular.module('webApp').controller('multisignatureModalController',
                         return '+' + element;
                     })
                 };
+                if ($scope.secondPassphrase){
+                    data.secondSecret = $scope.authData.secondPassword;
+                }
                 $scope.view.inLoading = true;
                 $http.put('/api/multisignatures', data).then(function (response) {
                     $scope.view.inLoading = false;
@@ -130,7 +133,7 @@ angular.module('webApp').controller('multisignatureModalController',
                     }
                     else {
                         if ($scope.destroy) {
-                            $scope.destroy();
+                            $scope.destroy(true);
                         }
                         multisignatureModal.deactivate();
                     }

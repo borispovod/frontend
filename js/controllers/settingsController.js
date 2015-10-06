@@ -38,8 +38,8 @@ angular.module('webApp').controller('settingsController', ['$scope', '$rootScope
             }
             $interval.cancel($scope.updateSettings);
             $scope.multisignatureModal = multisignatureModal.activate({
-                destroy: function () {
-                    $scope.settings.enabledMultisign = $scope.checkEnabledMultisign();
+                destroy: function (enabled) {
+                    $scope.settings.enabledMultisign = enabled;
                     $scope.settings.updateSettings = $interval(function () {
                         $scope.enabledMultisign = $scope.checkEnabledMultisign();
                     }, 1000);

@@ -7,6 +7,10 @@ angular.module('webApp').controller('multisignatureModalController',
             $scope.view.loadingText = "Set members of account";
             $scope.secondPassphrase = userService.secondPassphrase;
             $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
+            $scope.authData = {
+                password: $scope.rememberedPassword || '',
+                secondPassword: ''
+            }
             $scope.addingError = '';
             $scope.currentAddress = userService.address;
             $scope.close = function () {
@@ -94,8 +98,20 @@ angular.module('webApp').controller('multisignatureModalController',
                 }
             }
 
-            $scope.putMembers = function () {
+            $scope.putMembers = function (fromPass) {
                 $scope.errorMessage = '';
+                if (fromPass) {
+                    if ($scope.authData.password.trim()=='' || $scope.authData.secondPassword.trim() == ''){
+                        $scope.errorMessage = "Missing Password or Second Password";
+                        return;
+                    }
+                }
+                else {
+                    if ($scope.secondPassphrase || !$scope.rememberedPassword) {
+                        $scope.step = 4;
+                        return;
+                    }
+                }
 
                 var data = {
                     secret: $scope.rememberedPassword,

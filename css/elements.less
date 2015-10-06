@@ -309,6 +309,12 @@
           color: @dark-meant;
         }
       }
+      &.red-link {
+        color: @dark-red;
+        &:hover, &:active, &:focus {
+          color: @dark-red;
+        }
+      }
     }
   }
 }
@@ -382,7 +388,6 @@ a {
       &.red-link {
         color: @dark-red;
         &:hover, &:active, &:focus {
-          background-color: @grey;
           color: @dark-red;
         }
       }
@@ -426,7 +431,7 @@ a {
       &.red-link {
         color: @dark-red;
         &:hover, &:active, &:focus {
-          background-color: @grey;
+          background-color: @white;
           color: @dark-red;
         }
       }
@@ -981,5 +986,45 @@ a {
   }
   to {
     opacity: 1;
+  }
+}
+
+.in_develop {
+  overflow: hidden;
+  .in_develop_text {
+    left: 6px;
+    right: 6px;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    z-index: 2;
+    font-size: 20px;
+    line-height: 48px;
+    background-color: #263238;
+    color: white;
+    border-radius: 3px;
+    height: 0;
+    transition: all 0.5s ease-in-out;
+  }
+  .in_develop_blure_color {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 1;
+  }
+  .in_develop_feature {
+    -webkit-filter: blur(2px);
+    -moz-filter: blur(2px);
+    -ms-filter: blur(2px);
+    -o-filter: blur(2px);
+    filter: blur(2px);
+    position: relative;
+  }
+  &:hover {
+    .in_develop_text {
+      height: 48px;
+
+  }
   }
 }

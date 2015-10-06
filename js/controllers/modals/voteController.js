@@ -59,7 +59,7 @@ angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$
 
     $scope.close = function () {
         if ($scope.destroy) {
-            $scope.destroy();
+            $scope.destroy(true);
         }
         voteModal.deactivate();
     }

@@ -66,7 +66,10 @@ angular.module('webApp').controller('votedDelegatesController', ['$scope', '$roo
                 totalBalance: $scope.unconfirmedBalance,
                 voteList: $scope.voteList.list,
                 adding: false,
-                destroy: function () {
+                destroy: function (keepVotes) {
+                if (keepVotes) {
+                    return;
+                }
                     $scope.voteList.list = {};
                     $scope.unconfirmedTransactions.getList();
                 }

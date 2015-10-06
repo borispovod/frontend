@@ -9,11 +9,11 @@ angular.module('webApp').controller('delegatesController', ['$scope', '$rootScop
         $scope.view.page = {title: 'Forging', previos: null};
         $scope.view.bar = {forgingMenu: true};
         $scope.allVotes = 100
-        * 1000
-        * 1000
-        * 1000
-        * 1000
-        * 100;
+            * 1000
+            * 1000
+            * 1000
+            * 1000
+            * 100;
 
         $scope.countTop = 0;
         $scope.countStandby = 0;
@@ -73,12 +73,18 @@ angular.module('webApp').controller('delegatesController', ['$scope', '$rootScop
                 totalBalance: $scope.unconfirmedBalance,
                 voteList: $scope.voteList.list,
                 adding: true,
-                destroy: function () {
-                    $scope.voteList.list = {};
-                    $scope.voteList.recalcLength();
-                    $scope.delegates.getList(function () {
-                        $scope.unconfirmedTransactions.getList();
-                    });
+                destroy: function (keepVotes) {
+                    if (keepVotes) {
+                        $scope.voteList.recalcLength();
+                        return;
+                    }
+                    else {
+                        $scope.voteList.list = {};
+                        $scope.voteList.recalcLength();
+                        $scope.delegates.getList(function () {
+                            $scope.unconfirmedTransactions.getList();
+                        });
+                    }
                 }
             });
         };

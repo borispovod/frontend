@@ -141,6 +141,47 @@
                         </ul>
                     </div>
                 </div>
+                <div class="modal-content" ng-show="step==4">
+                    <div class="modal-header modal-iconed">
+                        <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div>
+                    </div>
+                    <div class="modal-header clearfix">
+                        <div><h2>Account Verification</h2>
+                        </div>
+                        <div>Please enter your passphrase.
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <form ng-submit="passcheck()">
+                            <div class="field-padding">
+                                <div class="input-field" ng-hide="rememberedPassword">
+                                    <input id="password" type="password" ng-model="authData.password" ng-trim="false"
+                                           autofocus
+                                           ng-focus="focus == 'password'">
+                                    <label for="password">Your Passphrase</label>
+                                </div>
+                                <div class="input-field">
+                                    <input id="secondPhrase" type="password" ng-model="authData.secondPassword" ng-trim="false"
+                                           autofocus
+                                           ng-focus="focus == 'secondPhrase'">
+                                    <label for="secondPhrase">Your Second Passphrase</label>
+                                </div>
+                                <span class="pass-error" ng-show="errorMessage">{{errorMessage}}</span>
+                                <input type="submit" ng-show="false">
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="nav modal-buttons pull-right">
+                            <li>
+                                <a href="#" ng-click="errorMessage=''; step=3;">BACK
+                                </a>
+                            </li>
+                            <li><a href="#" class="green-link" ng-click="putMembers(true)">confirm</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

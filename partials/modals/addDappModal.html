@@ -98,7 +98,7 @@
                                ng-maxlength=32
                                required
                                ng-class="{'invalid': dapp_data_form.submitted && dapp_data_form.name.$invalid , 'valid':  dapp_data_form.submitted && dapp_data_form.name.$valid}"
-                               id="name" name="name" type="text" class="validate" ng-model="newDapp.name">
+                               id="name" name="name" type="text" class="validate" ng-model="newDapp.name" maxlength="32">
                         <label for="name">Name</label>
                     </div>
                     <div class="error-newdapp-container"

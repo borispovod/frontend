@@ -114,26 +114,24 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
                     $scope.getLaunched();
                     $scope.getRemoving();
                     if (response.data.success == true) {
-                        if ($scope.dapp.type == 1) {
-                            $window.open($scope.dapp.link, '_blank');
-                        }
-                        else {
-                            $window.open('/dapps/' + $stateParams.dappId, '_blank');
-                        }
+                        $scope.openDapp();
                     }
                 });
             }
         }
 
         $scope.openDapp = function () {
-            // open dapp
+       // open dapp
             if ($scope.dapp.type == 1) {
-                $window.open($scope.dapp.link, '_blank');
+                var link = angular.element('<a href="'+ $scope.dapp.link+'" target="_blank"></a>');
             }
             else {
-                $window.open('/dapps/' + $stateParams.dappId, '_blank');
+                var link = angular.element('<a href="' +
+                    '/dapps/' + $stateParams.dappId + '" target="_blank"></a>');
             }
-
+            angular.element(document.body).append(link);
+            link[0].click();
+            link.remove();
         }
 
         $scope.isInstalled();

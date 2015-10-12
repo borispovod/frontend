@@ -26,8 +26,12 @@ angular.module('webApp').controller('multisignatureModalController',
             $scope.sign = 2;
 
             $scope.goToStep3 = function () {
+                $scope.addingError = '';
                 if ($scope.totalCount) {
                     $scope.step = 3;
+                }
+                else {
+                    $scope.addingError = 'You add at least one more account (except your) to create Multi-Signature';
                 }
             }
 

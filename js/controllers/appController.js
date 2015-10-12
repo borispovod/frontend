@@ -414,8 +414,8 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
 
                 }
                 if ($scope.delegateInRegistration) {
-                    $scope.delegateInRegistration = !(!!response);
-                    userService.setDelegateProcess($scope.delegateInRegistration);
+                  /*  $scope.delegateInRegistration = !(!!response);
+                    userService.setDelegateProcess($scope.delegateInRegistration);*/
                 }
                 $scope.delegate = response;
                 userService.setDelegate($scope.delegate);

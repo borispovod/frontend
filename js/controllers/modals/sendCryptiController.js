@@ -68,7 +68,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
                           $scope.sendXCR($scope.rememberedPassword);
                       }
                         else{
-                        $http.get("/api/accounts/username/get?username=" + $scope.to).then(function (response) {
+                        $http.get("/api/accounts/username/get?username=" + encodeURIComponent($scope.to)).then(function (response) {
                             if (response.data.success || correctAddress) {
                                 $scope.presendError = false;
                                 $scope.errorMessage = ''

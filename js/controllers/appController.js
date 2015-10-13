@@ -508,6 +508,16 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
                 'main.forging'
             ]);
         });
+        $scope.$on('socket:rounds/change' , function(ev, data){
+            console.log("I\'m here");
+            $scope.getAppData();
+            $scope.updateViews([
+                'main.delegates',
+                'main.votes',
+                'main.forging'
+            ]);
+        })
+
         $scope.$on('socket:contacts/change', function (ev, data) {
             $scope.getAppData();
             $scope.updateViews([

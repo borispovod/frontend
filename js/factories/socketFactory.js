@@ -13,5 +13,6 @@ angular.module('webApp').factory('serverSocket', ["socketFactory", "$location", 
     serverSocket.forward('multisignatures/change');
     serverSocket.forward('multisignatures/signatures/change');
     serverSocket.forward('dapps/change');
+    serverSocket.forward('rounds/change');
     return serverSocket;
 }]);

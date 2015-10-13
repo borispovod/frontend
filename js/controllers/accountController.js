@@ -119,7 +119,7 @@ angular.module('webApp').controller('accountController', ['$state','$scope', '$r
 
         $scope.$on('updateControllerData', function (event, data) {
             if (data.indexOf('main.transactions') != -1) {
-                $scope.updateView();
+                $scope.updateAppView();
             }
         });
 
@@ -135,7 +135,7 @@ angular.module('webApp').controller('accountController', ['$state','$scope', '$r
             $scope.secondPassphraseModal = secondPassphraseModal.activate({
                 totalBalance: $scope.unconfirmedBalance,
                 destroy: function (r) {
-                    $scope.updateView();
+                    $scope.updateAppView();
                     if (r) {
                         $scope.unconfirmedPassphrase = true;
                     }
@@ -143,7 +143,7 @@ angular.module('webApp').controller('accountController', ['$state','$scope', '$r
             });
         }
 
-        $scope.updateView = function () {
+        $scope.updateAppView = function () {
             $scope.getAccount();
             $scope.getTransactions();
             delegateService.getDelegate($scope.publicKey, function (response) {
@@ -156,11 +156,11 @@ angular.module('webApp').controller('accountController', ['$state','$scope', '$r
 
         $scope.$on('updateControllerData', function (event, data) {
             if (data.indexOf('main.dashboard') != -1 && $state.current.name=="main.dashboard") {
-                $scope.updateView();
+                $scope.updateAppView();
             }
         });
 
-        $scope.updateView();
+        $scope.updateAppView();
         $scope.getPrice();
 
     }]);

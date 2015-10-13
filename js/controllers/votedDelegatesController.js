@@ -140,6 +140,12 @@ angular.module('webApp').controller('votedDelegatesController', ['$scope', '$roo
             $scope.updateMyDelegates();
         }, 1000 * 10);
 
+        $scope.$on('updateControllerData', function (event, data) {
+            if (data.indexOf('main.votes') != -1) {
+                $scope.updateMyDelegates();
+            }
+        });
+
         $scope.$on('$destroy', function () {
             $interval.cancel($scope.updateView);
             $scope.updateView = null;

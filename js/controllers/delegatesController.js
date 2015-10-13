@@ -208,9 +208,15 @@ angular.module('webApp').controller('delegatesController', ['$scope', '$rootScop
         };
         //end Standby delegates
 
+        $scope.$on('updateControllerData', function (event, data) {
+            if (data.indexOf('main.delegates') != -1) {
+                $scope.updateStandby();
+                $scope.updateTop();
+            }
+        });
 
         $scope.$on('$destroy', function () {
-            $interval.cancel($scope.updateView);
-            $scope.updateView = null;
+
+
         });
     }]);

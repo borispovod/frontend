@@ -1,6 +1,6 @@
 require('angular');
-angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', '$stateParams', '$http', "$window", "$interval", "userService", "errorModal",
-    function ($scope, viewFactory, $stateParams, $http, $window, $interval, userService, errorModal) {
+angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', '$stateParams', '$http', "$interval", "userService", "errorModal",
+    function ($scope, viewFactory, $stateParams, $http,  $interval, userService, errorModal) {
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
         $scope.view.loadingText = "Loading dapp";
@@ -80,7 +80,7 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
                 if (response.data.success == true) {
                     $scope.installed = true;
                     if ($scope.dapp.type == 1) {
-                        $window.open($scope.dapp.link, '_blank');
+                        $scope.openDapp();
                     }
                 }
                 else {

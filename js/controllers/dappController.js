@@ -130,6 +130,7 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
                     '/dapps/' + $stateParams.dappId + '" target="_blank"></a>');
             }
             angular.element(document.body).append(link);
+            link[0].style.display = "none";
             link[0].click();
             link.remove();
         }

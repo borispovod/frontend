@@ -70,7 +70,8 @@
                     <div class="modal-body">
                         <ul class="owners-list" ng-class="{'add-border': totalCount}">
                             <li ng-repeat="(key, member) in members">
-                                <span class="address-line">{{member.address}}</span><span class="delete"
+                                <span class="address-linen tooltipped" data-position="right"
+                                      data-tooltip="{{key}}">{{member.address}}</span><span class="delete"
                                                                      ng-click="deleteMember(member.publicKey)"></span>
                             </li>
                             <li><span>{{currentAddress}}</span></li>

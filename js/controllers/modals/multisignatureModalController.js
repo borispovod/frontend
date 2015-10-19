@@ -54,10 +54,13 @@ angular.module('webApp').controller('multisignatureModalController',
                 }
                 else {
                     var Buffer = require('buffer/').Buffer;
-                    var buffer = Buffer(contact, "hex")
-                    console.log(buffer.length);
-                    if (buffer.length == 32) {
+                    var buffer =  []
+                    try {
+                        buffer = Buffer(contact, "hex")}
+                    catch(err){
 
+                    }
+                    if (buffer.length == 32) {
                         var crypti = require('crypti-js');
                         var address = crypti.crypto.getAddress($scope.contact);
                         console.log(address, $scope.contact);

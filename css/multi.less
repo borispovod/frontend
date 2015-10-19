@@ -10,17 +10,22 @@
     border: 1px solid #cecece;
   }
   li {
-    padding: 20px 40px;
+    padding: 20px 60px 20px 40px;
     border: 1px solid #cecece;
     margin: 0 -1px;
     font-size: 14px;
     font-weight: 500;
     span {
       display: inline-block;
+      &.address-line {
+        word-wrap: break-word;
+        width: 100%;
+      }
       &.delete {
         float: right;
         width: 20px;
         height: 20px;
+        margin-right: -29px;
         content: '';
         display: block;
         background-image: url('@{images}/sprites/iconset.png');

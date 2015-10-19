@@ -53,50 +53,66 @@ angular.module('webApp').controller('multisignatureModalController',
                     console.log($scope.addingError);
                 }
                 else {
+                    var Buffer = require('buffer/').Buffer;
+                    var buffer = Buffer(contact, "hex")
+                    console.log(buffer.length);
+                    if (buffer.length == 32) {
 
-                    if (correctAddress || correctName) {
-                        if (correctAddress) {
-                            $http.get("/api/accounts?address=" + contact).then(function (response) {
-                                if (response.data.success) {
-                                    $scope.presendError = false;
-                                    $scope.addingError = '';
-                                    if ($scope.members[response.data.account.publicKey]) {
-                                        return;
+                        var crypti = require('crypti-js');
+                        var address = crypti.crypto.getAddress($scope.contact);
+                        console.log(address, $scope.contact);
+                        if ($scope.members[$scope.contact]){
+                            return;
+                        }
+                        $scope.members[$scope.contact] = {address: address, publicKey: $scope.contact};
+                        $scope.totalCount = $scope.totalCount + 1;
+                        $scope.contact = '';
+                    }
+                    else {
+                        if (correctAddress || correctName) {
+                            if (correctAddress) {
+                                $http.get("/api/accounts?address=" + contact).then(function (response) {
+                                    if (response.data.success) {
+                                        $scope.presendError = false;
+                                        $scope.addingError = '';
+                                        if ($scope.members[response.data.account.publicKey]) {
+                                            return;
+                                        }
+                                        $scope.members[response.data.account.publicKey] = response.data.account;
+                                        $scope.totalCount = $scope.totalCount + 1;
+                                        $scope.contact = '';
                                     }
-                                    $scope.members[response.data.account.publicKey] = response.data.account;
-                                    $scope.totalCount = $scope.totalCount + 1;
-                                    $scope.contact = '';
-                                }
-                                else {
-                                    $scope.addingError = response.data.error;
-                                    console.log($scope.addingError);
-                                }
-                            });
+                                    else {
+                                        $scope.addingError = response.data.error;
+                                        console.log($scope.addingError);
+                                    }
+                                });
+
+                            }
+                            else {
+                                $http.get("/api/accounts/username/get?username=" + contact).then(function (response) {
+                                    if (response.data.success) {
+                                        $scope.presendError = false;
+                                        $scope.addingError = ''
+                                        if ($scope.members[response.data.account.publicKey]) {
+                                            return;
+                                        }
+                                        $scope.members[response.data.account.publicKey] = response.data.account;
+                                        $scope.totalCount = $scope.totalCount + 1;
+                                        $scope.contact = '';
+                                    }
+                                    else {
+                                        $scope.addingError = response.data.error;
+                                    }
+                                });
+                            }
 
                         }
                         else {
-                            $http.get("/api/accounts/username/get?username=" + contact).then(function (response) {
-                                if (response.data.success) {
-                                    $scope.presendError = false;
-                                    $scope.addingError = ''
-                                    if ($scope.members[response.data.account.publicKey]) {
-                                        return;
-                                    }
-                                    $scope.members[response.data.account.publicKey] = response.data.account;
-                                    $scope.totalCount = $scope.totalCount + 1;
-                                    $scope.contact = '';
-                                }
-                                else {
-                                    $scope.addingError = response.data.error;
-                                    console.log($scope.addingError);
-                                }
-                            });
-                        }
 
-                    }
-                    else {
-                        $scope.addingError = 'Incorrect contact name or address';
-                        console.log($scope.addingError);
+                            $scope.addingError = 'Incorrect contact name or address';
+                            console.log($scope.addingError);
+                        }
                     }
 
                 }
@@ -105,7 +121,7 @@ angular.module('webApp').controller('multisignatureModalController',
             $scope.putMembers = function (fromPass) {
                 $scope.errorMessage = '';
                 if (fromPass) {
-                    if ($scope.authData.password.trim()=='' || $scope.authData.secondPassword.trim() == ''){
+                    if ($scope.authData.password.trim() == '' || $scope.authData.secondPassword.trim() == '') {
                         $scope.errorMessage = "Missing Password or Second Password";
                         return;
                     }
@@ -126,7 +142,7 @@ angular.module('webApp').controller('multisignatureModalController',
                         return '+' + element;
                     })
                 };
-                if ($scope.secondPassphrase){
+                if ($scope.secondPassphrase) {
                     data.secondSecret = $scope.authData.secondPassword;
                 }
                 $scope.view.inLoading = true;

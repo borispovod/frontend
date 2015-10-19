@@ -445,12 +445,12 @@
 
                 <div class="field-padding">
                     <div class="input-field">
-                        <input id="amount" type="text" ng-model="newDapp.git"  class="validate" ng-class="{'invalid': errorAppLink}">
+                        <input id="gitRepository" type="text" ng-model="newDapp.git"  ng-class="{'invalid': errorAppLink}">
 
                         <label for="amount">Git repository link</label>
                     </div>
-                    <a class="btn btn-sky-blue waves-effect waves-light right">Check
-                    </a>
+                 <!--   <a class="btn btn-sky-blue waves-effect waves-light right">Check
+                    </a>-->
                 </div>
                 <input type="submit" ng-show="false">
             </form>
@@ -459,15 +459,14 @@
 
                 <div class="field-padding">
                     <div class="input-field materialize-textarea-big">
-                        <textarea id="textarea1" class="materialize-textarea validate"
+                        <textarea id="siaRepository" class="materialize-textarea"
                                   ng-class="{'invalid': errorAppLink}"
                                   ng-model="newDapp.siaAscii" style="max-height:
                                   250px;"></textarea>
                         <label for="textarea1">Sia ASCII Code</label>
                     </div>
-
-                    <a class="btn btn-sky-blue waves-effect waves-light right">Check
-                    </a>
+                   <!-- <a class="btn btn-sky-blue waves-effect waves-light right">Check
+                    </a>-->
                 </div>
                 <input type="submit" ng-show="false">
             </form>

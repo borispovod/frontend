@@ -1,8 +1,9 @@
 require('angular');
 
-angular.module('webApp').controller('userInfoController', ["$scope", "$http", "userInfo", "sendCryptiModal", function ($scope, $http, userInfo, sendCryptiModal) {
+angular.module('webApp').controller('userInfoController', ["$scope", "$http", "userInfo", "userService","sendCryptiModal", function ($scope, $http, userInfo, userService, sendCryptiModal) {
 
     $scope.userIdOld = '';
+    $scope.thisUser = userService;
 
     $scope.sendCryptiToUser = function () {
         userInfo.deactivate();

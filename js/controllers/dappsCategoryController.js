@@ -11,7 +11,10 @@ angular.module('webApp').controller('dappsCategoryController', ['$scope', 'viewF
         $scope.searchedText = '';
         $scope.searchDapp = dappsService;
         $scope.searchDapp.searchForDapp = '';
+        $scope.searchedTextString = '';
         $scope.searchDapp.inSearch = false;
+        $scope.inLoading = true;
+        $scope.categoryId = $scope.categories[$scope.category];
 
         //Search dapps watcher
         var tempsearchForDappID = '',
@@ -33,6 +36,7 @@ angular.module('webApp').controller('dappsCategoryController', ['$scope', 'viewF
             tempsearchForDappID = val;
             searchForDappIDTimeout = $timeout(function () {
                 $scope.searchDapp.searchForDapp = tempsearchForDappID;
+                $scope.searchedTextString = tempsearchForDappID;
                 $scope.searchDappText();
             }, 2000); // delay 2000 ms
         })
@@ -54,12 +58,13 @@ angular.module('webApp').controller('dappsCategoryController', ['$scope', 'viewF
                         $scope.dapps = response.data.dapps;
                         $scope.searchedText = '';
                         $scope.view.inLoading = false;
+                        $scope.inLoading = false;
                     });
                 }
             }
             else {
                 if ($scope.searchDapp.searchForDapp.trim() != '') {
-                    $http.get("/api/dapps/search?q=" + $scope.searchDapp.searchForDapp + "&category=" + $scope.category).then(function (response) {
+                    $http.get("/api/dapps/search?q=" + $scope.searchDapp.searchForDapp + "&category=" + $scope.categoryId).then(function (response) {
                         $scope.dapps = response.data.dapps;
                         $scope.searchDapp.inSearch = false;
                         $scope.view.inLoading = false;
@@ -72,6 +77,7 @@ angular.module('webApp').controller('dappsCategoryController', ['$scope', 'viewF
                         $scope.searchDapp.inSearch = false;
                         $scope.searchedText = '';
                         $scope.view.inLoading = false;
+                        $scope.inLoading = false;
                     });
                 }
             }

@@ -1,3 +1,16 @@
+<div class="row clearfix" ng-if="!dapps.length && !inLoading">
+    <div class="col-xs-12">
+        <div class="panel  panel-default no-margin-bottom">
+            <div class="panel-body empty-body ng-scope">
+                <div class="logo-gray-iconed"></div>
+                <p ng-if="!searchedTextString.length" class="empty-state-text">You haven't dapps in {{category}}
+                    yet. </p>
+
+                <p ng-if="!!searchedTextString.length" class="empty-state-text">No results for search
+                    '{{searchedTextString}}' in {{category}}.</p></div>
+        </div>
+    </div>
+</div>
 <div class="row clearfix" ng-repeat-start="cat in dapps | groupBy: 'category'">
     <div class="col-xs-12">
         <div class="panel  panel-default no-margin-bottom">
@@ -9,8 +22,7 @@
 </div>
 <div class="row clearfix">
     <div ng-repeat="dapp in cat" class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
-        <div class="dapp-content small-dapp clearfix cursor"
-                >
+        <div class="dapp-content small-dapp clearfix cursor">
             <div class="cover">
                 <div class="cover-image-container">
                     <div class="cover-outer-align">

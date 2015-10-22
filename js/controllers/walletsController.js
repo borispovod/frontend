@@ -9,6 +9,8 @@ angular.module('webApp').controller('walletsController', ['$scope', '$rootScope'
         $scope.view.bar = {showWalletBar: true};
         $scope.secondPassphrase = userService.secondPassphrase;
         $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
+        $scope.countWallets = 0;
+        $scope.countPendings = 0;
 
         $scope.countSign = function (transaction) {
             return (transaction.signatures ? transaction.signatures.length : 0) + 1;
@@ -19,7 +21,8 @@ angular.module('webApp').controller('walletsController', ['$scope', '$rootScope'
             return transaction.signatures ? (transaction.signatures.indexOf(userService.publicKey) != -1) : false;
         }
 
-        $scope.showMembers = function (confirmed, dataMembers) {
+        $scope.showMembers = function (confirmed, dataMembers, address) {
+            dataMembers.push({address: address})
             $scope.multiMembersModal = multiMembersModal.activate({
                 confirmed: confirmed,
                 dataMembers: dataMembers,
@@ -52,6 +55,7 @@ angular.module('webApp').controller('walletsController', ['$scope', '$rootScope'
                 $scope.view.inLoading = true;
                 multiService.getWallets($defer, params, $scope.filter, function () {
                     $scope.view.inLoading = false;
+                    $scope.countWallets = params.total();
                 });
 
             }
@@ -79,6 +83,7 @@ angular.module('webApp').controller('walletsController', ['$scope', '$rootScope'
                 $scope.view.inLoading = true;
                 multiService.getPendings($defer, params, $scope.filter, function () {
                     $scope.view.inLoading = false;
+                    $scope.countPendings = params.total();
                 });
             }
         });

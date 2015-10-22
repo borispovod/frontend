@@ -1,10 +1,13 @@
 <div class="top-margin"></div>
 <div class="row">
     <div class="col-xs-12">
-        <div class="panel panel-default paginated">
+        <div class="panel panel-default" ng-class="{'paginated': !!countPendings, 'not_paginated': !countPendings}">
             <div class="panel-heading"><h2>Latest Multi-Signature Transactions</h2>
             </div>
-            <table ng-table="tableTransactions" border="0" width="100%" cellpadding="0" cellspacing="0"
+            <div ng-show="!countPendings" class="panel-body empty-body">
+                <div class="logo-gray-iconed"></div>
+                <p class="empty-state-text">Your Multi-Signature group(s) haven't made any transactions yet.</p></div>
+            <table ng-show="!!countPendings" ng-table="tableTransactions" border="0" width="100%" cellpadding="0" cellspacing="0"
                    template-pagination="custom/pager">
                 <tr ng-class="{'voted': transaction.confirmations>=transaction.needed}" style="height: 63px;" ng-repeat="item in $data">
                     <td data-title="'Transaction ID'" sortable="'transaction.id'">{{item.transaction.id}}</td>
@@ -34,15 +37,18 @@
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <div class="panel panel-default paginated">
+        <div class="panel panel-default" ng-class="{'paginated': !!countWallets, 'not_paginated': !countWallets}">
             <div class="panel-heading"><h2>My Multi-Signature Groups</h2>
             </div>
-            <table ng-table="tableWallets" border="0" width="100%" cellpadding="0" cellspacing="0"
+            <div ng-show="!countWallets" class="panel-body empty-body">
+                <div class="logo-gray-iconed"></div>
+                <p class="empty-state-text">You are not a member of any one Multi-Signature group.</p></div>
+            <table  ng-show="!!countWallets" ng-table="tableWallets" border="0" width="100%" cellpadding="0" cellspacing="0"
                    template-pagination="custom/pager">
                 <tr  ng-repeat="wallet in $data">
                     <td data-title="'Group Name'" sortable="'address'">{{wallet.address}}</td>
                     <td data-title="'Members'" sortable="'multimin'">
-                       <a href="#" ng-click="showMembers(false, wallet.multisigaccounts)">{{wallet.multisignatures.length}}</a>
+                       <a href="#" ng-click="showMembers(false, wallet.multisigaccounts, wallet.address)">{{wallet.multisignatures.length + 1}}</a>
                     </td>
                     <td data-title="'Confirmations required'" sortable="'multimin'">
                         {{wallet.multimin}}

@@ -1,6 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryptiModal", "$http", "userService", "$timeout", function ($scope, sendCryptiModal, $http, userService, $timeout) {
+angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryptiModal", "$http", "userService", "$timeout", "$filter",
+    function ($scope, sendCryptiModal, $http, userService, $timeout, $filter) {
     $scope.sending = false;
     $scope.passmode = false;
     $scope.accountValid = true;
@@ -249,6 +250,8 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
                 $scope.currentFee = resp.data.fee;
             });
     }
+
+
 
     $scope.convertXCR = function (currency) {
         currency = String(currency);

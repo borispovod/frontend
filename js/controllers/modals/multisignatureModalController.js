@@ -63,7 +63,6 @@ angular.module('webApp').controller('multisignatureModalController',
                     if (buffer.length == 32) {
                         var crypti = require('crypti-js');
                         var address = crypti.crypto.getAddress($scope.contact);
-                        console.log(address, $scope.contact);
                         if ($scope.members[$scope.contact]){
                             return;
                         }

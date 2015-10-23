@@ -26,7 +26,7 @@
                     <td data-title="'Confirmations'" sortable="'countSing(transaction.confirmations)'">
                         {{countSign(item.transaction)}}/{{item.min}}
                     </td>
-                    <td data-title=""><a ng-click="confirmTransaction(item.transaction.id)" ng-if="!signedByUser(item.transaction)"
+                    <td data-title=""><a ng-click="confirmTransaction(item.transaction.id)" ng-if="!signedByUser(item)"
                                          class="btn btn-dark-meant"><i
                             class="mdi-action-done left"></i>CONFIRM
                     </a></td>
@@ -35,7 +35,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row" ng-if="showWallets">
     <div class="col-xs-12">
         <div class="panel panel-default" ng-class="{'paginated': !!countWallets, 'not_paginated': !countWallets}">
             <div class="panel-heading"><h2>My Multi-Signature Groups</h2>

@@ -64,6 +64,7 @@ angular.module('webApp').service('multiService', function ($http, userService, $
                         if (response.data.success) {
                             params.total(response.data.accounts.length);
                             cb();
+
                             var orderedData = params.sorting() ?
                                 $filter('orderBy')(response.data.accounts, params.orderBy()) : response.data.accounts;
                             $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));

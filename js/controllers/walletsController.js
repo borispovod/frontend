@@ -17,8 +17,7 @@ angular.module('webApp').controller('walletsController', ['$scope', '$rootScope'
         }
 
         $scope.signedByUser = function (transaction) {
-            return false;
-            return transaction.signatures ? (transaction.signatures.indexOf(userService.publicKey) != -1) : false;
+            return transaction.signed;
         }
 
         $scope.showMembers = function (confirmed, dataMembers, address) {
@@ -56,6 +55,8 @@ angular.module('webApp').controller('walletsController', ['$scope', '$rootScope'
                 multiService.getWallets($defer, params, $scope.filter, function () {
                     $scope.view.inLoading = false;
                     $scope.countWallets = params.total();
+                    $scope.showWallets = !!(!(userService.u_multisignatures.length || userService.multisignatures.length) || $scope.countWallets);
+
                 });
 
             }

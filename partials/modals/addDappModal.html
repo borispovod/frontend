@@ -32,7 +32,8 @@
                         </p><p class="top-margin-10">
                             <b>Things you need to know for the registration process:</b></p>
                             <p>
-                            - Dapp names are unique, you can't register the same name twice on the Crypti network.</p><p>
+                                - Dapp names are unique, you can't register the same name twice on the Crypti
+                                network.</p><p>
                             - You can either use a centralized (GitHub) or decentralized (Sia) hosting method.</p><p>
                             - Make sure that your dapp icon's format is a square.</p><p>
                             - Choose your tags wisely, with them your users will be able to find your dapp in the Dapp
@@ -98,7 +99,8 @@
                                ng-maxlength=32
                                required
                                ng-class="{'invalid': dapp_data_form.submitted && dapp_data_form.name.$invalid , 'valid':  dapp_data_form.submitted && dapp_data_form.name.$valid}"
-                               id="name" name="name" type="text" class="validate" ng-model="newDapp.name" maxlength="32">
+                               id="name" name="name" type="text" class="validate" ng-model="newDapp.name"
+                               maxlength="32">
                         <label for="name">Name</label>
                     </div>
                     <div class="error-newdapp-container"
@@ -132,7 +134,7 @@
                 <div class="row clearfix" style="height: inherit;">
                     <div class="input-field">
                         <input ng-class="{'invalid': dapp_data_form.submitted && dapp_data_form.tags.$invalid , 'valid':  dapp_data_form.submitted && dapp_data_form.tags.$valid}"
-                               ng-maxlength=160 id="tags" type="text" name="tags" class="validate"
+                               ng-maxlength=160 maxlength=160 id="tags" type="text" name="tags" class="validate"
                                ng-model="newDapp.tags">
                         <label for="tags">Tags (separated with comma)</label>
                     </div>
@@ -151,7 +153,7 @@
 
                     <div ng-if="!urlSiaMode" class="file-field input-field">
                         <input ng-model="newDapp.icon" id="icon" class="file-path validate"
-                               style="margin-left: 250px;  width: calc(100%- 250px);" type="text"/>
+                               style="margin-left: 250px;  width: calc(100% - 250px);" type="text"/>
                         <label for="icon" style="left:250px;">Icon URL</label>
 
                         <div class="btn btn-sky-blue" ng-click="changeUrlSiaMode()">
@@ -161,7 +163,7 @@
 
                     <div ng-if="!!urlSiaMode" class="file-field input-field materialize-textarea-big">
                         <textarea ng-model="newDapp.siaIcon" id="icon" class="materialize-textarea validate"
-                                  style="margin-left: 250px;  width: calc(100%- 250px); max-height: 100px;"
+                                  style="margin-left: 250px;  width: calc(100% - 250px); max-height: 100px;"
                                   type="text"/>
                         <label for="icon" style="left:250px;">Icon Sia ASCII</label>
 
@@ -228,7 +230,7 @@
                 <div class="row clearfix" style="height: inherit;">
                     <div class="input-field">
                         <input ng-class="{'invalid': dapp_data_form.submitted && dapp_data_form.tags.$invalid , 'valid':  dapp_data_form.submitted && dapp_data_form.tags.$valid}"
-                               ng-maxlength=160 id="tags" type="text" name="tags" class="validate"
+                               ng-maxlength=160 maxlength=160 id="tags" type="text" name="tags" class="validate"
                                ng-model="newDapp.tags">
                         <label for="tags">Tags (separated with comma)</label>
                     </div>
@@ -321,7 +323,8 @@
                             successful you need to specify the ASCII code of the file in the next step.
                         </p>
                     </div>
-                    <a target="_blank" href="http://siacoin.com" class="btn btn-sky-blue waves-effect waves-light right">MORE INFO
+                    <a target="_blank" href="http://siacoin.com"
+                       class="btn btn-sky-blue waves-effect waves-light right">MORE INFO
                     </a></li>
                 <!--    <li class="collection-item">
                         <input type="checkbox"
@@ -445,17 +448,18 @@
 
                 <div class="field-padding">
                     <div class="input-field">
-                        <input id="gitRepository" type="text" ng-model="newDapp.git"  ng-class="{'invalid': errorAppLink}">
+                        <input id="gitRepository" type="text" ng-model="newDapp.git"
+                               ng-class="{'invalid': errorAppLink}">
 
                         <label for="amount">Git repository link</label>
                     </div>
-                 <!--   <a class="btn btn-sky-blue waves-effect waves-light right">Check
-                    </a>-->
+                    <!--   <a class="btn btn-sky-blue waves-effect waves-light right">Check
+                       </a>-->
                 </div>
                 <input type="submit" ng-show="false">
             </form>
 
-            <form  ng-if="repository=='sia'" ng-submit="goToStep5()" style="padding-bottom: 30px;">
+            <form ng-if="repository=='sia'" ng-submit="goToStep5()" style="padding-bottom: 30px;">
 
                 <div class="field-padding">
                     <div class="input-field materialize-textarea-big">
@@ -465,8 +469,8 @@
                                   250px;"></textarea>
                         <label for="textarea1">Sia ASCII Code</label>
                     </div>
-                   <!-- <a class="btn btn-sky-blue waves-effect waves-light right">Check
-                    </a>-->
+                    <!-- <a class="btn btn-sky-blue waves-effect waves-light right">Check
+                     </a>-->
                 </div>
                 <input type="submit" ng-show="false">
             </form>
@@ -535,9 +539,10 @@
             <ul class="collection dapp-collection">
                 <li class="collection-item"><h4>Name:</h4> {{newDapp.name}}</li>
                 <li class="collection-item"><h4>Description:</h4> {{newDapp.description}}</li>
-                <li class="collection-item"><h4>Tags:</h4> {{newDapp.tags}}</li>
+                <li class="collection-item"><h4>Tags:</h4>  <span class="cut-text">{{newDapp.tags}}</span></li>
                 <li class="collection-item"><h4>Category:</h4> {{getCategoryName(newDapp.category)}}</li>
-                <li class="collection-item"><h4>Hosted at {{getRepositoryName()}}:</h4> <span class="cut-text">{{getRepositoryText()}}</span></li>
+                <li class="collection-item"><h4>Hosted at {{getRepositoryName()}}:</h4> <span class="cut-text">{{getRepositoryText()}}</span>
+                </li>
             </ul>
 
         </div>
@@ -552,7 +557,8 @@
                 <li class="collection-item"><h4>Description:</h4> {{newDapp.description}}</li>
                 <li class="collection-item"><h4>Tags:</h4> {{newDapp.tags}}</li>
                 <li class="collection-item"><h4>Category:</h4> {{getCategoryName(newDapp.category)}}</li>
-                <li class="collection-item"><h4>Hosted at {{getRepositoryName()}}:</h4> <span class="cut-text">{{getRepositoryText()}}</span></li>
+                <li class="collection-item"><h4>Hosted at {{getRepositoryName()}}:</h4> <span class="cut-text">{{getRepositoryText()}}</span>
+                </li>
             </ul>
 
         </div>

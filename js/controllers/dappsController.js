@@ -12,6 +12,23 @@ angular.module('webApp').controller('dappsController', ['$scope', 'viewFactory',
         $scope.searchDapp.inSearch = false;
         $scope.showPlaceholder = false;
 
+        $scope.shuffle = function(array) {
+            var currentIndex = array.length, temporaryValue, randomIndex;
+
+            while (0 !== currentIndex) {
+
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+
+                // And swap it with the current element.
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+
+            return array;
+        }
 
         //Search dapps watcher
         var tempsearchForDappID = '',
@@ -51,12 +68,12 @@ angular.module('webApp').controller('dappsController', ['$scope', 'viewFactory',
             if ($scope.searchDapp.searchForDappGlobal.trim() == '') {
 
                 $http.get("/api/dapps").then(function (response) {
-                    $scope.dapps = response.data.dapps;
+                    $scope.dapps = $scope.shuffle(response.data.dapps);
                     $scope.searchedText = '';
                     $scope.view.inLoading = false;
                 });
                 $http.get("/api/dapps/installed").then(function (response) {
-                    $scope.installedDapps = response.data.dapps;
+                    $scope.installedDapps = $scope.shuffle(response.data.dapps);
                     $scope.searchedInstalledText = '';
 
                         $scope.showPlaceholder = !response.data.success;
@@ -65,14 +82,14 @@ angular.module('webApp').controller('dappsController', ['$scope', 'viewFactory',
             }
             else {
                 $http.get("/api/dapps/search?q=" + $scope.searchDapp.searchForDappGlobal).then(function (response) {
-                    $scope.dapps = response.data.dapps;
+                    $scope.dapps = $scope.shuffle(response.data.dapps);
                     $scope.searchDapp.inSearch = false;
                     $scope.view.inLoading = false;
                     $scope.searchedText = '(search for "' + $scope.searchDapp.searchForDappGlobal + '")';
                 });
                 if (!$scope.showPlaceholder) {
                     $http.get("/api/dapps/search?q=" + $scope.searchDapp.searchForDappGlobal + "&installed=1").then(function (response) {
-                        $scope.installedDapps = response.data.dapps;
+                        $scope.installedDapps = $scope.shuffle(response.data.dapps);
                         $scope.searchedInstalledText = '(search for "' + $scope.searchDapp.searchForDappGlobal + '")';
                     });
                 }

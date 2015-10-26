@@ -11,10 +11,12 @@
                                 </a>
                             </div>
                             <div class="media-body text-left">
-                                <h2 class="media-heading">Account: <span class="id">{{account.address}}</span><span
-                                        class="blockchain-icon" clip-copy="account.address"></span></h2>
-                                {{account.username}}
-                                <p ng-if="thisUser.publicKey==account.publicKey">{{account.publicKey}}</p>
+                                <h2 class="media-heading">Account: <span class="id">{{account.address}}</span>
+                                    <span
+                                        class="blockchain-icon" clip-copy="account.address"></span>
+                                </h2>
+                                <strong>Name:</strong> {{account.username}}
+                                <p ng-if="thisUser.publicKey==account.publicKey"><strong>Public key:</strong> {{account.publicKey}}</p>
                             </div>
                         </div>
                         <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div>

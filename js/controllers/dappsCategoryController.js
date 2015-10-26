@@ -16,6 +16,24 @@ angular.module('webApp').controller('dappsCategoryController', ['$scope', 'viewF
         $scope.inLoading = true;
         $scope.categoryId = $scope.categories[$scope.category];
 
+        $scope.shuffle = function (array) {
+            var currentIndex = array.length, temporaryValue, randomIndex;
+
+            while (0 !== currentIndex) {
+
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+
+                // And swap it with the current element.
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+
+            return array;
+        }
+
         //Search dapps watcher
         var tempsearchForDappID = '',
             searchForDappIDTimeout;
@@ -47,7 +65,7 @@ angular.module('webApp').controller('dappsCategoryController', ['$scope', 'viewF
                 if ($scope.searchDapp.searchForDapp.trim() != '') {
                     $http.get("/api/dapps/search?q=" + $scope.searchDapp.searchForDapp + "&installed=1").then(function (response) {
                         console.log("here");
-                        $scope.dapps = response.data.dapps;
+                        $scope.dapps = $scope.shuffle(response.data.dapps);
                         $scope.searchDapp.inSearch=false;
                         $scope.view.inLoading = false;
                         $scope.searchedText = '(search for "' + $scope.searchDapp.searchForDapp + '")';
@@ -55,7 +73,7 @@ angular.module('webApp').controller('dappsCategoryController', ['$scope', 'viewF
                 }
                 else {
                     $http.get("/api/dapps/installed").then(function (response) {
-                        $scope.dapps = response.data.dapps;
+                        $scope.dapps = $scope.shuffle(response.data.dapps);
                         $scope.searchedText = '';
                         $scope.view.inLoading = false;
                         $scope.inLoading = false;
@@ -65,7 +83,7 @@ angular.module('webApp').controller('dappsCategoryController', ['$scope', 'viewF
             else {
                 if ($scope.searchDapp.searchForDapp.trim() != '') {
                     $http.get("/api/dapps/search?q=" + $scope.searchDapp.searchForDapp + "&category=" + $scope.categoryId).then(function (response) {
-                        $scope.dapps = response.data.dapps;
+                        $scope.dapps = $scope.shuffle(response.data.dapps);
                         $scope.searchDapp.inSearch = false;
                         $scope.view.inLoading = false;
                         $scope.searchedText = '(search for "' + $scope.searchDapp.searchForDapp + '")';
@@ -73,7 +91,7 @@ angular.module('webApp').controller('dappsCategoryController', ['$scope', 'viewF
                 }
                 else {
                     $http.get("/api/dapps/?category=" + $scope.category).then(function (response) {
-                        $scope.dapps = response.data.dapps;
+                        $scope.dapps = $scope.shuffle(response.data.dapps);
                         $scope.searchDapp.inSearch = false;
                         $scope.searchedText = '';
                         $scope.view.inLoading = false;

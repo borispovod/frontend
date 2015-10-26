@@ -31,7 +31,7 @@ angular.module('webApp').controller('multisignatureModalController',
                     $scope.step = 3;
                 }
                 else {
-                    $scope.addingError = 'You add at least one more account (except your) to create Multi-Signature';
+                    $scope.addingError = 'Please add at least one additional member to create a multi signature account';
                 }
             }
 

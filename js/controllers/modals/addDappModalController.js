@@ -132,6 +132,9 @@ angular.module('webApp').controller('addDappModalController', ["$scope", "$http"
 
         $scope.goToStep5 = function () {
             $scope.errorAppLink = $scope.repository == 'sia' ? $scope.newDapp.siaAscii.trim() == '' : $scope.newDapp.git.trim() == '';
+            if ($scope.repository == 'sia'){
+                $scope.errorAppLink = $scope.errorAppLink || ($scope.newDapp.siaAscii.trim().indexOf('H4sIAAAJbogC')!=0);
+            }
             if (!$scope.errorAppLink) {
                 $scope.step = 5;
             }

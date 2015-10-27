@@ -92,7 +92,7 @@ angular.module('webApp').controller('multisignatureModalController',
 
                             }
                             else {
-                                $http.get("/api/accounts/username/get?username=" + contact).then(function (response) {
+                                $http.get("/api/accounts/username/get?username=" + encodeURIComponent(contact)).then(function (response) {
                                     if (response.data.success) {
                                         $scope.presendError = false;
                                         $scope.addingError = ''
@@ -123,7 +123,7 @@ angular.module('webApp').controller('multisignatureModalController',
             $scope.putMembers = function (fromPass) {
                 $scope.errorMessage = '';
                 if (fromPass) {
-                    if ($scope.authData.password.trim() == '' || $scope.authData.secondPassword.trim() == '') {
+                    if ($scope.authData.password.trim() == '' || ($scope.authData.secondPassword.trim() == '' && $scope.secondPassphrase)) {
                         $scope.errorMessage = "Missing Password or Second Password";
                         return;
                     }
@@ -136,7 +136,7 @@ angular.module('webApp').controller('multisignatureModalController',
                 }
 
                 var data = {
-                    secret: $scope.rememberedPassword,
+                    secret: $scope.authData.password,
                     publicKey: userService.publicKey,
                     min: $scope.sign,
                     lifetime: 24,

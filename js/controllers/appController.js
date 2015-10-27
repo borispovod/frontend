@@ -258,8 +258,8 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
                 $scope.forgingModal = forgingModal.activate({
                     forging: false,
                     totalBalance: userService.unconfirmedBalance,
-                    destroy: function () {
-                        userService.setForging(resp.data.success);
+                    destroy: function (success) {
+                        userService.setForging(success);
                         $scope.getForging($scope.setForgingText);
                         $scope.forging = userService.forging;
                         $scope.dataToShow.forging = $scope.forging;

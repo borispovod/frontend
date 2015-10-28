@@ -63,7 +63,7 @@ angular.module('webApp').controller('multisignatureModalController',
                     if (buffer.length == 32) {
                         var crypti = require('crypti-js');
                         var address = crypti.crypto.getAddress($scope.contact);
-                        if ($scope.members[$scope.contact]){
+                        if ($scope.members[$scope.contact] || address == userService.address){
                             return;
                         }
                         $scope.members[$scope.contact] = {address: address, publicKey: $scope.contact};
@@ -77,7 +77,7 @@ angular.module('webApp').controller('multisignatureModalController',
                                     if (response.data.success) {
                                         $scope.presendError = false;
                                         $scope.addingError = '';
-                                        if ($scope.members[response.data.account.publicKey]) {
+                                        if ($scope.members[response.data.account.publicKey] || contact == userService.address) {
                                             return;
                                         }
                                         $scope.members[response.data.account.publicKey] = response.data.account;
@@ -96,7 +96,7 @@ angular.module('webApp').controller('multisignatureModalController',
                                     if (response.data.success) {
                                         $scope.presendError = false;
                                         $scope.addingError = ''
-                                        if ($scope.members[response.data.account.publicKey]) {
+                                        if ($scope.members[response.data.account.publicKey] || response.data.account.address == userService.address) {
                                             return;
                                         }
                                         $scope.members[response.data.account.publicKey] = response.data.account;

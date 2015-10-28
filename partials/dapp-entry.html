@@ -29,8 +29,6 @@
                     </a></div>
                     <div ng-if="!showSiaInstall"><span class="btn btn-white">
                         <span>Sia required</span>
-                  <span
-                          ng-switch-when="1">DOWNLOAD</span>
                     </span></div>
                         <!--<a class="btn btn-white waves-effect left-margin-14">SHARE
                         </a>-->
@@ -101,7 +99,7 @@
     </div>
 </div>
 
-<div ng-show="dapp.description" class="row clearfix">
+<div ng-show="dapp.description  || getTags().length" class="row clearfix">
     <div class="col-xs-12">
         <div class="dapp-info clearfix">
             <div class="description">

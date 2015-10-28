@@ -24,7 +24,7 @@
                         {{item.transaction.fee | xcrFilter}}
                     </td>
                     <td data-title="'Confirmations'" sortable="'countSing(transaction.confirmations)'">
-                        {{countSign(item.transaction)}}/{{item.min}}
+                        {{countSign(item.transaction)}}/{{confirmationsNeeded(item)}}
                     </td>
                     <td data-title=""><a ng-click="confirmTransaction(item.transaction.id)" ng-if="!signedByUser(item)"
                                          class="btn btn-dark-meant"><i

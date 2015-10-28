@@ -40,6 +40,10 @@ angular.module('webApp').controller('walletsController', ['$scope', '$rootScope'
             }
         };
 
+        $scope.confirmationsNeeded = function (item) {
+            return item.transaction.type==8 ? item.transaction.asset.multisignature.keysgroup.length +1 : item.min;
+        }
+
         //Wallets table
         $scope.tableWallets = new ngTableParams({
             page: 1,            // show first page

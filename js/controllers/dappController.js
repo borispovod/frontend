@@ -1,12 +1,20 @@
 require('angular');
 angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', '$stateParams', '$http', "$interval", "userService", "errorModal",
-    function ($scope, viewFactory, $stateParams, $http,  $interval, userService, errorModal) {
+    function ($scope, viewFactory, $stateParams, $http, $interval, userService, errorModal) {
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
         $scope.view.loadingText = "Loading dapp";
         $scope.loading = true;
         $scope.installed = false;
 
+        $scope.getTags = function () {
+            try {
+                return $scope.dapp.tags.split(',');
+            }
+            catch (err) {
+                return []
+            }
+        }
 
         $scope.isInstalled = function () {
             $http.get('/api/dapps/installedIds').then(function (response) {
@@ -121,9 +129,9 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
         }
 
         $scope.openDapp = function () {
-       // open dapp
+            // open dapp
             if ($scope.dapp.type == 1) {
-                var link = angular.element('<a href="'+ $scope.dapp.link+'" target="_blank"></a>');
+                var link = angular.element('<a href="' + $scope.dapp.link + '" target="_blank"></a>');
             }
             else {
                 var link = angular.element('<a href="' +
@@ -140,8 +148,6 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
         $scope.getInstalling();
         $scope.getLaunched();
         $scope.getRemoving();
-
-        console.log($scope.installed, $scope.loading, $scope.isInstalling(), $scope.isRemoving(), $scope.isLaunched());
 
         $scope.$on('$destroy', function () {
             $interval.cancel($scope.stateDappInterval);

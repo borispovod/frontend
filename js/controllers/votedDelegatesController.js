@@ -68,9 +68,11 @@ angular.module('webApp').controller('votedDelegatesController', ['$scope', '$roo
                 adding: false,
                 destroy: function (keepVotes) {
                 if (keepVotes) {
+                    $scope.voteList.recalcLength();
                     return;
                 }
                     $scope.voteList.list = {};
+                    $scope.voteList.recalcLength();
                     $scope.unconfirmedTransactions.getList();
                 }
             });

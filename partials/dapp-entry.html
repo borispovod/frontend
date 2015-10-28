@@ -16,25 +16,34 @@
                     <!--<a class="document-subtitle primary" href="#"><span>{{dapp.nikname}}</span> </a>-->
 
                     <!--<div class="document-subtitle">25 Mar 2015</div>-->
-              </div>
-              <div class="details-info-divider"></div>
-              <div ng-show="!loading && !installed && !isInstalling() && !isRemoving() && !isLaunched()"
-                   class="details-actions"><a class="btn btn-sky-blue waves-effect waves-light"
-                                              ng-click="installDapp()" ng-switch on="dapp.type"><i
-                      class="mdi-file-file-download left"></i><span ng-switch-default>INSTALL</span><span
-                      ng-switch-when="1">DOWNLOAD</span>
-              </a>
-                  <!--<a class="btn btn-white waves-effect left-margin-14">SHARE
-                  </a>-->
-                    <a ng-show="dapp.git" href="{{dapp.githublink}}" target="_blank"
-                       class="btn btn-white waves-effect pull-right">SOURCE CODE
-                    </a>
+                </div>
+                <div class="details-info-divider"></div>
+                <div ng-show="!loading && !installed && !isInstalling() && !isRemoving() && !isLaunched()"
+                     class="details-actions">
+                    <div ng-if="showSiaInstall"><a class="btn btn-sky-blue waves-effect waves-light"
+                            ng-click="installDapp()" ng-switch on="dapp.type">
+                        <i class="mdi-file-file-download left"></i>
+                        <span ng-switch-default>INSTALL</span>
+                  <span
+                          ng-switch-when="1">DOWNLOAD</span>
+                    </a></div>
+                    <div ng-if="!showSiaInstall"><span class="btn btn-white">
+                        <span>Sia required</span>
+                  <span
+                          ng-switch-when="1">DOWNLOAD</span>
+                    </span></div>
+                        <!--<a class="btn btn-white waves-effect left-margin-14">SHARE
+                        </a>-->
+                        <a ng-show="dapp.git" href="{{dapp.githublink}}" target="_blank"
+                           class="btn btn-white waves-effect pull-right">SOURCE CODE
+                        </a>
+
                 </div>
                 <div ng-show="!loading && installed  && !isInstalling() && !isRemoving() && !isLaunched()"
                      class="details-actions"><a class="btn btn-sky-blue waves-effect waves-light" ng-click="runDApp()"
                                                 ng-switch on="dapp.type"><i
                         class="mdi-file-file-download left"></i><span
-                                                                      ng-switch-default>LAUNCH</span><span
+                        ng-switch-default>LAUNCH</span><span
                         ng-switch-when="1">DOWNLOAD</span>
                 </a>
                     <!--<a class="btn btn-white waves-effect left-margin-14">SHARE
@@ -44,10 +53,11 @@
                     </a>
                 </div>
                 <div ng-show="!isInstalling() && !isRemoving() && isLaunched()"
-                     class="details-actions"><a class="btn btn-sky-blue waves-effect waves-light" ng-click="openDapp(dapp.type)"
+                     class="details-actions"><a class="btn btn-sky-blue waves-effect waves-light"
+                                                ng-click="openDapp(dapp.type)"
                                                 ng-switch on="dapp.type"><i
                         class="mdi-file-file-download left"></i><span
-                                                                      ng-switch-default>OPEN</span><span
+                        ng-switch-default>OPEN</span><span
                         ng-switch-when="1">DOWNLOAD</span>
                 </a>
                     <!--<a class="btn btn-white waves-effect left-margin-14">SHARE
@@ -105,7 +115,7 @@
                     MORE
                 </a></div>
                 <div class="text-body expanded">
-                  <span class="badge tag-badge" ng-repeat="tag in getTags() track by id">tag</span>
+                    <span class="badge tag-badge" ng-repeat="tag in getTags() track by $index">{{tag}}</span>
                 </div>
             </div>
         </div>

@@ -6,6 +6,7 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
         $scope.view.loadingText = "Loading dapp";
         $scope.loading = true;
         $scope.installed = false;
+        $scope.showSiaInstall = false;
 
         $scope.getTags = function () {
             try {
@@ -15,6 +16,12 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
                 return []
             }
         }
+
+        $http.get('/api/dapps/siaenabled').then(function (response) {
+            if (response.data.success) {
+                $scope.showSiaInstall = response.data.enabled || $scope.dapp.siaAscii.trim()=="";
+            }
+        })
 
         $scope.isInstalled = function () {
             $http.get('/api/dapps/installedIds').then(function (response) {

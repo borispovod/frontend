@@ -336,6 +336,16 @@
       background-color: @white;
     }
     .modal-body {
+      &.voting-error {
+        .pass-error {
+          padding: 20px;
+          margin: 0;
+          &:after {
+            top: 18px;
+            right: 4px;
+          }
+        }
+      }
       padding: 0;
       &.bordered {
         border-top: 1px solid @border-grey;
@@ -474,7 +484,7 @@
         text-decoration: none;
         color: lighten(@black, 20%);
         .card-title {
-          color: lighten(@black,20%);
+          color: lighten(@black, 20%);
         }
       }
       .card-title {
@@ -495,7 +505,8 @@
         .card-title {
           color: lighten(@black, 20%);
         }
-      }}
+      }
+    }
   }
 
 }
@@ -533,5 +544,6 @@
   a.primary-action:hover, a.primary-action:active {
     text-decoration: none;
     color: #aed388
-  }}
+  }
+}
 

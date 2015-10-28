@@ -16,6 +16,9 @@
                         </ul>
                     </div>
                     <div class="scrolling">
+                        <div class="modal-body voting-error" ng-if="fromServer">
+                          <span class="pass-error">{{fromServer}}</span>
+                        </div>
                         <div class="modal-body">
                             <ul class="list-group">
                                 <li class="list-group-item vote-list" ng-repeat="(key, item) in voteList"

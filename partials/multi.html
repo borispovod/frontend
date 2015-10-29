@@ -7,7 +7,7 @@
             <div ng-show="!countPendings" class="panel-body empty-body">
                 <div class="logo-gray-iconed"></div>
                 <p class="empty-state-text">Your Multi-Signature group(s) haven't made any transactions yet.</p></div>
-            <table ng-show="!!countPendings" ng-table="tableTransactions" border="0" width="100%" cellpadding="0" cellspacing="0"
+            <table ng-show="!!countPendings" ng-table="tableMultiTransactions" border="0" width="100%" cellpadding="0" cellspacing="0"
                    template-pagination="custom/pager">
                 <tr ng-class="{'voted': transaction.confirmations>=transaction.needed}" style="height: 63px;" ng-repeat="item in $data">
                     <td data-title="'Transaction ID'" sortable="'transaction.id'">{{item.transaction.id}}</td>
@@ -23,7 +23,7 @@
                     <td data-title="'Fee'" sortable="'transaction.fee'">
                         {{item.transaction.fee | xcrFilter}}
                     </td>
-                    <td data-title="'Confirmations'" sortable="'countSing(transaction.confirmations)'">
+                    <td data-title="'Confirmations'" sortable="'countSing(transaction)'">
                         {{countSign(item.transaction)}}/{{confirmationsNeeded(item)}}
                     </td>
                     <td data-title=""><a ng-click="confirmTransaction(item.transaction.id)" ng-if="!signedByUser(item)"

@@ -45,7 +45,7 @@ angular.module('webApp').controller('walletTransactionsController',
             }();
 
             //Transactions
-            $scope.tableTransactions = new ngTableParams({
+            $scope.tableWalletTransactions = new ngTableParams({
                 page: 1,
                 count: 25,
                 sorting: {
@@ -68,16 +68,16 @@ angular.module('webApp').controller('walletTransactionsController',
                 }
             });
 
-            $scope.tableTransactions.settings().$scope = $scope;
+            $scope.tableWalletTransactions.settings().$scope = $scope;
 
             $scope.$watch("filter.$", function () {
-                $scope.tableTransactions.reload();
+                $scope.tableWalletTransactions.reload();
             });
             //end Transactions
 
 
             $scope.updateTransactions = function () {
-                $scope.tableTransactions.reload();
+                $scope.tableWalletTransactions.reload();
             }
 
             $scope.$on('$destroy', function () {

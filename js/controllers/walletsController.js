@@ -13,11 +13,20 @@ angular.module('webApp').controller('walletsController', ['$scope', '$rootScope'
         $scope.countPendings = 0;
 
         $scope.countSign = function (transaction) {
-            return (transaction.signatures ? transaction.signatures.length : 0) + 1;
+            try {
+                return (transaction.signatures ? transaction.signatures.length : 0) + 1;
+            }
+            catch (err) {
+                return 0;
+            }
         }
 
         $scope.signedByUser = function (transaction) {
-            return transaction.signed;
+            try {
+                return transaction.signed; }
+            catch (err) {
+                return false;
+            }
         }
 
         $scope.showMembers = function (confirmed, dataMembers, address) {
@@ -41,7 +50,13 @@ angular.module('webApp').controller('walletsController', ['$scope', '$rootScope'
         };
 
         $scope.confirmationsNeeded = function (item) {
-            return item.transaction.type==8 ? item.transaction.asset.multisignature.keysgroup.length +1 : item.min;
+            try {
+                return item.transaction.type == 8 ? item.transaction.asset.multisignature.keysgroup.length + 1 : item.min;
+            }
+            catch (err) {
+                return 0;
+            }
+
         }
 
         //Wallets table
@@ -75,7 +90,7 @@ angular.module('webApp').controller('walletsController', ['$scope', '$rootScope'
         //end
 
         //Wallets table
-        $scope.tableTransactions = new ngTableParams({
+        $scope.tableMultiTransactions = new ngTableParams({
             page: 1,            // show first page
             count: 10,
             sorting: {
@@ -93,10 +108,10 @@ angular.module('webApp').controller('walletsController', ['$scope', '$rootScope'
             }
         });
 
-        $scope.tableTransactions.settings().$scope = $scope;
+        $scope.tableMultiTransactions.settings().$scope = $scope;
 
         $scope.$watch("filter.$", function () {
-            $scope.tableTransactions.reload();
+            $scope.tableMultiTransactions.reload();
         });
         //end
 
@@ -108,7 +123,7 @@ angular.module('webApp').controller('walletsController', ['$scope', '$rootScope'
         });
 
         $scope.updateWallets = function () {
-            $scope.tableTransactions.reload();
+            $scope.tableMultiTransactions.reload();
             $scope.tableWallets.reload();
         };
 

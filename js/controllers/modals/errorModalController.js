@@ -5,12 +5,15 @@ angular.module('webApp').controller('errorModalController', ["$scope", "errorMod
     $scope.fee = 0;
     $scope.focus = 'secretPhrase';
 
+
     if ($scope.forging) {
         $scope.label = "Disable Forging"
     }
     else {
         $scope.label = "Enable Forging"
     }
+
+    $scope.label = $scope.title || $scope.label;
 
     $scope.close = function () {
         if ($scope.destroy) {

@@ -33,7 +33,7 @@
                         <!--<a class="btn btn-white waves-effect left-margin-14">SHARE
                         </a>-->
                         <a ng-show="dapp.git" href="{{dapp.githublink}}" target="_blank"
-                           class="btn btn-white waves-effect pull-right">SOURCE CODE
+                           class="btn btn-white waves-effect pull-right source">SOURCE CODE
                         </a>
 
                 </div>
@@ -47,7 +47,7 @@
                     <!--<a class="btn btn-white waves-effect left-margin-14">SHARE
                     </a>-->
                     <a ng-show="dapp.git" href="{{dapp.githublink}}" target="_blank"
-                       class="btn btn-white waves-effect pull-right">SOURCE CODE
+                       class="btn btn-white waves-effect pull-right source">SOURCE CODE
                     </a>
                 </div>
                 <div ng-show="!isInstalling() && !isRemoving() && isLaunched()"
@@ -61,7 +61,7 @@
                     <!--<a class="btn btn-white waves-effect left-margin-14">SHARE
                     </a>-->
                     <a ng-show="dapp.git" href="{{dapp.githublink}}" target="_blank"
-                       class="btn btn-white waves-effect pull-right">SOURCE CODE
+                       class="btn btn-white waves-effect pull-right source">SOURCE CODE
                     </a>
                 </div>
                 <div ng-show="(isInstalling() || isRemoving()) && !isLaunched()"
@@ -75,8 +75,15 @@
                     <!--<a class="btn btn-white waves-effect left-margin-14">SHARE
                     </a>-->
                     <a ng-show="dapp.git" href="{{dapp.githublink}}" target="_blank"
-                       class="btn btn-white waves-effect pull-right">SOURCE CODE
+                       class="btn btn-white waves-effect pull-right source">SOURCE CODE
                     </a>
+                </div>
+                <div ng-show="installed" class="details-actions">
+                    <div><a class="btn btn-white waves-effect waves-light"
+                            ng-click="uninstallDapp()">
+                        <i class="mdi-action-delete left"></i>
+                        <span>UNINSTALL</span>
+                    </a></div>
                 </div>
                 <div class="subtitle-container">
                     <div class="document-subtitle large-subtitle">Category:</div>

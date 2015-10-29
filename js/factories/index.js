@@ -22,3 +22,4 @@ require('../../js/factories/modals/addDappModal');
 require('../../js/factories/modals/signTransactionModal');
 require('../../js/factories/modals/multisignatureModal');
 require('../../js/factories/modals/errorModal');
+require('../../js/factories/modals/masterPasswordModal');

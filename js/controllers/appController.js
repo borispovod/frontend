@@ -203,6 +203,15 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
                 });
         };
 
+        $scope.getMasterPassword = function(){
+            $http.get("api/dapps/ismasterpasswordenabled")
+                .then(function (resp) {
+                    if (resp.data.success){
+                        $scope.ismasterpasswordenabled = resp.data.enabled;
+                    }
+                });
+        }
+
         $scope.sendCrypti = function (to) {
             to = to || '';
             $scope.sendCryptiModal = sendCryptiModal.activate({
@@ -564,6 +573,7 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
         $scope.getAppData();
         $scope.getUSDPrice();
         $scope.getVersion();
+        $scope.getMasterPassword();
         $timeout(function () {
             $scope.getVersion();
         }, 60 * 10 * 1000);

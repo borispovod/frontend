@@ -1,6 +1,6 @@
 require('angular');
-angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', '$stateParams', '$http', "$interval", "userService", "errorModal",
-    function ($scope, viewFactory, $stateParams, $http, $interval, userService, errorModal) {
+angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', '$stateParams', '$http', "$interval", "userService", "errorModal", "masterPasswordModal",
+    function ($scope, viewFactory, $stateParams, $http, $interval, userService, errorModal, masterPasswordModal) {
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
         $scope.view.loadingText = "Loading dapp";
@@ -19,7 +19,7 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
 
         $http.get('/api/dapps/siaenabled').then(function (response) {
             if (response.data.success) {
-                $scope.showSiaInstall = response.data.enabled || $scope.dapp.siaAscii.trim()=="";
+                $scope.showSiaInstall = response.data.enabled || $scope.dapp.siaAscii.trim() == "";
             }
         })
 
@@ -74,6 +74,7 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
         $scope.changeShowMore = function () {
             $scope.showMore = !$scope.showMore;
         };
+
         $http.get("/api/dapps/get?id=" + $stateParams.dappId).then(function (response) {
             $scope.dapp = response.data.dapp;
             if ($scope.dapp.git) {
@@ -84,11 +85,57 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
             $scope.view.inLoading = false;
         });
 
-        $scope.installDapp = function () {
-            $scope.installingIds.push($stateParams.dappId);
-            $http.post("/api/dapps/install", {
+        $scope.uninsatallRequest = function (masterPassword) {
+            data = {
                 "id": $stateParams.dappId
-            }).then(function (response) {
+            };
+            if (masterPassword) {
+                data.master = masterPassword;
+            }
+            $http.post("/api/dapps/uninstall", data).then(function (response) {
+                $scope.getInstalling();
+                $scope.getLaunched();
+                $scope.getRemoving();
+                if (response.data.success == true) {
+                    $scope.installed = false;
+                }
+                else {
+                    $scope.errorModal = errorModal.activate({
+                        title: 'Uninstalling Dapp error',
+                        error: response.data.error,
+                        destroy: function () {
+
+                        }
+                    })
+                }
+            });
+        }
+
+        $scope.uninstallDapp = function () {
+            if ($scope.ismasterpasswordenabled) {
+                $scope.masterPasswordModal = masterPasswordModal.activate({
+                    destroy: function (masterPass) {
+                        if (masterPass) {
+                            $scope.uninsatallRequest(masterPass);
+                        }
+                    }
+                })
+            }
+            else {
+                $scope.uninsatallRequest();
+            }
+
+        }
+
+        $scope.insatallRequest = function (masterPassword) {
+            data = {
+                "id": $stateParams.dappId
+            };
+            if (masterPassword) {
+                data.master = masterPassword;
+            }
+            $scope.installingIds.push($stateParams.dappId);
+            $http.post("/api/dapps/install", data).then(function (response) {
                 $scope.getInstalling();
                 $scope.getLaunched();
                 $scope.getRemoving();
@@ -100,7 +147,8 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
                 }
                 else {
                     $scope.errorModal = errorModal.activate({
-                        error: resp.data.error,
+                        title: 'Installing Dapp error',
+                        error: response.data.error,
                         destroy: function () {
 
                         }
@@ -109,11 +157,47 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
             });
         }
 
-        $scope.githubLink = function (git) {
-            //git@github.com:crypti/cryptipad.git
-            return git.replace("git@", "https://").replace(".com:", ".com/").replace('.git', '');
+        $scope.installDapp = function () {
+            if ($scope.ismasterpasswordenabled) {
+                $scope.masterPasswordModal = masterPasswordModal.activate({
+                    destroy: function (masterPass) {
+                        if (masterPass) {
+                            $scope.insatallRequest(masterPass);
+                        }
+                    }
+                })
+            }
+            else {
+                $scope.insatallRequest();
+            }
         }
 
+        $scope.launchRequest = function(masterPass){
+            data = {
+                "params": [userService.rememberPassword],
+                "id": $stateParams.dappId
+            }
+            if (masterPass) {
+                data.master = masterPass;
+            }
+            $http.post("/api/dapps/launch", data).then(function (response) {
+                $scope.getInstalling();
+                $scope.getLaunched();
+                $scope.getRemoving();
+                if (response.data.success == true) {
+                    $scope.openDapp();
+                }
+                else {
+                    $scope.errorModal = errorModal.activate({
+                        title: 'Launching Dapp error',
+                        error: response.data.error,
+                        destroy: function () {
+
+                        }
+                    })
+                }
+            });
+        }
 
         $scope.runDApp = function (type) {
             // open dapp
@@ -121,17 +205,18 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
                 $scope.openDapp();
             }
             else {
-                $http.post("/api/dapps/launch", {
-                    "params": [userService.rememberPassword],
-                    "id": $stateParams.dappId
-                }).then(function (response) {
-                    $scope.getInstalling();
-                    $scope.getLaunched();
-                    $scope.getRemoving();
-                    if (response.data.success == true) {
-                        $scope.openDapp();
-                    }
-                });
+                if ($scope.ismasterpasswordenabled) {
+                    $scope.masterPasswordModal = masterPasswordModal.activate({
+                        destroy: function (masterPass) {
+                            if (masterPass) {
+                                $scope.launchRequest(masterPass);
+                            }
+                        }
+                    })
+                }
+                else {
+                    $scope.launchRequest();
+                }
             }
         }
 
@@ -148,6 +233,11 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
             link[0].style.display = "none";
             link[0].click();
             link.remove();
+        }
+
+        $scope.githubLink = function (git) {
+            //git@github.com:crypti/cryptipad.git
+            return git.replace("git@", "https://").replace(".com:", ".com/").replace('.git', '');
         }
 
         $scope.isInstalled();

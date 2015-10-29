@@ -81,12 +81,7 @@ angular.module('webApp').service('multiService', function ($http, userService, $
             }
         },
 
-        confirmTransaction: function (transactionId, cb) {
-            var queryParams = {
-                publicKey: userService.publicKey,
-                transactionId: transactionId,
-                secret: userService.rememberedPassword
-            }
+        confirmTransaction: function (queryParams, cb) {
             $http.post("/api/multisignatures/sign",
                 queryParams
             )
@@ -95,7 +90,7 @@ angular.module('webApp').service('multiService', function ($http, userService, $
                         cb(null);
                     }
                     else {
-                        cb(true);
+                        cb(response.data.error);
                     }
 
                 });

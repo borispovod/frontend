@@ -5,6 +5,9 @@ angular.module('webApp').controller('masterPasswordModalController', ["$scope", 
     $scope.masterPass = '';
     $scope.emptyPass = false;
 
+    $scope.title = $scope.title || 'Please enter master password.';
+    $scope.label = $scope.label || 'Master Password';
+
     $scope.close = function (pass) {
         if ($scope.destroy) {
             $scope.destroy(pass);

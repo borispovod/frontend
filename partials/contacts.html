@@ -29,6 +29,7 @@
                     </td>
                 </tr>
                 <tr ng-repeat="contact in $data">
+                    {{contact}}
                     <td data-title="''" class="user-icon-col"><img src="images/samples/account.png"
                                                                    class="small-user-icon"></td>
                     <td data-title="'Username'" sortable="'username'">{{contact.username || '-'}}</td>

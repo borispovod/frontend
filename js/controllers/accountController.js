@@ -88,7 +88,7 @@ angular.module('webApp').controller('accountController', ['$state','$scope', '$r
                     userService.multisignatures = account.multisignatures;
                     userService.u_multisignatures = account.u_multisignatures;
                     userService.unconfirmedBalance = account.unconfirmedBalance ;
-                    userService.secondPassphrase = account.secondSignature;
+                    userService.secondPassphrase = account.secondSignature || account.unconfirmedSignature;
                     userService.unconfirmedPassphrase = account.unconfirmedSignature;
                     $scope.balance = userService.balance;
                     $scope.unconfirmedBalance = userService.unconfirmedBalance;

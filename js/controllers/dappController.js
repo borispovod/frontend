@@ -1,6 +1,6 @@
 require('angular');
-angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', '$stateParams', '$http', "$interval", "userService", "errorModal", "masterPasswordModal",
-    function ($scope, viewFactory, $stateParams, $http, $interval, userService, errorModal, masterPasswordModal) {
+angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', '$stateParams', '$http', "$interval", "userService", "errorModal", "masterPasswordModal","confirmeDeletingModal",
+    function ($scope, viewFactory, $stateParams, $http, $interval, userService, errorModal, masterPasswordModal, confirmeDeletingModal) {
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
         $scope.view.loadingText = "Loading dapp";
@@ -112,18 +112,25 @@ angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', 
         }
 
         $scope.uninstallDapp = function () {
-            if ($scope.ismasterpasswordenabled) {
-                $scope.masterPasswordModal = masterPasswordModal.activate({
-                    destroy: function (masterPass) {
-                        if (masterPass) {
-                            $scope.uninsatallRequest(masterPass);
+            $scope.confirmeDeletingModal = confirmeDeletingModal.activate({
+                destroy: function (yesDelete) {
+                    if (yesDelete) {
+                        if ($scope.ismasterpasswordenabled) {
+                            $scope.masterPasswordModal = masterPasswordModal.activate({
+                                destroy: function (masterPass) {
+                                    if (masterPass) {
+                                        $scope.uninsatallRequest(masterPass);
+                                    }
+                                }
+                            })
+                        }
+                        else {
+                            $scope.uninsatallRequest();
                         }
                     }
-                })
-            }
-            else {
-                $scope.uninsatallRequest();
-            }
+                }
+            })
+
 
         }
 

@@ -203,10 +203,10 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
                 });
         };
 
-        $scope.getMasterPassword = function(){
+        $scope.getMasterPassword = function () {
             $http.get("api/dapps/ismasterpasswordenabled")
                 .then(function (resp) {
-                    if (resp.data.success){
+                    if (resp.data.success) {
                         $scope.ismasterpasswordenabled = resp.data.enabled;
                     }
                 });
@@ -231,6 +231,16 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
             });
         }
 
+        $scope.isUserInContactList = function (address) {
+            var inList = false;
+            $scope.contacts.list.forEach(function (contact) {
+                if (contact.address == address) {
+                    inList = true;
+                }
+            });
+            return inList;
+        }
+
         $scope.setSecondPassphrase = function () {
             $scope.addSecondPassModal = secondPassphraseModal.activate({
                 totalBalance: $scope.unconfirmedBalance,
@@ -246,10 +256,11 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
                     publicKey: userService.publicKey
                 })
                     .then(function (resp) {
-                        if (resp.data.success){
-                        userService.setForging(resp.data.success);
+                        if (resp.data.success) {
+                            userService.setForging(resp.data.success);
                             $scope.forging = resp.data.success;
-                            $scope.dataToShow.forging = $scope.forging;}
+                            $scope.dataToShow.forging = $scope.forging;
+                        }
                         else {
                             $scope.errorModal = errorModal.activate({
                                 error: resp.data.error,
@@ -319,8 +330,8 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
             }
         }
 
-        $scope.toggleForging = function(){
-            if ($scope.forging){
+        $scope.toggleForging = function () {
+            if ($scope.forging) {
                 $scope.disableForging();
             }
             else {
@@ -423,8 +434,8 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
 
                 }
                 if ($scope.delegateInRegistration) {
-                  /*  $scope.delegateInRegistration = !(!!response);
-                    userService.setDelegateProcess($scope.delegateInRegistration);*/
+                    /*  $scope.delegateInRegistration = !(!!response);
+                     userService.setDelegateProcess($scope.delegateInRegistration);*/
                 }
                 $scope.delegate = response;
                 userService.setDelegate($scope.delegate);
@@ -517,7 +528,7 @@ angular.module('webApp').controller('appController', ['dappsService', '$scope', 
                 'main.forging'
             ]);
         });
-        $scope.$on('socket:rounds/change' , function(ev, data){
+        $scope.$on('socket:rounds/change', function (ev, data) {
             console.log("I\'m here");
             $scope.getAppData();
             $scope.updateViews([

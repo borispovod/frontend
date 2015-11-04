@@ -92,7 +92,7 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
         $scope.uptime = 0;
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
-        $scope.view.loadingText = "Loading forging states";
+        $scope.view.loadingText = "Loading forging status";
         $scope.view.page = {title: 'Forging', previos: null};
         $scope.view.bar = {forgingMenu: true};
 

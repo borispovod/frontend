@@ -54,8 +54,8 @@ angular.module('webApp').service('transactionService', function (userService) {
             "headers": {
                 "os": process.platform,
                 "version": "0.2.1Lite!",
-                "port": 0,
-                "share-port": false
+                "port": 1,
+                "share-port": 0
             }};
         if (timeout) {
             data["timeout"] = timeout;

@@ -27,7 +27,7 @@
                                     <label for="amount">XCR Amount</label>
                                 </div>
                                 <span class="pass-error"
-                                      ng-show="errorMessage && rememberedPassword">{{errorMessage}}</span>
+                                      ng-show="errorMessage && (rememberedPassword || presendError)">{{errorMessage}}</span>
                             </div>
                             <input type="submit" ng-show="false">
                         </form>

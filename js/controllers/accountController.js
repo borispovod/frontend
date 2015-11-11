@@ -1,9 +1,12 @@
 require('angular');
 
-angular.module('webApp').controller('accountController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionInfo', 'userInfo', '$filter', 'peerFactory',
-    function ($rootScope, $scope, $http, userService, $interval, $timeout, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionInfo, userInfo, $filter, peerFactory) {
+angular.module('webApp').controller('accountController',
+    ['$state', '$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionInfo', 'userInfo', '$filter', 'peerFactory',
+    function ($state, $rootScope, $scope, $http, userService, $interval, $timeout, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionInfo, userInfo, $filter, peerFactory) {
 
         $scope.view = viewFactory;
+        $scope.view.inLoading = true;
+        $scope.view.loadingText = "Loading dashboard";
         $scope.view.page = {title: 'Dashboard', previos: null};
         $scope.view.bar = {};
         $scope.delegate = undefined;
@@ -66,8 +69,10 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
                     })
                         .then(function (resp) {
                             var unconfirmedTransactions = resp.data.transactions;
+
                             $timeout(function () {
                                 $scope.transactions = unconfirmedTransactions.concat(transactions).slice(0, 8);
+
                             });
 
                         });
@@ -77,6 +82,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
         $scope.getAccount = function () {
             $http.get(peerFactory.getUrl() +"/api/accounts", {params: {address: userService.address}})
                 .then(function (resp) {
+                    $scope.view.inLoading = false;
                     var account = resp.data.account;
                     if (!account) {
                         userService.balance = 0;
@@ -87,7 +93,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
                     else {
                         userService.balance = account.balance;
                         userService.unconfirmedBalance = account.unconfirmedBalance;
-                        userService.secondPassphrase = account.secondSignature;
+                        userService.secondPassphrase = account.secondSignature || account.unconfirmedSignature;
                         userService.unconfirmedPassphrase = account.unconfirmedSignature;
                     }
                     $scope.balance = userService.balance;
@@ -117,8 +123,8 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
 
 
         $scope.$on('updateControllerData', function (event, data) {
-            if (data.indexOf('main.dashboard') != -1) {
-                $scope.updateView();
+            if (data.indexOf('main.transactions') != -1) {
+                $scope.updateAppView();
             }
         });
 
@@ -134,7 +140,7 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
             $scope.secondPassphraseModal = secondPassphraseModal.activate({
                 totalBalance: $scope.unconfirmedBalance,
                 destroy: function (r) {
-                    $scope.updateView();
+                    $scope.updateAppView();
                     if (r) {
                         $scope.unconfirmedPassphrase = true;
                     }
@@ -142,17 +148,24 @@ angular.module('webApp').controller('accountController', ['$scope', '$rootScope'
             });
         }
 
-        $scope.updateView = function () {
+        $scope.updateAppView = function () {
             $scope.getAccount();
             $scope.getTransactions();
             delegateService.getDelegate($scope.publicKey, function (response) {
                 $timeout(function () {
                     $scope.delegate = response;
+
                 });
             });
         }
 
-        $scope.updateView();
+        $scope.$on('updateControllerData', function (event, data) {
+            if (data.indexOf('main.dashboard') != -1 && $state.current.name=="main.dashboard") {
+                $scope.updateAppView();
+            }
+        });
+
+        $scope.updateAppView();
         $scope.getPrice();
 
     }]);

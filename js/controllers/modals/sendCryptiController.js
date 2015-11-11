@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryptiModal", "$http", "userService", "$timeout", "peerFactory", "transactionService",
-    function ($scope, sendCryptiModal, $http, userService, $timeout, peerFactory, transactionService) {
+angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryptiModal", "$http", "userService", "$timeout", "peerFactory", "transactionService", "$filter",
+    function ($scope, sendCryptiModal, $http, userService, $timeout, peerFactory, transactionService, $filter) {
         $scope.sending = false;
         $scope.passmode = false;
         $scope.accountValid = true;
@@ -13,46 +13,9 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
         $scope.focus = $scope.to ? 'amount' : 'to';
         $scope.presendError = false;
 
-        $scope.isCorrectValue = function (currency) {
-            currency = String(currency);
-
-            var parts = currency.split(".");
-
-            var amount = parts[0];
-
-            //no fractional part
-            if (parts.length == 1) {
-                var fraction = "00000000";
-            } else if (parts.length == 2) {
-                if (parts[1].length <= 8) {
-                    var fraction = parts[1];
-                } else {
-                    var fraction = parts[1].substring(0, 8);
-                }
-            } else {
-                $scope.errorMessage = "Wrong XCR value";
-                return false;
-            }
-
-            for (var i = fraction.length; i < 8; i++) {
-                fraction += "0";
-            }
-
-            var result = amount + "" + fraction;
-
-            //in case there's a comma or something else in there.. at this point there should only be numbers
-            if (!/^\d+$/.test(result)) {
-                $scope.errorMessage = "Wrong XCR value";
-                return false;
-            }
-
-            return true;
-        }
-
-
-        $scope.submit = function () {
-            console.log('submited');
-        };
+    $scope.submit = function () {
+        console.log('submited');
+    };
 
         $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;
 
@@ -100,6 +63,12 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
                 } else {
                     if (correctAddress || allowSymbols.test($scope.to.toLowerCase())) {
                         if ($scope.isCorrectValue($scope.amount)) {
+                            if (correctAddress) {
+                                $scope.presendError = false;
+                                $scope.errorMessage = ''
+                                $scope.sendXCR($scope.rememberedPassword);
+                            }
+                            else{
                             $http.get(peerFactory.getUrl() + "/api/accounts/username/get?username=" + $scope.to).then(function (response) {
                                 if (response.data.success || correctAddress) {
                                     $scope.presendError = false;
@@ -110,7 +79,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
                                     $scope.errorMessage = response.data.error;
                                     $scope.presendError = true;
                                 }
-                            });
+                            });}
 
                         }
                         else {
@@ -137,6 +106,14 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
                 } else {
                     if (correctAddress || allowSymbols.test($scope.to.toLowerCase())) {
                         if ($scope.isCorrectValue($scope.amount)) {
+                            if (correctAddress){
+                                $scope.presendError = false;
+                                $scope.errorMessage = ''
+                                $scope.passmode = !$scope.passmode;
+                                $scope.focus = 'secretPhrase';
+                                $scope.secretPhrase = '';
+                            }
+                            else {
                             $http.get(peerFactory.getUrl() + "/api/accounts/username/get?username=" + $scope.to).then(function (response) {
                                 if (response.data.success || correctAddress) {
                                     $scope.presendError = false;
@@ -149,7 +126,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
                                     $scope.errorMessage = response.data.error;
                                     $scope.presendError = true;
                                 }
-                            });
+                            });}
 
                         }
                         else {
@@ -186,7 +163,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
             }
         }
 
-        $scope.recalculateFee = function () {
+        $scope.recalculateFee = function ($event) {
             if (!$scope.amount || isNaN(parseFloat($scope.amount))) {
                 $scope.fee = "";
             } else {
@@ -316,6 +293,42 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
 
             return parseInt(result);
         }
+
+        $scope.isCorrectValue = function(currency){
+            currency = String(currency);
+
+            var parts = currency.split(".");
+
+            var amount = parts[0];
+
+            //no fractional part
+            if (parts.length == 1) {
+                var fraction = "00000000";
+            } else if (parts.length == 2) {
+                if (parts[1].length <= 8) {
+                    var fraction = parts[1];
+                } else {
+                    var fraction = parts[1].substring(0, 8);
+                }
+            } else {
+                $scope.errorMessage = "Wrong XCR value";
+                return false;
+            }
+
+            for (var i = fraction.length; i < 8; i++) {
+                fraction += "0";
+            }
+
+            var result = amount + "" + fraction;
+
+            //in case there's a comma or something else in there.. at this point there should only be numbers
+            if (!/^\d+$/.test(result)) {
+                $scope.errorMessage = "Wrong XCR value";
+                return false;
+            }
+
+            return true;
+        }
         $scope.clearRecipient = function () {
             $scope.to = '';
         }
@@ -327,7 +340,6 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
                 $scope.focus = 'secondPhrase';
                 return;
             }
-            $scope.recalculateFee();
             $scope.errorMessage = "";
             if (($scope.amount + '').indexOf('.') != -1) {
                 $scope.lengthError = $scope.amount.split('.')[1].length > 8;

@@ -27,6 +27,8 @@ angular.module('webApp').controller('userSettingsModalController',
                     $scope.pass = '';
                     return;
                 }
+                var isAddress = (/^[0-9]+[C|c]$/g).test($scope.username);
+                var allowSymbols = (/^[a-z0-9!@$&_.]+$/g).test($scope.username.toLowerCase());
                 if ($scope.rememberedPassword) {
                     var isAddress = /^[0-9]+[C|c]$/g;
                     var allowSymbols = /^[a-z0-9!@$&_.]+$/g;
@@ -34,8 +36,8 @@ angular.module('webApp').controller('userSettingsModalController',
                         $scope.error = 'Empty username'
                         $scope.presendError = true;
                     } else {
-                        if (!isAddress.test($scope.username)) {
-                            if (allowSymbols.test($scope.username.toLowerCase())) {
+                        if (!isAddress) {
+                            if (allowSymbols) {
                                 $scope.presendError = false;
                                 $scope.error = null;
                                 $scope.saveName($scope.rememberedPassword);
@@ -57,8 +59,8 @@ angular.module('webApp').controller('userSettingsModalController',
                         $scope.error = 'Empty username'
                         $scope.presendError = true;
                     } else {
-                        if (!isAddress.test($scope.username)) {
-                            if (allowSymbols.test($scope.username.toLowerCase())) {
+                        if (!isAddress) {
+                            if (allowSymbols) {
                                 $scope.presendError = false;
                                 $scope.error = null;
                                 $scope.focus = 'passPhrase';

@@ -116,7 +116,7 @@ angular.module('webApp').controller('passphraseController', ['$scope', '$rootSco
                                 if (resp.data.success) {
                                     userService.setData(resp.data.account.address, resp.data.account.publicKey, resp.data.account.balance, resp.data.account.unconfirmedBalance, resp.data.account.effectiveBalance);
                                     userService.setForging(resp.data.account.forging);
-                                    userService.setSecondPassphrase(resp.data.account.secondSignature);
+                                    userService.setSecondPassphrase(resp.data.account.secondSignature || resp.data.account.unconfirmedSignature);
                                     userService.unconfirmedPassphrase = resp.data.account.unconfirmedSignature;
                                 } else {
                                     console.log("Something wrong. Restart server please.");

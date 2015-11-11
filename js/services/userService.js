@@ -23,6 +23,11 @@ angular.module('webApp').service('userService', function () {
 		this.forging = forging;
 	}
 
+	this.setMultisignature = function (multisignature,cb) {
+		this.multisignature = multisignature;
+		cb(multisignature);
+	}
+
 	this.setDelegate = function (delegate) {
 		this.delegate = delegate;
 	}

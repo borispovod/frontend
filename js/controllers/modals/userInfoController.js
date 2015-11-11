@@ -3,6 +3,7 @@ require('angular');
 angular.module('webApp').controller('userInfoController', ["$scope", "$http", "userInfo", "sendCryptiModal", "peerFactory", function ($scope, $http, userInfo, sendCryptiModal, peerFactory) {
 
     $scope.userIdOld = '';
+    $scope.thisUser = userService;
 
     $scope.sendCryptiToUser = function () {
         userInfo.deactivate();

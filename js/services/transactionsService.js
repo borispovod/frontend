@@ -38,6 +38,38 @@ angular.module('webApp').service('transactionsService', function ($http, userSer
         },
         count: 0,
         searchForTransaction: '',
+        getMultiTransactions: function ($defer, params, filter, requestParams, cb) {
+            var sortString = '';
+            var keys = [];
+            for (var key in params.$params.sorting) {
+                if (params.$params.sorting.hasOwnProperty(key)) {
+                    sortString = key + ':' + params.$params.sorting[key];
+                }
+            };
+
+            requestParams.orderBy = sortString;
+            requestParams.limit = params.count();
+            requestParams.offset = (params.page() - 1) * params.count()
+
+            $http.get(peerFactory.getUrl() + "/api/transactions", {
+                params: requestParams
+            }).then(function (response) {
+                if (response.data.success) {
+                    var transactions = response.data.transactions;
+                    transactionsList.count = response.data.count;
+                    params.total(response.data.count);
+                    cb(null);
+                    $defer.resolve(transactions);
+                }
+                else {
+                    var transactions = [];
+                    transactionsList.count = 0;
+                    params.total(0);
+                    cb(null);
+                    $defer.resolve(transactions);
+                }
+            });
+        },
         getTransactions: function ($defer, params, filter, searchForTransaction, cb) {
             searchForTransaction = searchForTransaction.trim();
             if (searchForTransaction != '') {

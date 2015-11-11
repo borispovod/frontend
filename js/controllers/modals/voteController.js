@@ -1,7 +1,8 @@
 require('angular');
 var crypti = require('crypti-js');
 
-angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$http", "userService", "$timeout", "peerFactory", "transactionService",
+angular.module('webApp').controller('voteController',
+    ["$scope", "voteModal", "$http", "userService", "$timeout", "peerFactory", "transactionService",
     function ($scope, voteModal, $http, userService, $timeout, peerFactory, transactionService) {
         $scope.voting = false;
         $scope.fromServer = '';
@@ -10,6 +11,16 @@ angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$
         $scope.secondPassphrase = userService.secondPassphrase;
         $scope.focus = 'secretPhrase';
         $scope.fee = 0;
+        $scope.confirmText = $scope.adding ? 'CONFIRM VOTE' : 'REMOVE VOTE';
+
+        Object.size = function (obj) {
+            var size = 0, key;
+            for (key in obj) {
+                if (obj.hasOwnProperty(key)) size++;
+            }
+            return size;
+        };
+
 
         $scope.getFee = function () {
             $http.get(peerFactory.getUrl() + "/api/accounts/delegates/fee").then(function (resp) {
@@ -23,6 +34,7 @@ angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$
         }
 
         $scope.passcheck = function (fromSecondPass) {
+            $scope.fromServer=null;
             if (fromSecondPass) {
                 $scope.checkSecondPass = false;
                 $scope.passmode = $scope.rememberedPassword ? false : true;
@@ -47,40 +59,20 @@ angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$
 
         $scope.secondPassphrase = userService.secondPassphrase;
 
-        Number.prototype.roundTo = function (digitsCount) {
-            var digitsCount = typeof digitsCount !== 'undefined' ? digitsCount : 2;
-            var s = String(this);
-            if (s.indexOf('e') < 0) {
-                var e = s.indexOf('.');
-                if (e == -1) return this;
-                var c = s.length - e - 1;
-                if (c < digitsCount) digitsCount = c;
-                var e1 = e + 1 + digitsCount;
-                var d = Number(s.substr(0, e) + s.substr(e + 1, digitsCount));
-                if (s[e1] > 4) d += 1;
-                d /= Math.pow(10, digitsCount);
-                return d.valueOf();
-            } else {
-                return this.toFixed(digitsCount);
-            }
-        }
-
         $scope.getFee();
-
-        Math.roundTo = function (number, digitsCount) {
-            number = Number(number);
-            return number.roundTo(digitsCount).valueOf();
-        }
 
         $scope.close = function () {
             if ($scope.destroy) {
-                $scope.destroy();
+                $scope.destroy(true);
             }
             voteModal.deactivate();
         }
 
         $scope.removeVote = function (publicKey) {
             delete $scope.voteList[publicKey];
+            if (!Object.size($scope.voteList)){
+                $scope.close();
+            }
         }
 
         $scope.vote = function (pass, withSecond) {
@@ -120,7 +112,6 @@ angular.module('webApp').controller('voteController', ["$scope", "voteModal", "$
                 return;
             };
 
-            $scope.voting = !$scope.voting;
             $http.post(peerFactory.getUrl() + "/peer/transactions", {transaction: voteTransaction}, transactionService.createHeaders()).then(function (resp) {
 
                 $scope.voting = !$scope.voting;

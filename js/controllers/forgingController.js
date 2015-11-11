@@ -5,11 +5,11 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
     function ($rootScope, $scope, $http, userService, $interval, companyModal, forgingModal, delegateService, viewFactory, blockInfo, ngTableParams, blockService, peerFactory) {
 
         $scope.allVotes = 100
-        * 1000
-        * 1000
-        * 1000
-        * 1000
-        * 100;
+            * 1000
+            * 1000
+            * 1000
+            * 1000
+            * 100;
         $scope.showAllColumns = false;
         $scope.showFullTime = false;
         $scope.countForgingBlocks = 0;
@@ -92,13 +92,17 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
         $scope.rank = 0;
         $scope.uptime = 0;
         $scope.view = viewFactory;
+        $scope.view.inLoading = true;
+        $scope.view.loadingText = "Loading forging status";
         $scope.view.page = {title: 'Forging', previos: null};
         $scope.view.bar = {forgingMenu: true};
+
         $scope.address = userService.address;
         $scope.effectiveBalance = userService.effectiveBalance;
         $scope.totalBalance = userService.balance;
         $scope.unconfirmedBalance = userService.unconfirmedBalance;
         $scope.loadingBlocks = true;
+        $scope.setForgingText(userService.forging);
 
         //Blocks
         $scope.tableBlocks = new ngTableParams({
@@ -115,6 +119,7 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
                 blockService.getBlocks('', $defer, params, $scope.filter, function () {
                     $scope.loading = false;
                     $scope.countForgingBlocks = params.total();
+                    $scope.view.inLoading = false;
                 }, userService.publicKey);
             }
         });
@@ -135,7 +140,7 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
             delegateService.getDelegate(userService.publicKey, function (response) {
                 var totalDelegates = 108;
                 var rank = response.rate;
-                if (rank == 0) {
+                if (!rank || rank == 0) {
                     $scope.graphs.rank.values = [0, 100];
                 }
                 else {

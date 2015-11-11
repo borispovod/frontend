@@ -33,7 +33,7 @@ angular.module('webApp').service('contactsService', function ($http, userService
                     if (response.data.success) {
                         contacts.list = response.data.following;
                         contacts.count = response.data.following.length;
-                        contacts.followersCount = response.data.followers.length;
+                        contacts.followersCount = response.data.followers ? response.data.followers.length : 0;
                     }
                     else {
                         contacts.list = [];
@@ -51,7 +51,7 @@ angular.module('webApp').service('contactsService', function ($http, userService
                 params: queryParams
             })
                 .then(function (response) {
-                    params.total(response.data.following ? response.data.following.length : 0);
+                    params.total(response.data.following.length);
                     var filteredData = $filter('filter')(response.data.following, filter);
                     var transformedData = transformData(response.data.following, filter, params);
                     $defer.resolve(transformedData);
@@ -66,9 +66,9 @@ angular.module('webApp').service('contactsService', function ($http, userService
                 params: queryParams
             })
                 .then(function (response) {
-                    params.total(response.data.followers.length);
-                    var filteredData = $filter('filter')(response.data.followers, filter);
-                    var transformedData = transformData(response.data.followers, filter, params);
+                    params.total(response.data.followers ? response.data.followers.length : 0);
+                    var filteredData = $filter('filter')(response.data.followers ? response.data.followers : [], filter);
+                    var transformedData = transformData(response.data.followers ? response.data.followers : [], filter, params);
                     $defer.resolve(transformedData);
                     cb(null);
                 });

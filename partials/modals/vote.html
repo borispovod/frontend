@@ -9,13 +9,16 @@
                     </div>
                     <div class="modal-nav">
                         <ul class="nav nav-vote">
-                            <li><a  class="green-link" ng-click="passcheck()"><i
-                                    class="mdi-action-favorite-outline left"></i> CONFIRM VOTE</a></li>
+                            <li><a ng-class="{'green-link': adding,  'red-link': !adding}" ng-click="passcheck()"><i
+                                    class="mdi-action-favorite-outline left"></i> {{confirmText}}</a></li>
                             <li><a ng-click="close()"><i class="mdi-navigation-close left"></i> CANCEL</a></li>
 
                         </ul>
                     </div>
                     <div class="scrolling">
+                        <div class="modal-body voting-error" ng-if="fromServer">
+                          <span class="pass-error">{{fromServer}}</span>
+                        </div>
                         <div class="modal-body">
                             <ul class="list-group">
                                 <li class="list-group-item vote-list" ng-repeat="(key, item) in voteList"

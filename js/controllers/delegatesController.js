@@ -3,14 +3,17 @@ require('angular');
 angular.module('webApp').controller('delegatesController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "$filter", "ngTableParams", "delegateService", "voteModal", "viewFactory", "userInfo", "peerFactory",
     function ($rootScope, $scope, $http, userService, $interval, $timeout, $filter, ngTableParams, delegateService, voteModal, viewFactory, userInfo, peerFactory) {
         $scope.view = viewFactory;
+        $scope.view.inLoading = true;
+        $scope.view.loadingText = "Loading delegates";
+
         $scope.view.page = {title: 'Forging', previos: null};
         $scope.view.bar = {forgingMenu: true};
         $scope.allVotes = 100
-        * 1000
-        * 1000
-        * 1000
-        * 1000
-        * 100;
+            * 1000
+            * 1000
+            * 1000
+            * 1000
+            * 100;
 
         $scope.countTop = 0;
         $scope.countStandby = 0;
@@ -70,12 +73,18 @@ angular.module('webApp').controller('delegatesController', ['$scope', '$rootScop
                 totalBalance: $scope.unconfirmedBalance,
                 voteList: $scope.voteList.list,
                 adding: true,
-                destroy: function () {
-                    $scope.voteList.list = {};
-                    $scope.voteList.recalcLength();
-                    $scope.delegates.getList(function () {
-                        $scope.unconfirmedTransactions.getList();
-                    });
+                destroy: function (keepVotes) {
+                    if (keepVotes) {
+                        $scope.voteList.recalcLength();
+                        return;
+                    }
+                    else {
+                        $scope.voteList.list = {};
+                        $scope.voteList.recalcLength();
+                        $scope.delegates.getList(function () {
+                            $scope.unconfirmedTransactions.getList();
+                        });
+                    }
                 }
             });
         };
@@ -143,11 +152,13 @@ angular.module('webApp').controller('delegatesController', ['$scope', '$rootScop
                 delegateService.getTopList($defer, params, $scope.filter, function () {
                     $scope.countTop = params.total();
                     $scope.loadingTop = false;
+                    $scope.view.inLoading = false;
                     $timeout(function () {
                         $scope.delegates.getList(function () {
                             $scope.unconfirmedTransactions.getList();
+
                         });
-                    }, 10000);
+                    }, 1);
                 });
             }
         });
@@ -197,9 +208,15 @@ angular.module('webApp').controller('delegatesController', ['$scope', '$rootScop
         };
         //end Standby delegates
 
+        $scope.$on('updateControllerData', function (event, data) {
+            if (data.indexOf('main.delegates') != -1) {
+                $scope.updateStandby();
+                $scope.updateTop();
+            }
+        });
 
         $scope.$on('$destroy', function () {
-            $interval.cancel($scope.updateView);
-            $scope.updateView = null;
+
+
         });
     }]);

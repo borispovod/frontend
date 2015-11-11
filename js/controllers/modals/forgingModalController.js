@@ -15,7 +15,7 @@ angular.module('webApp').controller('forgingModalController', ["$scope", "forgin
 
     $scope.close = function () {
         if ($scope.destroy) {
-            $scope.destroy();
+            $scope.destroy($scope.forging);
         }
 
         forgingModal.deactivate();
@@ -44,7 +44,7 @@ angular.module('webApp').controller('forgingModalController', ["$scope", "forgin
 
                 if (resp.data.success) {
                     if ($scope.destroy) {
-                        $scope.destroy();
+                        $scope.destroy(resp.data.success);
                     }
 
                     forgingModal.deactivate();
@@ -64,10 +64,10 @@ angular.module('webApp').controller('forgingModalController', ["$scope", "forgin
 
                 if (resp.data.success) {
                     if ($scope.destroy) {
-                        $scope.destroy();
+                        $scope.destroy(!resp.data.success);
                     }
 
-                    $scope.forging = !resp.data.success;
+
                     forgingModal.deactivate();
                 } else {
                     $scope.error = resp.data.error;

@@ -3,6 +3,8 @@ require('angular');
 angular.module('webApp').controller('votedDelegatesController', ['$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "$filter", "ngTableParams", "delegateService", "voteModal", "viewFactory", "peerFactory",
     function ($rootScope, $scope, $http, userService, $interval, $timeout, $filter, ngTableParams, delegateService, voteModal, viewFactory, peerFactory) {
         $scope.view = viewFactory;
+        $scope.view.inLoading = true;
+        $scope.view.loadingText = "Loading delegates";
         $scope.view.page = {title: 'Forging', previos: null};
         $scope.view.bar = {forgingMenu: true};
         $scope.allVotes = 100
@@ -64,8 +66,13 @@ angular.module('webApp').controller('votedDelegatesController', ['$scope', '$roo
                 totalBalance: $scope.unconfirmedBalance,
                 voteList: $scope.voteList.list,
                 adding: false,
-                destroy: function () {
+                destroy: function (keepVotes) {
+                if (keepVotes) {
+                    $scope.voteList.recalcLength();
+                    return;
+                }
                     $scope.voteList.list = {};
+                    $scope.voteList.recalcLength();
                     $scope.unconfirmedTransactions.getList();
                 }
             });
@@ -82,6 +89,7 @@ angular.module('webApp').controller('votedDelegatesController', ['$scope', '$roo
                         $scope.unconfirmedTransactions.list = [];
                         response.data.transactions.forEach(function (transaction) {
                             $scope.unconfirmedTransactions.list = $scope.unconfirmedTransactions.list.concat(transaction.asset.votes);
+
                         });
                     });
 
@@ -108,10 +116,12 @@ angular.module('webApp').controller('votedDelegatesController', ['$scope', '$roo
                 delegateService.getMyDelegates($defer, params, $scope.filter, userService.address, function () {
                     $scope.count = params.total();
                     $scope.loading = false;
+                    $scope.view.inLoading = false;
                     $timeout(function () {
                         $scope.unconfirmedTransactions.getList();
-                    },1);
-                }, $scope.myVotes);
+
+                    }, 1000);
+                });
             }
         });
 
@@ -131,6 +141,12 @@ angular.module('webApp').controller('votedDelegatesController', ['$scope', '$roo
             delegateService.cachedVotedDelegates.time = delegateService.cachedVotedDelegates.time - 20000;
             $scope.updateMyDelegates();
         }, 1000 * 10);
+
+        $scope.$on('updateControllerData', function (event, data) {
+            if (data.indexOf('main.votes') != -1) {
+                $scope.updateMyDelegates();
+            }
+        });
 
         $scope.$on('$destroy', function () {
             $interval.cancel($scope.updateView);

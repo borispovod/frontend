@@ -2,11 +2,12 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="panel panel-default paginated">
-            <table ng-table="tableTransactions" border="0" width="100%" cellpadding="0"
+            <table ng-table="tableWalletTransactions" border="0" width="100%" cellpadding="0"
                    cellspacing="0">
-                <tr ng-class="{'voted': wallet.transaction.multi.confirmations<transaction.multi.needed}"
-                    ng-repeat="transaction in $data">
-                    <td data-title="'Transaction ID'" class="pointer"><a href="#"
+                <tr ng-repeat="transaction in $data">
+                    <td data-title="'Height'" sortable="'b_height'">{{transaction.height}}
+                    </td>
+                    <td data-title="'Transaction ID'" sortable="'t_id'" class="pointer"><a href="#"
                                                                          ng-click="transactionInfo(transaction, transaction.signList)">{{transaction.id}}</a>
                     </td>
                     <td data-title="'Recipient'" class="pointer" sortable="'t_recipientId'"><a href="#"
@@ -18,22 +19,18 @@
                     </td>
                     <td class="td-amount" data-title="'Amount'" sortable="'t_amount'">
                         <i ng-if="transaction.recipientId==transaction.senderId"
-                           class="vertical-text mdi-image-brightness-1 cloud-font"></i>
+                           class="vertical-text mdi-image-brightness-1 cloud-font">
+                        </i>
                         <i ng-if="transaction.recipientId!=transaction.senderId" class="vertical-text"
-                           ng-class="{'mdi-content-add-circle dark-meent-font': transaction.recipientId==address, 'mdi-content-remove-circle dark-red-font': transaction.senderId==address}"></i>
+                           ng-class="{'mdi-content-add-circle dark-meent-font': transaction.recipientId==walletAddress, 'mdi-content-remove-circle dark-red-font': transaction.senderId==walletAddress}"></i>
                         {{transaction.amount | xcrFilter}}
                     </td>
-                    <td data-title="'Fee'" sortable="'t_fee'">{{transaction.fee | xcrFilter}}
+                    <td data-title="'Fee'">{{transaction.fee | xcrFilter}}
                     </td>
                     <td data-title="'Confirmations'">
-                        <span ng-if="transaction.multi.confirmations<transaction.multi.needed">{{transaction.multi.confirmations}}/{{transaction.multi.needed}}</span><span
-                            ng-if="transaction.multi.confirmations>=transaction.multi.needed"
-                            >CONFIRMED</span>
+                        <span>{{transaction.signatures.length + 1}}</span>
                     </td>
-                    <td data-title=""><a ng-if="transaction.multi.confirmations<transaction.multi.needed"
-                                         class="btn btn-dark-meant"><i
-                            class="mdi-action-done left"></i>CONFIRM
-                    </a></td>
+
                 </tr>
             </table>
 

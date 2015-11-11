@@ -41,11 +41,11 @@
                                     <div class="transaction-data">{{transaction.id}} <span class="pull-right">{{transaction.timestamp | timestampFilter}}</span>
                                     </div>
                                     <div class="transaction-path">
-                                        <div class="transaction-part pull-left"><a >{{transaction.senderId}}</a>
+                                        <div class="transaction-part pull-left"><a ng-click="userInfo(transaction.senderId)">{{transaction.senderId}}</a>
                                             <span class="xcr">{{transaction.amount  | xcrFilter}} XCR</span>
                                         </div>
                                         <div class="transaction-direction"></div>
-                                        <div class="transaction-part pull-right"><a>{{transaction.recipientId
+                                        <div class="transaction-part pull-right"><a ng-click="userInfo(transaction.recipientId)">{{transaction.recipientId
                                             || "-"}}</a><span class="xcr">{{transaction.amount  | xcrFilter}} XCR</span>
                                         </div>
                                     </div>

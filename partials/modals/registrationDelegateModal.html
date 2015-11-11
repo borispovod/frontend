@@ -7,7 +7,7 @@
                         <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div>
                     </div>
                     <div class="modal-header clearfix">
-                        <div><h2>Register as Delegate</h2>
+                        <div><h2>Register as a Delegate</h2>
                         </div>
                         <div>Please choose a delegate name
                         </div>
@@ -23,10 +23,13 @@
                             <input type="submit" ng-show="false">
                         </form>
                     </div>
+
                     <div class="modal-body bordered">
-                        <span ng-if="!!username" class="pass-error" ng-show="error"
-                              style="margin: 20px 40px 0px !important;">{{error}}</span>
-                        <span class="send-info-text padding-right-40 flat-text">Becoming a delegate requires registration. You may choose your own delegate name, which can be used to promote your delegate. Convince other users to vote for your delegate to increase your rank. Only the top 101 delegates will be forging. All fees are shared equally between top delegates. Registration fee: {{fee | xcrFilter}}XCR.</span>
+                        <span ng-if="!!username" class="pass-error" ng-show="error" style="margin: 20px 40px 0px !important;">{{error}}</span>
+                        <span class="send-info-text padding-right-40 flat-text">
+                           Becoming a delegate requires registration. You may choose your own delegate name, which can be used to promote your delegate.
+                            Only the top 101 delegates are eligible to forge.
+                            All fees are shared equally between the top 101 delegates. Registration costs: {{fee | xcrFilter}}XCR.</span>
                     </div>
                     <div class="modal-body">
                         <ul class="nav modal-buttons pull-right">

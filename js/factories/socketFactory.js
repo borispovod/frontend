@@ -17,6 +17,10 @@ angular.module('webApp').factory('serverSocket', ["socketFactory", "$location", 
         serverSocket.forward('delegates/change');
         serverSocket.forward('contacts/change');
         serverSocket.forward('followers/change');
+        serverSocket.forward('multisignatures/change');
+        serverSocket.forward('multisignatures/signatures/change');
+        serverSocket.forward('dapps/change');
+        serverSocket.forward('rounds/change');
     };
 
     serverSocket.forward('transactions/change');
@@ -24,5 +28,9 @@ angular.module('webApp').factory('serverSocket', ["socketFactory", "$location", 
     serverSocket.forward('delegates/change');
     serverSocket.forward('contacts/change');
     serverSocket.forward('followers/change');
+    serverSocket.forward('multisignatures/change');
+    serverSocket.forward('multisignatures/signatures/change');
+    serverSocket.forward('dapps/change');
+    serverSocket.forward('rounds/change');
     return serverSocket;
 }]);

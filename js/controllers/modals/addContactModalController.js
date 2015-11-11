@@ -1,8 +1,11 @@
 require('angular');
 
-angular.module('webApp').controller('addContactModalController', ["$scope", "addContactModal", "$http", "userService", "contactsService", "peerFactory",
-    function ($scope, addContactModal, $http, userService, contactsService, peerFactory) {
+angular.module('webApp').controller('addContactModalController', ["$scope", "addContactModal", "$http", "userService", "contactsService", "peerFactory", "viewFactory","$timeout",
+    function ($scope, addContactModal, $http, userService, contactsService, peerFactory,  viewFactory, $timeout) {
         $scope.passmode = false;
+        $scope.view = viewFactory;
+        $scope.view.loadingText = "Adding new contact";
+        $scope.view.inLoading = false;
         $scope.accountValid = true;
         $scope.errorMessage = "";
         $scope.secondPassphrase = userService.secondPassphrase;
@@ -116,14 +119,17 @@ angular.module('webApp').controller('addContactModalController', ["$scope", "add
                     queryParams.secret = $scope.rememberedPassword;
                 }
             }
-
-
+            $scope.view.inLoading = true;
             contactsService.addContact(queryParams, function (response) {
+                $scope.view.inLoading = false;
                 if (response.data.success) {
+                    $timeout(function () {
+                        $scope.$broadcast('updateControllerData', ['main.contacts']);
+                    });
                     $scope.close();
                 }
                 else {
-                    $scope.errorMessage = response.data.error || response.data.err;
+                    $scope.errorMessage = response.data.error;
                 }
             });
         }

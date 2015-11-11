@@ -36,6 +36,7 @@
     "angular-modal": "~0.4.0",
     "angular-resource": "latest",
     "angular-route": "latest",
+    "angular-filter": "latest",
     "angular-ui-router": "~0.2.10",
     "bitcore-mnemonic": "^0.10.1",
     "bootstrap": "^3.3.4",

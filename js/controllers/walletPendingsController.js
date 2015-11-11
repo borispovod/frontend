@@ -2,7 +2,10 @@ require('angular');
 
 angular.module('webApp').controller('walletPendingsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionsService', 'ngTableParams', 'transactionInfo', '$timeout', 'userInfo',
     function ($rootScope, $scope, $http, userService, $interval, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo, $timeout, userInfo) {
+
         $scope.view = viewFactory;
+        $scope.view.inLoading = true;
+        $scope.view.loadingText = "Loading transactions";
         $scope.view.page = {title: 'Pending transactions', previos: null};
         $scope.view.bar = {showWalletBar: true};
         $scope.showAllColumns = true;
@@ -148,6 +151,7 @@ angular.module('webApp').controller('walletPendingsController', ['$scope', '$roo
             counts: [],
             getData: function ($defer, params) {
                 $defer.resolve(data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                $scope.view.inLoading = false;
             }
         });
 

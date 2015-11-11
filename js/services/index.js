@@ -3,5 +3,4 @@ require('../../js/services/delegateService.js');
 require('../../js/services/userService.js');
 require('../../js/services/transactionsService.js');
 require('../../js/services/contactsService.js');
-require('../../js/services/transactionService.js');
-require('../../js/services/cryptoService.js');
+require('../../js/services/multiService.js');

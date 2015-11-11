@@ -281,7 +281,7 @@ angular.module('webApp').factory('dbFactory', function (peerFactory) {
 
     factory.ipVersion = function(cb){
         factory.db.put({
-            _id: "0.5.0test"
+            _id: "0.5.0peertest"
         }, function (err, response) {
             if (err) {
 
@@ -291,7 +291,7 @@ angular.module('webApp').factory('dbFactory', function (peerFactory) {
     }
 
     factory.destroydb = function (cb) {
-        this.db.get("0.5.0test", function (err, doc) {
+        this.db.get("0.5.0peertest", function (err, doc) {
             if (err) {
                 factory.db.destroy(function (error) {
                     if (error) {

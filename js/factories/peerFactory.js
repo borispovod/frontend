@@ -9,15 +9,7 @@ angular.module('webApp').factory('peerFactory', ['$http',  '$interval', 'transac
 			{
 				"ip": "130.211.72.188",
 				"port": 7040
-			},
-            {
-                "ip": "104.155.15.135",
-                "port": 4060
-            },
-            {
-                "ip": "213.8.59.59",
-                "port": 8040
-            }
+			}
         ],
         checkPeer: function (url, cb, timeout) {
             $http.get(url + "/peer/list", transactionService.createHeaders(10000))

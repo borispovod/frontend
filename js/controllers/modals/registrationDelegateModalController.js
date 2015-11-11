@@ -117,6 +117,9 @@ angular.module('webApp').controller('registrationDelegateModalController',
             if ($scope.delegateData.username.trim() != '') {
                 data.username = $scope.delegateData.username.trim()
             }
+            else {
+                data.username = userService.username;
+            }
             if ($scope.secondPassphrase) {
                 data.secondSecret = $scope.secondPhrase;
                 if ($scope.rememberedPassword) {
@@ -144,7 +147,7 @@ angular.module('webApp').controller('registrationDelegateModalController',
                     transactionService.createHeaders()).then(function (resp) {
                         $scope.sending = !$scope.sending;
                         if (!resp.data.success) {
-                            $scope.error = resp.data.error;
+                            $scope.error = resp.data.message;
                         }
                         else {
                             if ($scope.destroy) {

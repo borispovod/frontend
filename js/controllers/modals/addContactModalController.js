@@ -129,7 +129,7 @@ angular.module('webApp').controller('addContactModalController', ["$scope", "add
                     $scope.close();
                 }
                 else {
-                    $scope.errorMessage = response.data.error;
+                    $scope.errorMessage = response.data.message;
                 }
             });
         }

@@ -33,3 +33,4 @@ require('../../js/controllers/modals/multisignatureModalController');
 require('../../js/controllers/modals/newUserController');
 require('../../js/controllers/modals/multiMembersModalController');
 require('../../js/controllers/modals/masterPasswordModalController');
+require('../../js/controllers/modals/blurredModalController');

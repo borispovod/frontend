@@ -292,9 +292,6 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
                         $scope.getMyVotesCount();
                         $scope.getForging($scope.setForgingText);
                     }
-                    if ($state.current.name == 'main.dappstore' || 'main.dashboard') {
-                        $scope.getCategories();
-                    }
 
                 });
         };

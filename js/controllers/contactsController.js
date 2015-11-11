@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('contactsController', ['$scope', '$rootScope', '$http', 'viewFactory', 'contactsService', 'ngTableParams', "userService", "$timeout",
-    function ($rootScope, $scope, $http, viewFactory, contactsService, ngTableParams, userService, $timeout) {
+angular.module('webApp').controller('contactsController', ['$scope', '$rootScope', '$http', 'viewFactory', 'contactsService', 'ngTableParams', "userService", "$timeout", "peerFactory",
+    function ($rootScope, $scope, $http, viewFactory, contactsService, ngTableParams, userService, $timeout, peerFactory) {
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
         $scope.view.loadingText = "Loading contacts";
@@ -22,7 +22,7 @@ angular.module('webApp').controller('contactsController', ['$scope', '$rootScope
             getData: function ($defer, params) {
                 contactsService.getSortedContacts($defer, params, $scope.filter, function (err) {
                     $scope.view.inLoading = false;
-                    $http.get('/api/contacts/unconfirmed', {
+                    $http.get(peerFactory.getUrl() + '/api/contacts/unconfirmed', {
                         params: {
                             publicKey: userService.publicKey
                         }

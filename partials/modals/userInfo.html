@@ -25,7 +25,7 @@
                         <ul class="nav nav-justified nav-actions">
                             <li><a class="green-link" ng-click="sendCryptiToUser()"><i class="mdi-content-send"></i>
                                 Send XCR</a></li>
-                            <li><a ng-click="addContact(account.address)"><i class="mdi-social-person-add"></i> Contact
+                            <li  ng-if="!isUserInContactList(account.address)"><a ng-click="addContact(account.address)"><i class="mdi-social-person-add"></i> Contact
                                 Request</a></li>
                         </ul>
                     </div>

@@ -107,7 +107,7 @@ angular.module('webApp').service('blockService', function ($http, peerFactory) {
                                 if (publicKey) {
                                     queryParams.generatorPublicKey = publicKey;
                                 }
-                                $http.get("/api/blocks/", {params: queryParams})
+                                $http.get(peerFactory.getUrl() + "/api/blocks/", {params: queryParams})
                                     .then(function (res) {
                                         this.gettingBlocks = false;
 

@@ -1,8 +1,8 @@
 require('angular');
 
 angular.module('webApp').controller('multisignatureModalController',
-    ["$scope", "$http", "multisignatureModal", "viewFactory", "userService",
-        function ($scope, $http, multisignatureModal, viewFactory, userService) {
+    ["$scope", "$http", "multisignatureModal", "viewFactory", "userService", "peerFactory",
+        function ($scope, $http, multisignatureModal, viewFactory, userService, peerFactory) {
             $scope.view = viewFactory;
             $scope.view.loadingText = "Set members of account";
             $scope.secondPassphrase = userService.secondPassphrase;
@@ -73,7 +73,7 @@ angular.module('webApp').controller('multisignatureModalController',
                     else {
                         if (correctAddress || correctName) {
                             if (correctAddress) {
-                                $http.get("/api/accounts?address=" + contact).then(function (response) {
+                                $http.get(peerFactory.getUrl() + "/api/accounts?address=" + contact).then(function (response) {
                                     if (response.data.success) {
                                         $scope.presendError = false;
                                         $scope.addingError = '';
@@ -92,7 +92,7 @@ angular.module('webApp').controller('multisignatureModalController',
 
                             }
                             else {
-                                $http.get("/api/accounts/username/get?username=" + encodeURIComponent(contact)).then(function (response) {
+                                $http.get(peerFactory.getUrl() + "/api/accounts/username/get?username=" + encodeURIComponent(contact)).then(function (response) {
                                     if (response.data.success) {
                                         $scope.presendError = false;
                                         $scope.addingError = ''
@@ -148,7 +148,7 @@ angular.module('webApp').controller('multisignatureModalController',
                     data.secondSecret = $scope.authData.secondPassword;
                 }
                 $scope.view.inLoading = true;
-                $http.put('/api/multisignatures', data).then(function (response) {
+                $http.put(peerFactory.getUrl() + '/api/multisignatures', data).then(function (response) {
                     $scope.view.inLoading = false;
                     if (response.data.error) {
                         $scope.errorMessage = response.data.error;

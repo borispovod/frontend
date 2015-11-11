@@ -1,7 +1,7 @@
 require('angular');
 
-angular.module('webApp').controller('transactionsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionsService', 'ngTableParams', 'transactionInfo', '$timeout', 'userInfo',
-    function ($rootScope, $scope, $http, userService, $interval, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo, $timeout, userInfo) {
+angular.module('webApp').controller('transactionsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionsService', 'ngTableParams', 'transactionInfo', '$timeout', 'userInfo', 'peerFactory',
+    function ($rootScope, $scope, $http, userService, $interval, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo, $timeout, userInfo, peerFactory) {
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
         $scope.view.loadingText = "Loading transactions";
@@ -38,7 +38,7 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
                         $scope.searchTransactions.inSearch = false;
                         $scope.countForgingBlocks = params.total();
                         $scope.loading = false;
-                        $http.get('/api/transactions/unconfirmed', {
+                        $http.get(peerFactory.getUrl() + '/api/transactions/unconfirmed', {
                                 params: {
                                     senderPublicKey: userService.publicKey,
                                     address: userService.address

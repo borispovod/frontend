@@ -24,7 +24,7 @@ angular.module('webApp').controller('walletTransactionsController',
 
             $scope.getParams = function () {
 
-                $http.get("/api/accounts?address=" + $scope.walletAddress)
+                $http.get(peerFactory.getUrl() + "/api/accounts?address=" + $scope.walletAddress)
                     .then(function (response) {
 
                         if (response.data.success) {

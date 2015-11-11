@@ -350,7 +350,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
                 return;
             }
 
-            $scope.amountError = $scope.convertXCR($scope.fee) + $scope.convertXCR($scope.amount) > userService._unconfirmedBalance;
+            $scope.amountError = $scope.convertXCR($scope.amount) > userService._unconfirmedBalance;
             $scope.errorMessage = $scope.amountError ? "Not enough XCR" : "";
 
             var data = {

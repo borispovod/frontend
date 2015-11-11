@@ -1,6 +1,8 @@
 require('angular');
 
-angular.module('webApp').controller('userInfoController', ["$scope", "$http", "userInfo", "sendCryptiModal", "peerFactory", function ($scope, $http, userInfo, sendCryptiModal, peerFactory) {
+angular.module('webApp').controller('userInfoController',
+    ["$scope", "$http", "userInfo", "sendCryptiModal", "peerFactory", "userService",
+    function ($scope, $http, userInfo, sendCryptiModal, peerFactory, userService) {
 
     $scope.userIdOld = '';
     $scope.thisUser = userService;

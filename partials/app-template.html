@@ -20,6 +20,10 @@
                                                                                     class="waves-effect waves-blue">
                 <div class="nav-icon" id="dashboard-icon"></div>
                 <span class="menu-text">Dashboard</span></a></li>
+            <li ng-if="false" ng-show="showMenuItem('main.multi') &&  multisignature" ui-sref-active="active"><a ui-sref="main.multi"
+                                                                                class="waves-effect waves-blue">
+                <div class="nav-icon" id="multi-icon"></div>
+                <span class="menu-text">Multi-Signature</span></a></li>
             <li ng-show="showMenuItem('main.contacts')" ui-sref-active="active"><a ui-sref="main.contacts"
                                                                                    class="waves-effect waves-blue">
                 <div class="nav-icon" id="contacts-icon"></div>
@@ -56,7 +60,7 @@
                                                                                      class="waves-effect waves-blue">
                 <div class="nav-icon" id="blockchain-icon"></div>
                 <span class="menu-text">Blockchain</span></a></li>
-            <li ng-show="showMenuItem('main.multi')" ui-sref-active="active"><a ui-sref="main.multi"
+            <li ng-if="false" ng-show="showMenuItem('main.multi')" ui-sref-active="active"><a ui-sref="main.multi"
                                                                                   class="waves-effect waves-blue">
                 <div class="nav-icon" id="network-icon"></div>
                 <span class="menu-text">Multi</span></a></li>
@@ -107,6 +111,7 @@
                             <li><a ng-click="myUserInfo()">My Profile</a></li>
                             <li ng-if="!secondPassphrase"><a ng-click="setSecondPassphrase()">2nd
                                 Passphrase</a></li>
+                            <li ng-if="false"><a ui-sref="main.settings">Settings</a></li>
                             <li><a ui-sref="passphrase">Logout</a></li>
                         </ul>
                     </div>

@@ -203,8 +203,7 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
             'main.forging',
             'main.blockchain',
             'passphrase',
-            'main.contacts',
-            'main.multi'
+            'main.contacts'
         ];
 
         $scope.getUSDPrice = function () {

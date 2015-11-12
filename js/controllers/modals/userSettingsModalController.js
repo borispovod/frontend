@@ -30,8 +30,6 @@ angular.module('webApp').controller('userSettingsModalController',
                 var isAddress = (/^[0-9]+[C|c]$/g).test($scope.username);
                 var allowSymbols = (/^[a-z0-9!@$&_.]+$/g).test($scope.username.toLowerCase());
                 if ($scope.rememberedPassword) {
-                    var isAddress = /^[0-9]+[C|c]$/g;
-                    var allowSymbols = /^[a-z0-9!@$&_.]+$/g;
                     if ($scope.username.trim() == '') {
                         $scope.error = 'Empty username'
                         $scope.presendError = true;
@@ -127,7 +125,7 @@ angular.module('webApp').controller('userSettingsModalController',
                         transactionService.createHeaders()).then(function (resp) {
                             $scope.sending = !$scope.sending;
                             if (!resp.data.success) {
-                                $scope.error = resp.data.error;
+                                $scope.error = resp.data.message;
                             }
                             else {
                                 if ($scope.destroy) {

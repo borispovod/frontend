@@ -116,7 +116,7 @@ angular.module('webApp').controller('voteController',
 
                 $scope.voting = !$scope.voting;
                 if (!resp.data.success) {
-                    $scope.fromServer = resp.data.error;
+                    $scope.fromServer = resp.data.message;
                     if ($scope.rememberedPassword && !$scope.secondPassphrase) {
                         Materialize.toast($scope.fromServer, 4000);
                     }

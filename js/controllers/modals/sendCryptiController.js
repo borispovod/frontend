@@ -69,7 +69,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
                                 $scope.sendXCR($scope.rememberedPassword);
                             }
                             else{
-                            $http.get(peerFactory.getUrl() + "/api/accounts/username/get?username=" + $scope.to).then(function (response) {
+                            $http.get(peerFactory.getUrl() + "/api/accounts/username/get?username=" + encodeURIComponent($scope.to)).then(function (response) {
                                 if (response.data.success || correctAddress) {
                                     $scope.presendError = false;
                                     $scope.errorMessage = ''
@@ -372,7 +372,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
                 $scope.sendData(data);
             }
             else {
-                $http.get(peerFactory.getUrl() + "/api/accounts/username/get?username=" + $scope.to).then(function (response) {
+                $http.get(peerFactory.getUrl() + "/api/accounts/username/get?username=" + encodeURIComponent($scope.to)).then(function (response) {
                     if (response.data.success) {
                         data.recipientId = response.data.account.address;
                         $scope.sendData(data);
@@ -405,7 +405,7 @@ angular.module('webApp').controller('sendCryptiController', ["$scope", "sendCryp
                     transactionService.createHeaders()).then(function (resp) {
                         $scope.sending = !$scope.sending;
                         if (!resp.data.success) {
-                            $scope.errorMessage = resp.data.error;
+                            $scope.errorMessage = resp.data.message;
                         }
                         else {
                             if ($scope.destroy) {

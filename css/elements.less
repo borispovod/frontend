@@ -310,6 +310,12 @@
           color: @dark-meant;
         }
       }
+      &.red-link {
+        color: @dark-red;
+        &:hover, &:active, &:focus {
+          color: @dark-red;
+        }
+      }
     }
   }
 }
@@ -380,6 +386,12 @@ a {
           color: @dark-meant;
         }
       }
+      &.red-link {
+        color: @dark-red;
+        &:hover, &:active, &:focus {
+          color: @dark-red;
+        }
+      }
       i {
         font-size: 20px;
         line-height: 13px
@@ -415,6 +427,13 @@ a {
         &:hover, &:active, &:focus {
           color: @dark-meant;
           background-color: @white;
+        }
+      }
+      &.red-link {
+        color: @dark-red;
+        &:hover, &:active, &:focus {
+          background-color: @white;
+          color: @dark-red;
         }
       }
       &:hover, &:active, &:focus {
@@ -814,7 +833,22 @@ a {
     }
   }
 }
+.pretty-scrolling {
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
 
+  &::-webkit-scrollbar-track {
+    background-color: rgba(207, 216, 220, 0.4);
+    opacity: 0.1;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgba(55, 71, 79, 0.2);
+  }
+}
 .scrolling {
   max-height: 410px;
   overflow-y: auto;

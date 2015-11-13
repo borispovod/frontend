@@ -79,6 +79,13 @@ span.menu-text {
   }
 }
 
+#multi-icon {
+  background-position: -110px 0;
+  .active & {
+    background-position: -110px -22px;
+  }
+}
+
 #contacts-icon {
   background-position: -22px -44px;
   .active & {
@@ -167,8 +174,14 @@ span.menu-text {
 
 .search-bar {
   background-color: white;
-  padding: 10px 30px;
-
+  padding: 10px 80px 10px 30px;
+  position: relative;
+  .search-toggle {
+    position: absolute;
+    right: 30px;
+    top: 13px;
+    cursor: pointer;
+  }
   .preloader-wrapper {
     width: 22px;
     height: 22px;

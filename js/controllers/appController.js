@@ -315,6 +315,9 @@ angular.module('webApp').controller('appController', ['$scope', '$rootScope', '$
         }
 
         $scope.isUserInContactList = function (address) {
+            if (address == userService.address){
+                return true;
+            }
             var inList = false;
             $scope.contacts.list.forEach(function (contact) {
                 if (contact.address == address) {

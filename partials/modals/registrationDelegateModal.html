@@ -4,12 +4,12 @@
             <div class="col-md-6 col-md-offset-4 height100 valign-wrapper">
                 <div class="modal-content" ng-show="!passmode && !checkSecondPass">
                     <div class="modal-header modal-iconed">
-                        <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div>
+                        <div class="close-modal" ng-click="close()"><span class="sr-only">关闭</span></div>
                     </div>
                     <div class="modal-header clearfix">
-                        <div><h2>Register as a Delegate</h2>
+                        <div><h2>注册为受托人</h2>
                         </div>
-                        <div>Please choose a delegate name
+                        <div>请输入您要注册的名称
                         </div>
                     </div>
                     <div class="modal-body field-padding" ng-if="!username">
@@ -17,7 +17,7 @@
                             <div class="input-field">
                                 <input ng-focus="focus == 'username'" id="delegateUsername" type="text"
                                        ng-model="delegateData.username" autofocus>
-                                <label for="delegateUsername">Delegate Name</label>
+                                <label for="delegateUsername">受托人名称</label>
                             </div>
                             <span class="pass-error" ng-show="error">{{error}}</span>
                             <input type="submit" ng-show="false">
@@ -27,29 +27,27 @@
                     <div class="modal-body bordered">
                         <span ng-if="!!username" class="pass-error" ng-show="error" style="margin: 20px 40px 0px !important;">{{error}}</span>
                         <span class="send-info-text padding-right-40 flat-text">
-                           Becoming a delegate requires registration. You may choose your own delegate name, which can be used to promote your delegate.
-                            Only the top 101 delegates are eligible to forge.
-                            All fees are shared equally between the top 101 delegates. Registration costs: {{fee | xcrFilter}}XCR.</span>
+                           要成为受托人首先要进行注册,您需要先填写您的受托人名称,这便于推广您的受托人帐号,只有得票率排名在前101名的受托人才有资格锻造区块,锻造区块的所有费用都会平均分配到这101个受托人帐号下,本次注册费用为: {{fee | xcrFilter}}XCR.</span>
                     </div>
                     <div class="modal-body">
                         <ul class="nav modal-buttons pull-right">
                             <li>
-                                <a ng-click="close()">Cancel
+                                <a ng-click="close()">取消
                                 </a>
                             </li>
-                            <li><a class="green-link" ng-click="passcheck()">register</a></li>
+                            <li><a class="green-link" ng-click="passcheck()">注册</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="modal-content" ng-show="passmode && !checkSecondPass">
                     <div class="modal-header modal-iconed">
-                        <div class="close-modal" ng-click="passcheck()"><span class="sr-only">Close modal</span>
+                        <div class="close-modal" ng-click="passcheck()"><span class="sr-only">关闭</span>
                         </div>
                     </div>
                     <div class="modal-header clearfix">
-                        <div><h2>Account Verification</h2>
+                        <div><h2>帐户验证</h2>
                         </div>
-                        <div>Please enter your passphrase below
+                        <div>请在下方输入您的主密钥
                         </div>
                     </div>
                     <div class="modal-body">
@@ -59,17 +57,17 @@
                                     <input ng-focus="focus == 'secretPhrase'" id="passPhrase" type="password"
                                            ng-model="secretPhrase" ng-trim="false" autofocus
                                            ng-class="{'invalid': error}">
-                                    <label for="passPhrase">Your Passphrase</label>
+                                    <label for="passPhrase">您的主密钥</label>
                                 </div>
                                 <span class="pass-error" ng-show="error">{{error}}</span>
                             </div>
                             <div class="modal-body">
                                 <ul class="nav modal-buttons pull-right">
                                     <li>
-                                        <a ng-click="passcheck()">Cancel
+                                        <a ng-click="passcheck()">取消
                                         </a>
                                     </li>
-                                    <li><a class="green-link" ng-click="registrationDelegate(secretPhrase)">register</a>
+                                    <li><a class="green-link" ng-click="registrationDelegate(secretPhrase)">注册</a>
                                     </li>
                                 </ul>
                             </div>
@@ -79,12 +77,12 @@
                 </div>
                 <div class="modal-content" ng-show="checkSecondPass">
                     <div class="modal-header modal-iconed">
-                        <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div>
+                        <div class="close-modal" ng-click="close()"><span class="sr-only">关闭</span></div>
                     </div>
                     <div class="modal-header clearfix">
-                        <div><h2>Account Verification</h2>
+                        <div><h2>帐户验证</h2>
                         </div>
-                        <div>Please enter your second passphrase below
+                        <div>请在下方输入您的支付密码
                         </div>
                     </div>
                     <div class="modal-body">
@@ -95,7 +93,7 @@
                                        ng-model="secondPhrase" ng-trim="false"
                                        autofocus
                                        ng-class="{'invalid': errorMessage}">
-                                <label for="secondPhrase">Your Second Passphrase</label>
+                                <label for="secondPhrase">您的支付密码</label>
                             </div>
                             <span class="pass-error" ng-show="error">{{error}}</span>
                         </div>
@@ -106,10 +104,10 @@
                     <div class="modal-body">
                         <ul class="nav modal-buttons pull-right">
                             <li>
-                                <a ng-click="passcheck(true)">BACK
+                                <a ng-click="passcheck(true)">返回
                                 </a>
                             </li>
-                            <li><a  class="green-link" ng-click="registrationDelegate(secretPhrase, true)">register</a>
+                            <li><a  class="green-link" ng-click="registrationDelegate(secretPhrase, true)">注册</a>
                             </li>
                         </ul>
                     </div>

@@ -7,13 +7,13 @@
 
                         <div class="material-modal-content" ng-show="firstStep">
                             <div class="modal-header modal-iconed">
-                                <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span>
+                                <div class="close-modal" ng-click="close()"><span class="sr-only">关闭</span>
                                 </div>
                             </div>
                             <div class="modal-header clearfix">
-                                <div><h2>Step 1/2 - Generate a Passphrase</h2>
+                                <div><h2>步骤 1/2 - 创建你的主密钥</h2>
                                 </div>
-                                <div>You can find your passphrase below
+                                <div>你的主密钥如下如示
                                 </div>
                             </div>
                             <div class="modal-body clearfix">
@@ -22,31 +22,31 @@
                                     <div class="input-field passphraseGeneration">
                                            <textarea id="newPassphrase" class="materialize-textarea"
                                                      ng-model="newPassphrase" autofocus ng-trim="false"></textarea>
-                                        <label for="newPassphrase" ng-class="{'active':activeLabel(newPassphrase)}">Passphrase</label>
+                                        <label for="newPassphrase" ng-class="{'active':activeLabel(newPassphrase)}">主密钥</label>
                                     </div>
                                     <span class="pull-right generate unselectable"
-                                          ng-click="generatePassword()"><span>Generate New</span></span>
+                                          ng-click="generatePassword()"><span>创建一个新的</span></span>
                                 </div>
 
                             </div>
                             <div class="modal-body bordered">
-                                <span class="send-info-text">Make sure that you keep the passphrase safe. You will be asked to re-type it for confirmation.</span>
+                                <span class="send-info-text">一定要保存好你的主密钥，这可是你的家当，一会还要你输入一下，以确认你记住主密钥！</span>
                             </div>
                             <div class="card-action clearfix">
                                 <div class="pull-right">
-                                    <a class="waves-effect second-action" ng-click="savePassToFile(newPassphrase)">SAVE PASSPHRASE</a>
-                                    <a class="primary-action waves-effect" ng-click="step()">NEXT STEP</a></div>
+                                    <a class="waves-effect second-action" ng-click="savePassToFile(newPassphrase)">保存主密钥</a>
+                                    <a class="primary-action waves-effect" ng-click="step()">下一步</a></div>
                             </div>
                         </div>
                         <div class="material-modal-content" ng-show="!firstStep">
                             <div class="modal-header modal-iconed">
-                                <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span>
+                                <div class="close-modal" ng-click="close()"><span class="sr-only">关闭</span>
                                 </div>
                             </div>
                             <div class="modal-header clearfix">
-                                <div><h2>Step 2/2 - Confirm the Passphrase</h2>
+                                <div><h2>步骤 2/2 - 确认主密钥</h2>
                                 </div>
-                                <div>Please re-enter your passphrase below
+                                <div>请在下方输入一下你的主密钥
                                 </div>
                             </div>
                             <div class="modal-body clearfix">
@@ -55,19 +55,19 @@
                                     <div class="input-field passphraseGeneration">
                                            <textarea id="repeatPassphrase" class="materialize-textarea"
                                                      ng-trim="false" ng-model="repeatPassphrase" ng-class="{'invalid': noMatch}" autofocus></textarea>
-                                        <label for="repeatPassphrase" ng-class="{'active':activeLabel(repeatPassphrase)}">Passphrase</label>
+                                        <label for="repeatPassphrase" ng-class="{'active':activeLabel(repeatPassphrase)}">主密钥</label>
                                     </div>
-                                    <span class="pass-error" ng-show="noMatch">Passphrase doesn't match.</span>
+                                    <span class="pass-error" ng-show="noMatch">主密钥不对哦！</span>
                                 </div>
 
                             </div>
                             <div class="modal-body bordered" ng-show="noMatch">
-                                <span class="send-info-text">The passphrase entered doesn't match with the one generated before. Please go back and generate a new one.</span>
+                                <span class="send-info-text">您输入的主密钥不对哦，返回上一步重新创建一个吧.</span>
                             </div>
                             <div class="card-action clearfix">
                                 <div class="pull-right">
-                                    <a class="waves-effect second-action" ng-click="step()">GO BACK</a>
-                                    <a class="primary-action waves-effect" ng-click="login(repeatPassphrase)">GET STARTED</a></div>
+                                    <a class="waves-effect second-action" ng-click="step()">返回</a>
+                                    <a class="primary-action waves-effect" ng-click="login(repeatPassphrase)">开启</a></div>
                             </div>
                         </div>
 

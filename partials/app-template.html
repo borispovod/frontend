@@ -9,9 +9,9 @@
             <div class="icon">
                 <img src="images/samples/account.png">
             </div>
-            <span class="name" ng-show="username">Welcome back, {{username}}</span>
+            <span class="name" ng-show="username">欢迎回来，{{username}}</span>
             <span class="name name-add" ng-click="userSettings()"
-                  ng-hide="username">Welcome, click to edit profile</span>
+                  ng-hide="username">欢迎，点击可编辑</span>
             <span class="address">{{address}}</span>
         </div>
       <!--  <div class="white-glow"></div>-->
@@ -19,27 +19,27 @@
             <li ng-show="showMenuItem('main.dashboard')" ui-sref-active="active"><a ui-sref="main.dashboard"
                                                                                     class="waves-effect waves-blue">
                 <div class="nav-icon" id="dashboard-icon"></div>
-                <span class="menu-text">Dashboard</span></a></li>
+                <span class="menu-text">控制面板</span></a></li>
             <li ng-if="false" ng-show="showMenuItem('main.multi') &&  multisignature" ui-sref-active="active"><a ui-sref="main.multi"
                                                                                 class="waves-effect waves-blue">
                 <div class="nav-icon" id="multi-icon"></div>
-                <span class="menu-text">Multi-Signature</span></a></li>
+                <span class="menu-text">多重签名</span></a></li>
             <li ng-show="showMenuItem('main.contacts')" ui-sref-active="active"><a ui-sref="main.contacts"
                                                                                    class="waves-effect waves-blue">
                 <div class="nav-icon" id="contacts-icon"></div>
-                <span class="menu-text">Contacts</span></a></li>
+                <span class="menu-text">联系人</span></a></li>
             <li ng-show="showMenuItem('main.conversations')" ui-sref-active="active"><a ui-sref="main.conversations"
                                                                                         class="waves-effect waves-blue">
                 <div class="nav-icon" id="conversations-icon"></div>
-                <span class="menu-text">Conversations</span></a></li>
+                <span class="menu-text">会话</span></a></li>
             <li ng-show="showMenuItem('main.dappstore')" ui-sref-active="active"><a ui-sref="main.dappstore"
                                                                                     class="waves-effect waves-blue">
                 <div class="nav-icon" id="dappstore-icon"></div>
-                <span class="menu-text">Dapp Store</span></a></li>
+                <span class="menu-text">Dapp应用商店</span></a></li>
             <li ng-show="showMenuItem('main.forging')" ui-sref-active="active"><a ui-sref="main.forging"
                                                                                   class="waves-effect waves-blue">
                 <div class="nav-icon" id="forging-icon"></div>
-                <span class="menu-text">Forging</span><i
+                <span class="menu-text">锻造</span><i
                     ng-click="collapseMenu()"
                     stop-event
                     class="vertical-text right submenu-collapsing"
@@ -49,21 +49,21 @@
                 <li ng-show="showMenuItem('main.delegates')" ui-sref-active="active"><a ui-sref="main.delegates"
                                                                                         class="waves-effect waves-blue">
                     <div class="nav-icon" id="delegates-icon"></div>
-                    <span class="menu-text">Delegates</span></a></li>
+                    <span class="menu-text">受托人</span></a></li>
                 <li ng-show="showMenuItem('main.votes')" ui-sref-active="active">
                     <a ui-sref="main.votes" class="waves-effect waves-blue">
                         <div class="nav-icon" id="myvotes-icon"></div>
-                        <span class="menu-text">My Votes</span></a>
+                        <span class="menu-text">我的投票</span></a>
                 </li>
             </ul>
             <li ng-show="showMenuItem('main.blockchain')" ui-sref-active="active"><a ui-sref="main.blockchain"
                                                                                      class="waves-effect waves-blue">
                 <div class="nav-icon" id="blockchain-icon"></div>
-                <span class="menu-text">Blockchain</span></a></li>
+                <span class="menu-text">区块链</span></a></li>
             <li ng-if="false" ng-show="showMenuItem('main.multi')" ui-sref-active="active"><a ui-sref="main.multi"
                                                                                   class="waves-effect waves-blue">
                 <div class="nav-icon" id="network-icon"></div>
-                <span class="menu-text">Multi</span></a></li>
+                <span class="menu-text">多重签名</span></a></li>
 
         </ul>
         <div id="inc"></div>
@@ -74,13 +74,13 @@
         <div class="header-wrapper">
             <div class="nav-bar" id="header">
                 <button type="button" class="toggle-menu" ng-click="toggleMenu()">
-                    <span class="sr-only">Toggle navigation</span>
+                    <span class="sr-only">导航切换</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
                 <h1 id="title"><span class="title-icon" ng-show="view.page.previos" ng-click="goToPrevios()">
-            <span class="sr-only">Go to previos page</span></span>{{view.page.title}}</h1>
+            <span class="sr-only">返回上一页</span></span>{{view.page.title}}</h1>
                 <span class="forging-state" ng-show="view.forgingState">{{view.forgingState}}</span>
 
                 <div id="top-menu" class="valign-wrapper">
@@ -88,7 +88,7 @@
                 {{unconfirmedBalance | xcrFilter}} XCR
             </span>
                     <a class="btn btn-sky-blue waves-effect waves-light left-margin-20" ng-click="sendCrypti()"><i
-                            class="mdi-content-send left"></i>SEND
+                            class="mdi-content-send left"></i>发送
                     </a>
                     <!--<div class="notifications left-margin-20 valign-wrapper" dropdown
                          is-open="moreNotificationsStatus.isopen"><span dropdown-toggle>9</span>
@@ -108,11 +108,10 @@
                     <div class="more-down left-margin-20" dropdown is-open="moreDropdownStatus.isopen">
                         <i class="mdi-navigation-more-vert" dropdown-toggle></i>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a ng-click="myUserInfo()">My Profile</a></li>
-                            <li ng-if="!secondPassphrase"><a ng-click="setSecondPassphrase()">2nd
-                                Passphrase</a></li>
-                            <li ng-if="false"><a ui-sref="main.settings">Settings</a></li>
-                            <li><a ui-sref="passphrase">Logout</a></li>
+                            <li><a ng-click="myUserInfo()">我的信息</a></li>
+                            <li ng-if="!secondPassphrase"><a ng-click="setSecondPassphrase()">支付密码</a></li>
+                            <li ng-if="false"><a ui-sref="main.settings">设计</a></li>
+                            <li><a ui-sref="passphrase">退出</a></li>
                         </ul>
                     </div>
                 </div>
@@ -123,7 +122,7 @@
                     <span class="input-group-addon">
                         <i class="mdi-action-search"></i>
                     </span>
-                    <input type="text" class="form-control" placeholder="Search for transactions (Transaction ID, Sender address, Recipient address)"
+                    <input type="text" class="form-control" placeholder="搜索交易记录(交易ID,发送者地址,接收者地址)"
                            ng-model="searchTransactions.searchForTransaction">
                        <span class="input-group-addon spinner-addon">
                             <div class="preloader-wrapper" ng-class="{'active':searchTransactions.inSearch}">
@@ -149,7 +148,7 @@
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="mdi-action-search"></i></span>
-                    <input type="text" class="form-control" placeholder="Search for blocks"
+                    <input type="text" class="form-control" placeholder="搜索区块"
                            ng-model="searchBlocks.searchForBlock">
                          <span class="input-group-addon spinner-addon">
                             <div class="preloader-wrapper" ng-class="{'active':searchBlocks.inSearch}">
@@ -171,13 +170,13 @@
 
             <div id="page-nav" ng-if="view.bar.forgingMenu">
                 <ul class="nav nav-underline pull-left">
-                    <li ui-sref-active="active"><a ui-sref="main.forging">Forging</a></li>
-                    <li ui-sref-active="active"><a ui-sref="main.delegates">Delegates</a></li>
-                    <li ui-sref-active="active"><a ui-sref="main.votes">My votes ({{myVotesCount||'0'}})</a>
+                    <li ui-sref-active="active"><a ui-sref="main.forging">锻造</a></li>
+                    <li ui-sref-active="active"><a ui-sref="main.delegates">受托人</a></li>
+                    <li ui-sref-active="active"><a ui-sref="main.votes">我的投票 ({{myVotesCount||'0'}})</a>
                     </li>
                 </ul>
                 <ul class="nav nav-underline pull-right registration" ng-show="!delegate.username">
-                    <li><a class="bold-text" ng-click="registrationDelegate()">delegate registration</a></li>
+                    <li><a class="bold-text" ng-click="registrationDelegate()">受托人注册</a></li>
                 </ul>
              <!--   <a class="btn-floating btn-large waves-effect waves-light green" ng-click="disableForging()"
                    ng-show="delegate.username && forging" style="
@@ -195,16 +194,16 @@
             </div>
             <div id="page-nav" ng-if="view.bar.showWalletBar">
                 <ul class="nav nav-underline pull-left">
-                    <li ui-sref-active="active"><a ui-sref="main.multi">Wallets</a></li>
+                    <li ui-sref-active="active"><a ui-sref="main.multi">钱包</a></li>
                     <li ui-sref-active="active"><a
-                                                   ui-sref="main.multiPendings">Pending(5)</a></li>
+                                                   ui-sref="main.multiPendings">处理中(5)</a></li>
                 </ul>
             </div>
             <div id="page-nav" ng-if="view.bar.showContactsBar">
                 <ul class="nav nav-underline pull-left">
-                    <li ui-sref-active="active"><a ui-sref="main.contacts">Contacts</a></li>
+                    <li ui-sref-active="active"><a ui-sref="main.contacts">联系人</a></li>
                     <li ui-sref-active="active"><a
-                                                   ui-sref="main.pending">Pending({{contacts.followersCount}})</a></li>
+                                                   ui-sref="main.pending">处理中({{contacts.followersCount}})</a></li>
                 </ul>
                 <a ng-click="addContact()" class="btn-floating btn-large waves-effect waves-light green" style="
     position: absolute;
@@ -239,5 +238,3 @@
 </script>
 </div>
 <st-blurred-dialog-overlay></st-blurred-dialog-overlay>
-
-

@@ -1,16 +1,16 @@
 <div class="app-modal" id="transaction-modal">
     <div class="modal-content">
-        <div class="modal-header"><h2>Transaction ID: </h2>{{block.id}}<span class="blockchain-icon" clip-copy="block.id"></span><div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div></div>
+        <div class="modal-header"><h2>交易ID: </h2>{{block.id}}<span class="blockchain-icon" clip-copy="block.id"></span><div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div></div>
         <div class="modal-body">
             <ul class="list-group">
-                <li class="list-group-item summary">Summary
+                <li class="list-group-item summary">摘要信息
                 </li>
-                <li class="list-group-item bordered">Confirmations<span class="pull-right small-text">{{block.confirmations}}</span></li>
-                <li class="list-group-item">Amount<span class="pull-right small-text">{{block.amount | xcrFilter}} XCR</span></li>
-                <li class="list-group-item bordered">Fee<span
+                <li class="list-group-item bordered">确认数<span class="pull-right small-text">{{block.confirmations}}</span></li>
+                <li class="list-group-item">余额<span class="pull-right small-text">{{block.amount | xcrFilter}} XCR</span></li>
+                <li class="list-group-item bordered">费用<span
                         class="pull-right small-text">{{block.fee  | xcrFilter}} XCR</span></li>
-                <li class="list-group-item">USD Equivalent<span class="pull-right small-text">{{convertToUSD(block.amount)| number: 2}}$</span></li>
-                <li class="list-group-item bordered">Time<span class="pull-right small-text">{{block.timestamp | timestampFilter}}</span></li>
+                <li class="list-group-item">美元等值<span class="pull-right small-text">{{convertToUSD(block.amount)| number: 2}}$</span></li>
+                <li class="list-group-item bordered">时间<span class="pull-right small-text">{{block.timestamp | timestampFilter}}</span></li>
             </ul>
             <ul class="list-group transactions">
                 <li class="list-group-item">
@@ -24,11 +24,11 @@
                                 class="xcr">{{block.amount  | xcrFilter}} XCR</span></div>
                     </div>
                     <div class="transaction-bottom">
-                        <div class="fee">FEE: {{block.fee  | xcrFilter}} XCR
+                        <div class="fee">费用: {{block.fee  | xcrFilter}} XCR
                         </div>
                         <div class="xcr">{{block.amount  | xcrFilter}} XCR
                         </div>
-                        <div class="confirmations">{{block.confirmations || 0}} CONFIRMATIONS
+                        <div class="confirmations">{{block.confirmations || 0}} 确认数
                         </div>
                     </div>
                 </li>

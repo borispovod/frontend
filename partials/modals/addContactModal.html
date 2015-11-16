@@ -4,12 +4,12 @@
             <div class="col-md-6 col-md-offset-4 height100 valign-wrapper">
                 <div class="modal-content" ng-show="!passmode && !checkSecondPass">
                     <div class="modal-header modal-iconed">
-                        <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div>
+                        <div class="close-modal" ng-click="close()"><span class="sr-only">关闭</span></div>
                     </div>
                     <div class="modal-header clearfix">
-                        <div><h2>Add new contact</h2>
+                        <div><h2>添加新联系人</h2>
                         </div>
-                        <div>Please type in an account name or ID below
+                        <div>请以下方填写对方的帐户地址，或者帐户名称
                         </div>
                     </div>
                     <div class="modal-body">
@@ -26,26 +26,26 @@
                         </form>
                     </div>
                     <div class="modal-body">
-                        <span class="send-info-text flat-text">You shall receive notification when the contact has accepted your request.</span>
+                        <span class="send-info-text flat-text">当该联系人确认您的请求后，您就会收到通知</span>
                     </div>
                     <div class="modal-body">
                         <ul class="nav modal-buttons pull-right">
                             <li>
-                                <a  ng-click="close()">Cancel
+                                <a  ng-click="close()">取消
                                 </a>
                             </li>
-                            <li><a class="green-link" ng-click="passcheck()">add contact</a></li>
+                            <li><a class="green-link" ng-click="passcheck()">添加联系人</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="modal-content" ng-show="passmode && !checkSecondPass">
                     <div class="modal-header modal-iconed">
-                        <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div>
+                        <div class="close-modal" ng-click="close()"><span class="sr-only">关闭</span></div>
                     </div>
                     <div class="modal-header clearfix">
-                        <div><h2>Account Verification</h2>
+                        <div><h2>帐户验证</h2>
                         </div>
-                        <div>Please enter your passphrase below
+                        <div>请输入你的主密钥
                         </div>
                     </div>
                     <div class="modal-body">
@@ -54,7 +54,7 @@
                             <div class="input-field">
                                 <input ng-focus="focus == 'secretPhrase'" id="passPhrase" type="password" ng-model="secretPhrase" ng-trim="false" autofocus
                                        ng-class="{'invalid': errorMessage}">
-                                <label for="passPhrase">Your Passphrase</label>
+                                <label for="passPhrase">您的主密钥</label>
                             </div>
                             <span class="pass-error" ng-show="errorMessage">{{errorMessage}}</span>
                         </div>
@@ -65,21 +65,21 @@
                     <div class="modal-body">
                         <ul class="nav modal-buttons pull-right">
                             <li>
-                                <a ng-click="passcheck()">BACK
+                                <a ng-click="passcheck()">返回
                                 </a>
                             </li>
-                            <li><a class="green-link" ng-click="addFolower(secretPhrase)">add contact</a></li>
+                            <li><a class="green-link" ng-click="addFolower(secretPhrase)">添加联系人</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="modal-content" ng-show="checkSecondPass">
                     <div class="modal-header modal-iconed">
-                        <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div>
+                        <div class="close-modal" ng-click="close()"><span class="sr-only">关闭</span></div>
                     </div>
                     <div class="modal-header clearfix">
-                        <div><h2>Account Verification</h2>
+                        <div><h2>帐户验证</h2>
                         </div>
-                        <div>Please enter your second passphrase below
+                        <div>请输入你的主密钥
                         </div>
                     </div>
                     <div class="modal-body">
@@ -89,7 +89,7 @@
                                 <input ng-focus="focus == 'secondPhrase'" id="secondPhrase" type="password" ng-model="secondPhrase" ng-trim="false"
                                        autofocus
                                        ng-class="{'invalid': errorMessage}">
-                                <label for="secondPhrase">Your Second Passphrase</label>
+                                <label for="secondPhrase">请输入支付密码</label>
                             </div>
                             <span class="pass-error" ng-show="errorMessage">{{errorMessage}}</span>
                         </div>
@@ -100,10 +100,10 @@
                     <div class="modal-body">
                         <ul class="nav modal-buttons pull-right">
                             <li>
-                                <a ng-click="passcheck(true)">BACK
+                                <a ng-click="passcheck(true)">返回
                                 </a>
                             </li>
-                            <li><a class="green-link" ng-click="addFolower(secretPhrase, true)">add contact</a></li>
+                            <li><a class="green-link" ng-click="addFolower(secretPhrase, true)">添加联系人</a></li>
                         </ul>
                     </div>
                 </div>

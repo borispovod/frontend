@@ -4,12 +4,12 @@
             <div class="col-md-6 col-md-offset-4 height100 valign-wrapper">
                 <div class="modal-content" ng-show="!passmode && !checkSecondPass">
                     <div class="modal-header modal-iconed">
-                        <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div>
+                        <div class="close-modal" ng-click="close()"><span class="sr-only">关闭</span></div>
                     </div>
                     <div class="modal-header clearfix">
-                        <div><h2>Send XCR</h2>
+                        <div><h2>发送XCR</h2>
                         </div>
-                        <div>Please type in an account name or ID below
+                        <div>请在下方输入帐户名称或者地址
                         </div>
                     </div>
                     <div class="modal-body">
@@ -17,14 +17,14 @@
                             <div class="input-group app-addon">
                                 <span class="input-group-addon search"></span>
                                 <input id="to" ng-focus="focus == 'to'" type="text" class="form-control"
-                                       placeholder="Account name or ID"
+                                       placeholder="帐户名称或者地址"
                                        ng-model="to">
                                 <span class="input-group-addon clear" ng-click="clearRecipient()"></span>
                             </div>
                             <div class="field-padding">
                                 <div class="input-field">
                                     <input id="amount" type="text" ng-model="amount" ng-focus="focus == 'amount'">
-                                    <label for="amount">XCR Amount</label>
+                                    <label for="amount">XCR余额</label>
                                 </div>
                                 <span class="pass-error"
                                       ng-show="errorMessage && (rememberedPassword || presendError)">{{errorMessage}}</span>
@@ -33,26 +33,26 @@
                         </form>
                     </div>
                     <div class="modal-body bordered">
-                        <span class="send-info-text flat-text">Make sure you're sending XCR to the right contact. This action can't be undone later.</span>
+                        <span class="send-info-text flat-text">请确认您发送的地址无误，该操作无法回退！</span>
                     </div>
                     <div class="modal-body">
                         <ul class="nav modal-buttons pull-right">
                             <li>
-                                <a ng-click="close()">Cancel
+                                <a ng-click="close()">取消
                                 </a>
                             </li>
-                            <li><a class="green-link" ng-click="passcheck()">send xcr</a></li>
+                            <li><a class="green-link" ng-click="passcheck()">发送XCR</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="modal-content" ng-show="passmode && !checkSecondPass">
                     <div class="modal-header modal-iconed">
-                        <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div>
+                        <div class="close-modal" ng-click="close()"><span class="sr-only">关闭</span></div>
                     </div>
                     <div class="modal-header clearfix">
-                        <div><h2>Account Verification</h2>
+                        <div><h2>帐户验证</h2>
                         </div>
-                        <div>Please enter your passphrase below
+                        <div>请输入您的主密钥
                         </div>
                     </div>
                     <div class="modal-body">
@@ -62,7 +62,7 @@
                                     <input id="passPhrase" type="password" ng-model="secretPhrase"
                                            ng-focus="focus == 'secretPhrase'" ng-trim="false" autofocus
                                            ng-class="{'invalid': errorMessage}">
-                                    <label for="passPhrase">Your Passphrase</label>
+                                    <label for="passPhrase">您的主密钥</label>
                                 </div>
                                 <span class="pass-error" ng-show="errorMessage && !secondSecret">{{errorMessage}}</span>
                             </div>
@@ -73,21 +73,21 @@
                     <div class="modal-body">
                         <ul class="nav modal-buttons pull-right">
                             <li>
-                                <a ng-click="passcheck()">BACK
+                                <a ng-click="passcheck()">返回
                                 </a>
                             </li>
-                            <li><a class="green-link" ng-click="sendXCR(secretPhrase)">send xcr</a></li>
+                            <li><a class="green-link" ng-click="sendXCR(secretPhrase)">发送XCR</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="modal-content" ng-show="checkSecondPass">
                     <div class="modal-header modal-iconed">
-                        <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div>
+                        <div class="close-modal" ng-click="close()"><span class="sr-only">关闭</span></div>
                     </div>
                     <div class="modal-header clearfix">
-                        <div><h2>Account Verification</h2>
+                        <div><h2>帐户验证</h2>
                         </div>
-                        <div>Please enter your second passphrase below
+                        <div>请输入您的支付密码
                         </div>
                     </div>
                     <div class="modal-body">
@@ -97,7 +97,7 @@
                                     <input id="secondPhrase" type="password" ng-model="secondPhrase" ng-trim="false"
                                            autofocus
                                            ng-focus="focus == 'secondPhrase'" ng-class="{'invalid': errorMessage}">
-                                    <label for="secondPhrase">Your Second Passphrase</label>
+                                    <label for="secondPhrase">您的支付密码</label>
                                 </div>
                                 <span class="pass-error" ng-show="errorMessage">{{errorMessage}}</span>
                             </div>
@@ -107,10 +107,10 @@
                     <div class="modal-body">
                         <ul class="nav modal-buttons pull-right">
                             <li>
-                                <a  ng-click="passcheck(true)">BACK
+                                <a  ng-click="passcheck(true)">返回
                                 </a>
                             </li>
-                            <li><a  class="green-link" ng-click="sendXCR(secretPhrase, true)">send xcr</a>
+                            <li><a  class="green-link" ng-click="sendXCR(secretPhrase, true)">发送XCR</a>
                             </li>
                         </ul>
                     </div>

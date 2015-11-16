@@ -3,9 +3,9 @@
         <div class="row height100">
             <div class="col-md-9 col-md-offset-2 height100 valign-wrapper">
                 <div class="modal-content">
-                    <div class="modal-header"><h2>Transactions ({{block.numberOfTransactions}})</h2>
+                    <div class="modal-header"><h2>交易信息 ({{block.numberOfTransactions}})</h2>
 
-                        <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div>
+                        <div class="close-modal" ng-click="close()"><span class="sr-only">关闭</span></div>
                     </div>
                     <div class="scrolling">
                         <div class="modal-body">
@@ -25,11 +25,11 @@
                                         </div>
                                     </div>
                                     <div class="transaction-bottom">
-                                        <div class="fee">FEE: {{transaction.fee  | xcrFilter}} XCR
+                                        <div class="fee">费用: {{transaction.fee  | xcrFilter}} XCR
                                         </div>
                                         <div class="xcr">{{transaction.amount  | xcrFilter}} XCR
                                         </div>
-                                        <div class="confirmations">{{transaction.confirmations || 0}} CONFIRMATIONS
+                                        <div class="confirmations">{{transaction.confirmations || 0}} 确认数
                                         </div>
                                     </div>
                                 </li>

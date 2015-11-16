@@ -11,14 +11,14 @@ angular.module('webApp').service('transactionService', function (userService) {
         if (userService.address != address) {
             return {
                 err: true,
-                message: "Invalid account password. Please try again"
+                message: "无效的主密钥，请重试！"
             }
         }
 
         if (secret.length == 0) {
             return {
                 err: true,
-                message: "Provide secret key"
+                message: "请提供您的主密钥"
             }
         }
 
@@ -26,7 +26,7 @@ angular.module('webApp').service('transactionService', function (userService) {
             if (keys.publicKey != transaction.senderPublicKey) {
                 return {
                     err: true,
-                    message: "Invalid account primary password. Try again"
+                    message: "无效的主密钥，请重试！"
                 }
             }
         }
@@ -34,14 +34,14 @@ angular.module('webApp').service('transactionService', function (userService) {
         if (!userService.balance) {
             return {
                 err: true,
-                message: "Account doesn't have balance"
+                message: "目前帐户余额为0"
             }
         }
 
         if (!userService.publicKey) {
             return {
                 err: true,
-                message: "Open account to make transaction"
+                message: "开启帐户去进行交易吧！"
             }
         }
 

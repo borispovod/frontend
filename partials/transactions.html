@@ -13,11 +13,11 @@
                         <div class="dropdown-menu" role="menu">
                             <p ng-click="check($event)"><input type="checkbox" class="filled-in violet" id="advanced"
                                                                ng-model="showAllColumns">
-                                <label for="advanced">Show All Columns</label></p>
+                                <label for="advanced">显示所有栏目</label></p>
 
                             <p ng-click="check($event)"><input type="checkbox" class="filled-in violet" id="fulltime"
                                                                ng-model="showFullTime">
-                                <label for="fulltime">Show Full Time</label></p>
+                                <label for="fulltime">显示完整时间</label></p>
                         </div>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
             <div class="panel-body empty-body empty-table without-margin-top"
                  ng-if="!countForgingBlocks && searchTransactions.searchForTransaction">
                 <div class="logo-gray-iconed"></div>
-                <p class="empty-state-text">No results for this search.</p>
+                <p class="empty-state-text">哎呦，没找到你要的耶！</p>
             </div>
         </div>
     </div>

@@ -5,10 +5,10 @@
                 {{delegate.username}}
             </span>
                 <span class="title" ng-if="!delegate.username">
-               To become a delegate, click on the 'Delegate Registration' button.
+               如果想注册为受托人，请点击'受托人注册'按钮
             </span>
                <span class="plain-text" ng-show="delegate.time">
-              Registered on {{delegate.time | timestampFilter}}
+              在23:23{{delegate.time | timestampFilter}}分注册
             </span>
         </div>
     </div>
@@ -16,7 +16,7 @@
 
         <div class="info-panel info-panel-grey">
             <span class="title">
-               XCR Earned
+               赚得XCR
             </span>
                <span class="plain-text">
              {{totalForged  | xcrFilter }} XCR
@@ -37,7 +37,7 @@
 <div class="row">
     <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6">
         <div class="light-graph">
-            <div class="light-graph-heading">Rank</div>
+            <div class="light-graph-heading">排名</div>
             <div class="light-graph-body">
                 <div class="chart-legend">{{rank}}
                 </div>
@@ -49,7 +49,7 @@
     </div>
     <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6">
         <div class="light-graph">
-            <div class="light-graph-heading">Uptime</div>
+            <div class="light-graph-heading">出块率</div>
             <div class="light-graph-body">
                 <div class="chart-legend">{{uptime | number:2}} %
                 </div>
@@ -62,7 +62,7 @@
     <div class="clearfix visible-md visible-sm visible-xs"></div>
     <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6">
         <div class="light-graph">
-            <div class="light-graph-heading">Approval</div>
+            <div class="light-graph-heading">得票率</div>
             <div class="light-graph-body">
                 <div class="chart-legend">{{approval | number:2}} %
                 </div>
@@ -101,7 +101,7 @@
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="panel panel-default" ng-class="{'paginated': countForgingBlocks}">
-            <div class="panel-heading"><h2>Forged Blocks</h2>
+            <div class="panel-heading"><h2>锻造的区块</h2>
             </div>
             <table ng-table="tableBlocks" border="0" width="100%" cellpadding="0" cellspacing="0"
                    ng-show="countForgingBlocks">
@@ -114,11 +114,11 @@
                         <div class="dropdown-menu" role="menu">
                             <p ng-click="check($event)"><input type="checkbox" class="filled-in violet" id="advanced"
                                                                ng-model="showAllColumns">
-                                <label for="advanced"> Show All Columns</label></p>
+                                <label for="advanced">显示所有栏目</label></p>
 
                             <p ng-click="check($event)"><input type="checkbox" class="filled-in violet" id="fulltime"
                                                                ng-model="showFullTime">
-                                <label for="fulltime">Show Full Time</label></p>
+                                <label for="fulltime">显示完整时间</label></p>
                         </div>
                     </div>
                 </div>
@@ -136,10 +136,9 @@
             </table>
             <div class="panel-body empty-body empty-table without-margin-top" ng-if="!countForgingBlocks">
                 <div class="logo-gray-iconed"></div>
-                <p class="empty-state-text">You haven't forged any blocks yet.</p>
+                <p class="empty-state-text">你还没有锻造区块呢！</p>
             </div>
     </div>
 
 </div>
 </div>
-

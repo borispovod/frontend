@@ -4,12 +4,12 @@
             <div class="col-md-6 col-md-offset-4 height100 valign-wrapper">
                 <div class="modal-content" ng-show="!passmode  && !checkSecondPass">
                     <div class="modal-header modal-iconed">
-                        <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div>
+                        <div class="close-modal" ng-click="close()"><span class="sr-only">关闭</span></div>
                     </div>
                     <div class="modal-header clearfix">
-                        <div><h2>Profile Information</h2>
+                        <div><h2>个人信息</h2>
                         </div>
-                        <div>Please set your username
+                        <div>请输入您的名称
                         </div>
                     </div>
                     <div class="modal-body field-padding">
@@ -17,7 +17,7 @@
                             <div class="input-field">
                                 <input ng-focus="focus=='username'" id="username" type="text" ng-model="username"
                                        autofocus>
-                                <label for="username">Username</label>
+                                <label for="username">名称</label>
                             </div>
                             <input type="submit" ng-show="false">
                         </form>
@@ -27,22 +27,22 @@
                     <div class="modal-body">
                         <ul class="nav modal-buttons pull-right">
                             <li>
-                                <a ng-click="close()">Cancel
+                                <a ng-click="close()">取消
                                 </a>
                             </li>
-                            <li><a class="green-link" ng-click="passcheck()">save Name</a></li>
+                            <li><a class="green-link" ng-click="passcheck()">保存名称</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="modal-content" ng-show="passmode  && !checkSecondPass">
                     <div class="modal-header modal-iconed">
-                        <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span>
+                        <div class="close-modal" ng-click="close()"><span class="sr-only">关闭</span>
                         </div>
                     </div>
                     <div class="modal-header clearfix">
-                        <div><h2>Account Verification</h2>
+                        <div><h2>帐户验证</h2>
                         </div>
-                        <div>Please enter your passphrase below
+                        <div>请以下方输入您的主密钥
                         </div>
                     </div>
                     <div class="modal-body">
@@ -52,7 +52,7 @@
                                 <input ng-focus="focus=='passPhrase'" id="passPhrase" type="password"
                                        ng-model="secretPhrase" ng-trim="false" autofocus
                                        ng-class="{'invalid': error}">
-                                <label for="passPhrase">Your Passphrase</label>
+                                <label for="passPhrase">您的主密钥</label>
                             </div>
                                 <input type="submit" ng-show="false">
                             </form>
@@ -61,10 +61,10 @@
                         <div class="modal-body">
                             <ul class="nav modal-buttons pull-right">
                                 <li>
-                                    <a  ng-click="passcheck()">Back
+                                    <a  ng-click="passcheck()">返回
                                     </a>
                                 </li>
-                                <li><a class="green-link" ng-click="saveName(secretPhrase)">confirm</a>
+                                <li><a class="green-link" ng-click="saveName(secretPhrase)">确认</a>
                                 </li>
                             </ul>
                         </div>
@@ -72,12 +72,12 @@
                 </div>
                 <div class="modal-content" ng-show="checkSecondPass">
                     <div class="modal-header modal-iconed">
-                        <div class="close-modal" ng-click="close()"><span class="sr-only">Close modal</span></div>
+                        <div class="close-modal" ng-click="close()"><span class="sr-only">关闭</span></div>
                     </div>
                     <div class="modal-header clearfix">
-                        <div><h2>Account Verification</h2>
+                        <div><h2>帐户验证</h2>
                         </div>
-                        <div>Please enter your second passphrase below
+                        <div>请在下方输入您的支付密码
                         </div>
                     </div>
                     <div class="modal-body">
@@ -88,7 +88,7 @@
                                        ng-model="secondPhrase" ng-trim="false"
                                        autofocus
                                        ng-class="{'invalid': errorMessage}">
-                                <label for="secondPhrase">Your Second Passphrase</label>
+                                <label for="secondPhrase">您的支付密码</label>
                             </div>
                                 <input type="submit" ng-show="false">
                             </form>
@@ -99,10 +99,10 @@
                     <div class="modal-body">
                         <ul class="nav modal-buttons pull-right">
                             <li>
-                                <a ng-click="passcheck(true)">BACK
+                                <a ng-click="passcheck(true)">返回
                                 </a>
                             </li>
-                            <li><a class="green-link" ng-click="saveName(secretPhrase, true)">confirm</a>
+                            <li><a class="green-link" ng-click="saveName(secretPhrase, true)">确认</a>
                             </li>
                         </ul>
                     </div>

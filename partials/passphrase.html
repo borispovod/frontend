@@ -6,7 +6,7 @@
             <form class="clearfix pass-window-form" _lpchecked="1" ng-submit="login(pass, rememberPassword)">
                 <div class="input-field ">
                     <input id="password" type="password" ng-model="pass" ng-trim="false" autofocus>
-                    <label for="password">Your Passphrase</label>
+                    <label for="password">你的密钥</label>
                 </div>
                 <span class="pass-error" ng-show="errorMessage">{{errorMessage}}</span>
 
@@ -14,14 +14,14 @@
                     <label>
                         <input type="checkbox" ng-model="rememberPassword">
                         <span class="lever"></span>
-                        Remember during this session
+                        保持登陆状态
                     </label>
                 </div>
                 <div class="pull-right buttons-panel">
-                    <a class="btn btn-white waves-effect btn-marging" ng-click="newUser()">NEW ACCOUNT
+                    <a class="btn btn-white waves-effect btn-marging" ng-click="newUser()">获取新帐户
                     </a>
                     <a class="btn btn-blue waves-effect waves-light" ng-click="login(pass, rememberPassword)"
-                       ng-disabled="!pass">SIGN IN
+                       ng-disabled="!pass">登陆
                     </a>
                 </div>
             </form>

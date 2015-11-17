@@ -3,7 +3,7 @@ require('angular');
 
 angular.module('webApp').controller('settingsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "multisignatureModal",
     function ($rootScope, $scope, $http, userService, $interval, multisignatureModal) {
-        $scope.view.page = {title: 'Settings', previos: null};
+        $scope.view.page = {title: '设计', previos: null};
         $scope.view.bar = {};
 
         $scope.settings = {

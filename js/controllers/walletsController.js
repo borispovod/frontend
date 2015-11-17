@@ -4,8 +4,8 @@ angular.module('webApp').controller('walletsController', ['$scope', '$rootScope'
     function ($rootScope, $scope, $http, viewFactory, ngTableParams, $filter, multiMembersModal, multiService, userService) {
         $scope.view = viewFactory;
         $scope.view.inLoading = false;
-        $scope.view.loadingText = "Loading multisignature wallets";
-        $scope.view.page = {title: 'Multisignature', previos: null};
+        $scope.view.loadingText = "加载中…";
+        $scope.view.page = {title: '多重签名', previos: null};
         $scope.view.bar = {showWalletBar: true};
         $scope.secondPassphrase = userService.secondPassphrase;
         $scope.rememberedPassword = userService.rememberPassword ? userService.rememberedPassword : false;

@@ -5,16 +5,16 @@
             <table ng-table="tableWalletTransactions" border="0" width="100%" cellpadding="0"
                    cellspacing="0">
                 <tr ng-repeat="transaction in $data">
-                    <td data-title="'Height'" sortable="'b_height'">{{transaction.height}}
+                    <td data-title="'区块高度'" sortable="'b_height'">{{transaction.height}}
                     </td>
-                    <td data-title="'Transaction ID'" sortable="'t_id'" class="pointer"><a href="#"
+                    <td data-title="'交易ID'" sortable="'t_id'" class="pointer"><a href="#"
                                                                          ng-click="transactionInfo(transaction, transaction.signList)">{{transaction.id}}</a>
                     </td>
-                    <td data-title="'Recipient'" class="pointer" sortable="'t_recipientId'"><a href="#"
+                    <td data-title="'接收者'" class="pointer" sortable="'t_recipientId'"><a href="#"
                                                                                                ng-click="userInfo(transaction.recipientId)">{{transaction.recipientUsername
                         || transaction.recipientId}}</a>
                     </td>
-                    <td data-title="'Time'" sortable="'t_timestamp'">{{transaction.timestamp | timeAgoFilter :
+                    <td data-title="'出块时间'" sortable="'t_timestamp'">{{transaction.timestamp | timeAgoFilter :
                         showFullTime}}
                     </td>
                     <td class="td-amount" data-title="'Amount'" sortable="'t_amount'">
@@ -25,9 +25,9 @@
                            ng-class="{'mdi-content-add-circle dark-meent-font': transaction.recipientId==walletAddress, 'mdi-content-remove-circle dark-red-font': transaction.senderId==walletAddress}"></i>
                         {{transaction.amount | xcrFilter}}
                     </td>
-                    <td data-title="'Fee'">{{transaction.fee | xcrFilter}}
+                    <td data-title="'费用'">{{transaction.fee | xcrFilter}}
                     </td>
-                    <td data-title="'Confirmations'">
+                    <td data-title="'确认数'">
                         <span>{{transaction.signatures.length + 1}}</span>
                     </td>
 

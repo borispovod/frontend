@@ -4,8 +4,8 @@ angular.module('webApp').controller('blockchainController', ['$scope', '$timeout
     function ($rootScope, $timeout, $scope, $http, userService, $interval, blockService, blockModal, blockInfo, userInfo, ngTableParams, viewFactory) {
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
-        $scope.view.loadingText = "Loading blockchain";
-        $scope.view.page = {title: 'Blockchain', previos: null};
+        $scope.view.loadingText = "加载中…";
+        $scope.view.page = {title: '区块链', previos: null};
         $scope.view.bar = {showBlockSearchBar: true};
         $scope.address = userService.address;
         $scope.loading = true;

@@ -4,8 +4,8 @@ angular.module('webApp').controller('pendingsController', ['$scope', '$rootScope
     function ($rootScope, $scope, $http, viewFactory, contactsService, ngTableParams) {
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
-        $scope.view.loadingText = "Loading contacts";
-        $scope.view.page = {title: 'Contacts', previos: null};
+        $scope.view.loadingText = "加载中…";
+        $scope.view.page = {title: '联系人', previos: null};
         $scope.view.bar = {showContactsBar: true};
         $scope.contactsView = contactsService;
         //Contacts table

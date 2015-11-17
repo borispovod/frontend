@@ -22,60 +22,60 @@
                     </div>
                 </div>
                 <tr ng-repeat="transaction in unconfirmedTransactions" class="checked">
-                    <td data-title="'Height'" sortable="'b_height'">
+                    <td data-title="'区块高度'" sortable="'b_height'">
                     </td>
-                    <td class="td-amount" ng-show="showAllColumns" data-title="'Transaction ID'" class="pointer"><a
+                    <td class="td-amount" ng-show="showAllColumns" data-title="'交易ID'" class="pointer"><a
                             href="#"
                             ng-click="transactionInfo(transaction)">{{transaction.id}}</a>
                     </td>
-                    <td class="td-amount" data-title="'Sender'" class="pointer" sortable="'t_senderId'"><a href="#"
+                    <td class="td-amount" data-title="'发送者'" class="pointer" sortable="'t_senderId'"><a href="#"
                                                                                                            ng-click="userInfo(transaction.senderId)">{{transaction.senderUsername
                         || transaction.senderId}}</a>
                     </td>
-                    <td class="td-amount" data-title="'Recipient'" class="pointer" sortable="'t_recipientId'"><a
+                    <td class="td-amount" data-title="'接收者'" class="pointer" sortable="'t_recipientId'"><a
                             href="#"
                             ng-click="userInfo(transaction.recipientId)">{{transaction.recipientUsername
                         || transaction.recipientId}}</a>
                     </td>
-                    <td data-title="'Time'" sortable="'t_timestamp'">{{transaction.timestamp | timeAgoFilter :
+                    <td data-title="'出块时间'" sortable="'t_timestamp'">{{transaction.timestamp | timeAgoFilter :
                         showFullTime}}
                     </td>
-                    <td class="td-amount" data-title="'Amount'" sortable="'t_amount'">
+                    <td class="td-amount" data-title="'金额'" sortable="'t_amount'">
                         <i ng-if="transaction.recipientId==transaction.senderId"
                            class="vertical-text mdi-image-brightness-1 cloud-font"></i>
                         <i ng-if="transaction.recipientId!=transaction.senderId" class="vertical-text"
                            ng-class="{'mdi-content-add-circle dark-meent-font': transaction.recipientId==address, 'mdi-content-remove-circle dark-red-font': transaction.senderId==address}"></i>
                         {{transaction.amount | xcrFilter}}
                     </td>
-                    <td data-title="'Fee'">{{transaction.fee | xcrFilter}}
+                    <td data-title="'费用'">{{transaction.fee | xcrFilter}}
                     </td>
                     <td data-title=""></td>
                 </tr>
                 <tr ng-repeat="transaction in $data">
-                    <td data-title="'Height'" sortable="'b_height'">{{transaction.height}}
+                    <td data-title="'区块高度'" sortable="'b_height'">{{transaction.height}}
                     </td>
-                    <td ng-show="showAllColumns" data-title="'Transaction ID'" class="pointer">
+                    <td ng-show="showAllColumns" data-title="'交易ID'" class="pointer">
                         <a ng-click="transactionInfo(transaction)">{{transaction.id}}</a>
                     </td>
-                    <td data-title="'Sender'" class="pointer" sortable="'t_senderId'">
+                    <td data-title="'发送者'" class="pointer" sortable="'t_senderId'">
                         <a ng-click="userInfo(transaction.senderId)">{{transaction.senderUsername
                             || transaction.senderId}}</a>
                     </td>
-                    <td data-title="'Recipient'" class="pointer" sortable="'t_recipientId'">
+                    <td data-title="'接收者'" class="pointer" sortable="'t_recipientId'">
                         <a ng-click="userInfo(transaction.recipientId)">{{transaction.recipientUsername
                             || transaction.recipientId}}</a>
                     </td>
-                    <td data-title="'Time'" sortable="'t_timestamp'">{{transaction.timestamp | timeAgoFilter :
+                    <td data-title="'出块时间'" sortable="'t_timestamp'">{{transaction.timestamp | timeAgoFilter :
                         showFullTime}}
                     </td>
-                    <td class="td-amount" data-title="'Amount'" sortable="'t_amount'">
+                    <td class="td-amount" data-title="'金额'" sortable="'t_amount'">
                         <i ng-if="transaction.recipientId==transaction.senderId"
                            class="vertical-text mdi-image-brightness-1 cloud-font"></i>
                         <i ng-if="transaction.recipientId!=transaction.senderId" class="vertical-text"
                            ng-class="{'mdi-content-add-circle dark-meent-font': transaction.recipientId==address, 'mdi-content-remove-circle dark-red-font': transaction.senderId==address}"></i>
                         {{transaction.amount | xcrFilter}}
                     </td>
-                    <td data-title="'Fee'" sortable="'t_fee'">{{transaction.fee | xcrFilter}}
+                    <td data-title="'费用'" sortable="'t_fee'">{{transaction.fee | xcrFilter}}
                     </td>
                     <td data-title="" style="min-width: 40px;"></td>
                 </tr>

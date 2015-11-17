@@ -31,7 +31,7 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
                 }
             },
             totalForged: {
-                labels: ['Total Forged'],
+                labels: ['赚得XCR'],
                 values: [1],
                 colours: ['#fff'],
                 options: {
@@ -47,7 +47,7 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
                 }
             },
             rank: {
-                labels: ['Others', 'Rank'],
+                labels: ['更多', '排名'],
                 values: [0, 100],
                 colours: ['#90a4ae', '#f5f5f5'],
                 options: {
@@ -59,7 +59,7 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
                 }
             },
             uptime: {
-                labels: ['Others', 'Uptime'],
+                labels: ['更多', '出块率'],
                 values: [0, 100],
                 colours: ['#90a4ae', '#f5f5f5'],
                 options: {
@@ -70,7 +70,7 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
                 }
             },
             approval: {
-                labels: ['Others', 'Approval'],
+                labels: ['更多', '得票率'],
                 values: [0, $scope.allVotes],
                 colours: ['#90a4ae', '#f5f5f5'],
                 options: {
@@ -92,8 +92,8 @@ angular.module('webApp').controller('forgingController', ['$scope', '$rootScope'
         $scope.uptime = 0;
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
-        $scope.view.loadingText = "Loading forging status";
-        $scope.view.page = {title: 'Forging', previos: null};
+        $scope.view.loadingText = "加载中…";
+        $scope.view.page = {title: '锻造', previos: null};
         $scope.view.bar = {forgingMenu: true};
 
         $scope.address = userService.address;

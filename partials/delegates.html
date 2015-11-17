@@ -8,28 +8,28 @@
                 <li class="list-delegate" dropdown is-open="moreDropdownSeelction.isopen">
                     <a dropdown-toggle ng-disabled="voteList.length==0"><i
                             class="mdi-action-visibility left"></i>视图选择</a>
-
+                    ​
                     <ul class="list-group dropdown-menu" ng-class="{'empty': voteList.length < 1}">
                         <li class="list-group-item" ng-repeat="(key,item) in voteList.list"
                             ng-click="voteList.vote(key, item, $event, true)">{{item}}
                         </li>
-
+                        ​
                     </ul>
                 </li>
                 <li><a class="green-link" ng-click="vote()" ng-disabled="voteList.length==0"><i
                         class="mdi-action-favorite-outline left"></i>投票</a></li>
             </ul>
-
+            ​
         </div>
     </div>
-
+    ​
 </div>
-
+​
 <div class="row">
     <div class="col-xs-12">
         <div class="panel panel-default paginated">
             <div class="panel-heading"><h2>入围受托人</h2>
-
+                ​
                 <div class="plain-text">总共{{countTop}}个</div>
             </div>
             <table ng-table="tableTopDelegates" border="0" width="100%"
@@ -48,14 +48,14 @@
                                  ng-hide="delegates.voted(delegate.publicKey) || unconfirmedTransactions.inList(delegate.publicKey)"
                                  ng-class="{'unchecked':!voteList.inList(delegate.publicKey), 'checked':voteList.inList(delegate.publicKey)}"></span>-->
                     </td>
-                    <td data-title="'Rank'" sortable="'rate'">{{delegate.rate}}</td>
-                    <td data-title="'Name'" sortable="'username'" class="username">{{delegate.username}}</td>
-                    <td data-title="'Crypti Address'"><a ng-click="userInfo(delegate.address)">{{delegate.address}}</a>
+                    <td data-title="'排名'" sortable="'rate'">{{delegate.rate}}</td>
+                    <td data-title="'名称'" sortable="'username'" class="username">{{delegate.username}}</td>
+                    <td data-title="'Crypti地址'"><a ng-click="userInfo(delegate.address)">{{delegate.address}}</a>
                     </td>
-                    <td data-title="'Uptime'" sortable="'productivity'"><span
+                    <td data-title="'出块率'" sortable="'productivity'"><span
                             ng-show="delegate.productivity">{{(delegate.productivity)}}%</span><span
                             ng-show="!delegate.productivity">-</span></td>
-                    <td data-title="'Approval'" sortable="'vote'">{{getApproval(delegate.vote) | number: 2}}%</td>
+                    <td data-title="'得票率'" sortable="'vote'">{{getApproval(delegate.vote) | number: 2}}%</td>
                     <td data-title="">
                         <div class="dropdown-more-group" dropdown><span class="table-more-actions" dropdown-toggle><span
                                 class="dots"></span></span>
@@ -89,16 +89,16 @@
                     </td>
                 </tr>
             </table>
-
+            ​
         </div>
     </div>
 </div>
-
+​
 <div class="row">
     <div class="col-xs-12">
         <div class="panel panel-default paginated">
             <div class="panel-heading"><h2>备选受托人</h2>
-
+                ​
                 <div class="plain-text">总共{{countStandby}}个</div>
             </div>
             <table ng-table="tableStandbyDelegates" border="0" width="100%" cellpadding="0" cellspacing="0"
@@ -117,13 +117,13 @@
                               ng-hide="delegates.voted(delegate.publicKey) || unconfirmedTransactions.inList(delegate.publicKey)"
                               ng-class="{'unchecked':!voteList.inList(delegate.publicKey), 'checked':voteList.inList(delegate.publicKey)}"></span>-->
                     </td>
-                    <td data-title="'Rank'" sortable="'rate'">{{delegate.rate}}</td>
-                    <td data-title="'Name'" sortable="'username'" class="username">{{delegate.username}}</td>
-                    <td data-title="'Crypti Address'"><a ng-click="userInfo(delegate.address)">{{delegate.address}}</a>
+                    <td data-title="'排名'" sortable="'rate'">{{delegate.rate}}</td>
+                    <td data-title="'名称'" sortable="'username'" class="username">{{delegate.username}}</td>
+                    <td data-title="'Crypti地址'"><a ng-click="userInfo(delegate.address)">{{delegate.address}}</a>
                     </td>
-                    <td data-title="'Uptime'" sortable="'productivity'"><span ng-show="delegate.productivity">{{(delegate.productivity)}}%</span><span
+                    <td data-title="'出块率'" sortable="'productivity'"><span ng-show="delegate.productivity">{{(delegate.productivity)}}%</span><span
                             ng-show="!delegate.productivity">-</span></td>
-                    <td data-title="'Approval'" sortable="'vote'">{{getApproval(delegate.vote) | number: 2}}%</td>
+                    <td data-title="'得票率'" sortable="'vote'">{{getApproval(delegate.vote) | number: 2}}%</td>
                     <td data-title="">
                         <div class="dropdown-more-group" dropdown><span class="table-more-actions" dropdown-toggle><span
                                 class="dots"></span></span>

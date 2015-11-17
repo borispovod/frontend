@@ -46,11 +46,11 @@
                               ng-hide="delegates.voted(delegate.publicKey) || unconfirmedTransactions.inList(delegate.publicKey)"
                               ng-class="{'unchecked':!voteList.inList(delegate.publicKey), 'checked':voteList.inList(delegate.publicKey)}"></span>-->
                     </td>
-                    <td data-title="'Rank'" sortable="'rate'">{{delegate.rate}}</td>
-                    <td data-title="'Name'" sortable="'username'" class="username">{{delegate.username}}</td>
-                    <td data-title="'Crypti Address'" ><a>{{delegate.address}}</a></td>
-                    <td data-title="'Uptime'" sortable="'productivity'">{{(delegate.productivity)}}%</td>
-                    <td data-title="'Approval'" sortable="'vote'">{{getApproval(delegate.vote) | number: 2}}%</td>
+                    <td data-title="'排名'" sortable="'rate'">{{delegate.rate}}</td>
+                    <td data-title="'名称'" sortable="'username'" class="username">{{delegate.username}}</td>
+                    <td data-title="'Crypti地址'" ><a>{{delegate.address}}</a></td>
+                    <td data-title="'出块率'" sortable="'productivity'">{{(delegate.productivity)}}%</td>
+                    <td data-title="'得票率'" sortable="'vote'">{{getApproval(delegate.vote) | number: 2}}%</td>
                     <td data-title="">
                         <div class="dropdown-more-group" dropdown><span class="table-more-actions" dropdown-toggle><span
                                 class="dots"></span></span>

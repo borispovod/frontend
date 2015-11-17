@@ -5,8 +5,8 @@ angular.module('webApp').controller('walletPendingsController', ['$scope', '$roo
 
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
-        $scope.view.loadingText = "Loading transactions";
-        $scope.view.page = {title: 'Pending transactions', previos: null};
+        $scope.view.loadingText = "加载中…";
+        $scope.view.page = {title: '交易', previos: null};
         $scope.view.bar = {showWalletBar: true};
         $scope.showAllColumns = true;
         $scope.showFullTime = false;

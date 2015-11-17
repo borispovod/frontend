@@ -6,8 +6,8 @@ angular.module('webApp').controller('accountController',
 
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
-        $scope.view.loadingText = "Loading dashboard";
-        $scope.view.page = {title: 'Dashboard', previos: null};
+        $scope.view.loadingText = "加载中…";
+        $scope.view.page = {title: '控制面板', previos: null};
         $scope.view.bar = {};
         $scope.delegate = undefined;
         $scope.address = userService.address;

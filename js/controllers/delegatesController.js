@@ -4,9 +4,9 @@ angular.module('webApp').controller('delegatesController', ['$scope', '$rootScop
     function ($rootScope, $scope, $http, userService, $interval, $timeout, $filter, ngTableParams, delegateService, voteModal, viewFactory, userInfo, peerFactory) {
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
-        $scope.view.loadingText = "Loading delegates";
+        $scope.view.loadingText = "加载中…";
 
-        $scope.view.page = {title: 'Forging', previos: null};
+        $scope.view.page = {title: '锻造', previos: null};
         $scope.view.bar = {forgingMenu: true};
         $scope.allVotes = 100
             * 1000

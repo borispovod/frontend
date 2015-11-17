@@ -4,8 +4,8 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
     function ($rootScope, $scope, $http, userService, $interval, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo, $timeout, userInfo, peerFactory) {
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
-        $scope.view.loadingText = "Loading transactions";
-        $scope.view.page = {title: 'Transactions', previos: 'main.dashboard'};
+        $scope.view.loadingText = "加载中…";
+        $scope.view.page = {title: '交易', previos: 'main.dashboard'};
         $scope.view.bar = {showTransactionsSearchBar: true};
         $scope.showAllColumns = true;
         $scope.showFullTime = false;

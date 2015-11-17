@@ -123,14 +123,14 @@
                     </div>
                 </div>
                 <tr ng-repeat="block in $data">
-                    <td data-title="'Height'" sortable="'height'">{{block.height}}</td>
-                    <td data-title="'Block ID'" ng-click="blockInfo(block)" class="pointer" ng-show="showAllColumns"><a>{{block.id}}</a></td>
+                    <td data-title="'区块高度'" sortable="'height'">{{block.height}}</td>
+                    <td data-title="'区块ID'" ng-click="blockInfo(block)" class="pointer" ng-show="showAllColumns"><a>{{block.id}}</a></td>
 
-                    <td data-title="'Time'" sortable="'timestamp'"><span
+                    <td data-title="'出块时间'" sortable="'timestamp'"><span
                             ng-show="block.timestamp > 0">{{block.timestamp | timeAgoFilter : showFullTime}}</span>
                         <span ng-show="block.timestamp == 0">-</span></td>
 
-                    <td data-title="'Fee'" sortable="'totalFee'">{{block.totalFee | xcrFilter}}</td>
+                    <td data-title="'费用'" sortable="'totalFee'">{{block.totalFee | xcrFilter}}</td>
                     <td data-title="" class="width-80"></td>
                 </tr>
             </table>

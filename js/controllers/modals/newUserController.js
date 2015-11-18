@@ -33,7 +33,7 @@ angular.module('webApp').controller('newUserController', ["$scope", "$http", "ne
         var address = crypti.crypto.getAddress(keys.publicKey);
         fs.writeFile('pass for ' + address + '.txt', 'address: ' + address + ' password: ' + pass, function (err) {
             if (err) throw err;
-            Materialize.toast('Password was saved in file: \'pass for ' + address + '.txt\' in root directory', 4000);
+            Materialize.toast('密码已保存到文件: \'pass for ' + address + '.txt\'', 4000);
         });
     }
 

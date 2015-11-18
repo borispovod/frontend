@@ -8,19 +8,16 @@
                 <li class="list-delegate" dropdown is-open="moreDropdownSeelction.isopen">
                     <a dropdown-toggle ng-disabled="voteList.length==0"><i
                             class="mdi-action-visibility left"></i>视图选择</a>
-                    ​
-                    <ul class="list-group dropdown-menu" ng-class="{'empty': voteList.length < 1}">
+                      <ul class="list-group dropdown-menu" ng-class="{'empty': voteList.length < 1}">
                         <li class="list-group-item" ng-repeat="(key,item) in voteList.list"
                             ng-click="voteList.vote(key, item, $event, true)">{{item}}
                         </li>
-                        ​
-                    </ul>
+                                    </ul>
                 </li>
                 <li><a class="green-link" ng-click="vote()" ng-disabled="voteList.length==0"><i
                         class="mdi-action-favorite-outline left"></i>投票</a></li>
             </ul>
-            ​
-        </div>
+         </div>
     </div>
     ​
 </div>
@@ -29,7 +26,6 @@
     <div class="col-xs-12">
         <div class="panel panel-default paginated">
             <div class="panel-heading"><h2>入围受托人</h2>
-                ​
                 <div class="plain-text">总共{{countTop}}个</div>
             </div>
             <table ng-table="tableTopDelegates" border="0" width="100%"

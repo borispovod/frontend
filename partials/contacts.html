@@ -8,8 +8,8 @@
                 <tr ng-repeat="tx in unconfirmedContacts track by $index" class="checked">
                     <td data-title="''" class="user-icon-col"><img src="images/samples/account.png"
                                                                    class="small-user-icon"></td>
-                    <td data-title="'Username'" sortable="'username'">{{tx.asset.contact.username || '-'}}</td>
-                    <td data-title="'Address'" sortable="'address'">
+                    <td data-title="'名称'" sortable="'username'">{{tx.asset.contact.username || '-'}}</td>
+                    <td data-title="'地址'" sortable="'address'">
                         <a ng-click="userInfo(contact.address)">{{tx.asset.contact.address}}</a></td>
                     <td data-title="''"><a class="btn btn-dark-meant" ng-click="sendCrypti(contact.address)"><i
                             class="mdi-content-send left"></i>发送
@@ -29,8 +29,8 @@
                 <tr ng-repeat="contact in $data">
                     <td data-title="''" class="user-icon-col"><img src="images/samples/account.png"
                                                                    class="small-user-icon"></td>
-                    <td data-title="'Username'" sortable="'username'">{{contact.username || 'noname'}}</td>
-                    <td data-title="'Address'" sortable="'address'">
+                    <td data-title="'名称'" sortable="'username'">{{contact.username || 'noname'}}</td>
+                    <td data-title="'地址'" sortable="'address'">
                        <a ng-click="userInfo(contact.address)">{{contact.address}}</a></td>
                     <td data-title="''"><a class="btn btn-dark-meant" ng-click="sendCrypti(contact.address)"><i
                             class="mdi-content-send left"></i>发送

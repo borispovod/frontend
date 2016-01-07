@@ -99,7 +99,7 @@
                 <div class="nav-icon" id="dashboard-icon"></div>
                 <span class="menu-text">Dashboard</span></a></li>
             <li ng-show="showMenuItem('main.multi') &&  multisignature" ui-sref-active="active"><a ui-sref="main.multi"
-                                                                                class="waves-effect waves-blue">
+                                                                                                   class="waves-effect waves-blue">
                 <div class="nav-icon" id="multi-icon"></div>
                 <span class="menu-text">Multi-Signature</span></a></li>
             <li ng-show="showMenuItem('main.contacts')" ui-sref-active="active"><a ui-sref="main.contacts"
@@ -158,7 +158,8 @@
                     </button>
                     <h1 id="title"><span class="title-icon" ng-show="view.page.previos" ng-click="goToPrevios()">
             <span class="sr-only">Go to previos page</span></span>{{view.page.title}}</h1>
-                    <span class="forging-state" ng-class="{'disabled': !forgingEnabled}" ng-if="forgingStatus && view.bar.forgingMenu">{{forgingStatus}}</span></div>
+                    <span class="forging-state" ng-class="{'disabled': !forgingEnabled}"
+                          ng-if="forgingStatus && view.bar.forgingMenu">{{forgingStatus}}</span></div>
                 <div id="top-menu">
                 <span id="balance">
                 {{unconfirmedBalance | xcrFilter}} XCR
@@ -195,7 +196,9 @@
                 </div>
             </div>
             <div class="search-bar" ng-show="view.bar.showTransactionsSearchBar">
-                <div class="search-toggle" ng-if="searchTransactions.searchForTransaction"><i ng-click="clearSearch()" class="mdi-content-clear small"></i></div>
+                <div class="search-toggle" ng-if="searchTransactions.searchForTransaction"><i ng-click="clearSearch()"
+                                                                                              class="mdi-content-clear small"></i>
+                </div>
                 <div class="input-group">
                     <span class="input-group-addon">
                         <i class="mdi-action-search"></i>
@@ -222,7 +225,7 @@
             </div>
             <div class="search-bar" ng-show="view.bar.showBlockSearchBar">
                 <div class="search-toggle" ng-if="searchBlocks.searchForBlock"><i ng-click="clearSearch()"
-                                                                                              class="mdi-content-clear small"></i>
+                                                                                  class="mdi-content-clear small"></i>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="mdi-action-search"></i></span>
@@ -245,18 +248,20 @@
                     </span>
                 </div>
             </div>
-            <div id="page-nav" ng-if="view.bar.forgingMenu">
+            <div id="page-nav" class="clearfix" ng-if="view.bar.forgingMenu">
                 <ul class="nav nav-underline pull-left">
                     <li ui-sref-active="active"><a href="#" ui-sref="main.forging">Forging</a></li>
                     <li ui-sref-active="active"><a href="#" ui-sref="main.delegates">Delegates</a></li>
                     <li ui-sref-active="active"><a href="#" ui-sref="main.votes">My votes ({{myVotesCount||'0'}})</a>
                     </li>
                 </ul>
-                <ul class="nav nav-underline pull-right registration" ng-show="!delegate.username && !delegateInRegistration">
+                <ul class="nav nav-underline pull-right registration"
+                    ng-show="!delegate.username && !delegateInRegistration">
                     <li><a href="#" class="bold-text" ng-click="registrationDelegate()">delegate registration</a></li>
                 </ul>
                 <ul class="nav nav-underline pull-right forgin-start" ng-show="delegate.username">
                     <li><span>FORGING: </span>
+
                         <div class="switch">
                             <label>
                                 Off
@@ -268,7 +273,7 @@
                     </li>
                 </ul>
             </div>
-            <div id="page-nav" class="clearfix mobile-nav" ng-if="view.bar.showDappsBar">
+            <div id="page-nav" class="clearfix" class="clearfix mobile-nav" ng-if="view.bar.showDappsBar">
                 <ul class="nav nav-underline categories pull-left">
                     <li><a ng-click="view.bar.showCategories=!view.bar.showCategories">CATEGORIES <span
                             class="dropdown-toggle"></span></a>
@@ -286,7 +291,7 @@
                 </div>
                 <ul class="nav nav-underline fast-sort pull-left">
                     <li ui-sref-active="active"><a href="#" ui-sref="main.dappstore">HOME</a></li>
-                 <!-- <li><a href="#">TOP RATED</a></li> -->
+                    <!-- <li><a href="#">TOP RATED</a></li> -->
                     <!--   <li><a href="#">MOST USED</a>-->
                     </li>
                     <li><a ui-sref='main.dappsCategory({categoryId:"Installed"})'>INSTALLED</a></li>
@@ -325,7 +330,7 @@
                 </div>
 
             </div>
-            <div id="page-nav" class="clearfix mobile-nav" ng-if="view.bar.showDappsCategoryBar">
+            <div id="page-nav"  class="clearfix" class="clearfix mobile-nav" ng-if="view.bar.showDappsCategoryBar">
                 <div class="search-container open">
                     <span class="input-group-addon spinner-addon" style="
     position: absolute;
@@ -359,7 +364,7 @@
                 </div>
 
             </div>
-            <div id="page-nav" ng-if="view.bar.showContactsBar">
+            <div id="page-nav"  class="clearfix" ng-if="view.bar.showContactsBar">
                 <ul class="nav nav-underline pull-left">
                     <li ui-sref-active="active"><a href="#" ui-sref="main.contacts">Contacts</a></li>
                     <li ui-sref-active="active"><a href="#"
@@ -379,7 +384,7 @@
 
 <!-- /#page-content-wrapper -->
 <script type="text/ng-template" id="custom/pager">
-    <ul class="pagination ng-table-pagination">
+    <ul class="pagination ng-table-pagination hide-on-phone">
         <li ng-class="{'disabled': !page.active && !page.current, 'active': page.current}" ng-repeat="page in pages"
             ng-switch="page.type">
             <a ng-switch-when="prev" ng-click="params.page(page.number)" href=""><i
@@ -395,7 +400,49 @@
                     class="mdi-hardware-keyboard-arrow-right"></i></a>
         </li>
     </ul>
+    <ul  class="pagination ng-table-pagination show-on-phone">
+        <li ng-show="page.type == 'prev' || page.type == 'next'" ng-class="{'disabled': !page.active && !page.current, 'active': page.current}" ng-repeat="page in pages"
+            ng-switch="page.type">
+            <a ng-switch-when="prev" ng-click="params.page(page.number)" href=""><i
+                    class="mdi-hardware-keyboard-arrow-left"></i></a>
+            <a ng-switch-when="first"
+               ng-click="params.page(page.number)" href=""><span
+                    ng-bind="page.number"></span></a>
+            <a ng-switch-when="page" ng-click="params.page(page.number)" href=""><span ng-bind="page.number"></span></a>
+           <a ng-switch-when="more" ng-click="params.page(page.number)" href="">&#8230;</a>
+            <a ng-switch-when="last"
+               ng-click="params.page(page.number)" href=""><span ng-bind="page.number"></span></a>
+            <a ng-switch-when="next" ng-click="params.page(page.number)" href=""><i
+                    class="mdi-hardware-keyboard-arrow-right"></i></a>
+        </li>
+    </ul>
 </script>
+
+<script id="custom/header-contacts" type="text/ng-template">
+    <tr>
+
+        <th title="{{$column.headerTitle(this)}}"
+            ng-repeat="($index,$column) in $columns"
+            ng-class="{
+                    'sortable': $column.sortable(this),
+                    'sort-asc': params.sorting()[$column.sortable(this)]=='asc',
+                    'sort-desc': params.sorting()[$column.sortable(this)]=='desc',
+                    'hide-on-phone': $index==2 || $index ==4
+                  }"
+            ng-click="sortBy($column, $event)"
+            ng-if="$column.show(this)"
+            ng-init="template = $column.headerTemplateURL(this)"
+            class="header {{$column.class(this)}}">
+            <div ng-if="!template" class="ng-table-header"
+                 ng-class="{'sort-indicator': params.settings().sortingIndicator == 'div'}">
+                <span ng-bind="$column.title(this)"
+                      ng-class="{'sort-indicator': params.settings().sortingIndicator == 'span'}"></span>
+            </div>
+            <div ng-if="template" ng-include="template"></div>
+        </th>
+    </tr>
+</script>
+
 </div>
 
 

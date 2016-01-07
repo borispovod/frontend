@@ -1,7 +1,7 @@
 <div class="top-margin"></div>
 <div class="row">
     <div class="col-xs-12">
-        <div class="panel panel-default" ng-class="{'paginated': countForgingBlocks  || !searchTransactions.searchForTransaction}">
+        <div class="panel panel-default hide-on-phone" ng-class="{'paginated': countForgingBlocks  || !searchTransactions.searchForTransaction}">
             <table ng-show="countForgingBlocks  || !searchTransactions.searchForTransaction" ng-table="tableTransactions" border="0" width="100%" cellpadding="0"
                    cellspacing="0">
                 <div class="table-menu" ng-show="countForgingBlocks  || !searchTransactions.searchForTransaction">
@@ -79,8 +79,44 @@
                     </td>
                     <td data-title=""></td>
                 </tr>
+
             </table>
             <div class="panel-body empty-body empty-table without-margin-top" ng-if="!countForgingBlocks && searchTransactions.searchForTransaction">
+                <div class="logo-gray-iconed"></div>
+                <p class="empty-state-text">No results for this search.</p>
+            </div>
+        </div>
+        <div class="panel panel-default show-on-phone"
+             ng-class="{'paginated': countForgingBlocks  || !searchTransactions.searchForTransaction}">
+            <table template-pagination="custom/pager" ng-show="countForgingBlocks  || !searchTransactions.searchForTransaction" ng-table="tableTransactions2" class="table ng-table-responsive ng-table-group">
+                <tbody class="tbody-group" ng-repeat="group in $groups">
+                <tr class="ng-table-group">
+                    <td colspan="2">
+                        Transaction ID: <strong>{{ group.value }}</strong>
+                    </td>
+                </tr>
+                <tr ng-repeat="trans in group.data">
+                    <td colspan="2">
+                        Sender: {{trans.senderId}}
+                    </td>
+                </tr>
+                <tr ng-repeat="trans in group.data">
+                    <td colspan="2">
+                        Recipient: {{trans.recipientId}}
+                    </td>
+                </tr>
+                <tr ng-repeat="trans in group.data">
+                    <td>
+                        Amount: {{trans.amount | xcrFilter}}
+                    </td>
+                    <td>
+                        Time: {{trans.timestamp | timeAgoFilter}}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="panel-body empty-body empty-table without-margin-top"
+                 ng-if="!countForgingBlocks && searchTransactions.searchForTransaction">
                 <div class="logo-gray-iconed"></div>
                 <p class="empty-state-text">No results for this search.</p>
             </div>

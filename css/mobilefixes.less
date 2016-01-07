@@ -1,0 +1,187 @@
+
+.show-on-phone-tabble-row {
+  display: none;
+}
+
+.blockchain-row.odd {
+  background-color: @grey;
+}
+
+@media (max-width: @screen-xs-max) {
+  .nav.modal-buttons {
+    padding-right: 0;
+  }
+
+  .nav.modal-buttons > li {
+    padding: 10px 0;
+    a {
+      padding: 10px 0;
+    }
+  }
+
+  .media {
+    &.user {
+      .media-left {
+        display: none;
+      }
+    }
+  }
+
+  .show-on-phone-tabble-cell {
+    display: table-cell;
+
+  }
+
+  .show-on-phone-tabble-row {
+    display: table-row;
+  }
+
+  .mobile-padding-header {
+    margin: 0 !important;
+    padding: 25px 0 0 !important;
+  }
+
+  .mobile-padding-zero {
+    padding: 0 !important;
+  }
+
+  .app-modal .material-modal-content .modal-body .list-group .list-group-item {
+    padding: 12px 18px;
+  }
+
+  .app-modal .material-modal-content .modal-chapter {
+    padding: 20px 18px;
+  }
+
+  .app-modal .material-modal-content .modal-header.mobile-padding {
+    padding: 10px 40px 20px;
+  }
+
+  .app-modal .material-modal-content .modal-body .list-group.mobile-padding .list-group-item {
+    padding: 12px 18px;
+  }
+
+  .app-modal .material-modal-content .modal-body .list-group.transactions .list-group-item .transaction-data.mobile-padding {
+    padding: 10px 6px;
+  }
+
+  .app-modal .material-modal-content .modal-body .list-group.transactions .list-group-item .transaction-path.mobile-padding {
+    padding: 0;
+  }
+
+  .app-modal .material-modal-content .modal-body .list-group.transactions .list-group-item .transaction-path .transaction-part {
+    display: block;
+    width: 100%;
+  }
+
+  .app-modal .material-modal-content .modal-body .list-group.transactions .list-group-item .transaction-path .transaction-direction {
+    display: none;
+  }
+
+  .app-modal .material-modal-content .modal-body .list-group.transactions .list-group-item .transaction-bottom {
+    padding: 0;
+    background-color: #b0bec5;
+    .fee {
+      border-radius: 0;
+    }
+    .xcr {
+      border-radius: 0;
+    }
+    .confirmations {
+      width: 100%;
+      border-radius: 0;
+      float: none !important;
+    }
+  }
+
+  td.contacts-username {
+    max-width: 90px;
+    span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .user-icon-col {
+    width: 80px;
+  }
+
+  .pending-confirm {
+    padding-left: 0 !important;
+    float: right;
+  }
+
+  .block-row {
+    display: table-cell;
+    width: 100%;
+  }
+
+  tbody tr.block-chain-transparent:nth-child(2n) {
+    background-color: @background;
+  }
+
+  .blockchain-row {
+    &.opened {
+      background-color: @background;
+    }
+    background-color: @white;
+  }
+
+  .arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+
+    border-bottom: 5px solid black;
+  }
+
+  .arrow-down {
+    margin-right: 10px;
+    cursor: pointer;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: none;
+    border-top: 5px solid black;
+    .opened & {
+      border-top: none;
+      border-bottom: 5px solid black;
+    }
+
+  }
+
+  .blockchain-row.odd {
+    &.opened {
+      background-color: @background;
+    }
+    background-color: @white;
+  }
+
+  .card-modal {
+    width: 100%;
+  }
+
+  .margintop0-mobile {
+    margin-top: 0 !important;
+  }
+}
+
+.first-line {
+  padding: 10px 25px 10px;
+}
+
+.last-line {
+  padding: 10px 25px 10px;
+}
+
+
+
+
+
+
+

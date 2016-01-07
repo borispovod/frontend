@@ -1,3 +1,9 @@
+.mobile-no-valign{
+  @media (max-width: @screen-sm-min) {
+ display: block !important;
+  }
+}
+
 ::-ms-clear, ::-ms-reveal {
   display: none;
 }
@@ -203,6 +209,9 @@ span.badge.tag-badge {
   padding-right: 20px;
   & > li {
     padding: 20px 0;
+    @media (max-width: @screen-xs-max) {
+      padding: 0;
+    }
     display: inline-block;
     & > a {
       font-size: @content-text;

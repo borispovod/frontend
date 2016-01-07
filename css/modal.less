@@ -6,6 +6,57 @@
   z-index: 9998;
   top: 0;
   left: 0;
+  @media only screen and (max-width: @screen-xs-min) {
+    .container {
+      padding: 0 !important;
+      width: 100% !important;
+      margin: 0 !important;
+      .row {
+
+        .col-sm-12 {
+          padding: 0;
+          .scroll-on-phone {
+            height: 100%;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            padding-bottom: 56px;
+            .left-margin-40 {
+              margin-left: 20px;
+            }
+            .right-margin-40 {
+              margin-right: 20px;
+            }
+          }
+          .card-action {
+            background-color: @grey;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            height: 56px;
+          }
+        }
+        margin: 0;
+        .card.card-modal {
+          margin: 0;
+          height: 100vh;
+          .card-content {
+            height: 100%;
+            .material-modal-content {
+              height: 100%;
+              .send-info-text {
+                padding: 30px 16px 30px 46px;
+                &:before {
+                  left: 16px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+  }
+
   #send-modal {
     @media (min-width: @screen-xs-max) {
       margin-left: 250px;

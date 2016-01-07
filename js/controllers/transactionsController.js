@@ -2,6 +2,7 @@ require('angular');
 
 angular.module('webApp').controller('transactionsController', ['$scope', '$rootScope', '$http', "userService", "$interval", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionsService', 'ngTableParams', 'transactionInfo', '$timeout', 'userInfo',
     function ($rootScope, $scope, $http, userService, $interval, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionsService, ngTableParams, transactionInfo, $timeout, userInfo) {
+        $scope.toggled = true;
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
         $scope.view.loadingText = "Loading transactions";
@@ -65,9 +66,57 @@ angular.module('webApp').controller('transactionsController', ['$scope', '$rootS
 
         //end Transactions
 
+        //Transactions2
+        $scope.tableTransactions2 = new ngTableParams({
+            page: 1,
+            count: 25,
+            sorting: {
+                b_height: 'desc'
+            }
+        }, {
+            groupBy: function (item) {
+                return item.id;
+            },
+            total: 0,
+            counts: [],
+            getData: function ($defer, params) {
+                $scope.loading = true;
+                transactionsService.getTransactions($defer, params, $scope.filter, $scope.transactionsView.searchForTransaction,
+                    function (error) {
+                        $scope.searchTransactions.inSearch = false;
+                        $scope.countForgingBlocks = params.total();
+                        $scope.loading = false;
+                        $http.get('/api/transactions/unconfirmed', {
+                                params: {
+                                    senderPublicKey: userService.publicKey,
+                                    address: userService.address
+                                }
+                            })
+                            .then(function (resp) {
+                                var unconfirmedTransactions = resp.data.transactions;
+                                $scope.view.inLoading = false;
+                                $timeout(function () {
+                                    $scope.unconfirmedTransactions = unconfirmedTransactions;
+                                    $scope.$apply();
+                                }, 1);
+
+                            });
+                    });
+            }
+        });
+
+        $scope.tableTransactions2.settings().$scope = $scope;
+
+        $scope.$watch("filter.$", function () {
+            $scope.tableTransactions2.reload();
+        });
+
+        //end Transactions
+
 
         $scope.updateTransactions = function () {
             $scope.tableTransactions.reload();
+            $scope.tableTransactions2.reload();
         }
 
         $scope.$on('$destroy', function () {

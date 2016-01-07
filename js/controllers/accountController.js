@@ -1,7 +1,8 @@
 require('angular');
 
-angular.module('webApp').controller('accountController', ['$state','$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionInfo', 'userInfo', '$filter',
-    function ($state, $rootScope, $scope, $http, userService, $interval, $timeout, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionInfo, userInfo, $filter) {
+angular.module('webApp').controller('accountController', ['$state','$scope', '$rootScope', '$http', "userService", "$interval", "$timeout", "sendCryptiModal", "secondPassphraseModal", "delegateService", 'viewFactory', 'transactionInfo', 'userInfo', '$filter', 'ngTableParams',
+    function ($state, $rootScope, $scope, $http, userService, $interval, $timeout, sendCryptiModal, secondPassphraseModal, delegateService, viewFactory, transactionInfo, userInfo, $filter, ngTableParams) {
+        $scope.toggled = true;
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
         $scope.view.loadingText = "Loading dashboard";
@@ -21,6 +22,27 @@ angular.module('webApp').controller('accountController', ['$state','$scope', '$r
         * 1000
         * 1000
         * 100;
+
+        $scope.tableParams = new ngTableParams({
+            page: 1,            // show first page
+            count: 8          // count per page
+        }, {
+            groupBy: function (item) {
+                return item.id;
+            }, total: 0,
+            counts: [],
+            getData: function ($defer, params) {
+                $scope.getTransactions($defer);
+            }
+        });
+
+        $scope.tableParams.settings().$scope = $scope;
+
+        $scope.$watch("filter.$", function () {
+            $scope.tableParams.reload();
+        });
+
+        //end Transactions
 
         $scope.graphs = {
             cryptiPrice: {
@@ -48,7 +70,7 @@ angular.module('webApp').controller('accountController', ['$state','$scope', '$r
             $scope.modal = userInfo.activate({userId: userId});
         }
 
-        $scope.getTransactions = function () {
+        $scope.getTransactions = function ($defer) {
 
             $http.get("/api/transactions", {
                 params: {
@@ -59,6 +81,7 @@ angular.module('webApp').controller('accountController', ['$state','$scope', '$r
                 }
             })
                 .then(function (resp) {
+
                     var transactions = resp.data.transactions;
 
                     $http.get('/api/transactions/unconfirmed', {
@@ -72,7 +95,8 @@ angular.module('webApp').controller('accountController', ['$state','$scope', '$r
 
                             $timeout(function () {
                                 $scope.transactions = unconfirmedTransactions.concat(transactions).slice(0, 8);
-
+                                if ($defer) {
+                                $defer.resolve($scope.transactions);}
                             });
 
                         });
@@ -146,6 +170,7 @@ angular.module('webApp').controller('accountController', ['$state','$scope', '$r
         $scope.updateAppView = function () {
             $scope.getAccount();
             $scope.getTransactions();
+            $scope.tableParams.reload();
             delegateService.getDelegate($scope.publicKey, function (response) {
                 $timeout(function () {
                     $scope.delegate = response;

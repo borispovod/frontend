@@ -3,6 +3,7 @@ require('angular');
 angular.module('webApp').controller('walletsController',
     ['$scope', '$rootScope', '$http', 'viewFactory', 'ngTableParams', '$filter', 'multiMembersModal', 'multiService', 'userService', "errorModal", 'masterPasswordModal',
         function ($rootScope, $scope, $http, viewFactory, ngTableParams, $filter, multiMembersModal, multiService, userService, errorModal, masterPasswordModal) {
+            $scope.toggled = true;
             $scope.view = viewFactory;
             $scope.view.inLoading = false;
             $scope.view.loadingText = "Loading multisignature wallets";

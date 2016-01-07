@@ -2,10 +2,11 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="panel panel-default" ng-class="{'paginated': countForgingBlocks || !searchBlocks.searchForBlock}">
-            <table ng-show="countForgingBlocks  || !searchBlocks.searchForBlock" ng-table="tableBlocks" border="0" width="100%" cellpadding="0" cellspacing="0"
-                   template-pagination="custom/pager">
+            <table ng-show="countForgingBlocks  || !searchBlocks.searchForBlock" ng-table="tableBlocks" border="0"
+                   width="100%" cellpadding="0" cellspacing="0"
+                   template-pagination="custom/pager" template-header="custom/header-blockchain">
                 <div class="table-menu" ng-show="countForgingBlocks || !searchBlocks.searchForBlock">
-                    <div class="more-down-table" dropdown
+                    <div class="more-down-table hide-on-phone" dropdown
                          on-toggle="toggled(open)" is-open="moreDownTable.isopen">
                         <i class="mdi-navigation-more-vert" dropdown-toggle aria-haspopup="true"
                            aria-expanded="false"></i>
@@ -21,18 +22,42 @@
                         </div>
                     </div>
                 </div>
-                <tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}">
-                    <td data-title="'Height'" sortable="'height'">{{block.height}}</td>
-                    <td data-title="'Block ID'" ng-click="blockInfo(block)" class="pointer" ng-show="showAllColumns"><a href="#">{{block.id}}</a></td>
-                    <td data-title="'Generator'" ng-show="showAllColumns"><a href="#"
-                                                                             ng-click="userInfo(block.generatorId)">{{block.generatorId}}</a></td>
+                <tr ng-repeat-start="block in $data" class="blockchain-row"
+                    ng-class="{'voted': address == block.generatorId, 'opened': block.id == opened, 'even':$even, 'odd': $odd}">
+
+                    <td data-title="'Height'" sortable="'height'"><span class="arrow-down show-on-phone no-select"
+                                                                        ng-click="setOpened(block.id)"></span>
+                        {{block.height}}
+                    </td>
+
+                    <td data-title="'Block ID'" ng-click="blockInfo(block)" class="pointer hide-on-phone"
+                        ng-show="showAllColumns"><a href="#">{{block.id}}</a></td>
+                    <td data-title="'Generator'" class="hide-on-phone" ng-show="showAllColumns"><a href="#"
+                                                                                                   ng-click="userInfo(block.generatorId)">{{block.generatorId}}</a>
+                    </td>
+
                     <td data-title="'Time'" sortable="'timestamp'"><span
                             ng-show="block.timestamp > 0">{{block.timestamp | timeAgoFilter : showFullTime}}</span>
                         <span ng-show="block.timestamp == 0">-</span></td>
-                    <td data-title="'Transactions'" ng-click="showBlock(block)" class="pointer"><a href="#">{{block.numberOfTransactions}}</a></td>
-                    <td data-title="'Amount'" sortable="'totalAmount'">{{block.totalAmount  | xcrFilter}}</td>
-                    <td data-title="'Fee'" sortable="'totalFee'">{{block.totalFee  | xcrFilter}}</td>
-                    <td data-title="" class="width-80"></td>
+                    <td data-title="'Transactions'" ng-click="showBlock(block)" class="pointer"><a href="#">{{block.numberOfTransactions}}</a>
+                    </td>
+                    <td data-title="'Amount'" sortable="'totalAmount'" class="hide-on-phone">{{block.totalAmount |
+                        xcrFilter}}
+                    </td>
+                    <td data-title="'Fee'" sortable="'totalFee'" class="hide-on-phone">{{block.totalFee | xcrFilter}}
+                    </td>
+                    <td data-title="" class="width-80 hide-on-phone"></td>
+
+                </tr>
+                <tr ng-repeat-end ng-hide="block.id != opened" ng-class="{'voted': address == block.generatorId}"
+                    class="show-on-phone-tabble-row block-chain-transparent">
+                    <td colspan="3">
+                        <div class="first-line">Generator: <a href="#"
+                                                    ng-click="userInfo(block.generatorId)">{{block.generatorId}}</a>
+                        </div>
+                        <div class="last-line">Amount: {{block.totalAmount | xcrFilter}} Fee: {{block.totalFee | xcrFilter}}
+                        </div>
+                    </td>
                 </tr>
                 <tr ng-show="!loading && (!$data || $data.length == 0) && !searchBlocks.searchForBlock">
                     <td colspan="8">
@@ -53,3 +78,28 @@
         </div>
     </div>
 </div>
+
+<script id="custom/header-blockchain" type="text/ng-template">
+    <tr>
+
+        <th title="{{$column.headerTitle(this)}}"
+            ng-repeat="($index,$column) in $columns"
+            ng-class="{
+                    'sortable': $column.sortable(this),
+                    'sort-asc': params.sorting()[$column.sortable(this)]=='asc',
+                    'sort-desc': params.sorting()[$column.sortable(this)]=='desc',
+                    'hide-on-phone': $index==1 || $index ==2 ||  $index==5 || $index ==6 || $index ==7
+                  }"
+            ng-click="sortBy($column, $event)"
+            ng-if="$column.show(this)"
+            ng-init="template = $column.headerTemplateURL(this)"
+            class="header {{$column.class(this)}}">
+            <div ng-if="!template" class="ng-table-header"
+                 ng-class="{'sort-indicator': params.settings().sortingIndicator == 'div'}">
+                <span ng-bind="$column.title(this)"
+                      ng-class="{'sort-indicator': params.settings().sortingIndicator == 'span'}"></span>
+            </div>
+            <div ng-if="template" ng-include="template"></div>
+        </th>
+    </tr>
+</script>

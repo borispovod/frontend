@@ -2,6 +2,7 @@ require('angular');
 
 angular.module('webApp').controller('contactsController', ['$scope', '$rootScope', '$http', 'viewFactory', 'contactsService', 'ngTableParams', 'userService', '$timeout',
     function ($rootScope, $scope, $http, viewFactory, contactsService, ngTableParams, userService, $timeout) {
+        $scope.toggled = true;
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
         $scope.view.loadingText = "Loading contacts";

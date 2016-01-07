@@ -2,6 +2,7 @@ require('angular');
 
 angular.module('webApp').controller('pendingsController', ['$scope', '$rootScope', '$http', 'viewFactory', 'contactsService', 'ngTableParams',
     function ($rootScope, $scope, $http, viewFactory, contactsService, ngTableParams) {
+        $scope.toggled = true;
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
         $scope.view.loadingText = "Loading contacts";

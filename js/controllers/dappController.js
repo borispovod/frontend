@@ -1,6 +1,7 @@
 require('angular');
 angular.module('webApp').controller('dappController', ['$scope', 'viewFactory', '$stateParams', '$http', "$interval", "userService", "errorModal", "masterPasswordModal","confirmeDeletingModal",
     function ($scope, viewFactory, $stateParams, $http, $interval, userService, errorModal, masterPasswordModal, confirmeDeletingModal) {
+        $scope.toggled = true;
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
         $scope.view.loadingText = "Loading dapp";

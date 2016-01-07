@@ -253,6 +253,39 @@ td {
   width: 100px;
 }
 
+.ng-table-group thead {
+  display: none;
+}
+tbody {
+  tr:nth-child(even) {
+    background-color: @grey;
+  }
+}
+
+tbody.tbody-group {
+  tr:hover {
+    background-color: inherit;
+  }
+  &:nth-child(even){
+    background-color: @grey;
+  }
+  tr:nth-child(even) {
+    background-color: inherit;
+  }
+  &.voted {
+    background-color: @meant;
+    &:hover {
+      background-color: @meant;
+    }
+  }
+  &.checked{
+    background-color: @super-light-violet;
+    &:hover {
+      background-color: @super-light-violet;
+    }
+  }
+}
+
 td {
   border-radius: 0;
   &.td-amount {

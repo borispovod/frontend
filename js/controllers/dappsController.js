@@ -2,6 +2,7 @@ require('angular');
 
 angular.module('webApp').controller('dappsController', ['$scope', 'viewFactory', '$http', 'dappsService', '$timeout', 'addDappModal', "$interval",
     function ($scope, viewFactory, $http, dappsService, $timeout, addDappModal, $interval) {
+        $scope.toggled = true;
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
         $scope.view.loadingText = "Loading dapps";

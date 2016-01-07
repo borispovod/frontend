@@ -2,6 +2,11 @@ require('angular');
 
 angular.module('webApp').controller('blockchainController', ['$scope', '$timeout', '$rootScope', '$http', "userService", "$interval", 'blockService', 'blockModal', 'blockInfo', 'userInfo', 'ngTableParams', 'viewFactory',
     function ($rootScope, $timeout, $scope, $http, userService, $interval, blockService, blockModal, blockInfo, userInfo, ngTableParams, viewFactory) {
+        $scope.opened = null;
+        $scope.setOpened = function (id) {
+            $scope.opened = $scope.opened == id ? null : id;
+        }
+        $scope.toggled = true;
         $scope.view = viewFactory;
         $scope.view.inLoading = true;
         $scope.view.loadingText = "Loading blockchain";
@@ -46,6 +51,7 @@ angular.module('webApp').controller('blockchainController', ['$scope', '$timeout
             $scope.tableBlocks.reload();
         };
         //end Blocks
+
 
         $scope.$on('updateControllerData', function (event, data) {
             if (data.indexOf('main.blockchain') != -1) {

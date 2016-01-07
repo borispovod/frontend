@@ -3,7 +3,7 @@ require('angular');
 
 angular.module('webApp').controller('forgingController', ['$scope', '$rootScope', '$http', "userService", "$interval", "companyModal", "forgingModal", "delegateService", "viewFactory", "blockInfo", "ngTableParams", "blockService",
     function ($rootScope, $scope, $http, userService, $interval, companyModal, forgingModal, delegateService, viewFactory, blockInfo, ngTableParams, blockService) {
-
+        $scope.toggled = true;
         $scope.allVotes = 100
             * 1000
             * 1000
